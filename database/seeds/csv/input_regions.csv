@@ -1,0 +1,7 @@
+region_id,region_abrv,region_name,region_province
+1001,GautEkur,Ekurhuleni,Gauteng
+1002,GautJoha,Johannesburg,Gauteng
+1003,GautSedi,Sedibeng,Gauteng
+1004,GautTshw,Tshwane,Gauteng
+1005,GautWest,West Rand,Gauteng
+1099,GautUnknown,Unknown,Gauteng
