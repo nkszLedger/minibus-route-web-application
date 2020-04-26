@@ -17,7 +17,7 @@
 						<table id="example2" class="table table-striped table-bordered table-hover display nowrap margin-top-10 w-p100">
 							<thead>
 								<tr>
-									<th style="display:none;">#</th>
+									<th>#</th>
 									<th>Name</th>
 									<th>Surname</th>
 									<th>ID Number</th>
@@ -33,7 +33,7 @@
 								@if($all_members !== null)
 								@foreach($all_members as $member)
 								<tr>
-									<td style="display:none;">{{$count}}</td>
+									<td>{{$count}}</td>
 									<td>{{$member->name}} </td>
 									<td>{{$member->surname}}</td>
 									<td>{{$member->id_number}}</td>

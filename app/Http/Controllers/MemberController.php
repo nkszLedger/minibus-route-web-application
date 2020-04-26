@@ -232,8 +232,7 @@ class MemberController extends Controller
 
     public function list_members()
     {
-        $all_members = Member::with(['membership_type','member_association','portrait'])->get();
-
+        $all_members = Member::with(['membership_type','member_association','portrait'])->orderBy('id','desc')->get();
 
         return view('list_members_table_data',compact(['all_members']));
 
