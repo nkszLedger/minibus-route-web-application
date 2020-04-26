@@ -597,6 +597,18 @@
 	<!-- VoiceX Admin for Data Table -->
 	<script src="/minibus/main/js/pages/data-table.js"></script> 
 
+	<!-- steps  -->
+	<script src="minibus/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
+
+	<!-- validate  -->
+	<script src="minibus/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+
+	<!-- Sweet-Alert  -->
+	<script src="minibus/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
+
+	<!-- wizard  -->
+	<script src="minibus/main/js/pages/steps.js"></script>
+
 	<!-- FLOT CHARTS -->
 	<script src="/minibus/assets/vendor_components/Flot/jquery.flot.js"></script>
 	<script src="/minibus/assets/vendor_components/Flot/jquery.flot.resize.js"></script>

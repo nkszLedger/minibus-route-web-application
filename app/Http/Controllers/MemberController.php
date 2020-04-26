@@ -11,6 +11,8 @@ use App\Region;
 use App\Route;
 use App\RouteVehicle;
 use App\Vehicle;
+use App\City;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
@@ -45,6 +47,7 @@ class MemberController extends Controller
     public function showregpage()
     {
         $all_types = MembershipType::all();
+        $all_cities = City::all();
         $all_regions = Region::all();
         $all_associations = Association::all();
         $all_routes = Route::limit(10)->get();
@@ -52,7 +55,7 @@ class MemberController extends Controller
 
 
 //        dd($all_routes);
-        return view('member_registration', compact(['all_types','all_regions','all_associations','all_routes']));
+        return view('member_registration', compact(['all_types','all_regions','all_associations','all_routes', 'all_cities']));
 
     }
 
