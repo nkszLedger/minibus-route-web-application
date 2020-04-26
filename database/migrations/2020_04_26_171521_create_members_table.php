@@ -19,10 +19,12 @@ class CreateMembersTable extends Migration
             $table->string('surname');
             $table->string('id_number')->unique();
             $table->string('license_number')->unique();
+            $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('address_line');
             $table->string('postal_code');
             $table->unsignedBigInteger('membership_type_id');
+            $table->integer('city_id');
             $table->integer('association_id');
             $table->integer('region_id');
 

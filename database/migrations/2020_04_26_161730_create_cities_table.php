@@ -14,11 +14,11 @@ class CreateCitiesTable extends Migration
     public function up()
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->id();
+            $table->integer('city_id')->primary();
             $table->string('city')->unique();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
-            $table->string('country');
+            $table->string('country')->nullable();
             $table->string('iso2')->nullable();
             $table->string('admin')->nullable();
             $table->string('capital')->nullable();
