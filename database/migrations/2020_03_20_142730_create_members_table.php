@@ -20,8 +20,8 @@ class CreateMembersTable extends Migration
             $table->string('id_number')->unique();
             $table->string('license_number')->unique();
             $table->string('email')->nullable();
-            $table->string('address_line_one');
-            $table->string('address_line_two')->nullable();
+            $table->string('address_line');
+            $table->string('postal_code');
             $table->unsignedBigInteger('membership_type_id');
             $table->integer('association_id');
             $table->integer('region_id');
@@ -31,6 +31,7 @@ class CreateMembersTable extends Migration
             $table->foreign('membership_type_id')->references('id')->on('membership_types');
             $table->foreign('association_id')->references('association_id')->on('association');
             $table->foreign('region_id')->references('region_id')->on('regions');
+            $table->foreign('city_id')->references('city_id')->on('cities');
 
 
         });

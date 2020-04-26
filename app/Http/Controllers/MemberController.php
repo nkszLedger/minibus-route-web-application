@@ -240,8 +240,6 @@ class MemberController extends Controller
 
     public function show_member($id)
     {
-
-
         $member_record = Member::with(['membership_type','member_association','vehicles','region'])->findOrFail($id);
 
 //        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
