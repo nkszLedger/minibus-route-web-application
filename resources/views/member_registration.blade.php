@@ -122,7 +122,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="webUrl3">Year : <span class="danger">*</span></label>
-											<input type="number" class="form-control required" id="webUrl3" name="vehicleyear" maxlength="4"> </div>
+											<input type="number" class="form-control required" id="webUrl3" name="vehicleyear" maxlength="4" min=2010> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
@@ -172,10 +172,9 @@
 										<div class="form-group">
 											<label>Route : <span class="danger">*</span></label>
 											<hr class="mb-15 mt-0">
-											@foreach ($all_routes as $route)
-												<input name="route[]" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">
-												<label for="{{$route->id}}" class="d-block">{{$route->id.'  :  '}}{{$route->origin}}{{' - '.$route->via.' - '}} {{$route->destination}}</label>
-											@endforeach
+											<div id="route" name="route">
+
+											</div>
 										</div>
 									</div>
 								</div>
@@ -316,10 +315,10 @@
 						<section>
 							<div class="row">
 								<div class="col-md-6">
-									{{--                                              <div class="form-group">--}}
-									{{--                                                  <label for="wint1">Interview For :</label>--}}
-									{{--                                                  <input type="text" class="form-control required" id="wint1">--}}
-									{{--                                              </div>--}}
+									{{--<div class="form-group">--}}
+									{{--<label for="wint1">Interview For :</label>--}}
+									{{--<input type="text" class="form-control required" id="wint1">--}}
+									{{--</div>--}}
 									<div class="form-group">
 										<label for="wintType1">Region:</label>
 										<select class="custom-select form-control required" id="wintType1" data-placeholder="Type to search cities" name="wintType1">
@@ -336,9 +335,9 @@
 										<label for="association">Association :</label>
 										<select class="custom-select form-control " id="association" name="association">
 											<option id="association_option" value="">Please select Association</option>
-											{{--                                        @foreach ($all_associations as $association)--}}
-											{{--                                            <option value="{{$association->id}}">{{$association->name}}</option>--}}
-											{{--                                        @endforeach--}}
+											{{--@foreach ($all_associations as $association)--}}
+											{{--<option value="{{$association->id}}">{{$association->name}}</option>--}}
+											{{--@endforeach--}}
 										</select>
 									</div>
 								</div>
@@ -346,12 +345,11 @@
 									<div class="form-group">
 										<label>Route :</label>
 										<hr class="mb-15 mt-0">
-										{{--                                    @foreach ($all_routes as $route)--}}
+										{{--@foreach ($all_routes as $route)--}}
 										<input name="route[]" type="checkbox" id="route" value="Route 1">
-
-										{{--                                        <input name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">--}}
-										{{--                                        <label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$route->origin}}{{' - '.$route->via.' - '}} {{$route->destination}}</label>--}}
-										{{--                                    @endforeach--}}
+										{{--<input name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">--}}
+										{{--<label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$route->origin}}{{' - '.$route->via.' - '}} {{$route->destination}}</label>--}}
+										{{--@endforeach--}}
 									</div>
 								</div>
 							</div>
@@ -374,101 +372,6 @@
 	</section>
 
 
-	<script>
-
-		$('#region').change(function(){
-			var id = $(this).val();
-
-			console.log(id);
-
-			$('#association').find('option').not(':first').remove();
-			$.ajax({
-				url: 'getAssociations/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
-
-					var len = 0;
-					if(response['data'] != null){
-						len = response['data'].length;
-					}
-
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
-
-							var id = response['data'][i].association_id;
-							var name = response['data'][i].name;
-
-							console.log('the loop');
-							console.log(name);
-
-							var option = "<option value='"+id+"'>"+name+"</option>";
-
-							console.log('the option to append');
-							console.log(option);
-							$("#association").append(option);
-						}
-						console.log('outside loop');
-
-
-					}
-
-				}
-			});
-		});
-
-		//routes per association ajax function //TODO pull routes based of the selected association ID.
-
-		$('#association').change(function(){
-			var id = $(this).val();
-
-			console.log(id);
-			// alert(id);
-
-			// $('#route').find('input').not(':first').remove();
-			$.ajax({
-				url: 'getRoutesPerAssociation/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
-
-					var len = 0;
-					if(response['data'] != null){
-						len = response['data'].length;
-					}
-
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
-
-							var id = response['data'][i].id;
-							var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
-
-							console.log('the loop');
-							console.log(route_name);
-
-							var option = "<input  type='checkbox'  value='"+id+"'>"+ route_name  +
-								"<label for='"+id+"' >" + route_name + "</label>";
-
-						{{--<input name="route[]" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">--}}
-						{{--        <label for="{{$route->id}}" class="d-block">{{$route->origin_id. ' :  '}}{{$route->origin}}{{' - '.$route->via.' - '}} {{$route->destination}}</label>--}}
-
-							console.log('the option to append');
-							console.log(option);
-							// $("#route").replaceWith(option);
-						}
-						console.log('outside loop');
-
-
-					}
-
-				}
-			});
-		});
-
-
-	</script>
 	
 
 @endsection
