@@ -26,43 +26,43 @@
 											<label for="wfirstName2"> First Name : <span class="danger">*</span> </label>
 {{--                                                  <a href="#modal-default" data-toggle="modal" id="modal-button-id"  > <b>Profile</b></a>--}}
 
-											<input type="text" class="form-control required" id="wfirstName2" name="firstName"> </div>
+											<input type="text" class="form-control required" id="wfirstName2" name="firstName" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wlastName2"> Last Name : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="wlastName2" name="lastName"> </div>
+											<input type="text" class="form-control required" id="wlastName2" name="lastName" maxlength="25"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="idnumber"> ID Number : <span class="danger">*</span> </label>
-											<input type="number" class="form-control required" id="idnumber" name="idnumber" maxlength="13" pattern="[0-9]"> </div>
+											<input type="text" class="form-control required" id="idnumber" name="idnumber" maxlength="13"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="licensenumber" name="licensenumber"> </div>
+											<input type="text" class="form-control required" id="licensenumber" name="licensenumber" maxlength="12"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wemailAddress2"> Email Address :</label>
-											<input type="email" class="form-control" id="wemailAddress2" name="emailAddress"> </div>
+											<input type="email" class="form-control" id="wemailAddress2" name="emailAddress" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
-											<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" pattern="[0-9]" maxlength="10"> </div>
+											<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" maxlength="10"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="addressline1">Address Line : <span class="danger">*</span>  </label>
-											<input type="text" class="form-control required" id="addressline1" name="addressline1"> </div>
+											<input type="text" class="form-control required" id="addressline1" name="addressline1" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
@@ -82,7 +82,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="postal-code">Postal Code : <span class="danger">*</span> </label>
-											<input type="text" class="form-control" id="postal-code" name="postal-code">
+											<input type="text" class="form-control" id="postal-code" name="postal-code" maxlength="4">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -105,29 +105,29 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="regnumber">Registration Number : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="regnumber" name="regnumber">
+											<input type="text" class="form-control required" id="regnumber" name="regnumber" maxlength="10">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehiclemake">Make : <span class="danger">*</span></label>
-											<input type="text" class="form-control required" id="vehiclemake" name="vehiclemake"> </div>
+											<input type="text" class="form-control required" id="vehiclemake" name="vehiclemake" maxlength="20"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehiclemodel">Model : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="vehiclemodel" name="vehiclemodel">
+											<input type="text" class="form-control required" id="vehiclemodel" name="vehiclemodel" maxlength="20">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="webUrl3">Year : <span class="danger">*</span></label>
-											<input type="text" class="form-control required" id="webUrl3" name="vehicleyear"> </div>
+											<input type="number" class="form-control required" id="webUrl3" name="vehicleyear" maxlength="4"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehicleseats">Number of seats : <span class="danger">*</span></label>
-											<input type="number" class="form-control required" id="vehicleseats" name="vehicleseats">
+											<input type="number" class="form-control required" id="vehicleseats" name="vehicleseats" maxlength="2" min=0 max=22>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -223,7 +223,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="idnumber"> ID Number : <span class="danger">*</span> </label>
-										<input type="number" class="form-control required" id="idnumber" name="idnumber" maxlength="13" pattern="[0-9]"> </div>
+										<input type="number" class="form-control required" id="idnumber" name="idnumber"> </div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
@@ -240,7 +240,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
-										<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" pattern="[0-9]" maxlength="10"> </div>
+										<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber"> </div>
 								</div>
 							</div>
 							<div class="row">

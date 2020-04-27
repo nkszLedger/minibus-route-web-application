@@ -8,17 +8,28 @@
     <meta name="author" content="">
     <link rel="icon" href="../../public/minibus/images/favicon.ico">
 
-      <title> MiniBus Route Registration App</title>
+    <title> MiniBus Route Registration App</title>
 
+	<!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
 
-      <!-- Bootstrap 4.0-->
+    <!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+
+	<!-- Bootstrap tagsinput -->
+    <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
       <!-- daterange picker -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
 
 	<!-- weather weather -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/weather-icons/weather-icons.css">
+
+	<!--alerts CSS -->
+    <link rel="stylesheet" href="/minibus/assets/vendor_components/sweetalert/sweetalert.css">
+
+	<!-- c3 CSS -->
+    <link rel="stylesheet" href="/minibus/assets/vendor_components/c3/c3.min.css">
 
 	<!-- theme style -->
 	<link rel="stylesheet" href="/minibus/main/css/horizontal-menu.css">
@@ -591,6 +602,11 @@
 	<script src="/minibus/assets/vendor_components/apexcharts-bundle/irregular-data-series.js"></script>
 	<script src="/minibus/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
 
+	<!-- Formatter -->
+	<script src="/minibus/assets/vendor_components/formatter/jquery.formatter.js"></script>
+	<script src="/minibus/assets/vendor_components/formatter/formatter.js"></script>
+	<script src="/minibus/main/js/pages/formatter.js"></script>
+
 	<!-- This is data table -->
 	<script src="/minibus/assets/vendor_components/datatable/datatables.min.js"></script>
 
@@ -609,6 +625,10 @@
 	<!-- wizard  -->
 	<script src="minibus/main/js/pages/steps.js"></script>
 
+	<!-- Form validator JavaScript -->
+	<script src="minibus/main/js/pages/validation.js"></script>
+	<script src="minibus/main/js/pages/form-validation.js"></script>
+
 	<!-- FLOT CHARTS -->
 	<script src="/minibus/assets/vendor_components/Flot/jquery.flot.js"></script>
 	<script src="/minibus/assets/vendor_components/Flot/jquery.flot.resize.js"></script>
@@ -620,7 +640,6 @@
 	<script src="/minibus/main/js/jquery.smartmenus.js"></script>
 	<script src="/minibus/main/js/menus.js"></script>
 	<script src="/minibus/main/js/template.js"></script>
-	<script src="/minibus/main/js/pages/voice-search.js"></script>
 
 	<!-- VoiceX Admin dashboard demo (This is only for demo purposes) -->
 	<script src="/minibus/main/js/pages/dashboard3.js"></script>

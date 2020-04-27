@@ -14,6 +14,36 @@ $(function () {
 	  'pattern': '{{9999}}-{{99}}-{{99}}',
 	  'persistent': true
 	});
+
+	// SA ID Number
+	$('#idnumber').formatter({
+		'pattern': '{{999999}}{{9999}}{{99}}{{9}}',
+		'persistent': true
+	});
+
+	// SA Licence Code
+	$('#licensenumber').formatter({
+		'pattern': '{{9999999999}}{{aa}}',
+		'persistent': true
+	});
+
+	// Phone Number 
+	$('#wphoneNumber2').formatter({
+		'pattern': '{{9999999999}}',
+		'persistent': true
+	});
+
+	// SA Postal Code
+	$('#postal-code').formatter({
+		'pattern': '{{9999}}',
+		'persistent': true
+	});
+
+	// Vehicle Seats
+	$('#vehicleseats').formatter({
+		'pattern': '{{99}}',
+		'persistent': true
+	});
 	
 	//Time hh:mm
 	$('#time').formatter({
