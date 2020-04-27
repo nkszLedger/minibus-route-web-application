@@ -75,12 +75,12 @@ class MemberController extends Controller
             $member->license_number = $request->get('licensenumber');
             $member->email = $request->get('emailAddress');
             $member->phone_number = $request->get('phonenumber');
-            $member->address_line_one = $request->get('addressline1');
-            $member->address_line_two = $request->get('addressline2');
+            $member->address_line = $request->get('addressline1');
             $member->membership_type_id = $request->get('membership-type'); //TODO check if associate method cannot be used
             $member->association_id = $request->get('association');
+            $member->postal_code = $request->get('postal-code');
             $member->region_id = $request->get('region');
-
+            $member->city_id = $request->get('city');
 
             if($member->save()) {
                 $vehicle->registration_number = $request->get('regnumber');
@@ -141,8 +141,9 @@ class MemberController extends Controller
                     'license_number' =>$request->get('licensenumber'),
                     'email' => $request->get('emailAddress'),
                     'phone_number' => $request->get('phonenumber'),
-                    'address_line_one' =>$request->get('addressline1'),
-                    'address_line_two' =>$request->get('addressline2'),
+                    'address_line' => $request->get('addressline1'),
+                    'postal_code' => $request->get('postal-code'),
+                    'city_id' => $request->get('city'),
                     'membership_type_id' =>$request->get('membership-type'),//TODO check if associate method cannot be used
                     'association_id' => $request->get('association'),
                     'region_id' => $request->get('region')

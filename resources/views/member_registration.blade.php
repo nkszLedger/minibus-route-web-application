@@ -66,11 +66,11 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="city">City/Town :</label>
+											<label for="city">City/Town : <span class="danger">*</span> </label>
 											<select class="custom-select form-control required" id="city" name="city">
 												<option value="">Please Select City</option>
 												@foreach ($all_cities as $city)
-													<option value="{{$city->id}}">{{$city->city}}</option>
+													<option value="{{$city->city_id}}">{{$city->city}}</option>
 												@endforeach
 											</select>
 										</div>
@@ -81,8 +81,8 @@
 									
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="Postal Code">City/Town :</label>
-											<input type="text" class="form-control" id="postalcode" name="postalcode">
+											<label for="postal-code">Postal Code : <span class="danger">*</span> </label>
+											<input type="text" class="form-control" id="postal-code" name="postal-code">
 										</div>
 									</div>
 									<div class="col-md-6">
