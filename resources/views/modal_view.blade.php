@@ -349,49 +349,42 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="idnumber"> ID Number : <span class="danger">*</span> </label>
-                                                <input type="text" class="form-control required" readonly id="idnumber" value="{{$member_record->idnumber}}" name="idnumber"> </div>
+                                                <input type="text" class="form-control required" readonly id="idnumber" value="{{$member_record->id_number}}" name="idnumber"> </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
-                                                <input type="text" class="form-control required" readonly id="licensenumber" value="{{$member_record->licensenumber}}" name="licensenumber"> </div>
+                                                <input type="text" class="form-control required" readonly id="licensenumber" value="{{$member_record->license_number}}" name="licensenumber"> </div>
                                         </div>
 								    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="wemailAddress2"> Email Address :</label>
-                                                <input type="email" class="form-control" readonly id="wemailAddress2" value="{{$member_record->wemailAddress2}}" name="emailAddress"> </div>
+                                                <input type="email" class="form-control" readonly id="emailAddress" value="{{$member_record->email}}" name="emailAddress"> </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
-                                                <input type="tel" class="form-control required" readonly id="wphoneNumber2" value="{{$member_record->wphoneNumber2}}" name="phonenumber"> </div>
+                                                <input type="tel" class="form-control required" readonly id="phonenumber" value="{{$member_record->phone_number}}" name="phonenumber"> </div>
                                         </div>
 								    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="addressline1">Address Line : <span class="danger">*</span>  </label>
-                                                <input type="text" class="form-control required" readonly id="addressline1" value="{{$member_record->addressline1}}" name="addressline1"> </div>
+                                                <input type="text" class="form-control required" readonly id="addressline1" value="{{$member_record->address_line}}" name="addressline1"> </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="city">City/Town : <span class="danger">*</span> </label>
-                                                <select class="custom-select form-control required" id="city" disabled name="city">
-                                                    <option value="">Please Select City</option>
-                                                </select>
-
-                                                {{-- <select class="custom-select form-control " id="wLocation1"  disabled name="association">
-                                                    <option value="">Please select Association</option>
-                                                    @foreach ($all_associations as $association)
-                                                        @if($association->association_id === $member_record['member_association']['association_id'] )
-                                                            <option selected value="{{$member_record['member_association']['association_id']}}">{{$member_record['member_association']['name']}}</option>
-                                                        @else
-                                                            <option  value="{{$association['association_id']}}">{{$association['name']}}</option>
+                                                <select class="custom-select form-control" id="city" disabled name="city">
+                                                    @foreach ($all_cities as $city)
+                                                        @if( $city->city_id === $member_record['city']['city_id'] )
+                                                            <option selected value="{{$member_record['city']['city_id']}}">{{$city->city}}</option>
                                                         @endif
                                                     @endforeach
-                                                </select> --}}
+                                                </select>
                                             </div>
                                         </div>
 								    </div>
