@@ -12,10 +12,11 @@ use App\Route;
 use App\RouteVehicle;
 use App\Vehicle;
 use App\City;
-
+use App\Fingerprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -86,7 +87,7 @@ class MemberController extends Controller
                 $vehicle->registration_number = $request->get('regnumber');
                 $vehicle->make = $request->get('vehiclemake');
                 $vehicle->model = $request->get('vehiclemodel');
-                $vehicle->year = $request->get('vehiclemake');
+                $vehicle->year = $request->get('vehicleyear');
                 $vehicle->seats_number = $request->get('vehicleseats');
 
                 if($vehicle->save()) {
@@ -98,19 +99,18 @@ class MemberController extends Controller
 
                     if($member_vehicle->save()) {
 
-                        $route_vehicle = new RouteVehicle();
-
                         if(!empty($request->get('route'))) {
-                            foreach ((array)$request->get('route') as $checkbox_value) {
-                                $route_vehicle->route_id = $checkbox_value; //$request->get('route');
-                                $route_vehicle->vehicle_id = $vehicle->id;
-                            }
 
-                            $route_vehicle->save();
+                            foreach ((array)$request->get('route') as $checkbox_value) {
+
+                                $route_vehicle = new RouteVehicle();
+
+                                $route_vehicle->route_id = $checkbox_value;
+                                $route_vehicle->vehicle_id = $vehicle->id;
+
+                                $route_vehicle->save();
+                            }
                         }
-//                        $route_vehicle->route_id = $request->get('route');
-                        //$route_vehicle->vehicle_id = $vehicle->id;//$request->get('route');
-                        //$route_vehicle->save();
 
                     }
 
@@ -128,8 +128,8 @@ class MemberController extends Controller
 
         }
         //update the model
-        else {
-
+        else 
+        {
             $check_member_exist = Member::with(['vehicles'])->findOrFail($member_form_id);
 
             if($check_member_exist !== null ) {
@@ -161,7 +161,7 @@ class MemberController extends Controller
                     'registration_number' => $request->get('regnumber'),
                     'make' =>  $request->get('vehiclemake'),
                     'model' =>$request->get('vehiclemodel'),
-                    'year' =>$request->get('vehiclemake'),
+                    'year' =>$request->get('vehicleyear'),
                     'seats_number' => $request->get('vehicleseats')
 
                 ]);
@@ -182,51 +182,47 @@ class MemberController extends Controller
                             'route_id' => $checkbox_value
                         ]);
 
-//                        $route_vehicle->route_id = $checkbox_value; //$request->get('route');
-//                        $route_vehicle->vehicle_id = $vehicle->id;
                     }
 
                 }
-
-
 
                 if ($is_updated === false) {
                     dd('could not update vehicle table, something went wrong');
                 }
             }
-            else {
+            else 
+            {
                 $vehicle->registration_number = $request->get('regnumber');
                 $vehicle->make = $request->get('vehiclemake');
                 $vehicle->model = $request->get('vehiclemodel');
-                $vehicle->year = $request->get('vehiclemake');
+                $vehicle->year = $request->get('vehicleyear');
                 $vehicle->seats_number = $request->get('vehicleseats');
 
-                if($vehicle->save()) {
+                if($vehicle->save()) 
+                {
                     $member_vehicle = new MemberVehicle();
 
                     $member_vehicle->member_id  = $member->id;
                     $member_vehicle->vehicle_id = $vehicle->id;
                     $member_vehicle->save();
                 }
-                else{
+                else
+                {
                     return redirect()->withInput();
                 }
 
-
-                $route_vehicle = new RouteVehicle();
-
                 if(!empty($request->get('route'))) {
-                    foreach ((array)$request->get('route') as $checkbox_value) {
+                    foreach ((array)$request->get('route') as $checkbox_value) 
+                    {
+
+                        $route_vehicle = new RouteVehicle();
+
                         $route_vehicle->route_id = $checkbox_value; //$request->get('route');
                         $route_vehicle->vehicle_id = $vehicle->id;
+
+                        $route_vehicle->save();
                     }
-
-                    $route_vehicle->save();
                 }
-
-//                $route_vehicle->route_id = $request->get('route');
-//                $route_vehicle->vehicle_id = $vehicle->id;
-//                $route_vehicle->save();
             }
 
         }
@@ -246,25 +242,19 @@ class MemberController extends Controller
     {
         $member_record = Member::with(['membership_type','member_association','vehicles','region'])->findOrFail($id);
 
-//        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
         $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
 
-
-        $all_routes = Route::limit(10)->get(); //$all_routes = Route::all();
-
-
         $portrait = Portrait::where('id',$id)->get();
+
+        $all_routes = Route::limit(10)->get();
 
         $all_member_types = MembershipType::all();
 
         $all_associations = Association::all();
-//        $all_associations = Association::where('region_id',$member_record['region']['region_id'])->get();
-
 
         $all_regions = Region::all();
 
-
-//        dd($member_vehicle_routes[0]);
+        dd( $member_vehicle_routes );
 
         return view('show_member_details', compact(['member_record', 'all_routes','all_member_types','all_associations','portrait', 'member_vehicle_routes','all_regions']));
 
@@ -274,21 +264,32 @@ class MemberController extends Controller
     {
 
         $member_record = Member::with(['membership_type','member_association','vehicles','portrait','fingerprint','region'])->findOrFail($id);
-
-        $all_routes = Route::limit(10)->get(); //$all_routes = Route::all();
-
+        
+        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
+        
         $portrait = Portrait::where('id',$id)->get();
+        $fingerprint = Fingerprint::where('id',$id)->get();
+
+        $member_vehicle_record = MemberVehicle::where('member_id', $id)->get();
+        $member_vehicle_id = $member_vehicle_record[0]['id'];
 
         $all_member_types = MembershipType::all();
         $all_associations = Association::all();
 
-        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
-        $all_regions = Region::all();
+        $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
 
-        //dd($member_record);
+        $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
+                            $query->select('route_id')
+                                ->from('route_vehicle')
+                                ->whereColumn('route_id', 'routes.id')
+                                ->where('vehicle_id','=' , $member_vehicle_id);
+                            })->get();
+
+
+        $all_regions = Region::all();
         
         return response()
-            ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 'all_associations'=>$all_associations,
+            ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 'fingerprint'=>$fingerprint, 'all_associations'=>$all_associations,
                     'all_routes'=>$all_routes,'member_vehicle_routes'=> $member_vehicle_routes, 'all_regions'=>$all_regions], 200)
             ->header('Content-Type', 'json');
 

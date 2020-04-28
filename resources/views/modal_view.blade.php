@@ -461,14 +461,11 @@
                                                 <h4>Vehicle Route Details</h4>
                                                 <hr class="mb-15 mt-0">
                                                 @foreach ($all_routes as $route)
-                                                    @if($route->route_id === $member_vehicle_routes[0]['routes'][0]['route_id'])
+                                                    {{-- @if($route->route_id === $member_vehicle_routes[0]['routes'][0]['route_id']) --}}
                                                         <input checked="checked" disabled name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">
-                                                        <label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$member_vehicle_routes[0]['routes'][0]['origin'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['via'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['destination']}}</label>
-{{--                                                    @else--}}
-{{--                                                        <input name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">--}}
-{{--                                                        <label for="{{$route->id}}" class="d-block">{{$route->origin.' - '}}{{$route->via.' - '}}{{$route->destination}}</label>--}}
-                                                    @endif
-
+                                                        {{-- <label for="{{$route->id}}" class="d-block">{{$route->id.' : '}}{{$member_vehicle_routes[0]['routes'][0]['origin'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['via'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['destination']}}</label> --}}
+                                                        <label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$route->origin.' - '}}{{$route->via.' - '}}{{$route->destination}}</label>
+                                                    {{-- @endif --}}
                                                 @endforeach
                                             </div>
                                         </div>
