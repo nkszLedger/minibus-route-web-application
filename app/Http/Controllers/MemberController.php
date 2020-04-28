@@ -51,12 +51,11 @@ class MemberController extends Controller
         $all_cities = City::all();
         $all_regions = Region::all();
         $all_associations = Association::all();
-        $all_routes = Route::limit(10)->get();
 
-
-
-//        dd($all_routes);
-        return view('member_registration', compact(['all_types','all_regions','all_associations','all_routes', 'all_cities']));
+        return view('member_registration', compact(['all_types','all_regions',
+                                                    'all_associations', 
+                                                    'all_cities'
+                                                  ]));
 
     }
 
@@ -232,32 +231,55 @@ class MemberController extends Controller
 
     public function list_members()
     {
-        $all_members = Member::with(['membership_type','member_association','portrait'])->orderBy('id','desc')->get();
+        $all_members = Member::with(['membership_type','member_association',
+                                        'portrait'])->orderBy('id','desc')->get();
 
-        return view('list_members_table_data',compact(['all_members']));
+        return view('list_members_table_data', 
+                    compact(['all_members']));
 
     }
 
     public function show_member($id)
     {
-        $member_record = Member::with(['membership_type','member_association','vehicles','region'])->findOrFail($id);
+        $member_record = Member::with(['membership_type','member_association',
+                                        'vehicles','portrait','fingerprint',
+                                        'city', 'region'])->findOrFail($id);
 
         $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
 
-        $portrait = Portrait::where('id',$id)->get();
+        $member_vehicle_record = MemberVehicle::where('member_id', $id)->get();
+        $member_vehicle_id = $member_vehicle_record[0]['id'];
 
-        $all_routes = Route::limit(10)->get();
+        $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
+
+        $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
+                            $query->select('route_id')
+                                ->from('route_vehicle')
+                                ->whereColumn('route_id', 'routes.id')
+                                ->where('vehicle_id','=' , $member_vehicle_id);
+                            })->get();
 
         $all_member_types = MembershipType::all();
-
         $all_associations = Association::all();
-
         $all_regions = Region::all();
+        $all_cities = City::all();
 
-        dd( $member_vehicle_routes );
+        return view('member_registration',  compact(['member_record', 'member_vehicle_record',
+                                                        'member_vehicle_routes',
+                                                        'route_vehicle','all_member_types',
+                                                        'all_associations','all_routes',
+                                                        'all_regions','all_cities'
+                                                  ]));
 
-        return view('show_member_details', compact(['member_record', 'all_routes','all_member_types','all_associations','portrait', 'member_vehicle_routes','all_regions']));
-
+        // return response()
+        //         ->view('show_member_details', ['member_record'=>$member_record,
+        //                                         'member_vehicle_record'=>$member_vehicle_record, 
+        //                                         'all_associations'=>$all_associations,
+        //                                         'all_routes'=>$all_routes,'route_vehicle'=>$route_vehicle,
+        //                                         'all_member_types'=>$all_member_types,
+        //                                         'member_vehicle_routes'=> $member_vehicle_routes, 
+        //                                         'all_regions'=>$all_regions, 'all_cities'=>$all_cities], 200)
+        //         ->header('Content-Type', 'json');
     }
 
     public function showmodal($id)

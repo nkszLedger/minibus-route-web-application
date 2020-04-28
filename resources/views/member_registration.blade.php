@@ -15,52 +15,52 @@
 					<div class="box-body wizard-content">
 						<form action="/create_member" type="POST" id="member-form" class="validation-wizard wizard-circle">
 						{{ csrf_field() }}
-							<input type="hidden" class="form-control " id="member-id" value="" name="member-id">
+							<input type="hidden" class="form-control " id="member-id" value="{{$member_record['id'] ?? '' }}" name="member-id">
 
-					<!-- Step 1 -->
+							<!-- Step 1 -->
 							<h6>Personal Details</h6>
 							<section>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wfirstName2"> First Name : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="wfirstName2" name="firstName" maxlength="25"> </div>
+											<input type="text" class="form-control required" id="wfirstName2" value="{{$member_record['name'] ?? '' }}" name="firstName" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wlastName2"> Last Name : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="wlastName2" name="lastName" maxlength="25"> </div>
+											<input type="text" class="form-control required" id="wlastName2" value="{{$member_record['surname'] ?? '' }}" name="lastName" maxlength="25"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="idnumber"> ID Number : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="idnumber" name="idnumber" maxlength="13"> </div>
+											<input type="text" class="form-control required" id="idnumber" value="{{$member_record['id_number'] ?? '' }}" name="idnumber" maxlength="13"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="licensenumber" name="licensenumber" maxlength="12"> </div>
+											<input type="text" class="form-control required" id="licensenumber" value="{{$member_record['license_number'] ?? '' }}" name="licensenumber" maxlength="12"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wemailAddress2"> Email Address :</label>
-											<input type="email" class="form-control" id="wemailAddress2" name="emailAddress" maxlength="25"> </div>
+											<input type="email" class="form-control" id="wemailAddress2" value="{{$member_record['email'] ?? '' }}" name="emailAddress" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
-											<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" maxlength="10"> </div>
+											<input type="tel" class="form-control required" id="wphoneNumber2" value="{{$member_record['phone_number'] ?? '' }}" name="phonenumber" maxlength="10"> </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="addressline1">Address Line : <span class="danger">*</span>  </label>
-											<input type="text" class="form-control required" id="addressline1" name="addressline1" maxlength="25"> </div>
+											<input type="text" class="form-control required" id="addressline1" value="{{$member_record['address_line'] ?? '' }}" name="addressline1" maxlength="25"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
@@ -80,7 +80,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="postal-code">Postal Code : <span class="danger">*</span> </label>
-											<input type="text" class="form-control" id="postal-code" name="postal-code" maxlength="4">
+											<input type="text" class="form-control" id="postal-code" value="{{$member_record['postal_code'] ?? '' }}" name="postal-code" maxlength="4">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -88,7 +88,7 @@
 											<label for="membership-type"> Select Membership : <span class="danger">*</span> </label>
 											<select class="custom-select form-control required" id="membership-type" name="membership-type">
 												<option value="">Please Select Membership</option>
-												@foreach ($all_types as $all_type)
+												@foreach ($all_cities as $all_type)
 													<option value="{{$all_type->id}}">{{$all_type->membership_type}}</option>
 												@endforeach
 											</select>
@@ -103,29 +103,29 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="regnumber">Registration Number : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="regnumber" name="regnumber" maxlength="10">
+											<input type="text" class="form-control required" id="regnumber" value="{{$member_record['vehicles'][0]['registration_number'] ?? ''}}"  name="regnumber" maxlength="10">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehiclemake">Make : <span class="danger">*</span></label>
-											<input type="text" class="form-control required" id="vehiclemake" name="vehiclemake" maxlength="20"> </div>
+											<input type="text" class="form-control required" id="vehiclemake" value="{{$member_record['vehicles'][0]['make'] ?? ''}}" name="vehiclemake" maxlength="20"> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehiclemodel">Model : <span class="danger">*</span> </label>
-											<input type="text" class="form-control required" id="vehiclemodel" name="vehiclemodel" maxlength="20">
+											<input type="text" class="form-control required" id="vehiclemodel" value="{{$member_record['vehicles'][0]['model'] ?? ''}}" name="vehiclemodel" maxlength="20">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="webUrl3">Year : <span class="danger">*</span></label>
-											<input type="number" class="form-control required" id="webUrl3" name="vehicleyear" maxlength="4" min=2010> </div>
+											<input type="number" class="form-control required" id="webUrl3" value="{{$member_record['vehicles'][0]['year'] ?? ''}}" name="vehicleyear" maxlength="4" min=2010> </div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="vehicleseats">Number of seats : <span class="danger">*</span></label>
-											<input type="number" class="form-control required" id="vehicleseats" name="vehicleseats" maxlength="2" min=0 max=22>
+											<input type="number" class="form-control required" id="vehicleseats" value="{{$member_record['vehicles'][0]['seats_number'] ?? ''}}" name="vehicleseats" maxlength="2" min=0 max=22>
 										</div>
 									</div>
 									<div class="col-md-6">
