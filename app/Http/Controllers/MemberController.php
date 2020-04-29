@@ -47,12 +47,13 @@ class MemberController extends Controller
 
     public function showregpage()
     {
-        $all_types = MembershipType::all();
         $all_cities = City::all();
         $all_regions = Region::all();
         $all_associations = Association::all();
+        $all_membership_types = MembershipType::all();
 
-        return view('member_registration', compact(['all_types','all_regions',
+        return view('member_registration', compact(['all_membership_types',
+                                                    'all_regions',
                                                     'all_associations', 
                                                     'all_cities'
                                                   ]));

@@ -66,13 +66,18 @@
 										<div class="form-group">
 											<label for="city">City/Town : <span class="danger">*</span> </label>
 											<select class="custom-select form-control required" id="city" name="city">
-												@if($member_record->city_id === null)
-													<option value="">Please Select City</option>
-												@else
+
+												@if( isset($member_record))
 													<option selected value="{{$member_record['city']['city_id']}}">{{$member_record['city']['city']}}</option>
+												@else
+													<option value="">Please Select City</option>
 												@endif
 												@foreach ($all_cities as $city)
-													@if($city->id !== $member_record->city_id)
+													@if( isset($member_record))
+														@if($city->id !== $member_record->city_id)
+															<option value="{{$city->city_id}}">{{$city->city}}</option>
+														@endif
+													@else
 														<option value="{{$city->city_id}}">{{$city->city}}</option>
 													@endif
 												@endforeach
@@ -93,13 +98,17 @@
 										<div class="form-group">
 											<label for="membership-type"> Select Membership : <span class="danger">*</span> </label>
 											<select class="custom-select form-control required" id="membership-type" name="membership-type">									
-												@if($member_record->membership_type_id === null)
-													<option value="">Please Select Membership</option>
-												@else
+												@if( isset($member_record))
 													<option selected value="{{$member_record['membership_type']['id']}}">{{$member_record['membership_type']['membership_type']}}</option>
+												@else
+													<option value="">Please Select Membership</option>
 												@endif
 												@foreach ($all_membership_types as $membership_type)
-													@if($membership_type->id !== $member_record['membership_type']['id'])
+													@if( isset($member_record))
+														@if($membership_type->id !== $member_record['membership_type']['id'])
+															<option value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
+														@endif
+													@else
 														<option value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
 													@endif
 												@endforeach
@@ -154,13 +163,17 @@
 										<div class="form-group">
 											<label for="wintType1">Region: <span class="danger">*</span> </label>
 											<select class="custom-select form-control required" id="region" data-placeholder="Type to search cities" name="region">
-												@if($member_record->region_id === null)
-													<option value="">Please select Region</option>
-												@else
+												@if( isset($member_record))
 													<option selected value="{{$member_record['region']['region_id']}}">{{$member_record['region']['region_name']}}</option>
+												@else
+													<option value="">Please select Region</option>
 												@endif
 												@foreach ($all_regions as $region)
-													@if($region->region_id !== $member_record['region']['region_id'] )
+													@if( isset($member_record))
+														@if($region->region_id !== $member_record['region']['region_id'] )
+															<option value="{{$region->region_id}}">{{$region->region_name}}</option>
+														@endif
+													@else
 														<option value="{{$region->region_id}}">{{$region->region_name}}</option>
 													@endif
 												@endforeach
@@ -173,14 +186,17 @@
 										<div class="form-group">
 											<label for="association">Association :<span class="danger">*</span>  </label>
 											<select class="custom-select form-control required " id="association" name="association">
-												@if($member_record->association_id === null)
-													<option value="">Please select Association</option>
-												@else
+												@if( isset($member_record))
 													<option selected value="{{$member_record['member_association']['association_id']}}">{{$member_record['member_association']['name']}}</option>
+												@else
+													<option value="">Please select Association</option>
 												@endif
-
 												@foreach ($all_associations as $association)
-													@if($association->association_id !== $member_record['member_association']['association_id'] )
+													@if( isset($member_record))
+														@if($association->association_id !== $member_record['member_association']['association_id'] )
+															<option value="{{$association->association_id}}">{{$association->name}}</option>
+														@endif
+													@else
 														<option value="{{$association->association_id}}">{{$association->name}}</option>
 													@endif
 												@endforeach
