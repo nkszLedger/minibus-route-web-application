@@ -259,14 +259,14 @@ class MemberController extends Controller
                                 ->where('vehicle_id','=' , $member_vehicle_id);
                             })->get();
 
-        $all_member_types = MembershipType::all();
+        $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
 
         return view('member_registration',  compact(['member_record', 'member_vehicle_record',
                                                         'member_vehicle_routes',
-                                                        'route_vehicle','all_member_types',
+                                                        'route_vehicle','all_membership_types',
                                                         'all_associations','all_routes',
                                                         'all_regions','all_cities'
                                                   ]));
@@ -306,7 +306,7 @@ class MemberController extends Controller
                                 ->where('vehicle_id','=' , $member_vehicle_id);
                             })->get();
 
-        $all_member_types = MembershipType::all();
+        $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
@@ -315,7 +315,8 @@ class MemberController extends Controller
             ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 
                                     'fingerprint'=>$fingerprint, 'all_associations'=>$all_associations,
                                     'all_routes'=>$all_routes,'member_vehicle_routes'=> $member_vehicle_routes, 
-                                    'all_regions'=>$all_regions, 'all_cities'=>$all_cities], 200)
+                                    'all_regions'=>$all_regions, 'all_membership_types'=>$all_membership_types, 
+                                    'all_cities'=>$all_cities], 200)
             ->header('Content-Type', 'json');
 
 

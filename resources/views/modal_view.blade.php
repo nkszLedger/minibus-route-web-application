@@ -388,6 +388,21 @@
                                             </div>
                                         </div>
 								    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="membership-type"> Select Membership : <span class="danger">*</span> </label>
+                                                <select class="custom-select form-control" id="membership-type" disabled name="membership-type">									
+                                                    @foreach ($all_membership_types as $membership_type)
+                                                        @if($membership_type->id === $member_record['membership_type']['id'])
+                                                            <option selected value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+									    </div>
+                                    </div>
+                                    <hr>
                                     <h4>Biometrics Captured</h4>
                                     <hr>
                                     <div class="row">
@@ -417,6 +432,7 @@
                                             </div>
                                     </div>
                                 </section>
+                                <hr>
                                 <h4>Vehicle Details</h4>
                                 <hr>
                                 <section>
@@ -449,22 +465,14 @@
                                                 <input type="number" class="form-control required" readonly  id="vehicleseats" value="{{$member_record['vehicles'][0]['seats_number']}}"  name="vehicleseats">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                            </div>
-                                        </div>
                                     </div>
                                 </section>
-
+                                <hr>
                                 <h4>Association and Routes</h4>
                                 <hr>
                                 <section>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            {{--                                              <div class="form-group">--}}
-                                            {{--                                                  <label for="wint1">Interview For :</label>--}}
-                                            {{--                                                  <input type="text" class="form-control required" id="wint1">--}}
-                                            {{--                                              </div>--}}
                                             <div class="form-group">
                                                 <label for="wintType1">Region:</label>
                                                 <select class="custom-select form-control required" disabled id="wintType1" data-placeholder="Type to search cities" name="region">
