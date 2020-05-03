@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="/minibus/main/css/skin_color.css">
 
 </head>
-<body class="hold-transition theme-fruit bg-img bg-gradient-vintage " >
+<body class="hold-transition theme-fruit bg-img" style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
 {{--<body class="hold-transition theme-fruit bg-img" style="background-image: url(/minibus/images/auth-bg/bg-2.jpg);">--}}
 	<div class="h-p100">
 		<div class="row align-items-center justify-content-md-center h-p100">
@@ -33,10 +33,10 @@
 						<div class="content-top-agile p-10">
 							<div class="logo">
 								<a href="#" class="aut-logo my-40 d-block">
-{{--									<img src="/minibus/images/logo-light.png" alt="">--}}
+									<img src="/minibus/images/taxi.png"  alt="">
 								</a>
 							</div>
-							<h2 class="text-white">Sign in your session</h2>
+							<h2 class="text-white">MINIBUS ROUTE REGISTRATION</h2>
 						</div>
 						<div class="p-30">
 							<form action="/dashboard" method="get">

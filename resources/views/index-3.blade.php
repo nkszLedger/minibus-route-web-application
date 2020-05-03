@@ -43,7 +43,7 @@
 
   </head>
 
-<body class="layout-top-nav light-skin theme-purple fixed">
+<body class="layout-top-nav light-skin theme-purple">
 
 <div class="wrapper">
 
@@ -57,7 +57,7 @@
   <header class="main-header">
 	  <div class="inside-header clearfix">
 		<nav class="main-nav" role="navigation">
-			<h2 class="nav-brand"><a href="/dashboard"><img src="/minibus/free-minibus-vector.png" class="max-w-50" alt="minibus-app"></a></h2>
+			<h2 class="nav-brand"><a href="/dashboard"><img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app"></a></h2>
 			<!-- Mobile menu toggle button (hamburger/x icon) -->
 			<button class="topbar-toggler" id="mobile_topbar_toggler"><i class="mdi mdi-dots-horizontal"></i></button>
 			<input id="main-menu-state" type="checkbox" />
@@ -312,7 +312,7 @@
 		  </li>
 		</ul>
     </div>
-	  &copy; {{now()->year}} <a href="https://www.transport.gov.za"  target="_blank" >Department of Transport. </a> All Rights Reserved.
+	  &copy; {{now()->year}} <a href="https://www.transport.gov.za"  target="_blank">Department of Transport. </a> All Rights Reserved.
   </footer>
 
   <!-- Control Sidebar -->

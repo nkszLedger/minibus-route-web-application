@@ -311,14 +311,24 @@ class MemberController extends Controller
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
+
+        return view('modal_view', compact(['member_record',
+                                            'portrait',
+                                            'all_associations', 
+                                            'all_routes',
+                                            'member_vehicle_routes',
+                                            'all_regions',
+                                            'all_membership_types',
+                                            'all_cities'
+                                         ]));
         
-        return response()
-            ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 
-                                    'fingerprint'=>$fingerprint, 'all_associations'=>$all_associations,
-                                    'all_routes'=>$all_routes,'member_vehicle_routes'=> $member_vehicle_routes, 
-                                    'all_regions'=>$all_regions, 'all_membership_types'=>$all_membership_types, 
-                                    'all_cities'=>$all_cities], 200)
-            ->header('Content-Type', 'json');
+        // return response()
+        //     ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 
+        //                             'fingerprint'=>$fingerprint, 'all_associations'=>$all_associations,
+        //                             'all_routes'=>$all_routes,'member_vehicle_routes'=> $member_vehicle_routes, 
+        //                             'all_regions'=>$all_regions, 'all_membership_types'=>$all_membership_types, 
+        //                             'all_cities'=>$all_cities], 200)
+        //     ->header('Content-Type', 'json');
 
 
     }
