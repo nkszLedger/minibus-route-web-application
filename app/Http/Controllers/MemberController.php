@@ -265,7 +265,7 @@ class MemberController extends Controller
         $all_regions = Region::all();
         $all_cities = City::all();
 
-        return view('member_registration',  compact(['member_record', 'member_vehicle_record',
+        return view('show_member_details',  compact(['member_record', 'member_vehicle_record',
                                                         'member_vehicle_routes',
                                                         'route_vehicle','all_membership_types',
                                                         'all_associations','all_routes',
