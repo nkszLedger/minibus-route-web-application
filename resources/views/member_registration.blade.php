@@ -8,8 +8,8 @@
 			<!-- Validation wizard -->
 			<div class="box box-default">
 				<div class="box-header with-border">
-					<h4 class="box-title">Member Registration: Create Member</h4>
-					<h6 class="box-subtitle">Complete the following details to create member profile</h6>
+					<h4 class="box-title" id="title">Member Registration: Create Member Profile</h4>
+					<h6 class="box-subtitle">Complete the following details to create profile</h6>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
@@ -20,6 +20,25 @@
 						<!-- Step 1 -->
 						<h6>Personal Details</h6>
 						<section>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="membership-type"> Select Type of Member : <span class="danger">*</span> </label>
+										<select class="custom-select form-control required" id="membership-type" name="membership-type">
+											<option value="">Please select Membership Type</option>
+											@foreach ($all_membership_types as $membership_type)		
+												<option value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
+										<input type="text" class="form-control required" id="licensenumber" name="licensenumber" maxlength="12"> </div>
+								</div>
+								
+							</div>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -40,28 +59,25 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
-										<input type="text" class="form-control required" id="licensenumber" name="licensenumber" maxlength="12"> </div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
 										<label for="wemailAddress2"> Email Address :</label>
 										<input type="email" class="form-control" id="wemailAddress2" name="emailAddress" maxlength="25"> </div>
 								</div>
+							</div>
+
+							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
 										<input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" maxlength="10"> </div>
 								</div>
-							</div>
-							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="addressline1">Address Line : <span class="danger">*</span>  </label>
 										<input type="text" class="form-control required" id="addressline1" name="addressline1" maxlength="25"> </div>
 								</div>
+							</div>
+
+							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="city">City/Town : <span class="danger">*</span> </label>
@@ -73,28 +89,14 @@
 										</select>
 									</div>
 								</div>
-							</div>
-
-							<div class="row">
-								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="postal-code">Postal Code : <span class="danger">*</span> </label>
 										<input type="text" class="form-control" id="postal-code" name="postal-code" maxlength="4">
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="membership-type"> Select Membership : <span class="danger">*</span> </label>
-										<select class="custom-select form-control required" id="membership-type" name="membership-type">
-										<option value="">Please select Membership Type</option>
-										@foreach ($all_membership_types as $membership_type)		
-											<option value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
-										@endforeach
-										</select>
-									</div>
-								</div>
 							</div>
+
 						</section>
 						<!-- Step 2 -->
 						<h6>Vehicle Details</h6>
