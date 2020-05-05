@@ -5,7 +5,6 @@
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<!-- Validation wizard -->
 			<div class="box box-default">
 				<div class="box-header with-border">
 					<h4 class="box-title">Member Registration: Update Member Details</h4>
@@ -167,8 +166,8 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="wintType1">Region: <span class="danger">*</span> </label>
-										<select class="custom-select form-control required" id="region2" data-placeholder="Type to search cities" name="region2">
+										<label for="region2">Region: <span class="danger">*</span> </label>
+										<select class="custom-select form-control required" id="region2" name="region2">
 											<option value="{{$member_record->region->region_id}}">{{$member_record->region->region_name}}</option>
 											@foreach ($all_regions as $region)
 												@if($region->region_id !== $member_record->region->region_id)
@@ -176,8 +175,6 @@
 												@endif
 											@endforeach
 										</select>
-									</div>
-									<div class="form-group">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -221,5 +218,4 @@
 	</div>
 
 </section>
-	
 @endsection

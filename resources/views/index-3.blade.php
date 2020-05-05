@@ -719,7 +719,16 @@
 
 			// clear area
 			$("#title").html('');
-			$("#title").html( 'Create <b>' + desc +'</b> Member Profile');
+
+			if( $(this).val() != "")
+			{
+				$("#title").html( 'Create <b>' + desc +'</b> Member Profile');
+			}
+			else
+			{
+				$("#title").html( 'Member Registration: Create Member Profile' );
+			}
+			
 	});
 
 </script>
@@ -763,8 +772,6 @@
 							$("#association").append(option);
 						}
 						console.log('outside loop');
-
-
 					}
 
 				}
@@ -827,12 +834,10 @@
 			});
 		});
 
-
+		
 	</script>
-	
 
 	<script>
-
 		$('#region2').change(function(){
 			var id = $(this).val();
 
@@ -841,8 +846,9 @@
 			// clear area
 			$("#route2").html('');
 
-			$('#association2').find('option').not(':first').remove();
+			console.log("calling associations...");
 
+			$('#association2').find('option').not(':first').remove();
 			$.ajax({
 				url: 'getAssociations/'+id,
 				type: 'get',
@@ -871,15 +877,16 @@
 							$("#association2").append(option);
 						}
 						console.log('outside loop');
-
-
 					}
 
+				},
+				error: function(xhr, status, error){
+					var errorMessage = xhr.status + ': ' + xhr.statusText
+					console.log(error);
+					alert('Error - ' + errorMessage);
 				}
 			});
 		});
-
-		//routes per association ajax function //TODO pull routes based of the selected association ID.
 
 		$('#association2').change(function(){
 			var id = $(this).val();
@@ -925,17 +932,12 @@
 							$("#route2").append(option);
 						}
 						console.log('outside loop');
-
-
 					}
 
 				}
 			});
 		});
-
-
 	</script>
-	
 
 </body>
 </html>
