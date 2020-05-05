@@ -731,213 +731,242 @@
 			
 	});
 
+	$('#membership-type2').change(function(){
+			var desc = $(this).find(":selected").text();
+
+			console.log(desc);
+
+			// clear area
+			$("#title2").html('');
+
+			if( $(this).val() != "")
+			{
+				$("#title2").html( 'Update <b>' + desc +'</b> Member Profile');
+			}
+			else
+			{
+				$("#title2").html( 'Member Registration: Create Member Profile' );
+			}
+			
+	});
+
 </script>
 
 <script>
 
-		$('#region').change(function(){
-			var id = $(this).val();
+	$('#region').change(function(){
+		var id = $(this).val();
 
-			console.log(id);
+		console.log(id);
 
-			// clear area
-			$("#route").html('');
+		// clear area
+		$("#route").html('');
 
-			$('#association').find('option').not(':first').remove();
-			$.ajax({
-				url: 'getAssociations/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
+		$('#association').find('option').not(':first').remove();
+		$.ajax({
+			url: 'getAssociations/'+id,
+			type: 'get',
+			dataType: 'json',
+			success: function(response){
 
-					var len = 0;
-					if(response['data'] != null){
-						len = response['data'].length;
-					}
-
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
-
-							var id = response['data'][i].association_id;
-							var name = response['data'][i].name;
-
-							console.log('the loop');
-							console.log(name);
-
-							var option = "<option value='"+id+"'>"+name+"</option>";
-
-							console.log('the option to append');
-							console.log(option);
-							$("#association").append(option);
-						}
-						console.log('outside loop');
-					}
-
+				var len = 0;
+				if(response['data'] != null){
+					len = response['data'].length;
 				}
-			});
-		});
 
-		//routes per association ajax function //TODO pull routes based of the selected association ID.
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
 
-		$('#association').change(function(){
-			var id = $(this).val();
+						var id = response['data'][i].association_id;
+						var name = response['data'][i].name;
 
-			console.log(id);
-			// alert(id);
+						console.log('the loop');
+						console.log(name);
 
-			console.log("setting associations...");
+						var option = "<option value='"+id+"'>"+name+"</option>";
 
-			// $('#route').find('input').not(':first').remove();
-			$.ajax({
-				url: 'getRoutesPerAssociation/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
-
-					var len = 0;
-
-					// clear area
-					$("#route").html('');
-
-					if(response['data'] != null){
-						len = response['data'].length;
+						console.log('the option to append');
+						console.log(option);
+						$("#association").append(option);
 					}
+					console.log('outside loop');
+				}
 
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
+			}
+		});
+	});
 
-							var id = response['data'][i].id;
-							var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
+	//routes per association ajax function //TODO pull routes based of the selected association ID.
 
-							console.log('the loop');
-							console.log(route_name);
-								
-							var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
-							var label = "<label for='"+id+"' >" + route_name + "</label>";
+	$('#association').change(function(){
+		var id = $(this).val();
 
-							var option = "<div>" + input + label + "</div>";
+		console.log(id);
+		// alert(id);
 
-							console.log('the option to append');
-							console.log(option);
+		console.log("setting associations...");
 
+		// $('#route').find('input').not(':first').remove();
+		$.ajax({
+			url: 'getRoutesPerAssociation/'+id,
+			type: 'get',
+			dataType: 'json',
+			success: function(response){
+
+				var len = 0;
+
+				// clear area
+				$("#route").html('');
+
+				if(response['data'] != null){
+					len = response['data'].length;
+				}
+
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
+
+						var id = response['data'][i].id;
+						var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
+
+						console.log('the loop');
+						console.log(route_name);
 							
-							$("#route").append(option);
-						}
-						console.log('outside loop');
+						var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
+						var label = "<label for='"+id+"' >" + route_name + "</label>";
 
+						var option = "<div>" + input + label + "</div>";
 
+						console.log('the option to append');
+						console.log(option);
+
+						
+						$("#route").append(option);
 					}
+					console.log('outside loop');
+
 
 				}
-			});
+
+			}
 		});
+	});
 
 		
-	</script>
+</script>
 
-	<script>
-		$('#region2').change(function(){
-			var id = $(this).val();
+<script>
+	$('#region2').change(function(){
+		var id = $(this).val();
+		var element_id = '#association2';
 
-			console.log(id);
+		console.log(id);
 
-			// clear area
-			$("#route2").html('');
+		// clear area
+		$("#route2").html('');
 
-			console.log("calling associations...");
+		console.log("calling associations...");
+		getAssociations(id, element_id );
+		
+	});
 
-			$('#association2').find('option').not(':first').remove();
-			$.ajax({
-				url: 'getAssociations/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
-					console.log("associations called...");
-					var len = 0;
-					if(response['data'] != null){
-						len = response['data'].length;
-					}
+	$('#association2').change(function(){
+		var id = $(this).val();
 
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
+		console.log(id);
+		
+		// clear area
+		$("#route2").html('');
 
-							var id = response['data'][i].association_id;
-							var name = response['data'][i].name;
+		$.ajax({
+			url: 'getRoutesPerAssociation/'+id,
+			type: 'get',
+			dataType: 'json',
+			success: function(response){
 
-							console.log('the loop');
-							console.log(name);
+				var len = 0;
 
-							var option = "<option value='"+id+"'>"+name+"</option>";
-
-							console.log('the option to append');
-							console.log(option);
-							$("#association2").append(option);
-						}
-						console.log('outside loop');
-					}
-
-				},
-				error: function(xhr, status, error){
-					var errorMessage = xhr.status + ': ' + xhr.statusText
-					console.log(error);
-					alert('Error - ' + errorMessage);
+				if(response['data'] != null){
+					len = response['data'].length;
 				}
-			});
-		});
 
-		$('#association2').change(function(){
-			var id = $(this).val();
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
 
-			console.log(id);
-			// alert(id);
+						var id = response['data'][i].id;
+						var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
 
-			// $('#route').find('input').not(':first').remove();
-			$.ajax({
-				url: 'getRoutesPerAssociation/'+id,
-				type: 'get',
-				dataType: 'json',
-				success: function(response){
-
-					var len = 0;
-
-					// clear area
-					$("#route2").html('');
-
-					if(response['data'] != null){
-						len = response['data'].length;
-					}
-
-					if(len > 0){
-						// Read data and create <option >
-						for(var i=0; i<len; i++){
-
-							var id = response['data'][i].id;
-							var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
-
-							console.log('the loop');
-							console.log(route_name);
-								
-							var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
-							var label = "<label for='"+id+"' >" + route_name + "</label>";
-
-							var option = "<div>" + input + label + "</div>";
-
-							console.log('the option to append');
-							console.log(option);
-
+						console.log('the loop');
+						console.log(route_name);
 							
-							$("#route2").append(option);
-						}
-						console.log('outside loop');
-					}
+						var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
+						var label = "<label for='"+id+"' >" + route_name + "</label>";
 
+						var option = "<div>" + input + label + "</div>";
+
+						console.log('the option to append');
+						console.log(option);
+
+						
+						$("#route2").append(option);
+					}
+					console.log('outside loop');
 				}
-			});
+			},
+			error: function(xhr, status, error){
+				var errorMessage = xhr.status + ': ' + xhr.statusText
+				console.log(error);
+				alert('Error - ' + errorMessage);
+			}
 		});
-	</script>
+	});
+</script>
+
+<script>
+	function getAssociations(region_id, element_id)
+	{
+		$(element_id).find('option').not(':first').remove();
+		$.ajax({
+			url: 'getAssociations/'+region_id ,
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+				console.log("associations called...");
+				var len = 0;
+				if(response['data'] != null){
+					len = response['data'].length;
+				}
+
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
+
+						var id = response['data'][i].association_id;
+						var name = response['data'][i].name;
+
+						console.log('the loop');
+						console.log(name);
+
+						var option = "<option value='"+id+"'>"+name+"</option>";
+
+						console.log('the option to append');
+						console.log(option);
+						$(element_id).append(option);
+					}
+					console.log('outside loop');
+				}
+
+			},
+			error: function(xhr, status, error){
+				var errorMessage = xhr.status + ': ' + xhr.statusText
+				console.log(error);
+				alert('Error - ' + errorMessage);
+			}
+		});
+	}
+</script>
 
 </body>
 </html>
