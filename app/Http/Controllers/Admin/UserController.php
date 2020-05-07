@@ -11,7 +11,7 @@ class UserController extends Controller
     /* create, edit or update user profile */
     public function create_user(Request $request)
     {
-
+        
     }
 
     /* show user profile */
