@@ -67,8 +67,14 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				<li><a href="#" class="current"><i class="ti-dashboard mx-5"></i>USERS</a></li>
-                <li><a href="#"><i class="ti-files mx-5"></i>ACTIVITIES</a></li>
+				<li><a href="#" class="current"><i class="ti-files mx-5"></i>USERS</a>
+					<ul>
+						<li><a href="#">Add New Users</a></li>
+						<li id="default"><a href="#">View Users</a></li>
+					</ul>
+				</li>
+                <li><a href="#"><i class="ti-files mx-5"></i>EMPLOYEES</a></li>
+				<li><a href="#"><i class="ti-files mx-5"></i>LOGS</a></li>
 			</ul>
 		</nav>
 		<!-- Header Navbar -->
@@ -627,6 +633,11 @@
 	<!-- Form validator JavaScript -->
 	<script src="minibus/main/js/pages/validation.js"></script>
 	<script src="minibus/main/js/pages/form-validation.js"></script>
+
+	<!-- VoiceX Admin App -->
+	<script src="/minibus/main/js/jquery.smartmenus.js"></script>
+	<script src="/minibus/main/js/menus.js"></script>
+	<script src="/minibus/main/js/template.js"></script>
 
 </body>
 </html>
