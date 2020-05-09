@@ -40,6 +40,7 @@
 											<th>Address Line</th>
                                             <th>City</th>
                                             <th>Postal Code</th>
+											<th>Verification Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -53,16 +54,19 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-											<td>{{ $employee->idnumber }}</td>
-                                            <td>{{ $employee->employee_number }}</td>
-                                            <td>{{ $employee->phonenumber }}</td>
+											<td>{{ $employee->id_number }}</td>
+                                            <td>{{ $employee->employee_id }}</td>
+                                            <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->email }}</td>
-                                            <td>{{ $employee->addressline1 }}</td>
-                                            <td>{{ $employee->city }}</td>
-                                            <td>{{ $employee->postal-code }}</td>
-											 <td>
+                                            <td>{{ $employee->address_line }}</td>
+                                            <td>{{ $employee['city']['city'] }}</td>
+                                            <td>{{ $employee->postal_code }}</td>
+											<td>
+												<span class="badge badge-pill badge-danger">Not Verified</span>
+											</td>
+											<td>
 												<a href="#"><b>Edit</b></a> |
-												<a href="#"> <b>View Profile</b></a>
+												<a href="#"><b>View Profile</b></a>
 											</td>
 										</tr>
 						  			<?php $count++?>

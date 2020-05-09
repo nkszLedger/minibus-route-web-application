@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class UsersTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('users')->insert([
+            [
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => 'password',
+                'employee_id' => '1',
+                'role_id' => '1',
+                'remember_token' => 'yes',
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ],
+
+        ]);
+    }
+}

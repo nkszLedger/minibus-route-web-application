@@ -23,6 +23,7 @@
 									<th>ID Number</th>
 									<th>Association</th>
 									<th>Membership Type</th>
+									<th>Verification Status</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -39,6 +40,9 @@
 									<td>{{$member->id_number}}</td>
 									<td>{{$member['member_association']['name']}}</td>
 									<td>{{$member['membership_type']['membership_type']}}</td>
+									<td>
+										<span class="badge badge-pill badge-danger">Not Verified</span>
+									</td>
 									<td>
 										<a href="{{ url('show_member', $member->id)}}"><b>Edit</b></a> |
 										{{-- <a href="#" data-toggle="modal" data-target="#modal-default" id="modal-button-id"  > <b>Profile</b></a> |--}}

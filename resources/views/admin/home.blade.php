@@ -67,14 +67,18 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				<li><a href="#" class="current"><i class="ti-files mx-5"></i>USERS</a>
+				<li><a href="{{ route('users') }}" class="current"><i class="ti-files mx-5"></i>USERS</a>
 					<ul>
-						<li><a href="#">Add New Users</a></li>
-						<li id="default"><a href="#">View Users</a></li>
+						<li><a href="{{ route('register_employee') }}">Add New Users</a></li>
+						<li id="default"><a href="{{ route('users') }}">View Users</a></li>
 					</ul>
 				</li>
-                <li><a href="#"><i class="ti-files mx-5"></i>EMPLOYEES</a></li>
-				<li><a href="#"><i class="ti-files mx-5"></i>LOGS</a></li>
+                <li><a href="{{ route('employees') }}"><i class="ti-files mx-5"></i>EMPLOYEES</a>
+					<ul>
+						<li><a href="{{ route('register_employee') }}">Add New Employees</a></li>
+						<li id="default"><a href="{{ route('employees') }}">View Employees</a></li>
+					</ul>
+				</li>
 			</ul>
 		</nav>
 		<!-- Header Navbar -->
