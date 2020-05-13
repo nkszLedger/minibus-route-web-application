@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::get('/', 'Auth\LoginController@loginPage');
+// Route::get('/', 'Auth\LoginController@loginPage');
 
 /* Route::get('dashboard', function () {
     return view('index-3');
@@ -42,18 +47,6 @@ Route::get('admin/employees', 'Admin\EmployeeController@list_employees')->name('
 Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')->name('create_employee');
 Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');
 
-Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('admin/login', 'Auth\LoginController@login');
-Route::post('admin/logout', 'Auth\LoginController@logout')->name('logout');
-// Password Reset Routes...
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('showmodal/{id}', 'MemberController@showmodal')->name('showmodal');
 Route::get('getAssociations/{region_id}', 'MemberController@getAssociations')->name('regions');
 Route::get('getRoutesPerAssociation/{association_id}', 'MemberController@getRoutesPerAssociation')->name('regions');
-
-
