@@ -20,7 +20,6 @@ class CreateEmployeeTable extends Migration
             $table->string('id_number')->unique();
             $table->string('employee_id')->unique();
             $table->string('phone_number')->nullable();
-            $table->string('email')->unique();
             $table->string('address_line');
             $table->string('postal_code');
             $table->integer('city_id');

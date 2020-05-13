@@ -30,6 +30,7 @@ class UserController extends Controller
     public function list_users()
     {
         $all_users = User::all();
+        $all_roles = Role::all();
 
         return view('admin/users', compact(['all_users']));
     }

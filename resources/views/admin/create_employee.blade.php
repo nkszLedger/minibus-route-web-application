@@ -24,7 +24,13 @@
         <div class="col-12">
           <div class="box">
             <div class="box-header with-border">
-              <h4 class="box-title">Create Employee Profile</h4>
+              <h4 class="box-title">
+                @if( isset($employee) )
+                    Employee Registration: Update Employee Profile
+                @else
+                    Employee Registration: Create Employee Profile
+                @endif
+              </h4>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -70,7 +76,7 @@
                                 <div class="form-group">
                                     <h5>National ID Number :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="idnumber" required data-validation-required-message="This field is required" value="{{$employee->id_number ?? '' }}">
+                                        <input type="text" class="form-control" name="id_number" required data-validation-required-message="This field is required" value="{{$employee->id_number ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -87,21 +93,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
-                                    <input type="tel" class="form-control required" id="wphoneNumber2" name="phonenumber" maxlength="10" value="{{$employee->phone_number ?? '' }}">
+                                    <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="addressline1">Address Line : <span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="addressline1" name="addressline1" maxlength="25" value="{{$employee->address_line ?? '' }}">
+                                    <input type="text" class="form-control required" id="address_line" name="address_line" maxlength="25" value="{{$employee->address_line ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="postal-code">Postal Code : <span class="text-danger"> *</span> </h5>
-                                    <input type="text" class="form-control" id="postal-code" name="postal-code" maxlength="4" value="{{$employee->postal_code ?? '' }}">
+                                    <input type="text" class="form-control" id="postal_code" name="postal_code" maxlength="4" value="{{$employee->postal_code ?? '' }}">
                                 </div>
                             </div>
 
@@ -136,33 +142,32 @@
                                 <div class="form-group">
                                     <h5>Select User Role</h5>
                                     <div class="c-inputs-stacked">
-                                        <div class="radio">
-                                            <input name="group1" type="radio" id="Option_1" checked>
-                                            <label for="Option_1"> NONE - This employee must not have access</label>                    
-                                        </div>
-
-                                        <div class="radio">
-                                            <input name="group1" type="radio" id="Option_2" >
-                                            <label for="Option_2"> ADMINISTRATOR - This employee shall register new employees, Create, Update, Remove Employees & Deactivate System users ONLY</label>   
-                                        </div>
-
-                                        <div class="radio">
-                                            <input name="group1" type="radio" id="Option_3">
-                                            <label for="Option_3"> CLERK - This employee shall register MiniBus Operators, Owners & Drivers ONLY</label> 
-                                        </div>
-
-                                        <div class="radio">
-                                            <input name="group1" type="radio" id="Option_4" >
-                                            <label for="Option_4"> AUDITOR - This employee shall VIEW Dashboard, MiniBus Operators, Owners & Drivers ONLY</label> 
-                                        </div>
+                                        @foreach($all_roles as $key => $role)
+                                            <div class="radio">
+                                                @if( isset($employee) )
+                                                    @if( $user[0]['role_id'] === $role->id )
+                                                        <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}" checked>
+                                                    @else
+                                                        <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
+                                                    @endif
+                                                @else
+                                                    <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
+                                                @endif
+                                                    <label for="Option_{{ $role->id }}"> {{ $role->name }} - {{ $role->description }}</label>                    
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="box-footer text-right">
-                            <a class="btn btn-warning mb-5" href="/users">Cancel</a>
-                            <input class="btn btn-info mb-5" type="submit" value="Submit" />
+                            <a class="btn btn-warning mb-5" href="{{ route('users') }}">Cancel</a>
+                            @if( isset($employee) )
+                                <input class="btn btn-info mb-5" type="submit" value="Update" />
+                            @else
+                                <input class="btn btn-info mb-5" type="submit" value="Submit" />
+                            @endif
                         </div> 
                         
                       </form>

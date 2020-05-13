@@ -39,7 +39,8 @@
 							<h2 class="text-white">MINIBUS ROUTE REGISTRATION</h2>
 						</div>
 						<div class="p-30">
-							<form action="/dashboard" method="get">
+							<form action="{{ route('login') }}" method="GET"> {{-- <form action="/dashboard" method="get"> --}}
+							{{ csrf_field() }}
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">

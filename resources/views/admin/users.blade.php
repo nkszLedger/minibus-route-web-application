@@ -48,12 +48,12 @@
 									@foreach($all_users as $user )
 										<tr>
 											<td>{{$count}}</td>
-											<td>{{ $user->name }}</td>
-											<td>{{ $user->email }}</td>
+											<td>{{ $user['employees']['name'] }} {{ $user['employees']['surname']  }}</td>
+											<td>{{ $user['employees']['email'] }}</td>
 											<td>
 												<span class="text-muted">{{ $user->created_at }}</span>
 											</td>
-											<td>UNKNOWN</td>
+											<td>{{ $all_roles['roles']['name'] }}</td>
 											<td>
 												{{-- {% if user.is_active %} --}}
 												<span class="badge badge-pill badge-success">Active</span>
@@ -62,8 +62,7 @@
 												{% endif %} --}}
 									     	</td>
 											 <td>
-												<a href="#"><b>Edit</b></a> |
-												<a href="#"> <b>View Profile</b></a>
+												<a href="#"><b>Edit</b></a> 
 											</td>
 											{{-- <td><a href="{% url 'portfolio:editUser' profile.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td> --}}
 										</tr>
