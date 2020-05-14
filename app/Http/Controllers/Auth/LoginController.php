@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectPath = RouteServiceProvider::DASHBOARD;
+
 
     /**
      * Create a new controller instance.
@@ -42,4 +45,30 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials)) 
+        {
+            return redirect()->intended('dashboard');
+        }
+        else
+        {
+            dd('FAILED ATTEMPT');
+            
+            return redirect($this->loginPath)
+                ->withInput($request->only('email', 'remember'))
+                ->withErrors(['email' => 'Incorrect email address or password']);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout($request);
+
+        return view('welcome');
+    }
+
 }

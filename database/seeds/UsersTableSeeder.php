@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             [
                 'email' => 'lmakhi@dot.gov.za',
                 'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => 'password',
+                'password' => bcrypt('password'),
                 'employee_id' => '2',
                 'role_id' => '2',
                 'remember_token' => 'yes',
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             [
                 'email' => 'skunene@dot.gov.za',
                 'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => 'password1',
+                'password' => bcrypt('password1'),
                 'employee_id' => '3',
                 'role_id' => '3',
                 'remember_token' => 'yes',

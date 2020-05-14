@@ -29,9 +29,9 @@ Route::get('/', function () {
     return view('index-3');
 }); */
 
-Route::get('dashboard', function () {
+Route::get('/dashboard', function () {
     return view('dashboard');
-}); 
+});
 
 Route::get('showregpage', 'MemberController@showregpage');
 Route::get('showtestregpage', 'MemberController@showtestregpage');
