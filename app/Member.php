@@ -12,11 +12,6 @@ class Member extends Model
         return $this->belongsTo(MembershipType::class, 'membership_type_id');
     }
 
-    public function member_association()
-    {
-        return $this->belongsTo(Association::class,'association_id');
-    }
-
     public function vehicles()
     {
         return $this->belongsToMany(Vehicle::class);
@@ -30,11 +25,6 @@ class Member extends Model
     public function fingerprint()
     {
         return $this->hasOne(Fingerprint::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class,'region_id');
     }
 
     public function city()
