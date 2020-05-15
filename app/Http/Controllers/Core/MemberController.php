@@ -27,7 +27,11 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('index-3');
+        $all_members = Member::with(['membership_type','member_association',
+                                        'portrait'])->orderBy('id','desc')->get();
+
+        return view('list_members_table_data', 
+                    compact(['all_members']));
     }
 
     /**
