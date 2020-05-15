@@ -25,14 +25,10 @@ class CreateMembersTable extends Migration
             $table->string('postal_code');
             $table->unsignedBigInteger('membership_type_id');
             $table->integer('city_id');
-            $table->integer('association_id');
-            $table->integer('region_id');
 
             $table->timestamps();
 
             $table->foreign('membership_type_id')->references('id')->on('membership_types');
-            $table->foreign('association_id')->references('association_id')->on('association');
-            $table->foreign('region_id')->references('region_id')->on('regions');
             $table->foreign('city_id')->references('city_id')->on('cities');
 
 
