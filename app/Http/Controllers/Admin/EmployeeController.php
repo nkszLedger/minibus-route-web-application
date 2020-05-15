@@ -10,15 +10,38 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function register()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $all_cities = City::all();
+        $all_employees = Employee::with(['city'])->orderBy('id','desc')->get();
+
+        return view('admin/employees', compact(['all_cities', 'all_employees']));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         $all_cities = City::all();
 
         return view('admin/create_employee', compact(['all_cities']));
     }
 
-    /* create, edit or update employee profile */
-    public function create_employee(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         $employee = new Employee();
         $employee_form_id = $request->get('id');
@@ -76,8 +99,24 @@ class EmployeeController extends Controller
         // }
     }
 
-    /* show employee profile */
-    public function edit_employee($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         $employee = Employee::with(['city'])->findOrFail($id);
         $user = User::where('employee_id', $employee->id)->get();
@@ -92,18 +131,26 @@ class EmployeeController extends Controller
                                                     ]));
     }
 
-    /* remove employee profile */
-    public function remove_employee($id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-
+        //
     }
 
-    /* show all employee profiles */
-    public function list_employees()
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $all_cities = City::all();
-        $all_employees = Employee::with(['city'])->orderBy('id','desc')->get();
-
-        return view('admin/employees', compact(['all_cities', 'all_employees']));
+        //
     }
 }
