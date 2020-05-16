@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Role;
+use App\User;
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -29,7 +32,6 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectPath = RouteServiceProvider::DASHBOARD;
-
 
     /**
      * Create a new controller instance.

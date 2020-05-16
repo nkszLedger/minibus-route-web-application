@@ -23,14 +23,14 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/', 'Auth\LoginController@loginPage');
-
-/* Route::get('dashboard', function () {
-    return view('index-3');
-}); */
-
 Route::get('/dashboard', function () {
     return view('dashboard');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::resource('roles','Admin\RoleController');
+    Route::resource('users','Admin\UserController');
 });
 
 Route::get('showregpage', 'MemberController@showregpage');
@@ -48,5 +48,6 @@ Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')
 Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');
 
 Route::get('showmodal/{id}', 'MemberController@showmodal')->name('showmodal');
-Route::get('getAssociations/{region_id}', 'MemberController@getAssociations')->name('regions');
-Route::get('getRoutesPerAssociation/{association_id}', 'MemberController@getRoutesPerAssociation')->name('regions');
+
+Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('regions');
+Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
