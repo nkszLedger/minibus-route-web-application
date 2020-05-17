@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 
-    
 
 class UserController extends Controller
 {
@@ -20,10 +19,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $all_users = User::with(['employee'])->get();
 
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.users',compact(['all_users']));
     }
 
     
@@ -139,8 +137,6 @@ class UserController extends Controller
                          ->with('success','User updated successfully');
 
     }
-
-    
 
     /**
      * Remove the specified resource from storage.

@@ -48,12 +48,12 @@
 									@foreach($all_users as $user )
 										<tr>
 											<td>{{$count}}</td>
-											<td>{{ $user['employees']['name'] }} {{ $user['employees']['surname']  }}</td>
-											<td>{{ $user['employees']['email'] }}</td>
+											<td>{{ $user['employee']['name'] }} {{ $user['employee']['surname']  }}</td>
+											<td>{{ $user['email'] }}</td>
 											<td>
 												<span class="text-muted">{{ $user->created_at }}</span>
 											</td>
-											<td>{{ $all_roles['roles']['name'] }}</td>
+											<td>UNKNOWN</td>{{--<td>{{ $all_roles['roles']['name'] }}</td>--}}
 											<td>
 												{{-- {% if user.is_active %} --}}
 												<span class="badge badge-pill badge-success">Active</span>

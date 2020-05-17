@@ -22,32 +22,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::group(['middleware' => ['auth']], function() {
 
-    Route::resource('roles','Admin\RoleController');
-    Route::resource('users','Admin\UserController');
-});
+Route::get('users', 'UserController@index')->name('users');
+Route::get('employees', 'EmployeeController@list_employees')->name('employees');
+Route::get('employees/create', 'mployeeController@create_employee')->name('create_employee');
+Route::get('employees/registration', 'EmployeeController@register')->name('register_employee');
 
-Route::get('showregpage', 'MemberController@showregpage');
-Route::get('showtestregpage', 'MemberController@showtestregpage');
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource('roles','Admin\RoleController');
+//     Route::resource('users','Admin\UserController');
+// });
 
+// Route::get('showregpage', 'MemberController@showregpage');
+// Route::get('showtestregpage', 'MemberController@showtestregpage');
 
-Route::get('create_member', 'MemberController@create_member');
-Route::get('test_create_member', 'MemberController@test_create_member');
-Route::get('list_members', 'MemberController@list_members');
-Route::get('show_member/{id}', 'MemberController@show_member')->name('show_member');
+// Route::get('create_member', 'MemberController@create_member');
+// Route::get('test_create_member', 'MemberController@test_create_member');
+// Route::get('list_members', 'MemberController@list_members');
+// Route::get('show_member/{id}', 'MemberController@show_member')->name('show_member');
 
-Route::get('admin/', 'Admin\UserController@list_users')->name('users');
-Route::get('admin/employees', 'Admin\EmployeeController@list_employees')->name('employees');
-Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')->name('create_employee');
-Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');
+//Route::get('admin/', 'Admin\UserController@list_users')->name('users');
+// Route::get('admin/employees', 'Admin\EmployeeController@list_employees')->name('employees');
+// Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')->name('create_employee');
+// Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');
 
-Route::get('showmodal/{id}', 'MemberController@showmodal')->name('showmodal');
-
-Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('regions');
-Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
+// Route::get('showmodal/{id}', 'MemberController@showmodal')->name('showmodal');
+// Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('regions');
+// Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
