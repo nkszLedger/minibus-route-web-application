@@ -26,16 +26,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-
-Route::get('users', 'UserController@index')->name('users');
-Route::get('employees', 'EmployeeController@list_employees')->name('employees');
-Route::get('employees/create', 'mployeeController@create_employee')->name('create_employee');
-Route::get('employees/registration', 'EmployeeController@register')->name('register_employee');
-
-// Route::group(['middleware' => ['auth']], function() {
-//     Route::resource('roles','Admin\RoleController');
-//     Route::resource('users','Admin\UserController');
-// });
+/**
+ * Admin Resources
+ */
+Route::resources([
+    'roles' => 'RoleController',
+    'employees' => 'Admin\EmployeeController',
+    'users' => 'UserController'
+]);
 
 // Route::get('showregpage', 'MemberController@showregpage');
 // Route::get('showtestregpage', 'MemberController@showtestregpage');
