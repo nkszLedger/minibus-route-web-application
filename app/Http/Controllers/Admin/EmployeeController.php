@@ -20,7 +20,7 @@ class EmployeeController extends Controller
         $all_cities = City::all();
         $all_employees = Employee::with(['city'])->orderBy('id','desc')->get();
 
-        return view('admin/employees', compact(['all_cities', 'all_employees']));
+        return view('admin.employees.index', compact(['all_cities', 'all_employees']));
     }
 
     /**
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
     {
         $all_cities = City::all();
 
-        return view('admin/create_employee', compact(['all_cities']));
+        return view('admin.employees.create', compact(['all_cities']));
     }
 
     /**
@@ -124,11 +124,11 @@ class EmployeeController extends Controller
         $all_roles = Role::all();
         $all_cities = City::all();
 
-        return view('admin/create_employee', compact(['all_cities',
-                                                      'all_roles',
-                                                      'employee',
-                                                      'user'
-                                                    ]));
+        return view('admin.employees.create', compact(['all_cities',
+                                                        'all_roles',
+                                                        'employee',
+                                                        'user'
+                                                        ]));
     }
 
     /**
