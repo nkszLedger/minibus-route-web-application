@@ -30,7 +30,7 @@ class MemberController extends Controller
         $all_members = Member::with(['membership_type','member_association',
                                         'portrait'])->orderBy('id','desc')->get();
 
-        return view('list_members_table_data', 
+        return view('member.index', 
                     compact(['all_members']));
     }
 
@@ -46,7 +46,7 @@ class MemberController extends Controller
         $all_associations = Association::all();
         $all_membership_types = MembershipType::all();
 
-        return view('member_registration', compact(['all_membership_types',
+        return view('member.create', compact(['all_membership_types',
                                                     'all_regions',
                                                     'all_associations', 
                                                     'all_cities'
@@ -165,7 +165,7 @@ class MemberController extends Controller
         $all_regions = Region::all();
         $all_cities = City::all();
 
-        return view('show_member_details',  compact(['member_record', 'member_vehicle_record',
+        return view('member.show',  compact(['member_record', 'member_vehicle_record',
                                                         'member_vehicle_routes',
                                                         'route_vehicle','all_membership_types',
                                                         'all_associations','all_routes',
@@ -217,7 +217,7 @@ class MemberController extends Controller
         $all_regions = Region::all();
         $all_cities = City::all();
 
-        return view('modal_view', compact(['member_record',
+        return view('member.edit', compact(['member_record',
                                             'portrait',
                                             'all_associations', 
                                             'all_routes',
@@ -345,6 +345,8 @@ class MemberController extends Controller
                 }
             }
         }
+
+        return view('member.index');
         
     }
 
