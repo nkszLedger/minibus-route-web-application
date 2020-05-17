@@ -65,7 +65,7 @@
 												<span class="badge badge-pill badge-danger">Not Verified</span>
 											</td>
 											<td>
-												<a href="{{ route('edit_employee', ['id' => $employee->id]) }}"><b>Edit</b></a>
+												<a href="{{ route('employees.create', ['id' => $employee->id]) }}"><b>Edit</b></a>
 											</td>
 										</tr>
 						  			<?php $count++?>

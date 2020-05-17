@@ -67,22 +67,22 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				<li><a href="{{ route('users') }}" class="current"><i class="ti-files mx-5"></i>USERS</a>
+				<li><a href="{{ route('users.index') }}" class="current"><i class="ti-files mx-5"></i>USERS</a>
 					<ul>
-						<li><a href="{{ route('register_employee') }}">Add New Users</a></li>
-						<li><a href="{{ route('users') }}">View Users</a></li>
+						<li><a href="{{ route('employees.create') }}">Add New Users</a></li>
+						<li><a href="{{ route('users.index') }}">View Users</a></li>
 					</ul>
 				</li>
-                <li><a href="{{ route('employees') }}"><i class="ti-files mx-5"></i>EMPLOYEES</a>
+                <li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>EMPLOYEES</a>
 					<ul>
-						<li><a href="{{ route('register_employee') }}">Add New Employees</a></li>
-						<li><a href="{{ route('employees') }}">View Employees</a></li>
+						<li><a href="{{ route('employees.create') }}">Add New Employees</a></li>
+						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
 					</ul>
 				</li>
-				<li><a href="#"><i class="ti-files mx-5"></i>ROLES</a>
+				<li><a href="{{ route('roles.index') }}""><i class="ti-files mx-5"></i>ROLES</a>
 					<ul>
-						<li><a href="#">Add New Roles</a></li>
-						<li><a href="#">View Roles</a></li>
+						<li><a href="{{ route('roles.create') }}"">Add New Roles</a></li>
+						<li><a href="{{ route('roles.index') }}"">View Roles</a></li>
 					</ul>
 				</li>
 			</ul>
