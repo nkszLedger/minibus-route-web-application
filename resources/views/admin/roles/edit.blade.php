@@ -9,7 +9,7 @@
 
         <div class="pull-left">
 
-            <h2>Create New Role</h2>
+            <h2>Edit Role</h2>
 
         </div>
 
@@ -45,7 +45,7 @@
 @endif
 
 
-{!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
+{!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
 
 <div class="row">
 
@@ -71,7 +71,7 @@
 
             @foreach($permission as $value)
 
-                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
+                <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
 
                 {{ $value->name }}</label>
 
@@ -94,6 +94,6 @@
 {!! Form::close() !!}
 
 
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
-
 @endsection
+
+<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
