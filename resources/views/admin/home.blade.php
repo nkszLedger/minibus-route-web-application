@@ -287,7 +287,13 @@
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-settings"></i> Account Setting</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="/"><i class="ion-log-out"></i> Logout</a>
+						<form action="{{ route('logout') }}" method="POST">
+							@csrf
+							<a class="dropdown-item">
+								<i class="ion-log-out"></i> 
+								<input class="btn btn-default btn-flat" type="submit" value="Logout"/>
+							</a>
+						</form>
 						<div class="dropdown-divider"></div>
 						<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">View Profile</a></div>
 				  </li>
