@@ -23,11 +23,11 @@ Route::get('/', function () {
 });
 
 Route::resources([
-    'roles' => 'RoleController',
+    'roles' => 'Admin\RoleController',
     'employees' => 'Admin\EmployeeController',
-    'users' => 'UserController',
+    'users' => 'Admin\UserController',
     'members' => 'Member\MemberController',
-    'dashboard' => 'DashboardController'
+    'dashboard' => 'Dashboard\DashboardController'
 ]);
 
 // Route::get('showregpage', 'MemberController@showregpage');

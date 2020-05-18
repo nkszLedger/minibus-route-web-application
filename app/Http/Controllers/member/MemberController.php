@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member;
 
 use App\Association;
 use App\Member;
@@ -13,6 +13,7 @@ use App\RouteVehicle;
 use App\Vehicle;
 use App\City;
 use App\Fingerprint;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
