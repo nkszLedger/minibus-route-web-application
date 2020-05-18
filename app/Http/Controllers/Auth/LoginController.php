@@ -54,7 +54,7 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials)) 
         {
-            return redirect()->intended('users');
+            return redirect()->intended('dashboard');
         }
         else
         {

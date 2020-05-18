@@ -67,9 +67,9 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				<li><a href="/dashboard" class="current"><i class="ti-dashboard mx-5"></i>DASHBOARD</a></li>
-                <li><a href="/showregpage"><i class="ti-files mx-5"></i>MEMBER REGISTRATION</a></li>
-                <li><a href="/list_members"><i class="ti-files mx-5"></i>MEMBER MANAGEMENT</a></li>
+				<li><a href="{{ route('dashboard.index') }}" class="current"><i class="ti-dashboard mx-5"></i>DASHBOARD</a></li>
+                <li><a href="{{ route('members.create') }}"><i class="ti-files mx-5"></i>MEMBER REGISTRATION</a></li>
+                <li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MEMBER MANAGEMENT</a></li>
 			</ul>
 		</nav>
 		<!-- Header Navbar -->
