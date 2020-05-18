@@ -1,4 +1,4 @@
-﻿@extends('index-3')
+﻿@extends('member.home')
 
 @section('content')
 
@@ -12,7 +12,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<form action="/create_member" type="POST" id="member-form">
+					<form action="{{ url('members.update', $member_record->id )}}" type="POST" id="member-form">
 					{{ csrf_field() }}
 						<input type="hidden" class="form-control" id="member-id" value="{{$member_record->id ?? '' }}" name="member-id">
 
@@ -203,10 +203,10 @@
 							
 							<div class="row">
 							    <div class="col-6 text-right">
-									<input class="btn btn-info mb-5" type="submit" value="Submit" href="{{ url('show_member', $member_record->id )}}"/>
+									<input class="btn btn-info mb-5" type="submit" value="Submit" href="{{ url('members.update', $member_record->id )}}"/>
 							    </div>
 								<div class="col-6 text-left">
-									<a class="btn btn-warning mb-5" href="{{ url('list_members')}}">Cancel</a>
+									<a class="btn btn-warning mb-5" href="{{ url('members.index')}}">Cancel</a>
 							    </div>
 							</div>
 

@@ -1,4 +1,4 @@
-﻿@extends('index-3')
+﻿@extends('member.home')
 
 @section('content')
 
@@ -13,7 +13,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
-					<form action="/create_member" type="POST" id="member-form" class="validation-wizard wizard-circle">
+					<form action="{{ route('members.store') }}" type="POST" id="member-form" class="validation-wizard wizard-circle">
 					{{ csrf_field() }}
 						<input type="hidden" class="form-control " id="member-id" name="member-id">
 

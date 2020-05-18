@@ -22,17 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-
-/**
- * Admin Resources
- */
 Route::resources([
     'roles' => 'RoleController',
     'employees' => 'Admin\EmployeeController',
-    'users' => 'UserController'
+    'users' => 'UserController',
+    'members' => 'Member\MemberController',
+    'dashboard' => 'DashboardController'
 ]);
 
 // Route::get('showregpage', 'MemberController@showregpage');

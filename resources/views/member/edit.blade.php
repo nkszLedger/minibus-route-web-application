@@ -1,4 +1,4 @@
-@extends('index-3')
+@extends('member.home')
 
 @section('content')
 
@@ -203,8 +203,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <a href="{{ url('list_members')}}" type="submit" id="edit_button" class="btn btn-warning ">Cancel </a>
-                                    <a href="{{ url('show_member', $member_record->id )}}" type="submit" id="edit_button" class="btn btn-primary float-right">Edit </a>
+                                    <a href="{{ url('members.show', $member_record->id )}}" type="submit" id="cancel_button" class="btn btn-warning ">Cancel </a>
+                                    <a href="{{ url('members.update', $member_record->id )}}" type="submit" id="edit_button" class="btn btn-primary float-right">Edit </a>
                                 </div>
                             </div>
                         </section>
