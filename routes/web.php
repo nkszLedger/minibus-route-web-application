@@ -30,6 +30,9 @@ Route::resources([
     'dashboard' => 'Dashboard\DashboardController'
 ]);
 
+Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('associations');
+Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
+
 // Route::get('showregpage', 'MemberController@showregpage');
 // Route::get('showtestregpage', 'MemberController@showtestregpage');
 
@@ -38,7 +41,7 @@ Route::resources([
 // Route::get('list_members', 'MemberController@list_members');
 // Route::get('show_member/{id}', 'MemberController@show_member')->name('show_member');
 
-//Route::get('admin/', 'Admin\UserController@list_users')->name('users');
+// Route::get('admin/', 'Admin\UserController@list_users')->name('users');
 // Route::get('admin/employees', 'Admin\EmployeeController@list_employees')->name('employees');
 // Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')->name('create_employee');
 // Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');

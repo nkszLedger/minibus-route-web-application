@@ -57,7 +57,7 @@
   <header class="main-header">
 	  <div class="inside-header clearfix">
 		<nav class="main-nav" role="navigation">
-			<h2 class="nav-brand"><a href="/dashboard"><img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app"></a></h2>
+			<h2 class="nav-brand"><a href="{{ route('dashboard.index') }}"><img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app"></a></h2>
 			<!-- Mobile menu toggle button (hamburger/x icon) -->
 			<button class="topbar-toggler" id="mobile_topbar_toggler"><i class="mdi mdi-dots-horizontal"></i></button>
 			<input id="main-menu-state" type="checkbox" />

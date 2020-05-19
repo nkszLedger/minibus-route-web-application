@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 .vscode/
+.rnd
 .idea/
 .env
 .env.backup
