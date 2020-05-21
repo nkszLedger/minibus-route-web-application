@@ -30,8 +30,8 @@ Route::resources([
     'dashboard' => 'Dashboard\DashboardController'
 ]);
 
-Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('associations');
-Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
+Route::get('members/getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('associations');
+Route::get('members/getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
 
 // Route::get('showregpage', 'MemberController@showregpage');
 // Route::get('showtestregpage', 'MemberController@showtestregpage');

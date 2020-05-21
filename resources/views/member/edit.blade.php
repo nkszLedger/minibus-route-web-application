@@ -158,7 +158,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="wintType1">Region:</label>
-                                        <select class="custom-select form-control required" disabled id="wintType1" data-placeholder="Type to search cities" name="region">
+                                        <select class="custom-select form-control required" disabled id="wintType1" data-placeholder="Type to search cities" name="edit-region">
                                             <option value="">Please select Region</option>
                                             @foreach ($all_regions as $region)
                                                 @if($region->region_id === $member_record['region']['region_id'] )
@@ -175,7 +175,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="association">Association :</label>
-                                        <select class="custom-select form-control " id="wLocation1"  disabled name="association">
+                                        <select class="custom-select form-control " id="wLocation1"  disabled name="edit-association">
                                             <option value="">Please select Association</option>
                                             @foreach ($all_associations as $association)
                                                 @if($association->association_id === $member_record['member_association']['association_id'] )

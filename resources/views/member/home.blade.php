@@ -769,15 +769,14 @@
 	$('#region').change(function(){
 		var id = $(this).val();
 
-		console.log(id);
-
 		// clear area
 		$("#route").html('');
 
 		$('#association').find('option').not(':first').remove();
+
 		$.ajax({
-			url: 'getAssociations/'+id,
-			type: 'get',
+			url: 'getAssociations/'+ id.toString(),
+			type: 'GET',
 			dataType: 'json',
 			success: function(response){
 
@@ -785,6 +784,9 @@
 				if(response['data'] != null){
 					len = response['data'].length;
 				}
+
+				console.log('hi2');
+
 
 				if(len > 0){
 					// Read data and create <option >
@@ -805,6 +807,9 @@
 					console.log('outside loop');
 				}
 
+			},
+			error: function() {
+				console.log(this.url);
 			}
 		});
 	});
@@ -819,7 +824,8 @@
 
 		console.log("setting associations...");
 
-		// $('#route').find('input').not(':first').remove();
+		$('#route').find('input').not(':first').remove();
+
 		$.ajax({
 			url: 'getRoutesPerAssociation/'+id,
 			type: 'get',
@@ -866,118 +872,6 @@
 	});
 
 		
-</script>
-
-<script>
-	$('#region2').change(function(){
-		var id = $(this).val();
-		var element_id = '#association2';
-
-		console.log(id);
-
-		// clear area
-		$("#route2").html('');
-
-		console.log("calling associations...");
-		getAssociations(id, element_id );
-		
-	});
-
-	$('#association2').change(function(){
-		var id = $(this).val();
-
-		console.log(id);
-		
-		// clear area
-		$("#route2").html('');
-
-		$.ajax({
-			url: 'getRoutesPerAssociation/'+id,
-			type: 'get',
-			dataType: 'json',
-			success: function(response){
-
-				var len = 0;
-
-				if(response['data'] != null){
-					len = response['data'].length;
-				}
-
-				if(len > 0){
-					// Read data and create <option >
-					for(var i=0; i<len; i++){
-
-						var id = response['data'][i].id;
-						var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
-
-						console.log('the loop');
-						console.log(route_name);
-							
-						var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
-						var label = "<label for='"+id+"' >" + route_name + "</label>";
-
-						var option = "<div>" + input + label + "</div>";
-
-						console.log('the option to append');
-						console.log(option);
-
-						
-						$("#route2").append(option);
-					}
-					console.log('outside loop');
-				}
-			},
-			error: function(xhr, status, error){
-				var errorMessage = xhr.status + ': ' + xhr.statusText
-				console.log(error);
-				alert('Error - ' + errorMessage);
-			}
-		});
-	});
-</script>
-
-<script>
-	function getAssociations(region_id, element_id)
-	{
-		$(element_id).find('option').not(':first').remove();
-		$.ajax({
-			url: 'getAssociations/'+region_id ,
-			type: 'GET',
-			dataType: 'json',
-			success: function(response){
-				console.log("associations called...");
-				var len = 0;
-				if(response['data'] != null){
-					len = response['data'].length;
-				}
-
-				if(len > 0){
-					// Read data and create <option >
-					for(var i=0; i<len; i++){
-
-						var id = response['data'][i].association_id;
-						var name = response['data'][i].name;
-
-						console.log('the loop');
-						console.log(name);
-
-						var option = "<option value='"+id+"'>"+name+"</option>";
-
-						console.log('the option to append');
-						console.log(option);
-						$(element_id).append(option);
-					}
-					console.log('outside loop');
-				}
-
-			},
-			error: function(xhr, status, error){
-				var errorMessage = xhr.status + ': ' + xhr.statusText
-				console.log(error);
-				alert('Error - ' + errorMessage);
-			}
-		});
-	}
 </script>
 
 </body>
