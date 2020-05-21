@@ -724,6 +724,12 @@
 </script>
 
 <script>
+	document.getElementById("licensenumber").disabled = true;
+	document.getElementById("operatinglicensenumber").disabled = true;
+	document.getElementById("createoperatinglicensefile").disabled = true;
+</script>
+
+<script>
 	$('#membership-type').change(function(){
 			var desc = $(this).find(":selected").text();
 
@@ -735,10 +741,39 @@
 			if( $(this).val() != "")
 			{
 				$("#title").html( 'Create <b>' + desc +'</b> Member Profile');
+				if( desc == "Driver")
+				{
+					document.getElementById("licensenumber").disabled = false;
+					document.getElementById("operatinglicensenumber").disabled = true;
+					document.getElementById("createoperatinglicensefile").disabled = true;
+				}
+				else if( desc == "Operator")
+				{
+					document.getElementById("licensenumber").disabled = true;
+					document.getElementById("operatinglicensenumber").disabled = false;
+					document.getElementById("createoperatinglicensefile").disabled = false;
+
+				}
+				else if( desc == "Both Driver and Operator")
+				{
+					document.getElementById("licensenumber").disabled = false;
+					document.getElementById("operatinglicensenumber").disabled = false;
+					document.getElementById("createoperatinglicensefile").disabled = false;
+				}
+				else
+				{
+					// should never reach
+					document.getElementById("licensenumber").disabled = true;
+					document.getElementById("operatinglicensenumber").disabled = true;
+					document.getElementById("createoperatinglicensefile").disabled = true;
+				}
 			}
 			else
 			{
 				$("#title").html( 'Member Registration: Create Member Profile' );
+				document.getElementById("licensenumber").disabled = true;
+				document.getElementById("operatinglicensenumber").disabled = true;
+				document.getElementById("createoperatinglicensefile").disabled = true;
 			}
 			
 	});
