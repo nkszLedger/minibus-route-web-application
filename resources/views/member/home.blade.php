@@ -724,6 +724,28 @@
 </script>
 
 <script>
+	 $('#isMemberAssociated').change(function() {
+        if($(this).is(":checked")) 
+		{
+			document.getElementById("region").disabled = false;
+			document.getElementById("association").disabled = false;
+			document.getElementById("route").disabled = false;
+		} 
+		else
+		{	
+			document.getElementById("region").disabled = true;
+			document.getElementById("association").disabled = true;
+			document.getElementById("route").disabled = true;
+			// clear area
+			$("#route").html('');
+		}  
+    });
+</script>
+
+<script>
+	document.getElementById("region").disabled = true;
+	document.getElementById("association").disabled = true;
+	document.getElementById("route").disabled = true;
 	document.getElementById("licensenumber").disabled = true;
 	document.getElementById("operatinglicensenumber").disabled = true;
 	document.getElementById("createoperatinglicensefile").disabled = true;

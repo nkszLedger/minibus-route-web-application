@@ -50,8 +50,14 @@
 									<div class="form-group">
 										<label>Upload Operating licence... </label>
 										<label class="file">
-											<input type="file" id="createoperatinglicensefile" disabled>
+											<input type="file" id="createoperatinglicensefile">
 										</label>
+									</div>
+									<div class="form-group">
+										<div class="checkbox checkbox-success">
+											<input id="isMemberAssociated" type="checkbox">
+											<label for="isMemberAssociated"> <span class="text-danger">Does member belong to any association ? </span></label>
+										</div>
 									</div>
 								</div>
 
@@ -167,7 +173,7 @@
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-map-alt mr-15"></i> Routes & Associations</h4>
 						<hr class="mb-15 mt-0">
-						<section>
+						<section id="create-member-routes-associations-section" disabled>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -202,16 +208,17 @@
 								</div>
 							</div>
 							
-							<div class="row">
-							    <div class="col-6 text-right">
-									<input class="btn btn-info mb-5" type="submit" value="Submit" href="{{ route('members.create')}}"/>
-							    </div>
-								<div class="col-6 text-left">
-									<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>
-							    </div>
-							</div>
-
 						</section>
+
+						<div class="row">
+							<div class="col-6 text-right">
+								<input class="btn btn-info mb-5" type="submit" value="Submit" href="{{ route('members.create')}}"/>
+							</div>
+							<div class="col-6 text-left">
+								<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>
+							</div>
+						</div>
+
 					</form>
 				</div>
 				<!-- /.box-body -->
@@ -221,5 +228,17 @@
 	</div>
 
 </section>
+<script>
+	 $('#isMemberAssociated').change(function() {
+        if($(this).is(":checked")) 
+		{
+			document.getElementById("create-member-routes-associations-section").disabled = false;
+		} 
+		else
+		{	
+			document.getElementById("create-member-routes-associations-section").disabled = true;
+		}  
+    });
+</script>
 	
 @endsection
