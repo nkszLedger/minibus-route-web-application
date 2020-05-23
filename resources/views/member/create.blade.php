@@ -212,7 +212,7 @@
 
 						<div class="row">
 							<div class="col-6 text-right">
-								<input class="btn btn-info mb-5" type="submit" value="Submit" href="{{ route('members.create')}}"/>
+								<input class="btn btn-info mb-5" type="submit" value="Submit">
 							</div>
 							<div class="col-6 text-left">
 								<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>
@@ -228,17 +228,5 @@
 	</div>
 
 </section>
-<script>
-	 $('#isMemberAssociated').change(function() {
-        if($(this).is(":checked")) 
-		{
-			document.getElementById("create-member-routes-associations-section").disabled = false;
-		} 
-		else
-		{	
-			document.getElementById("create-member-routes-associations-section").disabled = true;
-		}  
-    });
-</script>
 	
 @endsection

@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeePortrait extends Model
 {
-    //
+    protected $table = 'employee_portrait';
+
     public function employee()
     {
-        return $this->hasOne(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 }

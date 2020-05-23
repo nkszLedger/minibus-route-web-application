@@ -13,7 +13,7 @@ class MemberRegionAssociation extends Model
         return $this->hasOne(Member::class,'member_id');
     }
 
-    public function member_association()
+    public function association()
     {
         return $this->belongsTo(Association::class,'association_id');
     }

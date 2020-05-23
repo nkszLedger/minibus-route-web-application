@@ -62,77 +62,88 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        $Driver = 1;
+        $Operator = 2;
+        $Both = 3;
+
         $member = new Member();
-
         $vehicle = new Vehicle();
+        
+        $membership_type = MembershipType::where('id', $request->get('membership-type'))->get();
 
-        $member_form_id = $request->get('member-id');
+        // capture personal details
+        $member->name = $request->get('firstName');
+        $member->surname = $request->get('lastName');
+        $member->id_number = $request->get('idnumber');
+        $member->email = $request->get('emailAddress');
+        $member->phone_number = $request->get('phonenumber');
+        $member->address_line = $request->get('addressline1');
+        $member->postal_code = $request->get('postal-code');
+        $member->city_id = $request->get('city');
 
-        if($member_form_id === null) {
-            $member->name = $request->get('firstName');
-            $member->surname = $request->get('lastName');
-            $member->id_number = $request->get('idnumber');
-            $member->license_number = $request->get('licensenumber');
-            $member->email = $request->get('emailAddress');
-            $member->phone_number = $request->get('phonenumber');
-            $member->address_line = $request->get('addressline1');
-
-            //TODO check if associate method cannot be used
-            $member->membership_type_id = $request->get('membership-type'); 
-            
-            $member->association_id = $request->get('association');
-            $member->postal_code = $request->get('postal-code');
-            $member->region_id = $request->get('region');
-            $member->city_id = $request->get('city');
-
-            if($member->save()) {
-                $vehicle->registration_number = $request->get('regnumber');
-                $vehicle->make = $request->get('vehiclemake');
-                $vehicle->model = $request->get('vehiclemodel');
-                $vehicle->year = $request->get('vehicleyear');
-                $vehicle->seats_number = $request->get('vehicleseats');
-
-                if($vehicle->save()) {
-
-                    $member_vehicle = new MemberVehicle();
-
-                    $member_vehicle->member_id  = $member->id;
-                    $member_vehicle->vehicle_id = $vehicle->id;
-
-                    if($member_vehicle->save()) {
-
-                        if(!empty($request->get('route'))) {
-
-                            foreach ((array)$request->get('route') as $checkbox_value) {
-
-                                $route_vehicle = new RouteVehicle();
-
-                                $route_vehicle->route_id = $checkbox_value;
-                                $route_vehicle->vehicle_id = $vehicle->id;
-
-                                $route_vehicle->save();
-                            }
-                        }
-
-                    }
-
-                }
-                else {
-
-                    return back()->withErrors('Whoops')->withInput();
-                }
-
-            }
-            else {
-
-                return back()->withErrors('Whoops')->withInput();
-            }
-
-        }
-        else
+        if( $request->get('membership-type') == $Driver )
         {
-            // do update if this func is called
+            
         }
+
+        // $member->name = $request->get('firstName');
+        // $member->surname = $request->get('lastName');
+        // $member->id_number = $request->get('idnumber');
+        // $member->license_number = $request->get('licensenumber');
+        // $member->email = $request->get('emailAddress');
+        // $member->phone_number = $request->get('phonenumber');
+        // $member->address_line = $request->get('addressline1');
+
+        // //TODO check if associate method cannot be used
+        // $member->membership_type_id = $request->get('membership-type'); 
+        
+        // $member->association_id = $request->get('association');
+        // $member->postal_code = $request->get('postal-code');
+        // $member->region_id = $request->get('region');
+        // $member->city_id = $request->get('city');
+
+        // if($member->save()) {
+        //     $vehicle->registration_number = $request->get('regnumber');
+        //     $vehicle->make = $request->get('vehiclemake');
+        //     $vehicle->model = $request->get('vehiclemodel');
+        //     $vehicle->year = $request->get('vehicleyear');
+        //     $vehicle->seats_number = $request->get('vehicleseats');
+
+        //     if($vehicle->save()) {
+
+        //         $member_vehicle = new MemberVehicle();
+
+        //         $member_vehicle->member_id  = $member->id;
+        //         $member_vehicle->vehicle_id = $vehicle->id;
+
+        //         if($member_vehicle->save()) {
+
+        //             if(!empty($request->get('route'))) {
+
+        //                 foreach ((array)$request->get('route') as $checkbox_value) {
+
+        //                     $route_vehicle = new RouteVehicle();
+
+        //                     $route_vehicle->route_id = $checkbox_value;
+        //                     $route_vehicle->vehicle_id = $vehicle->id;
+
+        //                     $route_vehicle->save();
+        //                 }
+        //             }
+
+        //         }
+
+        //     }
+        //     else {
+
+        //         return back()->withErrors('Whoops')->withInput();
+        //     }
+
+        // }
+        // else {
+
+        //     return back()->withErrors('Whoops')->withInput();
+        // }
     }
 
     /**

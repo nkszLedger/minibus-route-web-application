@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
 {
-//    protected $primaryKey = 'route_id';
-
+    protected $table = 'route';
 
     public function vehicles()
     {
