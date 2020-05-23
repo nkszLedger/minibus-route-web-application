@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MemberRegionAssociation extends Model
 {
-    protected $table = 'member_region_association';
+    protected $table = 'member_region_associations';
 
     public function region()
     {

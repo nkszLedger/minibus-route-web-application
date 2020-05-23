@@ -24,6 +24,7 @@ class CreateMembersTable extends Migration
             $table->string('postal_code');
             $table->unsignedBigInteger('membership_type_id');
             $table->integer('city_id');
+            $table->boolean('is_member_associated');
 
             $table->timestamps();
 

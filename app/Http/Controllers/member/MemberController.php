@@ -15,9 +15,10 @@ use App\Vehicle;
 use App\City;
 use App\MemberFingerprint;
 use App\RouteVehicle;
-use App\MemberRegionAssociation;
 use App\Http\Controllers\Controller;
+use App\MemberRegionAssociation;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 use Illuminate\Support\Facades\DB;
@@ -83,6 +84,7 @@ class MemberController extends Controller
         $member->address_line = $request->get('addressline1');
         $member->postal_code = $request->get('postal-code');
         $member->city_id = $request->get('city');
+        $member->is_member_associated =  $request->has('isMemberAssociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
         if( $member->save() ) 
@@ -180,36 +182,50 @@ class MemberController extends Controller
 
         $member_vehicle = MemberVehicle::where('member_id', $id)->get();
 
-        $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
-        $association = Association::where('association_id', $member_region_association->association_id );
-        $region = Region::where('region_id', $member_region_association->region_id );
-        $vehicle = Vehicle::where('id', $member_vehicle->vehicle_id)->get();
+        $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
+
         $portrait = MemberPortrait::where('member_id', $id);
         $fingerprint = MemberFingerprint::where('member_id', $id);
 
         $member_vehicle_id = $member_vehicle[0]['id'];
-        $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
-
-        $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
-                            $query->select('route_id')
-                                ->from('route_vehicle')
-                                ->whereColumn('route_id', 'routes.id')
-                                ->where('vehicle_id','=' , $member_vehicle_id);
-                            })->get();
 
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
+        
+        if( $member_record->is_member_associated )
+        {
+            $member_region_association = MemberRegionAssociation::with('member_id')->findOrFail($id);
+            $association = Association::where('association_id', $member_region_association->association_id );
+            $region = Region::where('region_id', $member_region_association->region_id );
+            $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
+            $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
+                                $query->select('route_id')
+                                    ->from('route_vehicle')
+                                    ->whereColumn('route_id', 'routes.id')
+                                    ->where('vehicle_id','=' , $member_vehicle_id);
+                                })->get();
 
-        return view('member.show', compact(['member_record', 
-                                             'vehicle', 'portrait',
-                                             'fingerprint','all_routes', 
-                                             'region', 'association',
-                                             'all_associations',
-                                             'all_membership_types',
-                                             'all_regions', 'all_cities'
-                                           ]));
+            return view('member.show', compact(['member_record', 
+                                                'vehicle', 'portrait',
+                                                'fingerprint','all_routes', 
+                                                'region', 'association',
+                                                'all_associations',
+                                                'all_membership_types',
+                                                'all_regions', 'all_cities'
+                                                ]));
+        }
+        else
+        {
+            return view('member.show', compact(['member_record', 
+                                                'vehicle', 'portrait',
+                                                'fingerprint',
+                                                'all_membership_types',
+                                                'all_cities'
+                                                ]));
+        }
+
     }
 
     /**

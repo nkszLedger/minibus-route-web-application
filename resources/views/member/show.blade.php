@@ -9,11 +9,14 @@
             <div class="col-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h4 class="box-title">Member Profile </h4>
+                        <h4 class="box-title">Member Management: Member Profile</h4>
+					    <h4 class="box-subtitle">Registered Member details</h4>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <section>
+                            <h4 class="box-title text-info"><i class="ti-target mr-15"></i> Personal Details</h4>
+						    <hr class="mb-15 mt-0">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -92,22 +95,34 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="idnumber"> Portrait :  </label>
-                                            @if($portrait !== null)
+                                            @if( isset($portrait->id) )
                                             <img src="/minibus/portrait-green.png" height="225" width="225">
                                             @else
                                             <img src="/minibus/portrait-grey.png" height="225" width="225">
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="licensenumber"> Fingerprint :  </label>
-                                        @if($fingerprint !== null)
+                                        <label for="licensenumber"> Fingerprint (Left) :  </label>
+                                        @if( isset($fingerprint->id) )
                                             <img src="/minibus/fingerprint-green.jpg" height="225" width="225">
                                         @else
                                             <img src="/minibus/fingerprint-gey.png" height="225" width="225">
                                         @endif
                                     </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="licensenumber"> Fingerprint (Right) :  </label>
+                                        @if( isset($fingerprint->id) )
+                                            <img src="/minibus/fingerprint-green.jpg" height="225" width="225">
+                                        @else
+                                            <img src="/minibus/fingerprint-gey.png" height="225" width="225">
+                                        @endif
+                                    </div>
+                                </div>
+
                             </div>
                         </section>
                         <hr>
@@ -118,33 +133,35 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="regnumber">Registration Number : <span class="danger">*</span> </label>
-                                        <input type="text" class="form-control required" readonly id="regnumber" value="{{ $vehicle->registration_number }}" name="regnumber">
+                                        <input type="text" class="form-control required" readonly id="regnumber" value="{{ $vehicle[0]['registration_number'] }}" name="regnumber">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vehiclemake">Make : <span class="danger">*</span></label>
-                                        <input type="text" class="form-control required" readonly  id="vehiclemake" value="{{ $vehicle->make }}" name="vehiclemake"> </div>
+                                        <input type="text" class="form-control required" readonly  id="vehiclemake" value="{{ $vehicle[0]['make'] }}" name="vehiclemake"> </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vehiclemodel">Model : <span class="danger">*</span> </label>
-                                        <input type="text" class="form-control required" readonly id="vehiclemodel" value="{{ $vehicle->model }}" name="vehiclemodel">
+                                        <input type="text" class="form-control required" readonly id="vehiclemodel" value="{{ $vehicle[0]['model'] }}" name="vehiclemodel">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="webUrl3">Year : <span class="danger">*</span></label>
-                                        <input type="text" class="form-control required" readonly id="webUrl3" value="{{ $vehicle->year }}" name="vehicleyear"> </div>
+                                        <input type="text" class="form-control required" readonly id="webUrl3" value="{{ $vehicle[0]['year'] }}" name="vehicleyear"> </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vehicleseats">Number of seats : <span class="danger">*</span></label>
-                                        <input type="number" class="form-control required" readonly  id="vehicleseats" value="{{ $vehicle->seats_number }}"  name="vehicleseats">
+                                        <input type="number" class="form-control required" readonly  id="vehicleseats" value="{{ $vehicle[0]['seats_number'] }}"  name="vehicleseats">
                                     </div>
                                 </div>
                             </div>
                         </section>
+
+                        @if( isset( $region )  )
                         <hr>
                         <h4>Association and Routes</h4>
                         <hr>
@@ -196,6 +213,8 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <a href="{{ url('members.show', $member_record->id )}}" type="submit" id="cancel_button" class="btn btn-warning ">Cancel </a>
