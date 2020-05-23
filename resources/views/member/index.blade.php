@@ -9,7 +9,8 @@
 		<div class="col-12">
 			<div class="box">
 				<div class="box-header with-border">
-					<h4 class="box-title">List of Members</h4>
+					<h4 class="box-title">Member Management: Member Profiles</h4>
+					<h4 class="box-subtitle">Showing Registered Member Profiles</h4>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -20,8 +21,8 @@
 									<th>#</th>
 									<th>Name</th>
 									<th>Surname</th>
-									<th>ID Number</th>
-									<th>Association</th>
+									<th>Email</th>
+									<th>City</th>
 									<th>Membership Type</th>
 									<th>Verification Status</th>
 									<th>Action</th>
@@ -37,16 +38,16 @@
 									<td>{{$count}}</td>
 									<td>{{$member->name}} </td>
 									<td>{{$member->surname}}</td>
-									<td>{{$member->id_number}}</td>
-									<td>{{$member['member_association']['name']}}</td>
+									<td>{{$member->email}}</td>
+									<td>{{$member['city']['city']}}</td>
 									<td>{{$member['membership_type']['membership_type']}}</td>
 									<td>
 										<span class="badge badge-pill badge-danger">Not Verified</span>
 									</td>
 									<td>
-										<a href="{{ url('show_member', $member->id)}}"><b>Edit</b></a> |
+										<a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> |
 										{{-- <a href="#" data-toggle="modal" data-target="#modal-default" id="modal-button-id"  > <b>Profile</b></a> |--}}
-										<a href="{{ url('showmodal', $member->id)}}"> <b>View Profile</b></a>
+										<a href="{{ route('members.show', $member->id)}}"> <b>View Profile</b></a>
 
 									</td>
 								</tr>

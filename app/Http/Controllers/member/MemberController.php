@@ -8,13 +8,14 @@ use App\MembershipType;
 use App\MemberVehicle;
 use App\MemberDriver;
 use App\MemberOperator;
-use App\Portrait;
+use App\MemberPortrait;
 use App\Region;
 use App\Route;
 use App\Vehicle;
 use App\City;
-use App\Fingerprint;
+use App\MemberFingerprint;
 use App\RouteVehicle;
+use App\MemberRegionAssociation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +31,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $all_members = Member::with(['membership_type','member_association',
-                                        'portrait'])->orderBy('id','desc')->get();
+        $all_members = Member::with(['membership_type', 
+                                     'city'])->orderBy('id','desc')->get();
 
         return view('member.index', 
                     compact(['all_members']));
@@ -71,6 +72,7 @@ class MemberController extends Controller
         $member_driver = new MemberDriver();
         $member_operator = new MemberOperator();
         $route_vehicle = new RouteVehicle();
+        $member_region_association = new MemberRegionAssociation();
 
         /* capture MEMBER details */
         $member->name = $request->get('firstName');
@@ -99,7 +101,7 @@ class MemberController extends Controller
                 $member_vehicle->vehicle_id = $vehicle->id;
                 $member_vehicle->save();
 
-                /* capture MEMBER DRIVE & OPERATOR details */
+                /* capture MEMBER DRIVER & OPERATOR details */
                 switch ( $request->get('membership-type') ) 
                 {
                     case "1":
@@ -138,6 +140,11 @@ class MemberController extends Controller
 
                 if( $request->has('isMemberAssociated') )
                 {
+                    /* capture MEMBER REGION, ASSOCIATION details */
+                    $member_region_association->member_id = $member->id;
+                    $member_region_association->region_id = $request->get('region');
+                    $member_region_association->association_id = $request->get('association');
+
                     if( !empty($request->get('route')) ) 
                     {
                         foreach ((array)$request->get('route') as $checkbox_value) 
@@ -156,6 +163,8 @@ class MemberController extends Controller
             else { return back()->withErrors('Whoops')->withInput();}
         }
         else { return back()->withErrors('Whoops')->withInput();}
+
+        return redirect()->route('members.index');
     }
 
     /**
@@ -166,15 +175,19 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        $member_record = Member::with(['membership_type','member_association',
-                                        'vehicles','portrait','fingerprint',
-                                        'city', 'region'])->findOrFail($id);
+        $member_record = Member::with(['membership_type',
+                                        'city'])->findOrFail($id);
 
-        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
+        $member_vehicle = MemberVehicle::where('member_id', $id)->get();
 
-        $member_vehicle_record = MemberVehicle::where('member_id', $id)->get();
-        $member_vehicle_id = $member_vehicle_record[0]['id'];
+        $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
+        $association = Association::where('association_id', $member_region_association->association_id );
+        $region = Region::where('region_id', $member_region_association->region_id );
+        $vehicle = Vehicle::where('id', $member_vehicle->vehicle_id)->get();
+        $portrait = MemberPortrait::where('member_id', $id);
+        $fingerprint = MemberFingerprint::where('member_id', $id);
 
+        $member_vehicle_id = $member_vehicle[0]['id'];
         $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
 
         $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
@@ -189,22 +202,14 @@ class MemberController extends Controller
         $all_regions = Region::all();
         $all_cities = City::all();
 
-        return view('member.show',  compact(['member_record', 'member_vehicle_record',
-                                                        'member_vehicle_routes',
-                                                        'route_vehicle','all_membership_types',
-                                                        'all_associations','all_routes',
-                                                        'all_regions','all_cities'
-                                                  ]));
-
-        // return response()
-        //         ->view('show_member_details', ['member_record'=>$member_record,
-        //                                         'member_vehicle_record'=>$member_vehicle_record, 
-        //                                         'all_associations'=>$all_associations,
-        //                                         'all_routes'=>$all_routes,'route_vehicle'=>$route_vehicle,
-        //                                         'all_member_types'=>$all_member_types,
-        //                                         'member_vehicle_routes'=> $member_vehicle_routes, 
-        //                                         'all_regions'=>$all_regions, 'all_cities'=>$all_cities], 200)
-        //         ->header('Content-Type', 'json');
+        return view('member.show', compact(['member_record', 
+                                             'vehicle', 'portrait',
+                                             'fingerprint','all_routes', 
+                                             'region', 'association',
+                                             'all_associations',
+                                             'all_membership_types',
+                                             'all_regions', 'all_cities'
+                                           ]));
     }
 
     /**
