@@ -50,7 +50,7 @@
 									<div class="form-group">
 										<label>Upload Operating licence... </label>
 										<label class="file">
-											<input type="file" id="createoperatinglicensefile">
+											<input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile">
 										</label>
 									</div>
 									<div class="form-group">

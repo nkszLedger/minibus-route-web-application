@@ -6,13 +6,15 @@ use App\Association;
 use App\Member;
 use App\MembershipType;
 use App\MemberVehicle;
+use App\MemberDriver;
+use App\MemberOperator;
 use App\Portrait;
 use App\Region;
 use App\Route;
-use App\RouteVehicle;
 use App\Vehicle;
 use App\City;
 use App\Fingerprint;
+use App\RouteVehicle;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,16 +64,15 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $Driver = 1;
-        $Operator = 2;
-        $Both = 3;
-
+        /* Init instances */
         $member = new Member();
         $vehicle = new Vehicle();
-        
-        $membership_type = MembershipType::where('id', $request->get('membership-type'))->get();
+        $member_vehicle = new MemberVehicle();
+        $member_driver = new MemberDriver();
+        $member_operator = new MemberOperator();
+        $route_vehicle = new RouteVehicle();
 
-        // capture personal details
+        /* capture MEMBER details */
         $member->name = $request->get('firstName');
         $member->surname = $request->get('lastName');
         $member->id_number = $request->get('idnumber');
@@ -80,70 +81,81 @@ class MemberController extends Controller
         $member->address_line = $request->get('addressline1');
         $member->postal_code = $request->get('postal-code');
         $member->city_id = $request->get('city');
+        $member->membership_type_id = $request->get('membership-type'); 
 
-        if( $request->get('membership-type') == $Driver )
+        if( $member->save() ) 
         {
-            
+            /* capture VEHICLE details */
+            $vehicle->registration_number = $request->get('regnumber');
+            $vehicle->make = $request->get('vehiclemake');
+            $vehicle->model = $request->get('vehiclemodel');
+            $vehicle->year = $request->get('vehicleyear');
+            $vehicle->seats_number = $request->get('vehicleseats');
+
+            if( $vehicle->save() ) 
+            {
+                /* capture MEMBER VEHICLE details */
+                $member_vehicle->member_id  = $member->id;
+                $member_vehicle->vehicle_id = $vehicle->id;
+                $member_vehicle->save();
+
+                /* capture MEMBER DRIVE & OPERATOR details */
+                switch ( $request->get('membership-type') ) 
+                {
+                    case "1":
+                      /* Member is a Driver */
+                      $member_driver->member_id = $member->id;
+                      $member_driver->license_id = $request->get('licensenumber');
+                      $member_driver->save();
+                      break;
+
+                    case "2":
+                       /* Member is a Operator */
+                       $member_operator->member_id = $member->id;
+                       $member_operator->license_id = $request->get('operatinglicensenumber');
+                       $member_operator->license_path = $request->file('createoperatinglicensefile')
+                                                                ->store('createoperatinglicensefile');
+                       $member_operator->save();
+                      break;
+
+                    case "3":
+                       /* Member is a Driver */
+                       $member_driver->member_id = $member->id;
+                       $member_driver->license_id = $request->get('licensenumber');
+                       $member_driver->save();
+
+                       /* Member is a Operator */
+                       $member_operator->member_id = $member->id;
+                       $member_operator->license_id = $request->get('operatinglicensenumber');
+                       $member_operator->license_path = $request->file('createoperatinglicensefile')
+                                                                ->store('createoperatinglicensefile');
+                       $member_operator->save();
+
+                      break;
+                    default:
+                       /* should never reach */
+                } 
+
+                if( $request->has('isMemberAssociated') )
+                {
+                    if( !empty($request->get('route')) ) 
+                    {
+                        foreach ((array)$request->get('route') as $checkbox_value) 
+                        {
+                            /* capture ROUTE VEHICLE details */
+                            $route_vehicle->route_id = $checkbox_value;
+                            $route_vehicle->vehicle_id = $vehicle->id;
+
+                            $route_vehicle->save();
+                        }
+                    }
+                    else { return back()->withErrors('Whoops')->withInput();}
+                }
+                else { return back()->withErrors('Whoops')->withInput();}
+            }
+            else { return back()->withErrors('Whoops')->withInput();}
         }
-
-        // $member->name = $request->get('firstName');
-        // $member->surname = $request->get('lastName');
-        // $member->id_number = $request->get('idnumber');
-        // $member->license_number = $request->get('licensenumber');
-        // $member->email = $request->get('emailAddress');
-        // $member->phone_number = $request->get('phonenumber');
-        // $member->address_line = $request->get('addressline1');
-
-        // //TODO check if associate method cannot be used
-        // $member->membership_type_id = $request->get('membership-type'); 
-        
-        // $member->association_id = $request->get('association');
-        // $member->postal_code = $request->get('postal-code');
-        // $member->region_id = $request->get('region');
-        // $member->city_id = $request->get('city');
-
-        // if($member->save()) {
-        //     $vehicle->registration_number = $request->get('regnumber');
-        //     $vehicle->make = $request->get('vehiclemake');
-        //     $vehicle->model = $request->get('vehiclemodel');
-        //     $vehicle->year = $request->get('vehicleyear');
-        //     $vehicle->seats_number = $request->get('vehicleseats');
-
-        //     if($vehicle->save()) {
-
-        //         $member_vehicle = new MemberVehicle();
-
-        //         $member_vehicle->member_id  = $member->id;
-        //         $member_vehicle->vehicle_id = $vehicle->id;
-
-        //         if($member_vehicle->save()) {
-
-        //             if(!empty($request->get('route'))) {
-
-        //                 foreach ((array)$request->get('route') as $checkbox_value) {
-
-        //                     $route_vehicle = new RouteVehicle();
-
-        //                     $route_vehicle->route_id = $checkbox_value;
-        //                     $route_vehicle->vehicle_id = $vehicle->id;
-
-        //                     $route_vehicle->save();
-        //                 }
-        //             }
-
-        //         }
-
-        //     }
-        //     else {
-
-        //         return back()->withErrors('Whoops')->withInput();
-        //     }
-
-        // }
-        // else {
-
-        //     return back()->withErrors('Whoops')->withInput();
-        // }
+        else { return back()->withErrors('Whoops')->withInput();}
     }
 
     /**

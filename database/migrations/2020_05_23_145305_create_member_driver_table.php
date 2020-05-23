@@ -17,7 +17,6 @@ class CreateMemberDriverTable extends Migration
             $table->id();
             $table->integer('member_id');
             $table->string('license_id')->unique();
-            $table->string('license_path')->nullable();
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members');
