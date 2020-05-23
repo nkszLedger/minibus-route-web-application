@@ -55,7 +55,7 @@ class CitiesTableSeeder extends Seeder
 
         foreach ($seedData as $unit_array)
         {
-            DB::table('cities')->insert([$unit_array]);
+            DB::table('city')->insert([$unit_array]);
 
         }
     }

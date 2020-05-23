@@ -14,13 +14,11 @@ class CreateAssociationTable extends Migration
     public function up()
     {
         Schema::create('association', function (Blueprint $table) {
-//            $table->id();
+
             $table->integer('region_id');
             $table->integer('association_id')->primary();
             $table->string('name');
             $table->string('RAS_number');
-//            $table->integer('active_members');
-//            $table->integer('number_of_members');
 
             $table->foreign('region_id')->references('region_id')->on('regions');
 

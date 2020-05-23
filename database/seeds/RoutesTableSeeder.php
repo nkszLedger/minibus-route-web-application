@@ -4,45 +4,6 @@ use Illuminate\Database\Seeder;
 
 class RoutesTableSeeder extends Seeder
 {
-//    /**
-//     * Run the database seeds.
-//     *
-//     * @return void
-//     */
-//    public function run()
-//    {
-//        DB::table('routes')->insert([
-//            [
-//                'association_id' => '800000',
-//                'route_id' => '700000',
-//                'origin' => 'Lakeside Taxi Rank ',
-//                'via' => 'Brits',
-//                'destination' => 'Dungeni Street',
-//                'created_at' => \Carbon\Carbon::now(),
-//                'updated_at' => \Carbon\Carbon::now(),
-//            ],
-//            [
-//                'association_id' => '700096',
-//                'route_id' => '700000',
-//                'origin' => 'Daveyton Main Taxi Rank',
-//                'via' => 'Birch Road',
-//                'destination' => 'Pretoria Long Distance Tax Rank',
-//                'created_at' => \Carbon\Carbon::now(),
-//                'updated_at' => \Carbon\Carbon::now(),
-//            ],
-//            [
-//                'association_id' => '800000',
-//                'route_id' => '700104',
-//                'origin' => 'Daveyton Square Taxi Rank ',
-//                'via' => 'Old Pretoria Road',
-//                'destination' => 'Midrand Taxi Rank',
-//                'created_at' => \Carbon\Carbon::now(),
-//                'updated_at' => \Carbon\Carbon::now(),
-//            ],
-//        ]);
-//}
-
-
         public function __construct(){
 
 

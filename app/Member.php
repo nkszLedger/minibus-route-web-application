@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    protected $table = 'member';
+    protected $table = 'members';
 
     public function membership_type()
     {

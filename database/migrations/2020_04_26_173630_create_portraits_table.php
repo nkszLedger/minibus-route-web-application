@@ -13,7 +13,7 @@ class CreatePortraitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('portraits', function (Blueprint $table) {
+        Schema::create('member_portrait', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
             $table->binary('portrait')->nullable();
@@ -30,6 +30,6 @@ class CreatePortraitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('portraits');
+        Schema::dropIfExists('member_portrait');
     }
 }

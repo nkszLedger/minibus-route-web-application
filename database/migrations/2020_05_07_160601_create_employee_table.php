@@ -13,7 +13,7 @@ class CreateEmployeeTable extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) 
+        Schema::create('employee', function (Blueprint $table) 
         {
             $table->id();
             $table->string('name');
@@ -26,7 +26,7 @@ class CreateEmployeeTable extends Migration
             $table->integer('city_id');
             $table->timestamps();
 
-            $table->foreign('city_id')->references('city_id')->on('cities');
+            $table->foreign('city_id')->references('city_id')->on('city');
         });
     }
 

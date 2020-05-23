@@ -13,7 +13,7 @@ class CreateFingerprintsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fingerprints', function (Blueprint $table) {
+        Schema::create('member_fingerprint', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
             $table->binary('fingerprint_left_thumb')->nullable();
@@ -31,6 +31,6 @@ class CreateFingerprintsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fingerprints');
+        Schema::dropIfExists('member_fingerprint');
     }
 }

@@ -29,7 +29,7 @@ class CreateMembersTable extends Migration
             $table->timestamps();
 
             $table->foreign('membership_type_id')->references('id')->on('membership_types');
-            $table->foreign('city_id')->references('city_id')->on('cities');
+            $table->foreign('city_id')->references('city_id')->on('city');
 
 
         });
