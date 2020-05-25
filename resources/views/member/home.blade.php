@@ -724,7 +724,7 @@
 </script>
 
 <script>
-	 $('#isMemberAssociated').change(function() {
+	 $('#ismemberassociated').change(function() {
         if($(this).is(":checked")) 
 		{
 			document.getElementById("region").disabled = false;

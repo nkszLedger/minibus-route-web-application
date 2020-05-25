@@ -18,10 +18,12 @@ use App\RouteVehicle;
 use App\Http\Controllers\Controller;
 use App\MemberRegionAssociation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Exists;
 
 class MemberController extends Controller
 {
@@ -52,10 +54,10 @@ class MemberController extends Controller
         $all_membership_types = MembershipType::all();
 
         return view('member.create', compact(['all_membership_types',
-                                                    'all_regions',
-                                                    'all_associations', 
-                                                    'all_cities'
-                                                  ]));
+                                                'all_regions',
+                                                'all_associations', 
+                                                'all_cities'
+                                            ]));
     }
 
     /**
@@ -84,7 +86,7 @@ class MemberController extends Controller
         $member->address_line = $request->get('addressline1');
         $member->postal_code = $request->get('postal-code');
         $member->city_id = $request->get('city');
-        $member->is_member_associated =  $request->has('isMemberAssociated');
+        $member->is_member_associated =  $request->has('ismemberassociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
         if( $member->save() ) 
@@ -115,37 +117,52 @@ class MemberController extends Controller
 
                     case "2":
                        /* Member is a Operator */
-                       $member_operator->member_id = $member->id;
-                       $member_operator->license_id = $request->get('operatinglicensenumber');
-                       $member_operator->license_path = $request->file('createoperatinglicensefile')
-                                                                ->store('createoperatinglicensefile');
-                       $member_operator->save();
+                       if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
+                                                            $file, $name);
+
+                            $member_operator->member_id = $member->id;
+                            $member_operator->license_id = $request->get('operatinglicensenumber');
+                            $member_operator->license_path = $path;
+                            $member_operator->save();
+                        }
                       break;
 
                     case "3":
-                       /* Member is a Driver */
-                       $member_driver->member_id = $member->id;
-                       $member_driver->license_id = $request->get('licensenumber');
-                       $member_driver->save();
+                        /* Member is a Driver */
+                        $member_driver->member_id = $member->id;
+                        $member_driver->license_id = $request->get('licensenumber');
+                        $member_driver->save();
 
-                       /* Member is a Operator */
-                       $member_operator->member_id = $member->id;
-                       $member_operator->license_id = $request->get('operatinglicensenumber');
-                       $member_operator->license_path = $request->file('createoperatinglicensefile')
-                                                                ->store('createoperatinglicensefile');
-                       $member_operator->save();
+                        /* Member is a Operator */
+                        if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
+                                                            $file, $name);
+
+                            $member_operator->member_id = $member->id;
+                            $member_operator->license_id = $request->get('operatinglicensenumber');
+                            $member_operator->license_path = $path;
+                            $member_operator->save();
+                        }
 
                       break;
                     default:
                        /* should never reach */
                 } 
 
-                if( $request->has('isMemberAssociated') )
+                if( $request->has('ismemberassociated') )
                 {
                     /* capture MEMBER REGION, ASSOCIATION details */
                     $member_region_association->member_id = $member->id;
                     $member_region_association->region_id = $request->get('region');
                     $member_region_association->association_id = $request->get('association');
+                    $member_region_association->save();
 
                     if( !empty($request->get('route')) ) 
                     {
@@ -179,11 +196,11 @@ class MemberController extends Controller
     {
         $member_record = Member::with(['membership_type',
                                         'city'])->findOrFail($id);
-
+        
         $member_vehicle = MemberVehicle::where('member_id', $id)->get();
-
+        
         $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
-
+        
         $portrait = MemberPortrait::where('member_id', $id)->get();
         $fingerprint = MemberFingerprint::where('member_id', $id)->get();
 
@@ -191,7 +208,7 @@ class MemberController extends Controller
 
         $driver = MemberDriver::where('member_id', $id)->get();
         $operator = MemberOperator::where('member_id', $id)->get();
-
+        
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
@@ -199,17 +216,17 @@ class MemberController extends Controller
         
         if( $member_record->is_member_associated )
         {
-            $member_region_association = MemberRegionAssociation::with('member_id')->findOrFail($id);
-            $association = Association::where('association_id', $member_region_association->association_id );
-            $region = Region::where('region_id', $member_region_association->region_id );
+            $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
+            $association = Association::where('association_id', $member_region_association[0]['association_id'] )->get()[0];
+            $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
             $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
             $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
-                                $query->select('route_id')
-                                    ->from('route_vehicle')
-                                    ->whereColumn('route_id', 'routes.id')
-                                    ->where('vehicle_id','=' , $member_vehicle_id);
-                                })->get();
-
+                                                            $query->select('route_id')
+                                                                ->from('route_vehicle')
+                                                                ->whereColumn('route_id', 'routes.id')
+                                                                ->where('vehicle_id','=' , $member_vehicle_id);
+                                                            })->get();
+                                
             return view('member.show', compact(['member_record', 
                                                 'vehicle', 'portrait',
                                                 'driver', 'operator',

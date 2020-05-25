@@ -44,7 +44,11 @@
 									<div class="form-group">
 										<label>Operating License</label>
 										<label class="file">
-											<input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile">
+                                            @if( isset($operator[0]['license_path']) )
+											<input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile" disabled>
+                                            @else
+                                            <input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile" disabled>
+                                            @endif
 										</label>
 									</div>
 									<div class="form-group">
@@ -214,7 +218,7 @@
                                             <option value="">Please select Region</option>
                                             @foreach ($all_regions as $reg)
                                                 @if($reg->region_id === $region->region_id )
-                                                    <option  selected value="{{ $reg['region_id'] }}">{{ $reg['region_name'] }}</option>
+                                                    <option  selected value="{{ $region->region_id }}">{{ $region->region_name }}</option>
                                                 @else
                                                     <option value="{{ $reg['region_id'] }}">{{ $reg['region_name'] }}</option>
                                                 @endif
@@ -231,7 +235,7 @@
                                             <option value="">Please select Association</option>
                                             @foreach ($all_associations as $assoc)
                                                 @if($assoc->association_id === $association->association_id )
-                                                    <option selected value="{{ $assoc['association_id'] }}">{{ $assoc['name'] }}</option>
+                                                    <option selected value="{{ $assoc->association_id }}">{{ $assoc->name }}</option>
                                                 @else
                                                     <option  value="{{$assoc['association_id'] }}">{{$assoc['name']}}</option>
                                                 @endif

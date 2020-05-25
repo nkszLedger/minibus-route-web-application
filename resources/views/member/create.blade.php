@@ -13,9 +13,9 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
-					<form action="{{ route('members.store') }}" method="POST" id="member-form" class="validation-wizard wizard-circle">
+					<form action="{{ route('members.store') }}" method="POST" id="member-form" class="validation-wizard wizard-circle" enctype='multipart/form-data'>
 						{{ csrf_field() }}
-						
+
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
 						<section>
@@ -54,8 +54,8 @@
 									</div>
 									<div class="form-group">
 										<div class="checkbox checkbox-success">
-											<input id="isMemberAssociated" type="checkbox">
-											<label for="isMemberAssociated"> <span class="text-danger">Does member belong to any association ? </span></label>
+											<input type="checkbox" id="ismemberassociated" name="ismemberassociated">
+											<label for="ismemberassociated"> <span class="text-danger">Does member belong to any association ? </span></label>
 										</div>
 									</div>
 								</div>
