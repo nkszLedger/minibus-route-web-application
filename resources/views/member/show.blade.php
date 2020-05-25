@@ -14,19 +14,69 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+
+                        <h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
+						<hr class="mb-15 mt-0">
+						<section>
+							<div class="row">
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="membership-type"> Selected Type of Member : </label>
+										<select class="custom-select form-control required" id="membership-type" disabled name="membership-type">		
+											<option selected value="{{ $member_record['membership_type']['id'] }}">{{ $member_record['membership_type']['membership_type'] }}</option>
+										</select>
+									</div>
+								</div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="licensenumber">Driver's License Number :</label>
+                                        <input type="text" class="form-control required" readonly id="licensenumber" value="{{$driver[0]['license_id'] ?? ''}}" name="licensenumber"> </div>
+                                </div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="operatinglicensenumber">Operating License Number : </label>
+										<input type="text" class="form-control required" readonly id="operatinglicensenumber" value="{{$operator[0]['operatinglicensenumber'] ?? ''}}" name="operatinglicensenumber" > </div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Operating License</label>
+										<label class="file">
+											<input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile">
+										</label>
+									</div>
+									<div class="form-group">
+										<div class="checkbox checkbox-success">
+                                            @if( $member_record->is_member_associated )
+											    <input id="isMemberAssociated" type="checkbox" checked disabled>
+                                                <label for="isMemberAssociated"> This member <span class="text-danger">BELONGS</span> to an association</label>
+                                            @else
+                                                <input id="isMemberAssociated" type="checkbox" disabled>
+                                                <label for="isMemberAssociated"> This member <span class="text-danger">DOES NOT</span> belong to any association</label>
+                                            @endif
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</section>
+
+                        <hr class="mb-15 mt-0">
+						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Personal Details</h4>
+						<hr class="mb-15 mt-0">
                         <section>
-                            <h4 class="box-title text-info"><i class="ti-target mr-15"></i> Personal Details</h4>
-						    <hr class="mb-15 mt-0">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="wfirstName2"> First Name : <span class="danger">*</span> </label>
+                                        <label for="wfirstName2"> First Name : </label>
                                         <input type="text" class="form-control required" readonly id="wfirstName2" value="{{$member_record->name}}" name="firstName">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="wlastName2"> Last Name : <span class="danger">*</span> </label>
+                                        <label for="wlastName2"> Last Name : </label>
                                         <input type="text" class="form-control required" readonly id="wlastName2" value="{{$member_record->surname}}" name="lastName">
                                     </div>
                                 </div>
@@ -34,63 +84,51 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="idnumber"> ID Number : <span class="danger">*</span> </label>
+                                        <label for="idnumber"> ID Number </label>
                                         <input type="text" class="form-control required" readonly id="idnumber" value="{{$member_record->id_number}}" name="idnumber"> </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="licensenumber">Driver's License Number : <span class="danger">*</span> </label>
-                                        <input type="text" class="form-control required" readonly id="licensenumber" value="{{$member_record->license_number}}" name="licensenumber"> </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="wemailAddress2"> Email Address :</label>
                                         <input type="email" class="form-control" readonly id="emailAddress" value="{{$member_record->email}}" name="emailAddress"> </div>
                                 </div>
+                               
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="wphoneNumber2">Phone Number : <span class="danger">*</span>  </label>
+                                        <label for="wphoneNumber2">Phone Number : </label>
                                         <input type="tel" class="form-control required" readonly id="phonenumber" value="{{$member_record->phone_number}}" name="phonenumber"> </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="addressline1">Address Line : <span class="danger">*</span>  </label>
+                                        <label for="addressline1">Address Line : </label>
                                         <input type="text" class="form-control required" readonly id="addressline1" value="{{$member_record->address_line}}" name="addressline1"> </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="city">City/Town : <span class="danger">*</span> </label>
-                                        <select class="custom-select form-control" id="city" disabled name="city">
-                                            @foreach ($all_cities as $city)
-                                                @if( $city->city_id === $member_record['city']['city_id'] )
-                                                    <option selected value="{{$member_record['city']['city_id']}}">{{$city->city}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="membership-type"> Select Membership : <span class="danger">*</span> </label>
-                                        <select class="custom-select form-control" id="membership-type" disabled name="membership-type">									
-                                            @foreach ($all_membership_types as $membership_type)
-                                                @if($membership_type->id === $member_record['membership_type']['id'])
-                                                    <option selected value="{{$membership_type->id}}">{{$membership_type->membership_type}}</option>
-                                                @endif
-                                            @endforeach
+                                        <label for="city">City/Town : </label>
+                                        <select class="custom-select form-control" id="city" disabled name="city">
+                                            <option selected value="{{$member_record['city']['city_id']}}">{{$member_record['city']['city']}}</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="postal-code">Postal Code : </label>
+										<input type="text" class="form-control" readonly id="postal-code" value="{{$member_record->postal_code}}">
+									</div>
+								</div>
                             </div>
-                            <hr>
-                            <h4>Biometrics Captured</h4>
-                            <hr>
+
+                        </section>
+                            
+						<hr class="mb-15 mt-0">
+						<h4 class="box-title text-info"><i class="ti-eye mr-15"></i> Biometrics Captured</h4>
+						<hr class="mb-15 mt-0">
+                        <section>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -125,36 +163,38 @@
 
                             </div>
                         </section>
-                        <hr>
-                        <h4>Vehicle Details</h4>
-                        <hr>
+
+                        
+						<hr class="mb-15 mt-0">
+						<h4 class="box-title text-info"><i class="ti-car mr-15"></i> Vehicle Details</h4>
+						<hr class="mb-15 mt-0">
                         <section>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="regnumber">Registration Number : <span class="danger">*</span> </label>
+                                        <label for="regnumber">Registration Number : </label>
                                         <input type="text" class="form-control required" readonly id="regnumber" value="{{ $vehicle[0]['registration_number'] }}" name="regnumber">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vehiclemake">Make : <span class="danger">*</span></label>
+                                        <label for="vehiclemake">Make : </label>
                                         <input type="text" class="form-control required" readonly  id="vehiclemake" value="{{ $vehicle[0]['make'] }}" name="vehiclemake"> </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vehiclemodel">Model : <span class="danger">*</span> </label>
+                                        <label for="vehiclemodel">Model : </label>
                                         <input type="text" class="form-control required" readonly id="vehiclemodel" value="{{ $vehicle[0]['model'] }}" name="vehiclemodel">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="webUrl3">Year : <span class="danger">*</span></label>
+                                        <label for="webUrl3">Year : </label>
                                         <input type="text" class="form-control required" readonly id="webUrl3" value="{{ $vehicle[0]['year'] }}" name="vehicleyear"> </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vehicleseats">Number of seats : <span class="danger">*</span></label>
+                                        <label for="vehicleseats">Number of seats : </label>
                                         <input type="number" class="form-control required" readonly  id="vehicleseats" value="{{ $vehicle[0]['seats_number'] }}"  name="vehicleseats">
                                     </div>
                                 </div>
@@ -162,9 +202,9 @@
                         </section>
 
                         @if( isset( $region )  )
-                        <hr>
-                        <h4>Association and Routes</h4>
-                        <hr>
+                        <hr class="mb-15 mt-0">
+						<h4 class="box-title text-info"><i class="ti-map-alt mr-15"></i> Routes & Associations</h4>
+						<hr class="mb-15 mt-0">
                         <section>
                             <div class="row">
                                 <div class="col-md-6">

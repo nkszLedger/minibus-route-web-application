@@ -184,10 +184,13 @@ class MemberController extends Controller
 
         $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
 
-        $portrait = MemberPortrait::where('member_id', $id);
-        $fingerprint = MemberFingerprint::where('member_id', $id);
+        $portrait = MemberPortrait::where('member_id', $id)->get();
+        $fingerprint = MemberFingerprint::where('member_id', $id)->get();
 
         $member_vehicle_id = $member_vehicle[0]['id'];
+
+        $driver = MemberDriver::where('member_id', $id)->get();
+        $operator = MemberOperator::where('member_id', $id)->get();
 
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
@@ -209,6 +212,7 @@ class MemberController extends Controller
 
             return view('member.show', compact(['member_record', 
                                                 'vehicle', 'portrait',
+                                                'driver', 'operator',
                                                 'fingerprint','all_routes', 
                                                 'region', 'association',
                                                 'all_associations',
@@ -220,6 +224,7 @@ class MemberController extends Controller
         {
             return view('member.show', compact(['member_record', 
                                                 'vehicle', 'portrait',
+                                                'driver', 'operator',
                                                 'fingerprint',
                                                 'all_membership_types',
                                                 'all_cities'

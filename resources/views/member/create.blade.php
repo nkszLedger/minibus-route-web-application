@@ -15,8 +15,7 @@
 				<div class="box-body wizard-content">
 					<form action="{{ route('members.store') }}" method="POST" id="member-form" class="validation-wizard wizard-circle">
 						{{ csrf_field() }}
-
-						<input type="hidden" class="form-control " id="member-id" name="member-id">
+						
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
 						<section>
