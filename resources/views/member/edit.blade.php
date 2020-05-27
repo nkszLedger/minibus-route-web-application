@@ -57,9 +57,9 @@
 										<label>Operating License</label>
 										<label class="file">
                                             @if( isset($operator[0]['license_path']) )
-											<input type="file" id="updateoperatinglicensefile" name="updateperatinglicensefile" title="{{ $operator[0]['license_path'] }}" >
+											<input type="file" id="updateoperatinglicensefile" name="operatinglicensefile" title="{{ $operator[0]['license_path'] }}" >
                                             @else
-                                            <input type="file" id="updateoperatinglicensefile" name="updateoperatinglicensefile" title="No file uploaded" >
+                                            <input type="file" id="updateoperatinglicensefile" name="operatinglicensefile" title="No file uploaded" >
                                             @endif
 										</label>
 									</div>

@@ -317,7 +317,126 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /* Init instances */
+        $member = Member::where('id', $id)->get();
+        $member_vehicle = MemberVehicle::where('member_id', $member->id);
+        $member_driver = MemberDriver::where('member_id', $member->id); 
+        $member_operator = MemberOperator::where('member_id', $member->id);
+        $member_region_association = MemberRegionAssociation::where('member_id', $member->id);
+        $vehicle = Vehicle::where('id', $member_vehicle->vehicle_id );
+
+        /* clear route vehicle */
+        $result = RouteVehicle::where('vehicle_id', $member_vehicle->vehicle_id)->delete();
         
+        $route_vehicle = new RouteVehicle();
+
+        /* capture MEMBER details */
+        $member->name = $request->get('firstName');
+        $member->surname = $request->get('lastName');
+        $member->id_number = $request->get('idnumber');
+        $member->email = $request->get('emailAddress');
+        $member->phone_number = $request->get('phonenumber');
+        $member->address_line = $request->get('addressline1');
+        $member->postal_code = $request->get('postal-code');
+        $member->city_id = $request->get('city');
+        $member->is_member_associated =  $request->has('ismemberassociated');
+        $member->membership_type_id = $request->get('membership-type'); 
+
+        if( $member->save() ) 
+        {
+            /* capture VEHICLE details */
+            $vehicle->registration_number = $request->get('regnumber');
+            $vehicle->make = $request->get('vehiclemake');
+            $vehicle->model = $request->get('vehiclemodel');
+            $vehicle->year = $request->get('vehicleyear');
+            $vehicle->seats_number = $request->get('vehicleseats');
+
+            if( $vehicle->save() ) 
+            {
+                /* capture MEMBER VEHICLE details */
+                $member_vehicle->member_id  = $member->id;
+                $member_vehicle->vehicle_id = $vehicle->id;
+                $member_vehicle->save();
+
+                /* capture MEMBER DRIVER & OPERATOR details */
+                switch ( $request->get('membership-type') ) 
+                {
+                    case "1":
+                      /* Member is a Driver */
+                      $member_driver->member_id = $member->id;
+                      $member_driver->license_id = $request->get('licensenumber');
+                      $member_driver->save();
+                      break;
+
+                    case "2":
+                       /* Member is a Operator */
+                       if( $request->hasFile('operatinglicensefile') )
+                       {
+                           $file = $request->file('operatinglicensefile');
+                           $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                           $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                                                           $file, $name);
+
+                           $member_operator->member_id = $member->id;
+                           $member_operator->license_id = $request->get('operatinglicensenumber');
+                           $member_operator->license_path = $path;
+                           $member_operator->save();
+                       }
+                      break;
+
+                    case "3":
+                        /* Member is a Driver */
+                        $member_driver->member_id = $member->id;
+                        $member_driver->license_id = $request->get('licensenumber');
+                        $member_driver->save();
+
+                        /* Member is a Operator */
+                        if( $request->hasFile('operatinglicensefile') )
+                        {
+                           $file = $request->file('operatinglicensefile');
+                           $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                           $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                                                           $file, $name);
+
+                           $member_operator->member_id = $member->id;
+                           $member_operator->license_id = $request->get('operatinglicensenumber');
+                           $member_operator->license_path = $path;
+                           $member_operator->save();
+                        }
+
+                      break;
+                    default:
+                       /* should never reach */
+                } 
+
+                if( $request->has('ismemberassociated') )
+                {
+                    /* capture MEMBER REGION, ASSOCIATION details */
+                    $member_region_association->member_id = $member->id;
+                    $member_region_association->region_id = $request->get('region');
+                    $member_region_association->association_id = $request->get('association');
+                    $member_region_association->save();
+
+                    if( !empty($request->get('route')) ) 
+                    {
+                        foreach ((array)$request->get('route') as $checkbox_value) 
+                        {
+                            /* capture ROUTE VEHICLE details */
+                            $route_vehicle->route_id = $checkbox_value;
+                            $route_vehicle->vehicle_id = $vehicle->id;
+
+                            $route_vehicle->save();
+                        }
+                    }
+                    else { return back()->withErrors('Whoops')->withInput();}
+                }
+                else { return back()->withErrors('Whoops')->withInput();}
+            }
+            else { return back()->withErrors('Whoops')->withInput();}
+        }
+        else { return back()->withErrors('Whoops')->withInput();}
+
+        return redirect()->route('members.index');
         
     }
 
