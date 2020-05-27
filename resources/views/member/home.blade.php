@@ -931,5 +931,103 @@
 		
 </script>
 
+<script>
+
+	$('#update-region').change(function(){
+		var id = $(this).val();
+
+		// clear area
+		$("#update-route").html('');
+
+		$('#update-association').find('option').not(':first').remove();
+
+		$.ajax({
+			url: 'getAssociations/'+ id.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				var len = 0;
+				if(response['data'] != null){
+					len = response['data'].length;
+				}
+
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
+
+						var id = response['data'][i].association_id;
+						var name = response['data'][i].name;
+
+						console.log('the loop');
+						console.log(name);
+
+						var option = "<option value='"+id+"'>"+name+"</option>";
+
+						console.log('the option to append');
+						console.log(option);
+						$("#update-association").append(option);
+					}
+					console.log('outside loop');
+				}
+
+			},
+			error: function() {
+				console.log(this.url);
+			}
+		});
+	});
+
+	//routes per association ajax function //TODO pull routes based of the selected association ID.
+
+	$('#update-association').change(function(){
+		var id = $(this).val();
+
+		$.ajax({
+			url: 'getRoutesPerAssociation/'+id,
+			type: 'get',
+			dataType: 'json',
+			success: function(response){
+
+				var len = 0;
+
+				// clear area
+				$("#update-route").html('');
+
+				if(response['data'] != null){
+					len = response['data'].length;
+					console.log(id);
+				}
+
+				if(len > 0){
+					// Read data and create <option >
+					for(var i=0; i<len; i++){
+
+						var id = response['data'][i].id;
+						var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
+							
+						var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
+						var label = "<label for='"+id+"' >" + route_name + "</label>";
+
+						var option = "<div>" + input + label + "</div>";
+
+						console.log('the option to append');
+						console.log(option);
+
+						
+						$("#update-route").append(option);
+					}
+					console.log('outside loop');
+
+
+				}
+
+			}
+		});
+	});
+
+		
+</script>
+
 </body>
 </html>

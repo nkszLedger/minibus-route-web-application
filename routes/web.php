@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,8 +28,22 @@ Route::resources([
     'dashboard' => 'Dashboard\DashboardController'
 ]);
 
-Route::get('members/getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('associations');
-Route::get('members/getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
+Route::get('members/getAssociations/{region_id}', 
+            'Controller@getAssociationsByRegionID')->name('associations');
+Route::get('members/{member_id}/getAssociations/{region_id}', 
+            function($member_id, $region_id) {
+                return App::make('App\http\Controllers\Controller')
+                ->getAssociationsByRegionID($region_id);
+});        
+
+
+Route::get('members/getRoutesPerAssociation/{association_id}', 
+            'Controller@getRoutesByAssociationID')->name('regions');
+Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}', 
+            function($member_id, $association_id) {
+                return App::make('App\http\Controllers\Controller')
+                ->getRoutesByAssociationID($association_id);
+});   
 
 // Route::get('showregpage', 'MemberController@showregpage');
 // Route::get('showtestregpage', 'MemberController@showtestregpage');

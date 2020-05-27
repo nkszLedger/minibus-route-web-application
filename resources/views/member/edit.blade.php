@@ -183,53 +183,65 @@
 						<hr class="mb-15 mt-0">
                         <section>
                             <div class="row">
-                                <div class="col-md-6">
+								<div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="updateregion">Region:</label>
-                                        <select class="custom-select form-control required" id="updateregion" name="region">
-                                            <option value="">Please select Region</option>
-                                            @foreach ($all_regions as $reg)
-                                                @if($reg->region_id === $region->region_id )
-                                                    <option  selected value="{{ $region->region_id }}">{{ $region->region_name }}</option>
-                                                @else
-                                                    <option value="{{ $reg['region_id'] }}">{{ $reg['region_name'] }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
+                                        <label><span class="text-danger">Current Region: </span></label>
+                                        <input type="text" class="form-control required" readonly value="{{ $region->region_name }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+								<div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="updateassociation
-										">Association :</label>
-                                        <select class="custom-select form-control " id="updateassociation" name="association">
-                                            <option value="">Please select Association</option>
-                                            @foreach ($all_associations as $assoc)
-                                                @if($assoc->association_id === $association->association_id )
-                                                    <option selected value="{{ $assoc->association_id }}">{{ $assoc->name }}</option>
-                                                @else
-                                                    <option  value="{{$assoc['association_id'] }}">{{$assoc['name']}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                        <label><span class="text-danger">Current Association: </span></label>
+                                        <input type="text" class="form-control required" readonly value="{{ $association->name}}">
                                     </div>
                                 </div>
-                                
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Vehicle Route Details: </label>
+										<label><span class="text-danger">Current Vehicle Route Details: </span></label>
 										<hr class="mb-15 mt-0">
-										<div id="updateroute" name="route">
+										<div>
 										@foreach ($all_routes as $route)
                                             {{-- @if($route->route_id === $member_vehicle_routes[0]['routes'][0]['route_id']) --}}
-                                                <input checked="checked"  name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}">
+                                                <input checked="checked"  name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}" disabled>
                                                 {{-- <label for="{{$route->id}}" class="d-block">{{$route->id.' : '}}{{$member_vehicle_routes[0]['routes'][0]['origin'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['via'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['destination']}}</label> --}}
                                                 <label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$route->origin.' - '}}{{$route->via.' - '}}{{$route->destination}}</label>
                                             {{-- @endif --}}
                                         @endforeach
 										</div>
+									</div>
+								</div>
+
+								<hr class="mb-15 mt-0">
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="update-region">Select New Region (If applicable): </label>
+										<select class="custom-select form-control required" id="update-region" name="region">
+											<option selected value="">Please select Region</option>
+											@foreach ($all_regions as $region)
+												<option value="{{$region->region_id}}">{{$region->region_name}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="update-association">Select New Association (If applicable):</label>
+										<select class="custom-select form-control required " id="update-association" name="association">
+											<option selected value="">Please select Association</option>
+											@foreach ($all_associations as $association)
+												<option value="{{$association->association_id}}">{{$association->name}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Vehicle Route Details : </label>
+										<hr class="mb-15 mt-0">
+										<div id="update-route" name="route"></div>
 									</div>
 								</div>
 
