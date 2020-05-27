@@ -37,7 +37,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="operatinglicensenumber">Operating License Number : </label>
-										<input type="text" class="form-control required" readonly id="operatinglicensenumber" value="{{$operator[0]['operatinglicensenumber'] ?? ''}}" name="operatinglicensenumber" > </div>
+										<input type="text" class="form-control required" readonly id="operatinglicensenumber" value="{{$operator[0]['license_id'] ?? ''}}" name="operatinglicensenumber" > </div>
 								</div>
 
 								<div class="col-md-6">
@@ -45,9 +45,9 @@
 										<label>Operating License</label>
 										<label class="file">
                                             @if( isset($operator[0]['license_path']) )
-											<input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile" disabled>
+											<input type="file" id="showoperatinglicensefile" name="showoperatinglicensefile" title="{{ $operator[0]['license_path'] }}" disabled>
                                             @else
-                                            <input type="file" id="createoperatinglicensefile" name="createoperatinglicensefile" disabled>
+                                            <input type="file" id="showoperatinglicensefile" name="showoperatinglicensefile" title="No file uploaded" disabled>
                                             @endif
 										</label>
 									</div>
@@ -261,8 +261,8 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <a href="{{ url('members.show', $member_record->id )}}" type="submit" id="cancel_button" class="btn btn-warning ">Cancel </a>
-                                    <a href="{{ url('members.update', $member_record->id )}}" type="submit" id="edit_button" class="btn btn-primary float-right">Edit </a>
+                                    <a href="{{ route('members.show', $member_record->id )}}" type="submit" id="cancel_button" class="btn btn-warning ">Cancel </a>
+                                    <a href="{{ route('members.edit', $member_record->id )}}" type="submit" id="edit_button" class="btn btn-primary float-right">Edit </a>
                                 </div>
                             </div>
                         </section>

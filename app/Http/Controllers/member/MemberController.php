@@ -258,49 +258,54 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $member_record = Member::with(['membership_type','member_association',
-                                        'vehicles','portrait','fingerprint',
-                                        'city', 'region'])->findOrFail($id);
+        $member_record = Member::with(['membership_type',
+                                        'city'])->findOrFail($id);
         
-        $member_vehicle_routes = Vehicle::with('routes')->where('id',$member_record['vehicles'][0]['id'])->get();
+        $member_vehicle = MemberVehicle::where('member_id', $id)->get();
         
-        $portrait = Portrait::where('id',$id)->get();
-        $fingerprint = Fingerprint::where('id',$id)->get();
+        $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
 
-        $member_vehicle_record = MemberVehicle::where('member_id', $id)->get();
-        $member_vehicle_id = $member_vehicle_record[0]['id'];
+        $member_vehicle_id = $member_vehicle[0]['id'];
 
-        $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
-
-        $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
-                            $query->select('route_id')
-                                ->from('route_vehicle')
-                                ->whereColumn('route_id', 'routes.id')
-                                ->where('vehicle_id','=' , $member_vehicle_id);
-                            })->get();
-
+        $driver = MemberDriver::where('member_id', $id)->get();
+        $operator = MemberOperator::where('member_id', $id)->get();
+        
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
-
-        return view('member.edit', compact(['member_record',
-                                            'portrait',
-                                            'all_associations', 
-                                            'all_routes',
-                                            'member_vehicle_routes',
-                                            'all_regions',
-                                            'all_membership_types',
-                                            'all_cities'
-                                         ]));
         
-        // return response()
-        //     ->view('modal_view', ['member_record'=>$member_record, 'portrait'=>$portrait, 
-        //                             'fingerprint'=>$fingerprint, 'all_associations'=>$all_associations,
-        //                             'all_routes'=>$all_routes,'member_vehicle_routes'=> $member_vehicle_routes, 
-        //                             'all_regions'=>$all_regions, 'all_membership_types'=>$all_membership_types, 
-        //                             'all_cities'=>$all_cities], 200)
-        //     ->header('Content-Type', 'json');
+        if( $member_record->is_member_associated )
+        {
+            $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
+            $association = Association::where('association_id', $member_region_association[0]['association_id'] )->get()[0];
+            $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
+            $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
+            $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
+                                                            $query->select('route_id')
+                                                                ->from('route_vehicle')
+                                                                ->whereColumn('route_id', 'routes.id')
+                                                                ->where('vehicle_id','=' , $member_vehicle_id);
+                                                            })->get();
+                                
+            return view('member.edit', compact(['member_record', 
+                                                'vehicle', 'driver', 
+                                                'operator','all_routes', 
+                                                'region', 'association',
+                                                'all_associations',
+                                                'all_membership_types',
+                                                'all_regions', 'all_cities'
+                                                ]));
+        }
+        else
+        {
+            return view('member.edit', compact(['member_record', 
+                                                'vehicle', 
+                                                'driver', 'operator',
+                                                'all_membership_types',
+                                                'all_cities'
+                                                ]));
+        }
     }
 
     /**
@@ -312,108 +317,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $member = new Member();
-
-        $vehicle = new Vehicle();
-
-        $member_form_id = $request->get('member-id'); // or id
-
-        $check_member_exist = Member::with(['vehicles'])->findOrFail($member_form_id);
-
-        if($check_member_exist !== null ) {
-
-            $member->where('id',$member_form_id)->update([
-                'name' =>$request->get('firstName'),
-                'surname' =>  $request->get('lastName'),
-                'id_number' =>$request->get('idnumber'),
-                'license_number' =>$request->get('licensenumber'),
-                'email' => $request->get('emailAddress'),
-                'phone_number' => $request->get('phonenumber'),
-                'address_line' => $request->get('addressline1'),
-                'postal_code' => $request->get('postal-code'),
-                'city_id' => $request->get('city'),
-                'membership_type_id' =>$request->get('membership-type'),//TODO check if associate method cannot be used
-                'association_id' => $request->get('association'),
-                'region_id' => $request->get('region')
-
-            ]);
-        }
-
-
-
-        $vehicle_exist = Vehicle::where('id',$check_member_exist->vehicles[0]->id)->exists();
-
-        if($vehicle_exist) {
-
-            $is_updated = $vehicle ->where('id',$member_form_id)->update([
-                'registration_number' => $request->get('regnumber'),
-                'make' =>  $request->get('vehiclemake'),
-                'model' =>$request->get('vehiclemodel'),
-                'year' =>$request->get('vehicleyear'),
-                'seats_number' => $request->get('vehicleseats')
-
-            ]);
-            $member_vehicle = new MemberVehicle();
-
-            $member_vehicle->where('vehicle_id',$check_member_exist->vehicles[0]->id)->update([
-                'member_id' => $member_form_id,
-                'vehicle_id' => $check_member_exist->vehicles[0]->id
-            ]);
-
-            $route_vehicle = new RouteVehicle();
-
-            if(!empty($request->get('route'))) {
-                foreach ((array)$request->get('route') as $checkbox_value) {
-
-                    $route_vehicle->where('vehicle_id', $check_member_exist->vehicles[0]->id)->update([
-                        'vehicle_id' => $check_member_exist->vehicles[0]->id,
-                        'route_id' => $checkbox_value
-                    ]);
-
-                }
-
-            }
-
-            if ($is_updated === false) {
-                dd('could not update vehicle table, something went wrong');
-            }
-        }
-        else 
-        {
-            $vehicle->registration_number = $request->get('regnumber');
-            $vehicle->make = $request->get('vehiclemake');
-            $vehicle->model = $request->get('vehiclemodel');
-            $vehicle->year = $request->get('vehicleyear');
-            $vehicle->seats_number = $request->get('vehicleseats');
-
-            if($vehicle->save()) 
-            {
-                $member_vehicle = new MemberVehicle();
-
-                $member_vehicle->member_id  = $member->id;
-                $member_vehicle->vehicle_id = $vehicle->id;
-                $member_vehicle->save();
-            }
-            else
-            {
-                return redirect()->withInput();
-            }
-
-            if(!empty($request->get('route'))) {
-                foreach ((array)$request->get('route') as $checkbox_value) 
-                {
-
-                    $route_vehicle = new RouteVehicle();
-
-                    $route_vehicle->route_id = $checkbox_value; //$request->get('route');
-                    $route_vehicle->vehicle_id = $vehicle->id;
-
-                    $route_vehicle->save();
-                }
-            }
-        }
-
-        return view('member.index');
+        
         
     }
 

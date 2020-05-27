@@ -200,7 +200,7 @@
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Route : <span class="text-danger">*</span></label>
+										<label>Vehicle Route Details : <span class="text-danger">*</span></label>
 										<hr class="mb-15 mt-0">
 										<div id="route" name="route"></div>
 									</div>
