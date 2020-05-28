@@ -655,6 +655,7 @@
 
 	<!-- VoiceX Admin dashboard demo (This is only for demo purposes) -->
 	<script src="/minibus/main/js/pages/dashboard3.js"></script>
+	<script src="/minibus/main/js/pages/dashboard5.js"></script>
 
 	<!-- VoiceX Admin for demo purposes -->
 	<script src="/minibus/main/js/demo.js"></script>

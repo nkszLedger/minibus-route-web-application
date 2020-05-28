@@ -419,11 +419,11 @@ $(function () {
 	
 	/**************** PIE CHART *******************/
    var piedata = [
-      { label: "Series 1", data: [[1,10]], color: '#38649f'},
-      { label: "Series 2", data: [[1,30]], color: '#389f99'},
-      { label: "Series 3", data: [[1,90]], color: '#689f38'},
-      { label: "Series 4", data: [[1,70]], color: '#ff8f00'},
-      { label: "Series 5", data: [[1,80]], color: '#ee1044'}
+      { label: "Pretoria", data: [[1,10]], color: '#38649f'},
+      { label: "Johannesburg", data: [[1,30]], color: '#389f99'},
+      { label: "Capetown", data: [[1,90]], color: '#689f38'},
+      { label: "Durban", data: [[1,70]], color: '#ff8f00'},
+      { label: "Pietermaritzburg", data: [[1,80]], color: '#ee1044'}
 	 ];
 
     $.plot('#flotPie2', piedata, {

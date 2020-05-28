@@ -11,35 +11,36 @@ $(function () {
 	
 	/**************** PIE CHART *******************/
    var piedata = [
-      { label: "By Email", data: [[1,10]], color: '#38649f'},
-      { label: "By Phone", data: [[1,30]], color: '#389f99'},
-      { label: "On Site", data: [[1,90]], color: '#689f38'},
-      { label: "By Agent", data: [[1,70]], color: '#ff8f00'}
+    { label: "Pretoria", data: [[1,10]], color: '#38649f'},
+    { label: "Johannesburg", data: [[1,30]], color: '#389f99'},
+    { label: "Durban", data: [[1,70]], color: '#ff8f00'},
+    { label: "Pietermaritzburg", data: [[1,80]], color: '#ee1044'}
 	 ];
 
-    $.plot('#flotPie2', piedata, {
-      series: {
-        pie: {
-          show: true,
-          radius: 1,
-          innerRadius: 0.5,
-          label: {
-            show: true,
-            radius: 2/3,
-            formatter: labelFormatter,
-            threshold: 0.1
-          }
-        }
-      },
-      grid: {
-        hoverable: true,
-        clickable: true
-      }
-    });
+    // $.plot('#flotPie2', piedata, {
+    //   series: {
+    //     pie: {
+    //       show: true,
+    //       radius: 1,
+    //       innerRadius: 0.5,
+    //       label: {
+    //         show: true,
+    //         radius: 2/3,
+    //         formatter: labelFormatter,
+    //         threshold: 0.1
+    //       }
+    //     }
+    //   },
+    //   grid: {
+    //     hoverable: true,
+    //     clickable: true
+    //   }
+    // });
 
-    function labelFormatter(label, series) {
-		  return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
-	  }
+    // function labelFormatter(label, series) {
+    //   return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + 
+    //   label + "<br/>" + Math.round(series.percent) + "%</div>";
+	  // }
 	
 	
 	      var options = {
@@ -56,17 +57,17 @@ $(function () {
             dataLabels: {
                 enabled: false
             },
-			colors: ["#ff8f00", '#ee1044'],
+			      colors: ["#ff8f00", '#ee1044'],
             stroke: {
                 show: true,
                 width: 2,
                 colors: ['transparent']
             },
             series: [{
-                name: 'Inquery',
+                name: 'Drivers',
                 data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
             }, {
-                name: 'Conform',
+                name: 'Operators',
                 data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
             }],
             xaxis: {
@@ -83,7 +84,7 @@ $(function () {
             tooltip: {
                 y: {
                     formatter: function (val) {
-                        return "$ " + val + " thousands"
+                        return "Count of " + val
                     }
                 }
             }

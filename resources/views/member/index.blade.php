@@ -60,9 +60,10 @@
 									<th>#</th>
 									<th>Name</th>
 									<th>Surname</th>
-									<th>ID Number</th>
-									<th>Association</th>
+									<th>Email</th>
+									<th>City</th>
 									<th>Membership Type</th>
+									<th>Verification Status</th>
 									<th>Action</th>
 								</tr>
 							</tfoot>

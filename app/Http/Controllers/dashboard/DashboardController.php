@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Dashboard;
-
+use App\Route;
+use App\Association;
+use App\MemberDriver;
+use App\MemberOperator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $driver_count = count(MemberDriver::all());
+        $operator_count = count(MemberOperator::all());
+        $association_count = count(Association::all());
+        $route_count = count(Route::all());
+
+        return view('dashboard.index', compact(['driver_count',
+                                                'operator_count',
+                                                'association_count', 
+                                                'route_count'
+                                            ]));
     }
 
     /**
