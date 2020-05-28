@@ -8,6 +8,10 @@ class MemberFingerprint extends Model
 {
     protected $table = 'member_fingerprint';
 
+    protected $fillable = [
+        'member_id', 'fingerprint_left_thumb', 'fingerprint_right_thumb'
+    ];
+
     public function member()
     {
         return $this->hasOne(Member::class);
