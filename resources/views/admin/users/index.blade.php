@@ -33,8 +33,8 @@
 											<th>#</th>
 											<th>Full Names</th>
 											<th>Email</th>
-											<th>Date Created</th>
 											<th>Role</th>
+											<th>Date Created</th>
 											<th>Status</th>
 											<th>Action</th>
 											{{-- <th></th> --}}
@@ -50,10 +50,10 @@
 											<td>{{$count}}</td>
 											<td>{{ $user['employee']['name'] }} {{ $user['employee']['surname']  }}</td>
 											<td>{{ $user['email'] }}</td>
+											<td>{{ $user->roles[0]['name'] }}</td>
 											<td>
 												<span class="text-muted">{{ $user->created_at }}</span>
 											</td>
-											<td>UNKNOWN</td>{{--<td>{{ $all_roles['roles']['name'] }}</td>--}}
 											<td>
 												{{-- {% if user.is_active %} --}}
 												<span class="badge badge-pill badge-success">Active</span>

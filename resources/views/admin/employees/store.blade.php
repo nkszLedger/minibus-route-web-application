@@ -38,8 +38,8 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-12">
-                      <form method="POST" action= "{{ route('employees.store') }}">
-                        @csrf
+                      <form type="POST" action= "{{ route('employees.store') }}">
+                        {{ csrf_field() }}
                         <input type="hidden" class="form-control" name="id" value="{{$employee->id ?? '' }}">
                         <h4 class="box-title text-info"><i class="ti-user mr-15"></i> About Employee</h4>
 						<hr class="mb-15 mt-0">
@@ -80,13 +80,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
-                                    <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
-                                </div>
-                            </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -94,6 +87,13 @@
                                     <div class="controls">
                                         <input type="text" class="form-control" name="email" required data-validation-required-message="This field is required" value="{{$employee->email ?? '' }}">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
+                                    <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
                                 </div>
                             </div>
 
@@ -146,12 +146,12 @@
                                             <div class="radio">
                                                 @if( isset($employee) )
                                                     @if( $user[0]['role_id'] === $role->id )
-                                                        <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}" checked>
+                                                        <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}" checked>
                                                     @else
-                                                        <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
+                                                        <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
                                                     @endif
                                                 @else
-                                                    <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
+                                                    <input name="group{{ $role->id }}" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
                                                 @endif
                                                     <label for="Option_{{ $role->id }}"> {{ $role->name }} </label>                    
                                             </div>

@@ -36,7 +36,6 @@
 											<th>National ID Number</th>
 											<th>Employee Number</th>
 											<th>Phone Number</th>
-											<th>Email</th>
 											<th>Address Line</th>
                                             <th>City</th>
                                             <th>Postal Code</th>
@@ -57,7 +56,6 @@
 											<td>{{ $employee->id_number }}</td>
                                             <td>{{ $employee->employee_id }}</td>
                                             <td>{{ $employee->phone_number }}</td>
-                                            <td>{{ $employee->email }}</td>
                                             <td>{{ $employee->address_line }}</td>
                                             <td>{{ $employee['city']['city'] }}</td>
                                             <td>{{ $employee->postal_code }}</td>

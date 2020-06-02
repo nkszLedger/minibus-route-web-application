@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Request; 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\API\UserResource;
 use App\User; 
 use Illuminate\Support\Facades\Auth; 
 use Validator;
@@ -35,4 +36,15 @@ use Validator;
         $user = Auth::user(); 
         return response()->json(['success' => $user], $this-> successStatus); 
     } 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return new UserResource($user);
+    }
 }

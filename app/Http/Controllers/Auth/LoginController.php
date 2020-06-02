@@ -54,7 +54,14 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials)) 
         {
-            return redirect()->intended('dashboard');
+            $user = Auth::user();
+            if($user->roles->pluck( 'name' )->contains( 'Member Clerk') )
+            {
+                return redirect()->intended('dashboard');
+            }
+            else{
+                return redirect()->intended('users');
+            }
         }
         else
         {

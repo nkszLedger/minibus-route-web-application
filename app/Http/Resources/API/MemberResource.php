@@ -16,17 +16,17 @@ class MemberResource extends JsonResource
     {
         return [
 
-            'id' => $this->id,
+            'id' => strval($this->id),
             'name' => $this->name,
             'surname' => $this->surname,
-            'id_number' => $this->id_number,
-            'phone_number' =>$this->phone_number,
+            'id_number' => strval($this->id_number),
+            /*'phone_number' =>$this->phone_number,*/
             'email' => $this->email,
-            'city_id' => $this->city_id,
+            /*'city_id' => $this->city_id,
             'address_line'=> $this->address_line,
             'postal_code' => $this->postal_code,
-            'membership_type_id' => $this->membership_type_id,
-            'is_member_associated' => $this->is_member_associated,
+            'membership_type_id' => strval($this->membership_type_id),
+            'is_member_associated' => $this->is_member_associated,*/
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at
 

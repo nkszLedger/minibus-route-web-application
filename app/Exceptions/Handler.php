@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -53,6 +55,9 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) 
         {
             return response()->json(['User have not permission for this page access.']);
+        }
+        else if($request->expectsJson() && $exception instanceof ModelNotFoundException){
+            return Route::respondWithRoute('api.fallback');
         }
         return parent::render($request, $exception);
     }
