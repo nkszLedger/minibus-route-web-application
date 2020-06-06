@@ -18,7 +18,16 @@ class MemberController extends Controller
     public function show($id)
     {
         $member = Member::where('id_number', $id)->get();
-        return $member;
+        
+        $data = array('id' => strval($member[0]['id']),
+                        'name' => $member[0]['name'],
+                        'surname' => $member[0]['surname'],
+                        'id_number' => $member[0]['id_number'],
+                        'email' => $member[0]['email'],
+                        'created_at' => (string) $member[0]['created_at'],
+                        'updated_at' => (string) $member[0]['updated_at']);
+
+        return (['data' => $data]);
     }
 
 }
