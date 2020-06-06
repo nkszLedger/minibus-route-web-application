@@ -10,7 +10,7 @@ class Member extends Model
     protected $hidden = [
         'phone_number', 'city_id',
         'address_line', 'postal_code',
-        'membership_type_id',
+        'membership_type_id', 'id_number', 
         'is_member_associated'
     ];
 
