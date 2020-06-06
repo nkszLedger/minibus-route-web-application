@@ -15,8 +15,10 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    public function show($id)
     {
-        return new MemberResource($member);
+        $member = Member::where('id_number', $id)->get();
+        return $member;
     }
+
 }

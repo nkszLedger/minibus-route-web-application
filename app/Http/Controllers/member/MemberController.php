@@ -101,7 +101,7 @@ class MemberController extends Controller
             if( $vehicle->save() ) 
             {
                 /* capture MEMBER VEHICLE details */
-                $member_vehicle->member_id  = $member->id;
+                $member_vehicle->member_id = $member->id;
                 $member_vehicle->vehicle_id = $vehicle->id;
                 $member_vehicle->save();
 

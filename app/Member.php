@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     protected $table = 'members';
-    protected $primaryKey = 'id_number';
+    protected $hidden = [
+        'phone_number', 'city_id',
+        'address_line', 'postal_code',
+        'membership_type_id',
+        'is_member_associated'
+    ];
 
     public function membership_type()
     {

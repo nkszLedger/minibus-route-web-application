@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePortraitsTable extends Migration
+class CreateUserFingerprintsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreatePortraitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_portrait', function (Blueprint $table) {
+        Schema::create('user_fingerprints', function (Blueprint $table) {
             $table->id();
-            $table->integer('member_id');
-            $table->string('portrait_path')->nullable();
+            $table->integer('user_id');
+            $table->binary('fingerprint')->nullable();
+            $table->string('comments')->nullable();
             $table->timestamps();
 
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +31,6 @@ class CreatePortraitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_portrait');
+        Schema::dropIfExists('user_fingerprints');
     }
 }

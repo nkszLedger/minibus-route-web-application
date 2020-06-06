@@ -16,8 +16,8 @@ class MemberPortraitResource extends JsonResource
     {
         return [
 
-            'id' => $this->id,
-            'member_id' => $this->member_id,
+            'id' => strval($this->id),
+            'member_id' => strval($this->member_id),
             'portrait' => $this->portrait,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at

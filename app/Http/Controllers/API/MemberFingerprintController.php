@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\MemberFingerprintResource;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
+
 class MemberFingerprintController extends Controller
 {
     /**
@@ -17,10 +19,20 @@ class MemberFingerprintController extends Controller
      */
     public function store(Request $request)
     {
+        $left_thumb_file = $request->file('fingerprint_left_thumb');
+        $left_thumb_name = 'MNDOTMF' . $request->id . '.' . $left_thumb_file->guessExtension();
+        $left_thumb_path = Storage::disk('local')->putFileAs('fingerprint_left_thumb', 
+                                                            $left_thumb_file, $left_thumb_name);
+
+        $right_thumb_file = $request->file('fingerprint_right_thumb');
+        $right_thumb_name = 'MNDOTMF' . $request->id . '.' . $right_thumb_file->guessExtension();
+        $right_thumb_path = Storage::disk('local')->putFileAs('fingerprint_right_thumb', 
+                                                            $right_thumb_file, $right_thumb_name);
+        
         $fingerprints = MemberFingerprint::firstOrCreate([
             'member_id' => $request->id,
-            'fingerprint_left_thumb' => $request->fingerprint_left_thumb,
-            'fingerprint_right_thumb' => $request->fingerprint_right_thumb
+            'fingerprint_left_thumb_path' => $left_thumb_path,
+            'fingerprint_right_thumb_path' => $right_thumb_path
         ]);
 
         return new MemberFingerprintResource($fingerprints);
@@ -29,12 +41,12 @@ class MemberFingerprintController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $fingerprint
      * @return \Illuminate\Http\Response
      */
-    public function show(MemberFingerprint $fingerprint)
+    public function show(MemberFingerprint $membersfingerprint)
     {
-        return new MemberFingerprintResource($fingerprint);
+        return new MemberFingerprintResource($membersfingerprint);
     }
 
     /**
@@ -46,8 +58,18 @@ class MemberFingerprintController extends Controller
      */ 
     public function update(Request $request, MemberFingerprint $fingerprint)
     {
-        $fingerprint->update($request->only(['fingerprint_left_thumb', 
-                                             'fingerprint_right_thumb']));
+        $left_thumb_file = $request->file('fingerprint_left_thumb');
+        $left_thumb_name = 'MNDOTMF' . $request->id . '.' . $left_thumb_file->guessExtension();
+        $left_thumb_path = Storage::disk('local')->putFileAs('fingerprint_left_thumb', 
+                                                            $left_thumb_file, $left_thumb_name);
+
+        $right_thumb_file = $request->file('fingerprint_right_thumb');
+        $right_thumb_name = 'MNDOTMF' . $request->id . '.' . $right_thumb_file->guessExtension();
+        $right_thumb_path = Storage::disk('local')->putFileAs('fingerprint_right_thumb', 
+                                                            $right_thumb_file, $right_thumb_name);
+                                                           
+        $fingerprint->update($request->only(['fingerprint_left_thumb_path' => $left_thumb_path, 
+                                             'fingerprint_right_thumb_path' => $right_thumb_path]));
         return new MemberFingerprintResource($fingerprint);
     }
 
