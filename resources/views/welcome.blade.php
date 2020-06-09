@@ -85,11 +85,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Minibus Route Registrations
+                    Minibus Taxi Registration
                 </div>
 
                 <div class="links">
-                    <a href="https://www.dot.gov.za">Department of Transport</a>
+                    <a href="https://www.dot.gov.za">Gauteng Department of Roads and Transport</a>
                     <a href="https://www.csir.co.za">CSIR</a>
                 </div>
             </div>

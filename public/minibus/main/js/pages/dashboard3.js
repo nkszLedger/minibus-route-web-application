@@ -419,11 +419,8 @@ $(function () {
 	
 	/**************** PIE CHART *******************/
    var piedata = [
-      { label: "Pretoria", data: [[1,10]], color: '#38649f'},
-      { label: "Johannesburg", data: [[1,30]], color: '#389f99'},
-      { label: "Capetown", data: [[1,90]], color: '#689f38'},
-      { label: "Durban", data: [[1,70]], color: '#ff8f00'},
-      { label: "Pietermaritzburg", data: [[1,80]], color: '#ee1044'}
+      { label: "Verified", data: [[1,55]], color: '#38649f'},
+      { label: "Unverified", data: [[1,45]], color: '#389f99'}
 	 ];
 
     $.plot('#flotPie2', piedata, {

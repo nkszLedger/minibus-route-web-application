@@ -744,9 +744,10 @@
 </script>
 
 <script>
-	document.getElementById("region").disabled = true;
-	document.getElementById("association").disabled = true;
-	document.getElementById("route").disabled = true;
+	document.getElementById("ismemberassociated").checked = true;
+	document.getElementById("region").disabled = false;
+	document.getElementById("association").disabled = false;
+	document.getElementById("route").disabled = false;
 	document.getElementById("licensenumber").disabled = true;
 	document.getElementById("operatinglicensenumber").disabled = true;
 	document.getElementById("createoperatinglicensefile").disabled = true;
@@ -766,22 +767,40 @@
 				$("#title").html( 'Create <b>' + desc +'</b> Member Profile');
 				if( desc == "Driver")
 				{
+					$("#licensenumbertypelabel").html( 'Association Membership Number : <span class="text-danger">*</span>' );
 					document.getElementById("licensenumber").disabled = false;
-					document.getElementById("operatinglicensenumber").disabled = true;
+					document.getElementById("operatinglicensenumber").disabled = false;
 					document.getElementById("createoperatinglicensefile").disabled = true;
+					document.getElementById("membershiplicensenumbertype").style.display = "none";
 				}
 				else if( desc == "Operator")
 				{
+					$("#licensenumbertypelabel").html( 'Operating License Number : <span class="text-danger">*</span>' );
 					document.getElementById("licensenumber").disabled = true;
 					document.getElementById("operatinglicensenumber").disabled = false;
 					document.getElementById("createoperatinglicensefile").disabled = false;
+					document.getElementById("membershiplicensenumbertype").style.display = "none";
 
 				}
 				else if( desc == "Both Driver and Operator")
 				{
+					$("#licensenumbertypelabel").html( 'Operating License Number : \
+						<span class="text-danger">*</span>' );
+
 					document.getElementById("licensenumber").disabled = false;
 					document.getElementById("operatinglicensenumber").disabled = false;
 					document.getElementById("createoperatinglicensefile").disabled = false;
+					$("#membershiplicensenumbertype").html('\
+						<label for="associationmembershipnumber">\
+							Association Membership Number : \
+							<span class="text-danger">*</span> \
+						</label> \
+						<input type="text" class="form-control required" \
+							id="associationmembershipnumber" \
+							name="associationmembershipnumber" \
+							maxlength="12"> '
+					);
+					document.getElementById("membershiplicensenumbertype").style.display = "block";
 				}
 				else
 				{
@@ -833,7 +852,7 @@
 		$('#association').find('option').not(':first').remove();
 
 		$.ajax({
-			url: 'getAssociations/'+ id.toString(),
+			url: 'members/getAssociations/'+ id.toString(),
 			type: 'GET',
 			dataType: 'json',
 			success: function(response){
@@ -885,7 +904,7 @@
 		$('#route').find('input').not(':first').remove();
 
 		$.ajax({
-			url: 'getRoutesPerAssociation/'+id,
+			url: 'members/getRoutesPerAssociation/'+id,
 			type: 'get',
 			dataType: 'json',
 			success: function(response){

@@ -56,7 +56,7 @@
         <div class="col-12 col-xl-5">
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Associations Per Region</h4>
+                    <h4 class="box-title">Member Verification Proportion</h4>
                 </div>
 
                 <div class="box-body">

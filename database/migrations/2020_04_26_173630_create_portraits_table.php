@@ -16,7 +16,7 @@ class CreatePortraitsTable extends Migration
         Schema::create('member_portrait', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
-            $table->string('portrait_path')->nullable();
+            $table->binary('portrait')->nullable();
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members');
