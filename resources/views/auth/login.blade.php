@@ -36,7 +36,7 @@
 									<img src="/minibus/images/taxi.png"  alt="">
 								</a>
 							</div>
-							<h2 class="text-white">MINIBUS ROUTE REGISTRATION</h2>
+							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
 						</div>
 						<div class="p-30">
 							<form action="{{ route('login') }}" method="POST">

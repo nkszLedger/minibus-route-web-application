@@ -12,8 +12,8 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);
+                color: #ffffff;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -44,12 +44,26 @@
                 text-align: center;
             }
 
+            .bottomleft {
+                position: absolute;
+                bottom: 8px;
+                left: 16px;
+                font-size: 18px;
+            }
+
+            .bottomright {
+                position: absolute;
+                bottom: 8px;
+                right: 16px;
+                font-size: 18px;
+            }
+
             .title {
                 font-size: 84px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #ffffff;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -84,15 +98,39 @@
             @endif
 
             <div class="content">
+                 
+                <div class="logo">
+                    <img src="/minibus/images/emblem.png" alt="minibus"  width="250" height="200">
+                </div>
+
                 <div class="title m-b-md">
                     Minibus Taxi Registration
                 </div>
 
                 <div class="links">
                     <a href="https://www.dot.gov.za">Gauteng Department of Roads and Transport</a>
-                    <a href="https://www.csir.co.za">CSIR</a>
                 </div>
+
+                <div class="footer">
+                    <div class="bottomleft">
+                        <img src="/minibus/images/minibus.png" alt="minibus"  width="275" height="200">
+                    </div>
+                    <div class="bottomright">
+                        <img src="/minibus/images/roadmap.png" alt="minibus"  width="250" height="200">
+                    </div>
+                </div>
+
             </div>
+            
         </div>
+
+        <!-- jQuery 3 -->
+        <script src="/minibus/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
     </body>
 </html>
+
+
