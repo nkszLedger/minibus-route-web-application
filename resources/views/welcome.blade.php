@@ -88,7 +88,7 @@
                             <input type="submit" value="Logout"/>
                         </form>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Minibus Taxi Login </a>
 
                         {{-- @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
