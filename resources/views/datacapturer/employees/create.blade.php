@@ -84,7 +84,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
-                                    <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
+                                    <input type="tel" class="form-control required" id="wphoneNumber2" 
+                                        name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
                                 </div>
                             </div>
                             
@@ -101,39 +102,50 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergencycontactname">Emergency Contact Name : <span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="emergencycontactname" name="emergencycontactname" 
-                                        maxlength="25" value="{{$employee->emergencycontactname ?? '' }}">
+                                    <h5 for="emergency_contact_name">Emergency Contact Name : 
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="text" class="form-control required" 
+                                        id="emergency_contact_name" name="emergency_contact_name" 
+                                        maxlength="25" value="{{$employee->emergency_contact_name ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergencycontactnumber">Emergency Contact Number : <span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="emergencycontactnumber" name="emergencycontactnumber" 
-                                        maxlength="10" value="{{$employee->emergencycontactnumber ?? '' }}">
+                                    <h5 for="emergency_contact_number">Emergency Contact Number : 
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="text" class="form-control required" 
+                                        id="emergency_contact_number" name="emergency_contact_number" 
+                                        maxlength="10" value="{{$employee->emergency_contact_number ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergencycontactrelationship">Emergency Contact Relationship : <span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="emergencycontactrelationship" name="emergencycontactrelationship" 
-                                        maxlength="25" value="{{$employee->emergencycontactrelationship ?? '' }}">
+                                    <h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="text" class="form-control required" 
+                                        id="emergency_contact_relationship" name="emergency_contact_relationship" 
+                                        maxlength="25" value="{{$employee->emergency_contact_relationship ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="addressline1">Address Line : <span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="address_line" name="address_line" maxlength="25" value="{{$employee->address_line ?? '' }}">
+                                    <input type="text" class="form-control required" id="address_line" 
+                                        name="address_line" maxlength="25" value="{{$employee->address_line ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
-                                    <input type="text" class="form-control required" id="surburb" name="surburb" maxlength="25" value="{{$employee->surburb ?? '' }}">
+                                    <input type="text" class="form-control required" id="surburb" 
+                                        name="surburb" maxlength="25" value="{{$employee->surburb ?? '' }}">
                                 </div>
                             </div>
 
@@ -168,8 +180,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="wintType1">Region: <span class="text-danger">*</span> </label>
-                                    <select class="custom-select form-control required" id="region" name="region">
+                                    <label for="eregion">Region: <span class="text-danger">*</span> </label>
+                                    <select class="custom-select form-control required" id="eregion" name="eregion">
                                         @if( isset($employee))
                                             <option value="{{$employee['region']['region_id']}}">{{$employee['region']['region_name']}}</option>
                                                 @foreach ($all_regions as $region)
