@@ -18,11 +18,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('employee_id');
             $table->timestamps();
             $table->rememberToken();
-
-            $table->foreign('employee_id')->references('id')->on('employee');
         });
     }
 

@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
         	'email' => 'lmakhi@dot.gov.za',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => bcrypt('password'),
-            'employee_id' => '2',
             'remember_token' => 'yes',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
@@ -33,15 +32,18 @@ class UsersTableSeeder extends Seeder
         	'email' => 'skunene@dot.gov.za',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => bcrypt('password1'),
-            'employee_id' => '3',
             'remember_token' => 'yes',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        $role = Role::create(['name' => 'Member Clerk']);
+        $role = Role::create(['name' => 'Data Capturer']);
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
+
+        $role = Role::create(['name' => 'Oversight']);
+        $permissions = Permission::pluck('id','id')->all();
+        $role->syncPermissions($permissions);
     }
 }

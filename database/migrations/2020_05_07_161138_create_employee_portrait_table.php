@@ -18,7 +18,7 @@ class CreateEmployeePortraitTable extends Migration
             $table->integer('employee_id');
             $table->binary('portrait')->nullable();
             $table->timestamps();
-            $table->foreign('employee_id')->references('id')->on('employee');
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

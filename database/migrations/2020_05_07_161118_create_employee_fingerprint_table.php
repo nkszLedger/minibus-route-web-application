@@ -20,7 +20,7 @@ class CreateEmployeeFingerprintTable extends Migration
             $table->string('comments')->nullable();
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employee');
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

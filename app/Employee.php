@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $table = 'employee';
+    protected $table = 'employees';
 
     public function portrait()
     {
@@ -21,6 +21,11 @@ class Employee extends Model
     public function region()
     {
         return $this->belongsTo(Region::class,'region_id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'province_id');
     }
 
     public function city()
