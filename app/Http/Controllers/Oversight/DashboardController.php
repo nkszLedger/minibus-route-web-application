@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Oversight;
 use App\Route;
 use App\Association;
 use App\MemberDriver;

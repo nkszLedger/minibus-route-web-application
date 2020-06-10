@@ -25,11 +25,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h4 class="box-title">
-                @if( isset($employee) )
-                    Employee Registration: Update Employee Profile
-                @else
-                    Employee Registration: Create Employee Profile
-                @endif
+                    Employee Management: Employee Profile
               </h4>
             </div>
             <!-- /.box-header -->
@@ -38,14 +34,8 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-12">
-                      @if( isset($employee) )
-                      <form method="POST" action= "{{ route('employees.update', $employee->id) }}">
-                        <?php echo method_field('PUT'); ?>
-                      @else
-                      <form method="POST" action= "{{ route('employees.store') }}">
-                      @endif
-                        @csrf
-                        <input type="hidden" class="form-control" name="id" value="{{$employee->id ?? '' }}">
+                      <form method="GET" action= "{{ route('employees.edit', $employee->id) }}">
+                        <input type="hidden" class="form-control" name="id" value="{{$employee->id }}">
                         <h4 class="box-title text-info"><i class="ti-user mr-15"></i> About Employee</h4>
 						<hr class="mb-15 mt-0">
                         <div class="row">
@@ -56,7 +46,7 @@
                                     <div class="controls">
                                         <input type="text" class="form-control" name="name" 
                                             required data-validation-required-message="This field is required" 
-                                            value="{{$employee->name ?? '' }}">
+                                                value="{{$employee->name }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +57,7 @@
                                     <div class="controls">
                                         <input type="text" class="form-control" name="surname" 
                                             required data-validation-required-message="This field is required" 
-                                                value="{{$employee->surname ?? '' }}">
+                                                value="{{$employee->surname }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -76,16 +66,9 @@
                                 <div class="form-group">
                                     <h5>Employee Number :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="employee_number" 
-                                            required data-validation-required-message="This field is required" 
-                                                value="{{$employee->employee_number ?? '' }}">
-                                        @if( isset($employee) ) 
-                                            <h6 class="box-subtitle d-block mb-10"><span class="text-danger" 
-                                                    id="error_on_employee_number">
-                                                    {{ $error_on_employee_number ?? '' }}
-                                                </span>
-                                            </h6>
-                                        @endif
+                                        <input type="text" class="form-control" name="employee_number"
+                                             required data-validation-required-message="This field is required" 
+                                                value="{{$employee->employee_number }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -95,13 +78,8 @@
                                     <h5>National ID Number :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="id_number" 
-                                            required data-validation-required-message="This field is required" 
-                                            value="{{$employee->id_number ?? '' }}">
-                                        @if( isset($employee) ) 
-                                            <h6 class="box-subtitle d-block mb-10"><span class="text-danger" 
-                                                id="error_on_id_number">{{ $error_on_id_number ?? '' }}</span>
-                                            </h6> 
-                                        @endif
+                                            required data-validation-required-message="This field is required"
+                                                 value="{{$employee->id_number }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +88,8 @@
                                 <div class="form-group">
                                     <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
                                     <input type="tel" class="form-control required" id="wphoneNumber2" 
-                                        name="phone_number" maxlength="10" value="{{$employee->phone_number ?? '' }}">
+                                        name="phone_number" maxlength="10" 
+                                            value="{{$employee->phone_number }}" readonly>
                                 </div>
                             </div>
                             
@@ -120,12 +99,7 @@
                                     <div class="controls">
                                         <input type="text" class="form-control" name="email" 
                                             required data-validation-required-message="This field is required" 
-                                            value="{{$employee->email ?? '' }}">
-                                            @if( isset($employee) ) 
-                                                <h6 class="box-subtitle d-block mb-10"><span class="text-danger" 
-                                                    id="error_on_email_number">{{ $error_on_email_number ?? ''}}</span>
-                                                </h6> 
-                                            @endif
+                                            value="{{$employee->email }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +110,8 @@
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="text" class="form-control required" 
-                                        id="emergency_contact_name" name="emergency_contact_name" 
-                                        maxlength="25" value="{{$employee->emergency_contact_name ?? '' }}">
+                                        id="emergency_contact_name" name="emergency_contact_name" maxlength="25" 
+                                        value="{{$employee->emergency_contact_name }}" readonly>
                                 </div>
                             </div>
 
@@ -148,7 +122,7 @@
                                     </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_number" name="emergency_contact_number" 
-                                        maxlength="10" value="{{$employee->emergency_contact_number ?? '' }}">
+                                        maxlength="10" value="{{$employee->emergency_contact_number }}" readonly>
                                 </div>
                             </div>
 
@@ -159,7 +133,7 @@
                                     </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_relationship" name="emergency_contact_relationship" 
-                                        maxlength="25" value="{{$employee->emergency_contact_relationship ?? '' }}">
+                                        maxlength="25" value="{{$employee->emergency_contact_relationship }}" readonly>
                                 </div>
                             </div>
 
@@ -167,7 +141,7 @@
                                 <div class="form-group">
                                     <h5 for="addressline1">Address Line : <span class="text-danger"> *</span>  </h5>
                                     <input type="text" class="form-control required" id="address_line" 
-                                        name="address_line" maxlength="25" value="{{$employee->address_line ?? '' }}">
+                                        name="address_line" maxlength="25" value="{{$employee->address_line }}" readonly>
                                 </div>
                             </div>
 
@@ -175,57 +149,36 @@
                                 <div class="form-group">
                                     <h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
                                     <input type="text" class="form-control required" id="surburb" 
-                                        name="surburb" maxlength="25" value="{{$employee->surburb ?? '' }}">
+                                        name="surburb" maxlength="25" value="{{$employee->surburb }}" readonly>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="postal-code">Postal Code : <span class="text-danger"> *</span> </h5>
-                                    <input type="text" class="form-control" id="postal_code" name="postal_code" 
-                                        maxlength="4" value="{{$employee->postal_code ?? '' }}">
+                                    <input type="text" class="form-control" id="postal_code" name="postal_code"
+                                         maxlength="4" value="{{$employee->postal_code }}" readonly>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="city">City/Town : <span class="text-danger"> *</span> </h5>
-                                    <select class="custom-select form-control required" id="city" name="city">
-                                    @if( isset($employee))
-                                        <option selected value="{{$employee['city']['city_id']}}">{{$employee['city']['city']}}</option>
-                                    @else
-                                        <option value="">Please Select City/Town</option>
-                                    @endif
-                                    @foreach ($all_cities as $city)
-                                        @if( isset($employee))
-                                            @if($city->id !== $employee->city_id)
-                                                <option value="{{$city->city_id}}">{{$city->city}}</option>
-                                            @endif
-                                        @else
-                                            <option value="{{$city->city_id}}">{{$city->city}}</option>
-                                        @endif
-                                    @endforeach
+                                    <select class="custom-select form-control required" id="city" name="city" disabled>
+                                        <option selected value="{{$employee['city']['city_id']}}">
+                                            {{$employee['city']['city']}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="eregion">Region: <span class="text-danger">*</span> </label>
-                                    <select class="custom-select form-control required" id="eregion" name="eregion">
-                                        @if( isset($employee))
-                                            <option value="{{$employee['region']['region_id']}}">{{$employee['region']['region_name']}}</option>
-                                                @foreach ($all_regions as $region)
-                                                    @if( $region->region_id != $employee['region']['region_id'] )
-                                                        <option value="{{$region->region_id}}">{{$region->region_name}}</option>
-                                                    @endif
-                                                @endforeach
-                                        @else
-                                            <option value="">Please select Region</option>
-                                            @foreach ($all_regions as $region)
-                                                <option value="{{$region->region_id}}">{{$region->region_name}}</option>
-                                            @endforeach
-                                        @endif
+                                    <h5 for="eregion">Region: <span class="text-danger">*</span> </h5>
+                                    <select class="custom-select form-control required" id="eregion" name="eregion" disabled>
+                                        <option value="{{$employee['region']['region_id']}}">
+                                            {{$employee['region']['region_name']}}
+                                        </option>
                                     </select>
                                 </div>
 							</div>
@@ -233,21 +186,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
-                                    <select class="custom-select form-control required" id="province" name="province">
-                                    @if( isset($employee))
-                                        <option selected value="{{$employee['province']['id']}}">{{$employee['province']['name']}}</option>
-                                    @else
-                                        <option value="">Please Select Province</option>
-                                    @endif
-                                    @foreach ($all_provinces as $province)
-                                        @if( isset($employee))
-                                            @if($province->id !== $employee->province_id)
-                                                <option value="{{$province->id}}">{{$province->name}}</option>
-                                            @endif
-                                        @else
-                                            <option value="{{$province->id}}">{{$province->name}}</option>
-                                        @endif
-                                    @endforeach
+                                    <select class="custom-select form-control required" id="province" name="province" disabled>
+                                        <option selected value="{{$employee['province']['id']}}">
+                                            {{$employee['province']['name']}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -257,11 +199,7 @@
                             <a class="btn btn-warning mb-5" href="{{ route('employees.index') }}">
                                 Cancel
                             </a>
-                            @if( isset($employee) )
-                                <input class="btn btn-info mb-5" type="submit" value="Update" />
-                            @else
-                                <input class="btn btn-info mb-5" type="submit" value="Submit" />
-                            @endif
+                            <input class="btn btn-info mb-5" type="submit" value="Edit">
                         </div> 
                         
                       </form>

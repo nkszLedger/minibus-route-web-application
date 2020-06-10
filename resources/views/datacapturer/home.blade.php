@@ -889,5 +889,11 @@
 		
 </script>
 
+<script>
+	$('#error_on_email_number').fadeIn().delay(10000).fadeOut();
+	$('#error_on_id_number').fadeIn().delay(10000).fadeOut();
+	$('#error_on_employee_number').fadeIn().delay(10000).fadeOut();
+</script>
+
 </body>
 </html>

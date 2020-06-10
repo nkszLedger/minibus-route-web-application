@@ -54,7 +54,7 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-                                            <td>{{ $employee->employee_id }}</td>
+                                            <td>{{ $employee->employee_number }}</td>
                                             <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->address_line }}</td>
                                             <td>{{ $employee['city']['city'] }}</td>
@@ -64,10 +64,9 @@
 												<span class="badge badge-pill badge-danger">Not Complete</span>
 											</td>
 											<td>
-												<a href="{{ route('employees.edit', 
-																	['id' => $employee->id]) }}">
+												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
-												</a>
+												</a> || 
 												<a href="{{ route('employees.show', $employee->id)}}"> 
 													<b>View Profile</b>
 												</a>

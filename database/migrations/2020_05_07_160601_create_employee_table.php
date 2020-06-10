@@ -32,6 +32,7 @@ class CreateEmployeeTable extends Migration
             $table->integer('province_id');
             $table->integer('region_id');
             $table->timestamps();
+            $table->softDeletes()->nullable();
 
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->foreign('city_id')->references('city_id')->on('city');

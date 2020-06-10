@@ -4,6 +4,8 @@ namespace App\Http\Controllers\DataCapturer;
 use App\User;
 use App\City;
 use App\Employee;
+use App\Province;
+use App\Region;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -28,13 +30,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $all_cities = City::all();
-        $all_roles = Role::all();
-        $all_employees = Employee::with(['city'])->orderBy('id','desc')->get();
+        $all_employees = Employee::with(['city', 
+                                    'province',
+                                    'region'])
+                            ->orderBy('id','desc')->get();
 
-        return view('datacapturer.employees.index', compact(['all_cities',
-                                                      'all_roles', 
-                                                      'all_employees']));
+        return view('datacapturer.employees.index', compact(['all_employees']));
     }
 
     /**
@@ -45,9 +46,13 @@ class EmployeeController extends Controller
     public function create()
     {
         $all_cities = City::all();
-        $all_roles = Role::all();
+        $all_provinces = Province::all();
+        $all_regions = Region::all();
 
-        return view('datacapturer.employees.create', compact(['all_cities', 'all_roles']));
+        return view('datacapturer.employees.create', compact(['all_cities', 
+                                                                'all_provinces', 
+                                                                'all_regions'
+                                                            ]));
     }
 
     /**
@@ -58,47 +63,69 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        
-        /* Finally Capture */
-        $employee->name = $request->get('name');
-        $employee->surname = $request->get('surname');
-        $employee->id_number = $request->get('id_number');
-        $employee->employee_id = $request->get('employee_number');
-        $employee->phone_number = $request->get('phone_number');
-        $employee->address_line = $request->get('address_line');
-        $employee->postal_code = $request->get('postal_code');
-        $employee->city_id = $request->get('city');
-
-        if( $employee->save() )
-        {
-            $user = new User();
-            $temporal_password = $this->randomPassword();
-
-            $user->email = $request->get('email');
-            $user->employee_id = $employee->id;
-            $user->password = bcrypt($temporal_password);
-
-            if(!empty($request->get('group'))) {
-
-                foreach ((array)$request->get('group') as $value) 
-                {
-                    switch($value)
-                    {
-                        case Role::where('id', 1)->get()[0]['id']:
-                            $role = Role::where('id', 1);
-                            $user->assignRole([$role->id]);
-                        break;
-
-                        case Role::where('id', 2)->get()[0]['id']:
-                            $role = Role::where('id', 2);
-                            $user->assignRole([$role->id]);
-                        break;
-                    }
-                }
-                $user->save();
-            }
+        if( $request->get('id') != '')
+        { 
+            $this->update($request, $request->get('id')); 
         }
+        else
+        {
+            $employee = new Employee();
+
+            if( $employee->employee_number == $request->get('employee_number') ||
+                count(Employee::where('employee_number', $request->get('employee_number'))->get() ) > 0)
+            {
+                $error_on_employee_number = 'Employee Number already exists';
+
+                return Redirect::to('datacapturer.employees.create', compact(['all_cities',
+                                                            'all_provinces', 
+                                                            'all_regions',
+                                                            'employee', 'error_on_employee_number']))
+                                                            ->withInput();
+            }
+            if( $employee->id_number == $request->get('id_number') ||
+                count(Employee::where('id_number', $request->get('id_number'))->get() ) > 0 )
+            {
+                $error_on_id_number = 'ID Number already exists';
+
+                return view('datacapturer.employees.create', compact(['all_cities',
+                                                            'all_provinces', 
+                                                            'all_regions',
+                                                            'employee', 'error_on_id_number']));
+            }
+            if( $employee->email == $request->get('email') ||
+                count(Employee::where('email', $request->get('email'))->get() ) > 0)
+            {
+                $error_on_email_number = 'Email already exists';
+
+                return view('datacapturer.employees.create', compact(['all_cities',
+                                                            'all_provinces', 
+                                                            'all_regions',
+                                                            'employee', 'error_on_email_number']));
+            }
+            
+            /* Finally Capture */
+            $employee->name = $request->get('name');
+            $employee->surname = $request->get('surname');
+            $employee->employee_number = $request->get('employee_number');
+            $employee->id_number = $request->get('id_number');
+            $employee->phone_number = $request->get('phone_number');
+            $employee->email = $request->get('email');
+            $employee->emergency_contact_name = $request->get('emergency_contact_name');
+            $employee->emergency_contact_relationship = $request->get('emergency_contact_relationship');
+            $employee->emergency_contact_number = $request->get('emergency_contact_number');
+            $employee->address_line = $request->get('address_line');
+            $employee->postal_code = $request->get('postal_code');
+            $employee->surburb = $request->get('surburb');
+            $employee->city_id = $request->get('city');
+            $employee->province_id = $request->get('province');
+            $employee->region_id = $request->get('eregion');
+
+            /* store employee entry */
+            $employee->save();
+
+            return redirect()->intended('employees');
+        }
+        
     }
 
     /**
@@ -109,7 +136,12 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = Employee::with(['city', 'province','region'])
+                             ->findOrFail($id);
+
+        return view('datacapturer.employees.show', 
+                        compact(['employee']));
+        
     }
 
     /**
@@ -120,17 +152,16 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employee::with(['city'])->findOrFail($id);
-        $user = User::where('employee_id', $employee->id)->get();
-
-        $all_roles = Role::all();
         $all_cities = City::all();
+        $all_provinces = Province::all();
+        $all_regions = Region::all();
+        $employee = Employee::with(['city', 'province','region'])
+                                ->findOrFail($id);
 
         return view('datacapturer.employees.create', compact(['all_cities',
-                                                        'all_roles',
-                                                        'employee',
-                                                        'user'
-                                                        ]));
+                                                        'all_provinces', 
+                                                        'all_regions',
+                                                        'employee']));
     }
 
     /**
@@ -142,12 +173,94 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $employee_form_id = $request->get('id');
+        $all_cities = City::all();
+        $all_provinces = Province::all();
+        $all_regions = Region::all();
+        $employee = Employee::with(['city', 'province','region'])
+                                ->findOrFail($request->get('id'));
+        
+        $update = array(
+            'name' => $request->get('name'),
+            'surname' => $request->get('surname'),
+            'phone_number' => $request->get('phone_number'),
+            'emergency_contact_name' => 
+                    $request->get('emergency_contact_name'),
+            'emergency_contact_relationship' => 
+                    $request->get('emergency_contact_relationship'),
+            'emergency_contact_number' => 
+                    $request->get('emergency_contact_number'),
+            'address_line' => $request->get('address_line'),
+            'postal_code' => $request->get('postal_code'),
+            'surburb' => $request->get('surburb'),
+            'city_id' => $request->get('city'),
+            'province_id' => $request->get('province'),
+            'region_id' => $request->get('eregion'),
+        );
 
-        if($employee_form_id !== null) 
+        if( $employee->employee_number != $request->get('employee_number') )
         {
-            $employee = Employee::where('id', $employee_form_id)->get();
+            $person = Employee::where('employee_number', $request->get('employee_number'))->get();
+            $n = count($person);
+            if( $n > 0)
+            {
+                $error_on_employee_number = 'Employee Number already exists';
+
+                return view('datacapturer.employees.create', compact(['all_cities',
+                                                            'all_provinces', 
+                                                            'all_regions',
+                                                            'employee', 
+                                                            'error_on_employee_number']));
+            }
+            else
+            {
+                $update['employee_number'] = $request->get('employee_number');
+            }
+            
         }
+        if( $employee->id_number != $request->get('id_number')  )
+        {
+            $person = Employee::where('id_number', $request->get('id_number'))->get();
+            $n = count($person);
+            if( $n > 0)
+            {
+                $error_on_id_number = 'ID Number already exists';
+
+                return view('datacapturer.employees.create', compact(['all_cities',
+                                                        'all_provinces', 
+                                                        'all_regions',
+                                                        'employee', 
+                                                        'error_on_id_number']));
+            }
+            else
+            {
+                $update['id_number'] = $request->get('id_number');
+            }
+            
+        }
+        if( $employee->email != $request->get('email') )
+        {
+            $person = Employee::where('email', $request->get('email'))->get();
+            $n = count($person);
+            if( $n > 0)
+            {
+                $error_on_email_number = 'Email already exists';
+
+                return view('datacapturer.employees.create', compact(['all_cities',
+                                                            'all_provinces', 
+                                                            'all_regions',
+                                                            'employee', 
+                                                            'error_on_email_number']));
+            }
+            else
+            {
+                $update['email'] = $request->get('email');
+            }
+        }
+        
+        /* update employee entry */
+        $employee->update($update);
+
+        return $this->index();
     }
 
     /**
@@ -158,6 +271,9 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->delete();
+
+        return redirect()->intended('employees');
     }
 }
