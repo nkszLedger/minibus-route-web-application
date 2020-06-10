@@ -34,13 +34,13 @@
 											<th>#</th>
 											<th>Firstname</th>
                                             <th>Surname</th>
-											<th>National ID Number</th>
 											<th>Employee Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
                                             <th>City</th>
-                                            <th>Postal Code</th>
-											<th>Verification Status</th>
+											<th>Region</th>
+                                            <th>Province</th>
+											<th>Profile Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -54,19 +54,22 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-											<td>{{ $employee->id_number }}</td>
                                             <td>{{ $employee->employee_id }}</td>
                                             <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->address_line }}</td>
                                             <td>{{ $employee['city']['city'] }}</td>
-                                            <td>{{ $employee->postal_code }}</td>
+											<td>{{ $employee['region']['region_name'] }}</td>
+											<td>{{ $employee['province']['name'] }}</td>
 											<td>
-												<span class="badge badge-pill badge-danger">Not Verified</span>
+												<span class="badge badge-pill badge-danger">Not Complete</span>
 											</td>
 											<td>
-												<a href="{{ route('employees.create', 
+												<a href="{{ route('employees.edit', 
 																	['id' => $employee->id]) }}">
 													<b>Edit</b>
+												</a>
+												<a href="{{ route('employees.show', $employee->id)}}"> 
+													<b>View Profile</b>
 												</a>
 											</td>
 										</tr>
