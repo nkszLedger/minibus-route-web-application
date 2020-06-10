@@ -92,8 +92,34 @@
                                 <div class="form-group">
                                     <h5>Email Address :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="email" required data-validation-required-message="This field is required" value="{{$employee->email ?? '' }}">
+                                        <input type="text" class="form-control" name="email" 
+                                            required data-validation-required-message="This field is required" 
+                                            value="{{$employee->email ?? '' }}">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergencycontactname">Emergency Contact Name : <span class="text-danger"> *</span>  </h5>
+                                    <input type="text" class="form-control required" id="emergencycontactname" name="emergencycontactname" 
+                                        maxlength="25" value="{{$employee->emergencycontactname ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergencycontactnumber">Emergency Contact Number : <span class="text-danger"> *</span>  </h5>
+                                    <input type="text" class="form-control required" id="emergencycontactnumber" name="emergencycontactnumber" 
+                                        maxlength="10" value="{{$employee->emergencycontactnumber ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergencycontactrelationship">Emergency Contact Relationship : <span class="text-danger"> *</span>  </h5>
+                                    <input type="text" class="form-control required" id="emergencycontactrelationship" name="emergencycontactrelationship" 
+                                        maxlength="25" value="{{$employee->emergencycontactrelationship ?? '' }}">
                                 </div>
                             </div>
 
@@ -101,6 +127,13 @@
                                 <div class="form-group">
                                     <h5 for="addressline1">Address Line : <span class="text-danger"> *</span>  </h5>
                                     <input type="text" class="form-control required" id="address_line" name="address_line" maxlength="25" value="{{$employee->address_line ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
+                                    <input type="text" class="form-control required" id="surburb" name="surburb" maxlength="25" value="{{$employee->surburb ?? '' }}">
                                 </div>
                             </div>
 
@@ -132,35 +165,30 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                    
-                        <h4 class="box-title text-info mt-15"><i class="ti-envelope mr-15"></i> System Access</h4>
-						<hr class="mb-15 mt-10">
 
-                        <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Select User Role</h5>
-                                    <div class="c-inputs-stacked">
-                                        @foreach($all_roles as $key => $role)
-                                            <div class="radio">
-                                                @if( isset($employee) )
-                                                    @if( $user[0]['role_id'] === $role->id )
-                                                        <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}" checked>
-                                                    @else
-                                                        <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
-                                                    @endif
-                                                @else
-                                                    <input name="group" type="radio" id="Option_{{ $role->id }}" value="{{ $role->id }}">
-                                                @endif
-                                                    <label for="Option_{{ $role->id }}"> {{ $role->name }} </label>                    
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                    <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
+                                    <select class="custom-select form-control required" id="province" name="province">
+                                    @if( isset($employee))
+                                        <option selected value="{{$employee['province']['id']}}">{{$employee['province']['name']}}</option>
+                                    @else
+                                        <option value="">Please Select Province</option>
+                                    @endif
+                                    @foreach ($all_provinces as $province)
+                                        @if( isset($employee))
+                                            @if($province->id !== $employee->province_id)
+                                                <option value="{{$province->id}}">{{$province->name}}</option>
+                                            @endif
+                                        @else
+                                            <option value="{{$province->id}}">{{$province->name}}</option>
+                                        @endif
+                                    @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
+                    
                         <div class="box-footer text-right">
                             <a class="btn btn-warning mb-5" href="{{ route('employees.index') }}">
                                 Cancel
