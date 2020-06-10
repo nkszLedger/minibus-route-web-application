@@ -1,4 +1,4 @@
-﻿@extends('member.home')
+﻿@extends('datacapturer.home')
 
 @section('content')
 

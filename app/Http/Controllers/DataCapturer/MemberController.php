@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\DataCapturer;
 
 use App\Association;
 use App\Member;
@@ -37,7 +37,7 @@ class MemberController extends Controller
         $all_members = Member::with(['membership_type', 
                                      'city'])->orderBy('id','desc')->get();
 
-        return view('member.index', 
+        return view('datacapturer.members.index', 
                     compact(['all_members']));
     }
 
@@ -53,11 +53,12 @@ class MemberController extends Controller
         $all_associations = Association::all();
         $all_membership_types = MembershipType::all();
 
-        return view('member.create', compact(['all_membership_types',
-                                                'all_regions',
-                                                'all_associations', 
-                                                'all_cities'
-                                            ]));
+        return view('datacapturer.members.create',      
+                            compact(['all_membership_types',
+                                        'all_regions',
+                                        'all_associations', 
+                                        'all_cities'
+                                    ]));
     }
 
     /**
@@ -198,7 +199,7 @@ class MemberController extends Controller
             // }
             // else { return back()->withErrors('Whoops')->withInput();}
 
-            return view('member.create', compact(['member_record', 
+            return view('datacapturer.members.create', compact(['member_record', 
                                                     'driver', 
                                                     'operator','member',
                                                     'all_associations',
@@ -313,13 +314,14 @@ class MemberController extends Controller
             $all_regions = Region::all();
             $all_cities = City::all();
             
-            return view('member.create', compact(['member_record', 
-                                                    'driver', 'member_vehicles',
-                                                    'operator',
-                                                    'all_associations',
-                                                    'all_membership_types',
-                                                    'all_regions', 'all_cities'
-                                                    ]));
+            return view('datacapturer.members.create', 
+                                compact(['member_record', 
+                                            'driver', 'member_vehicles',
+                                            'operator',
+                                            'all_associations',
+                                            'all_membership_types',
+                                            'all_regions', 'all_cities'
+                                        ]));
         }
     }
 
@@ -364,7 +366,8 @@ class MemberController extends Controller
                                                                 ->where('vehicle_id','=' , $member_vehicle_id);
                                                             })->get();
                                 
-            return view('member.show', compact(['member_record', 
+            return view('datacapturer.members.show', 
+                                    compact(['member_record', 
                                                 'vehicle', 'portrait',
                                                 'driver', 'operator',
                                                 'fingerprint','all_routes', 
@@ -376,13 +379,14 @@ class MemberController extends Controller
         }
         else
         {
-            return view('member.show', compact(['member_record', 
-                                                'vehicle', 'portrait',
-                                                'driver', 'operator',
-                                                'fingerprint',
-                                                'all_membership_types',
-                                                'all_cities'
-                                                ]));
+            return view('datacapturer.members.show', 
+                                compact(['member_record', 
+                                            'vehicle', 'portrait',
+                                            'driver', 'operator',
+                                            'fingerprint',
+                                            'all_membership_types',
+                                            'all_cities'
+                                            ]));
         }
 
     }
@@ -425,7 +429,7 @@ class MemberController extends Controller
                                                                 ->where('vehicle_id','=' , $member_vehicle_id);
                                                             })->get();
                                 
-            return view('member.edit', compact(['member_record', 
+            return view('datacapturer.members.edit', compact(['member_record', 
                                                 'vehicle', 'driver', 
                                                 'operator','all_routes', 
                                                 'region', 'association',
@@ -436,7 +440,7 @@ class MemberController extends Controller
         }
         else
         {
-            return view('member.edit', compact(['member_record', 
+            return view('datacapturer.members.edit', compact(['member_record', 
                                                 'vehicle', 
                                                 'driver', 'operator',
                                                 'all_membership_types',
@@ -573,7 +577,7 @@ class MemberController extends Controller
         }
         else { return back()->withErrors('Whoops')->withInput();}
 
-        return redirect()->route('members.index');
+        return redirect()->route('datacapturer.members.index');
         
     }
 

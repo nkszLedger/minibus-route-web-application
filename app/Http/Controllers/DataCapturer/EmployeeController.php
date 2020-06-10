@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\DataCapturer;
 use App\User;
 use App\City;
 use App\Employee;
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
         $all_roles = Role::all();
         $all_employees = Employee::with(['city'])->orderBy('id','desc')->get();
 
-        return view('admin.employees.index', compact(['all_cities',
+        return view('datacapturer.employees.index', compact(['all_cities',
                                                       'all_roles', 
                                                       'all_employees']));
     }
@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         $all_cities = City::all();
         $all_roles = Role::all();
 
-        return view('admin.employees.create', compact(['all_cities', 'all_roles']));
+        return view('datacapturer.employees.create', compact(['all_cities', 'all_roles']));
     }
 
     /**
@@ -126,7 +126,7 @@ class EmployeeController extends Controller
         $all_roles = Role::all();
         $all_cities = City::all();
 
-        return view('admin.employees.create', compact(['all_cities',
+        return view('datacapturer.employees.create', compact(['all_cities',
                                                         'all_roles',
                                                         'employee',
                                                         'user'

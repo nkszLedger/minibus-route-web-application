@@ -22,10 +22,10 @@ Route::get('/', function () {
 
 Route::resources([
     'roles' => 'Admin\RoleController',
-    'employees' => 'Admin\EmployeeController',
     'users' => 'Admin\UserController',
-    'members' => 'Member\MemberController',
-    'dashboard' => 'Dashboard\DashboardController'
+    'employees' => 'DataCapturer\EmployeeController',
+    'members' => 'DataCapturer\MemberController',
+    'dashboard' => 'Oversight\DashboardController'
 ]);
 
 Route::get('members/getAssociations/{region_id}', 

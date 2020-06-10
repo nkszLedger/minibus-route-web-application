@@ -1,4 +1,4 @@
-@extends('admin/home')
+@extends('datacapturer.home')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -162,7 +162,9 @@
                         </div>
 
                         <div class="box-footer text-right">
-                            <a class="btn btn-warning mb-5" href="{{ route('users.index') }}">Cancel</a>
+                            <a class="btn btn-warning mb-5" href="{{ route('employees.index') }}">
+                                Cancel
+                                </a>
                             @if( isset($employee) )
                                 <input class="btn btn-info mb-5" type="submit" value="Update" />
                             @else

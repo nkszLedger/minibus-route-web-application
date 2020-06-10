@@ -1,4 +1,4 @@
-@extends('admin/home')
+@extends('datacapturer.home')
 
 @section('content')
 		<!-- Content Header (Page header) -->
@@ -27,7 +27,8 @@
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
-								<table id="complex_header" class="table table-striped table-bordered display" style="width:100%">
+								<table id="complex_header" class="table table-striped table-bordered display" 
+									style="width:100%">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -63,7 +64,10 @@
 												<span class="badge badge-pill badge-danger">Not Verified</span>
 											</td>
 											<td>
-												<a href="{{ route('employees.create', ['id' => $employee->id]) }}"><b>Edit</b></a>
+												<a href="{{ route('employees.create', 
+																	['id' => $employee->id]) }}">
+													<b>Edit</b>
+												</a>
 											</td>
 										</tr>
 						  			<?php $count++?>

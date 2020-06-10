@@ -57,7 +57,7 @@ class LoginController extends Controller
             $user = Auth::user();
             if($user->roles->pluck( 'name' )->contains( 'Member Clerk') )
             {
-                return redirect()->intended('dashboard');
+                return redirect()->intended('employees');
             }
             else{
                 return redirect()->intended('users');

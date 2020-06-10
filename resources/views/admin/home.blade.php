@@ -73,16 +73,24 @@
 						<li><a href="{{ route('users.index') }}">View Users</a></li>
 					</ul>
 				</li>
-                <li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>EMPLOYEES</a>
-					<ul>
-						<li><a href="{{ route('employees.create') }}">Add New Employees</a></li>
-						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
-					</ul>
-				</li>
+
 				<li><a href="{{ route('roles.index') }}""><i class="ti-files mx-5"></i>ROLES</a>
 					<ul>
 						<li><a href="{{ route('roles.create') }}"">Add New Roles</a></li>
 						<li><a href="{{ route('roles.index') }}"">View Roles</a></li>
+					</ul>
+				</li>
+				
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+					<ul>
+						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
+						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
+					</ul>
+				</li>
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
+					<ul>
+						<li><a href="{{ route('members.create') }}">Register Member</a></li>
+						<li><a href="{{ route('members.index') }}">View Members</a></li>
 					</ul>
 				</li>
 			</ul>
