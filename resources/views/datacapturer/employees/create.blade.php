@@ -168,6 +168,27 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="wintType1">Region: <span class="text-danger">*</span> </label>
+                                    <select class="custom-select form-control required" id="region" name="region">
+                                        @if( isset($employee))
+                                            <option value="{{$employee['region']['region_id']}}">{{$employee['region']['region_name']}}</option>
+                                                @foreach ($all_regions as $region)
+                                                    @if( $region->region_id != $employee['region']['region_id'] )
+                                                        <option value="{{$region->region_id}}">{{$region->region_name}}</option>
+                                                    @endif
+                                                @endforeach
+                                        @else
+                                            <option value="">Please select Region</option>
+                                            @foreach ($all_regions as $region)
+                                                <option value="{{$region->region_id}}">{{$region->region_name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+							</div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
                                     <select class="custom-select form-control required" id="province" name="province">
                                     @if( isset($employee))
