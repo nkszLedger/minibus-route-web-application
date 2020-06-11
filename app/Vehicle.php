@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    protected $table = 'vehicles';
+    protected $table = 'vehicle';
 
     public function members()
     {
         return $this->belongsToMany(Member::class);
     }
-
-    public function routes()
+    public function vehicleclass()
     {
-        return $this->belongsToMany(Route::class);
+        return $this->belongsTo(VehicleClass::class);
     }
 }

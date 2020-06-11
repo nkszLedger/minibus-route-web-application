@@ -16,10 +16,15 @@ class CreateMemberDriverTable extends Migration
         Schema::create('member_driver', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
-            $table->string('license_id')->unique();
+            $table->integer('driving_licence_code_id');
+            $table->string('license_number')->unique();
+            $table->date('valid_since')->nullable();
+            $table->date('valid_until')->nullable();
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('driving_licence_code_id')->references('id')
+                                                ->on('driving_licence_codes');
         });
     }
 

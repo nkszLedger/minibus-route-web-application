@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMemberVehicleTable extends Migration
+class CreateDrivingLicenceCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateMemberVehicleTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_vehicle', function (Blueprint $table) {
+        Schema::create('driving_licence_codes', function (Blueprint $table) {
             $table->id();
-            $table->integer('member_id');
-            $table->integer('vehicle_id');
+            $table->string('code');
+            $table->string('class');
+            $table->string('category');
+            $table->string('includes');
             $table->timestamps();
-
-            $table->foreign('member_id')->references('id')->on('members');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
-
         });
     }
 
@@ -32,6 +30,6 @@ class CreateMemberVehicleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_vehicle');
+        Schema::dropIfExists('driving_licence_codes');
     }
 }
