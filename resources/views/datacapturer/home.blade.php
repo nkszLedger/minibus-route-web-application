@@ -614,8 +614,8 @@
 					document.getElementById("operatinglicensenumber").disabled = false;
 					document.getElementById("createoperatinglicensefile").disabled = false;
 					document.getElementById("drivinglicencecodes").disabled = false;
-					$("#attachment").html( 'Upload Operating Sticker' );
 					document.getElementById("membershiplicensenumbertype").style.display = "none";
+					$("#attachment").html( 'Upload Operating Sticker' );
 				}
 				else if( desc == "Operator")
 				{

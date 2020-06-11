@@ -16,12 +16,11 @@ class CreateVehicleTable extends Migration
         Schema::create('vehicle', function (Blueprint $table) {
             $table->id();
             $table->integer('vehicle_class_id');
-            $table->string('info')->nullable();
+            $table->longText('info')->nullable();
             $table->string('registration_number')->unique();
             $table->timestamps();
 
             $table->foreign('vehicle_class_id')->references('id')->on('vehicle_class');
-
         });
     }
 

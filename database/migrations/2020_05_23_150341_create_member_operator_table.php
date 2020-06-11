@@ -16,8 +16,11 @@ class CreateMemberOperatorTable extends Migration
         Schema::create('member_operator', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
-            $table->string('license_id')->unique();
+            $table->string('license_number')->unique();
+            $table->string('membership_number')->unique();
             $table->string('license_path')->nullable();
+            $table->date('valid_since')->nullable();
+            $table->date('valid_until')->nullable();
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members');

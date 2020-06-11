@@ -13,6 +13,7 @@ use App\Region;
 use App\Gender;
 use App\Route;
 use App\Vehicle;
+use App\VehicleClass;
 use App\City;
 use App\MemberFingerprint;
 use App\RouteVehicle;
@@ -81,6 +82,7 @@ class MemberController extends Controller
         $all_driving_licence_codes = DrivingLicenceCode::all();
         $all_associations = Association::all();
         $all_membership_types = MembershipType::all();
+        $all_vehicle_classes = VehicleClass::all();
 
         /* Init instances */
         $member = new Member();
@@ -95,6 +97,45 @@ class MemberController extends Controller
                 ->get() ) > 0)
         {
             $error = 'Member ID Number already exists';
+
+            return view('datacapturer.members.create',      
+                                compact(['all_membership_types',
+                                            'all_regions',
+                                            'all_associations', 
+                                            'all_cities', 'all_gender',
+                                            'all_driving_licence_codes',
+                                            'error'
+                                        ]));
+        }
+
+
+        if(  count(MemberDriver::where('license_number', 
+                $request->get('licensenumber'))
+                                ->get() ) > 0 ||
+            count(MemberOperator::where('license_number', 
+            $request->get('licensenumber'))
+                            ->get() ) > 0)
+        {
+            $error = 'Licence ID Number already exists';
+
+            return view('datacapturer.members.create',      
+                                compact(['all_membership_types',
+                                            'all_regions',
+                                            'all_associations', 
+                                            'all_cities', 'all_gender',
+                                            'all_driving_licence_codes',
+                                            'error'
+                                        ]));
+        }
+
+        if(  count(MemberDriver::where('membership_number', 
+                $request->get('membershiplicensenumbertype'))
+                                ->get() ) > 0 ||
+            count(MemberOperator::where('membership_number', 
+            $request->get('membershiplicensenumbertype'))
+                            ->get() ) > 0)
+        {
+            $error = 'Membership Number already exists';
 
             return view('datacapturer.members.create',      
                                 compact(['all_membership_types',
@@ -127,6 +168,90 @@ class MemberController extends Controller
 
             if( $member->save() )
             {
+                /* capture MEMBER DRIVER & OPERATOR details */
+                $path = '';
+                switch ( $request->get('membership-type') ) 
+                {
+                    case "1":
+                        /* Member is a Driver */
+                        if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                                                            $file, $name);
+                        }
+                        
+                        $member_driver->member_id = $member->id;
+                        $member_driver->license_path = $path;
+                        $member_driver->valid_since = $request->get('valid_since');
+                        $member_driver->valid_until = $request->get('valid_until');
+                        $member_driver->license_number = $request->get('licensenumber');
+                        $member_driver->membership_number = $request->get('operatinglicensenumber');
+                        $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
+                        $member_driver->save();
+                        break;
+                        
+
+                    case "2":
+                        /* Member is a Operator */
+                        if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                                                            $file, $name);
+                        }
+
+                        $member_operator->license_path = $path;
+                        $member_operator->member_id = $member->id;
+                        $member_operator->membership_number = $request->get('');
+                        $member_operator->license_number = $request->get('operatinglicensenumber');
+                        $member_operator->valid_since = $request->get('valid_since');
+                        $member_operator->valid_until = $request->get('valid_until');
+                        $member_operator->save();
+                        break;
+
+                    case "3":
+                        /* Member is a Driver */
+                        if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                                                            $file, $name);
+                        }
+                        
+                        $member_driver->member_id = $member->id;
+                        $member_driver->license_path = $path;
+                        $member_driver->valid_since = $request->get('valid_since');
+                        $member_driver->valid_until = $request->get('valid_until');
+                        $member_driver->license_number = $request->get('licensenumber');
+                        $member_driver->membership_number = $request->get('associationmembershipnumber');
+                        $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
+                        $member_driver->save();
+
+                        /* Member is a Operator */
+                        if( $request->hasFile('createoperatinglicensefile') )
+                        {
+                            $file = $request->file('createoperatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
+                            $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                                                            $file, $name);
+                        }
+
+                        $member_operator->license_path = $path;
+                        $member_operator->member_id = $member->id;
+                        $member_operator->membership_number = $request->get('associationmembershipnumber');
+                        $member_operator->license_number = $request->get('operatinglicensenumber');
+                        $member_operator->valid_since = $request->get('valid_since');
+                        $member_operator->valid_until = $request->get('valid_until');
+                        $member_operator->save();
+
+                        break;
+                    default:
+                        /* should never reach */
+                } 
 
             }
             else
@@ -143,235 +268,53 @@ class MemberController extends Controller
                                                 ]));
             }
 
-            $member_record = Member::with(['membership_type',
-                                            'city'])->findOrFail($member->id);
+            return view('datacapturer.members.create',      
+                                        compact(['all_membership_types',
+                                                    'all_regions',
+                                                    'all_associations', 
+                                                    'all_cities', 'all_gender',
+                                                    'all_driving_licence_codes',
+                                                    'member_driver', 
+                                                    'member_operator'
+                                                ]));
 
-            $driver = MemberDriver::where(['codes'])->findOrFail($member->id);
-            $operator = MemberOperator::where('member_id', $member->id)->get();
-            
-            $all_membership_types = MembershipType::all();
-            $all_associations = Association::all();
-            $all_regions = Region::all();
-            $all_cities = City::all();
-
-            // if( $member->save() ) 
-            // {
-            //     /* capture VEHICLE details */
-            //     $vehicle->registration_number = $request->get('regnumber');
-            //     $vehicle->make = $request->get('vehiclemake');
-            //     $vehicle->model = $request->get('vehiclemodel');
-            //     $vehicle->year = $request->get('vehicleyear');
-            //     $vehicle->seats_number = $request->get('vehicleseats');
-
-            //     if( $vehicle->save() ) 
-            //     {
-            //         /* capture MEMBER VEHICLE details */
-            //         $member_vehicle->member_id = $member->id;
-            //         $member_vehicle->vehicle_id = $vehicle->id;
-            //         $member_vehicle->save();
-
-            //         /* capture MEMBER DRIVER & OPERATOR details */
-            //         switch ( $request->get('membership-type') ) 
-            //         {
-            //             case "1":
-            //               /* Member is a Driver */
-            //               $member_driver->member_id = $member->id;
-            //               $member_driver->license_id = $request->get('licensenumber');
-            //               $member_driver->save();
-            //               break;
-
-            //             case "2":
-            //                /* Member is a Operator */
-            //                if( $request->hasFile('createoperatinglicensefile') )
-            //                 {
-            //                     $file = $request->file('createoperatinglicensefile');
-            //                     $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-            //                     $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
-            //                                                     $file, $name);
-
-            //                     $member_operator->member_id = $member->id;
-            //                     $member_operator->license_id = $request->get('operatinglicensenumber');
-            //                     $member_operator->license_path = $path;
-            //                     $member_operator->save();
-            //                 }
-            //               break;
-
-            //             case "3":
-            //                 /* Member is a Driver */
-            //                 $member_driver->member_id = $member->id;
-            //                 $member_driver->license_id = $request->get('licensenumber');
-            //                 $member_driver->save();
-
-            //                 /* Member is a Operator */
-            //                 if( $request->hasFile('createoperatinglicensefile') )
-            //                 {
-            //                     $file = $request->file('createoperatinglicensefile');
-            //                     $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-            //                     $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
-            //                                                     $file, $name);
-
-            //                     $member_operator->member_id = $member->id;
-            //                     $member_operator->license_id = $request->get('operatinglicensenumber');
-            //                     $member_operator->license_path = $path;
-            //                     $member_operator->save();
-            //                 }
-
-            //               break;
-            //             default:
-            //                /* should never reach */
-            //         } 
-
-            //         if( $request->has('ismemberassociated') )
-            //         {
-            //             /* capture MEMBER REGION, ASSOCIATION details */
-            //             $member_region_association->member_id = $member->id;
-            //             $member_region_association->region_id = $request->get('region');
-            //             $member_region_association->association_id = $request->get('association');
-            //             $member_region_association->save();
-
-            //             if( !empty($request->get('route')) ) 
-            //             {
-            //                 foreach ((array)$request->get('route') as $checkbox_value) 
-            //                 {
-            //                     /* capture ROUTE VEHICLE details */
-            //                     $route_vehicle->route_id = $checkbox_value;
-            //                     $route_vehicle->vehicle_id = $vehicle->id;
-
-            //                     $route_vehicle->save();
-            //                 }
-            //             }
-            //             else { return back()->withErrors('Whoops')->withInput();}
-            //         }
-            //         else { return back()->withErrors('Whoops')->withInput();}
-            //     }
-            //     else { return back()->withErrors('Whoops')->withInput();}
-            // }
-            // else { return back()->withErrors('Whoops')->withInput();}
-
-            return view('datacapturer.members.create', compact(['member_record', 
-                                                    'driver', 
-                                                    'operator',
-                                                    'all_associations',
-                                                    'all_membership_types',
-                                                    'all_regions', 'all_cities'
-                                                    ]));
         }
         else
         {
-            
-            /* capture VEHICLE details */
+            /* capture Vehicle Details */
+            $vehicle->vehicle_class_id = $request->get('vehicle_class');
+            $vehicle->info = $request->get('info');
             $vehicle->registration_number = $request->get('regnumber');
-            $vehicle->make = $request->get('vehiclemake');
-            $vehicle->model = $request->get('vehiclemodel');
-            $vehicle->year = $request->get('vehicleyear');
-            $vehicle->seats_number = $request->get('vehicleseats');
+            $vehicle->save();
+          
+            /* capture MEMBER VEHICLE details */
+            $member_vehicle->member_id = $request->get('member_id');
+            $member_vehicle->vehicle_id = $vehicle->id;
+            $member_vehicle->save();
 
-            if( $vehicle->save() ) 
+            if( $request->has('ismemberassociated') )
             {
-                /* capture MEMBER VEHICLE details */
-                $member_vehicle->member_id = $request->get('member_id');
-                $member_vehicle->vehicle_id = $vehicle->id;
-                $member_vehicle->save();
+                /* capture MEMBER REGION, ASSOCIATION details */
+                $member_region_association->member_id = $member->id;
+                $member_region_association->region_id = $request->get('region');
+                $member_region_association->association_id = $request->get('association');
+                $member_region_association->save();
 
-                /* capture MEMBER DRIVER & OPERATOR details */
-                switch ( $request->get('membership-type') ) 
+                if( !empty($request->get('route')) ) 
                 {
-                    case "1":
-                        /* Member is a Driver */
-                        $member_driver->member_id = $request->get('member_id');
-                        $member_driver->license_id = $request->get('licensenumber');
-                        $member_driver->save();
-                        break;
-
-                    case "2":
-                        /* Member is a Operator */
-                        if( $request->hasFile('createoperatinglicensefile') )
-                        {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $request->get('member_id') . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
-                                                            $file, $name);
-
-                            $member_operator->member_id = $request->get('member_id');
-                            $member_operator->license_id = $request->get('operatinglicensenumber');
-                            $member_operator->license_path = $path;
-                            $member_operator->save();
-                        }
-                        break;
-
-                    case "3":
-                        /* Member is a Driver */
-                        $member_driver->member_id = $request->get('member_id');
-                        $member_driver->license_id = $request->get('licensenumber');
-                        $member_driver->save();
-
-                        /* Member is a Operator */
-                        if( $request->hasFile('createoperatinglicensefile') )
-                        {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $request->get('member_id') . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('createoperatinglicensefile', 
-                                                            $file, $name);
-
-                            $member_operator->member_id = $request->get('member_id');
-                            $member_operator->license_id = $request->get('operatinglicensenumber');
-                            $member_operator->license_path = $path;
-                            $member_operator->save();
-                        }
-
-                        break;
-                    default:
-                        /* should never reach */
-                } 
-
-                if( $request->has('ismemberassociated') )
-                {
-                    /* capture MEMBER REGION, ASSOCIATION details */
-                    $member_region_association->member_id = $request->get('member_id');
-                    $member_region_association->region_id = $request->get('region');
-                    $member_region_association->association_id = $request->get('association');
-                    $member_region_association->save();
-
-                    if( !empty($request->get('route')) ) 
+                    foreach ((array)$request->get('route') as $checkbox_value) 
                     {
-                        foreach ((array)$request->get('route') as $checkbox_value) 
-                        {
-                            /* capture ROUTE VEHICLE details */
-                            $route_vehicle->route_id = $checkbox_value;
-                            $route_vehicle->vehicle_id = $vehicle->id;
-
-                            $route_vehicle->save();
-                        }
+                        /* capture ROUTE VEHICLE details */
+                        $route_vehicle->route_id = $checkbox_value;
+                        $route_vehicle->vehicle_id = $vehicle->id;
+                        $route_vehicle->save();
                     }
-                    else { return back()->withErrors('Whoops')->withInput();}
                 }
-                else { return back()->withErrors('Whoops')->withInput();}
+                
             }
-            else { return back()->withErrors('Whoops')->withInput();}
 
-            $member_id = $request->get('member_id');
-            $member_record = Member::with(['membership_type',
-                                            'city'])->findOrFail($member_id);
 
-            $member_vehicles = MemberVehicle::where('member_id', $member_id)->get();
-
-            $driver = MemberDriver::where('member_id', $member_id)->get();
-            $operator = MemberOperator::where('member_id', $member_id)->get();
-            
-            $all_membership_types = MembershipType::all();
-            $all_associations = Association::all();
-            $all_regions = Region::all();
-            $all_cities = City::all();
-            
-            return view('datacapturer.members.create', 
-                                compact(['member_record', 
-                                            'driver', 'member_vehicles',
-                                            'operator',
-                                            'all_associations',
-                                            'all_membership_types',
-                                            'all_regions', 'all_cities'
-                                        ]));
-        }
+        }								
     }
 
     /**

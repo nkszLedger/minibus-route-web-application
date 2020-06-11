@@ -120,8 +120,10 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<h5 for="drivinglicencecodes">Driving Licence Code : <span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" id="drivinglicencecodes" name="drivinglicencecodes">
+										<h5 for="drivinglicencecodes">Driving Licence Code : 
+											<span class="text-danger">*</span> </h5>
+										<select class="custom-select form-control required" 
+											id="drivinglicencecodes" name="drivinglicencecodes">
 										@if( isset($driver) )
 											<option value="{{$driver['codes']['code']}}">
 												Code: {{$driver['codes']['code']}}; 
@@ -147,6 +149,28 @@
 										</select>
 									</div>
 								</div>
+
+								<div class="col-md-6">
+									<div class="form-group" id="valid-from">
+										<h5 for="valid-from">
+											Licence Valid From : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="2020-01-01" name="valid-from">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" id="valid-until">
+										<h5 for="valid-until">
+											Licence Valid Until :
+												<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" value="2020-01-01" 
+												name="valid-until">
+									</div>
+								</div>
+								
 
 							</div>
 						</section>
@@ -345,7 +369,7 @@
 
 </section>
 
-@if( isset($member_vehicles) )
+@if( isset($member_vehicle) )
 <section class="content">
 	<div class="row">
 
@@ -437,30 +461,41 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="regnumber">Registration Number : <span class="text-danger">*</span> </label>
-										<input type="text" class="form-control required" id="regnumber" name="regnumber" maxlength="10">
+										<label for="regnumber">Registration Number : 
+											<span class="text-danger">*</span> 
+										</label>
+										<input type="text" class="form-control required" 
+											id="regnumber" name="regnumber" maxlength="10">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="vehiclemake">Make : <span class="text-danger">*</span></label>
-										<input type="text" class="form-control required" id="vehiclemake" name="vehiclemake" maxlength="20"> </div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="vehiclemodel">Model : <span class="text-danger">*</span> </label>
-										<input type="text" class="form-control required" id="vehiclemodel" name="vehiclemodel" maxlength="20">
+										<h5 for="vehicle_class">Vehicle : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<select class="custom-select form-control required" 
+											id="vehicle_class" name="vehicle_class">
+											<option value="">Please select Vehicle</option>
+											@foreach ($all_vehicle_classes as $vehicle_class)
+												<option value="{{$vehicle_class->id}}">
+													{{$vehicle_class->make}}; 
+													{{$vehicle_class->model}}; 
+													{{$vehicle_class->year}}; 
+													{{$vehicle_class->seats_number}}; 
+												</option>
+											@endforeach
+										</select>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="webUrl3">Year : <span class="text-danger">*</span></label>
-										<input type="number" class="form-control required" id="webUrl3" name="vehicleyear" maxlength="4" min=2010> </div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="vehicleseats">Number of seats : <span class="text-danger">*</span></label>
-										<input type="number" class="form-control required" id="vehicleseats" name="vehicleseats" maxlength="2" min=0 max=22>
+										<label for="notes">About Vehicle : 
+											<span class="text-danger">*</span> 
+										</label>
+										<textarea rows="5" class="form-control" 
+											placeholder="About Vehicle"
+											id="notes" name="notes">
+										</textarea>
 									</div>
 								</div>
 								<div class="col-md-6">
