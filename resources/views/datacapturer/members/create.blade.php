@@ -152,29 +152,96 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
+										<h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
+										<select class="custom-select form-control required" id="city" name="city">
+										@if( isset($member_record) )
+											<option value="{{$member_record['gender']['id']}}">
+												{{$member_record['gender']['type']}}
+											</option>
+											@foreach ($all_gender as $gender)
+												@if( $gender->id != $member_record['gender']['id'])
+													<option value="{{$gender->id}}">{{$gender->type}}</option>
+												@endif
+											@endforeach
+										@else
+											<option value="">Please Select Gender</option>
+											@foreach ($all_gender as $gender)
+												<option value="{{$gender->id}}">{{$gender->type}}</option>
+											@endforeach
+										@endif
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
 										<label for="wemailAddress2"> Email Address :</label>
 										<input type="email" class="form-control" id="wemailAddress2" 
 										name="emailAddress" maxlength="25" value="{{$member_record->email ?? ''}}"
 										{{ isset($member_record) ? 'readonly' : '' }}> 
 									</div>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="wphoneNumber2">Phone Number : <span class="text-danger">*</span>  </label>
+										<h5 for="wphoneNumber2">Phone Number : <span class="text-danger">*</span></h5>
 										<input type="tel" class="form-control required" id="wphoneNumber2" 
 										name="phonenumber" maxlength="10" value="{{$member_record->phone_number ?? ''}}"
 										{{ isset($member_record) ? 'readonly' : '' }}> 
 									</div>
 								</div>
+							</div>
+
+							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="addressline1">Address Line : <span class="text-danger">*</span>  </label>
+										<h5 for="addressline1">Address Line : <span class="text-danger">*</span>  </h5>
 										<input type="text" class="form-control required" id="addressline1" 
 										name="addressline1" maxlength="25" value="{{$member_record->address_line ?? ''}}" 
 										{{ isset($member_record) ? 'readonly' : '' }}> 
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
+										<input type="text" class="form-control required" id="surburb" 
+											name="surburb" maxlength="25" value="{{$member_record->surburb ?? '' }}">
+									</div>
+                           		</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergency_contact_name">Emergency Contact Name : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_name" name="emergency_contact_name" 
+											maxlength="25" value="{{$member_record->emergency_contact_name ?? '' }}">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergency_contact_number">Emergency Contact Number : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_number" name="emergency_contact_number" 
+											maxlength="10" value="{{$member_record->emergency_contact_number ?? '' }}">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_relationship" name="emergency_contact_relationship" 
+											maxlength="25" value="{{$member_record->emergency_contact_relationship ?? '' }}">
 									</div>
 								</div>
 							</div>
@@ -182,7 +249,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="city">City/Town : <span class="text-danger">*</span> </label>
+										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" id="city" name="city">
 										@if( isset($member_record) )
 											<option value="{{$member_record['city']['city_id']}}">
@@ -209,6 +276,8 @@
 									</div>
 								</div>
 							</div>
+
+							
 
 						</section>
 
