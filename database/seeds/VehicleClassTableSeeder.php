@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class VehicleClassSeeder extends Seeder
+class VehicleClassTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class VehicleClassSeeder extends Seeder
                 'make' => 'Other',
                 'model' => 'Other',
                 'year' => 'N/A',
-                'seats_number' => 'N/A'
+                'seats_number' => '0'
             ],
             [
                 'vehicle_type_id' => '2',

@@ -16,7 +16,7 @@ class CreateMemberVehicleTable extends Migration
         Schema::create('member_vehicle', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
-            $table->string('vehicle_class_id');
+            $table->integer('vehicle_class_id');
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members');

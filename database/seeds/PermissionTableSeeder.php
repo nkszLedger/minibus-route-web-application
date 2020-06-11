@@ -21,7 +21,15 @@ class PermissionTableSeeder extends Seeder
            'employee-list',
            'employee-create',
            'employee-edit',
-           'employee-delete'
+           'employee-delete',
+           'member-list',
+           'member-create',
+           'member-edit',
+           'member-delete',
+           'user-list',
+           'user-create',
+           'user-edit',
+           'user-delete',
 
         ];
 

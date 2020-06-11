@@ -591,6 +591,8 @@
 	document.getElementById("licensenumber").disabled = true;
 	document.getElementById("operatinglicensenumber").disabled = true;
 	document.getElementById("createoperatinglicensefile").disabled = true;
+	document.getElementById("drivinglicencecodes").disabled = true;
+	$("#attachment").html( 'Uploads' );
 </script>
 
 <script>
@@ -610,7 +612,9 @@
 					$("#licensenumbertypelabel").html( 'Association Membership Number : <span class="text-danger">*</span>' );
 					document.getElementById("licensenumber").disabled = false;
 					document.getElementById("operatinglicensenumber").disabled = false;
-					document.getElementById("createoperatinglicensefile").disabled = true;
+					document.getElementById("createoperatinglicensefile").disabled = false;
+					document.getElementById("drivinglicencecodes").disabled = false;
+					$("#attachment").html( 'Upload Operating Sticker' );
 					document.getElementById("membershiplicensenumbertype").style.display = "none";
 				}
 				else if( desc == "Operator")
@@ -619,7 +623,10 @@
 					document.getElementById("licensenumber").disabled = true;
 					document.getElementById("operatinglicensenumber").disabled = false;
 					document.getElementById("createoperatinglicensefile").disabled = false;
+					document.getElementById("drivinglicencecodes").disabled = true;
+					document.getElementById("membershiplicensenumbertype").disabled = true;
 					document.getElementById("membershiplicensenumbertype").style.display = "none";
+					$("#attachment").html( 'Upload Operating License' );
 
 				}
 				else if( desc == "Both Driver and Operator")
@@ -641,6 +648,9 @@
 							maxlength="12"> '
 					);
 					document.getElementById("membershiplicensenumbertype").style.display = "block";
+					document.getElementById("drivinglicencecodes").disabled = false;
+					document.getElementById("membershiplicensenumbertype").disabled = false;
+					$("#attachment").html( 'Upload Operating License' );
 				}
 				else
 				{
@@ -648,6 +658,9 @@
 					document.getElementById("licensenumber").disabled = true;
 					document.getElementById("operatinglicensenumber").disabled = true;
 					document.getElementById("createoperatinglicensefile").disabled = true;
+					document.getElementById("drivinglicencecodes").disabled = true;
+					document.getElementById("membershiplicensenumbertype").disabled = true;
+					$("#attachment").html( '' );
 				}
 			}
 			else
@@ -656,6 +669,10 @@
 				document.getElementById("licensenumber").disabled = true;
 				document.getElementById("operatinglicensenumber").disabled = true;
 				document.getElementById("createoperatinglicensefile").disabled = true;
+				document.getElementById("drivinglicencecodes").disabled = true;
+				document.getElementById("membershiplicensenumbertype").disabled = true;
+				document.getElementById("membershiplicensenumbertype").style.display = "none";
+				$("#attachment").html( 'Uploads' );
 			}
 			
 	});
@@ -889,11 +906,12 @@
 		
 </script>
 
-{{-- <script>
+<script>
 	$('#error_on_email_number').fadeIn().delay(10000).fadeOut();
 	$('#error_on_id_number').fadeIn().delay(10000).fadeOut();
 	$('#error_on_employee_number').fadeIn().delay(10000).fadeOut();
-</script> --}}
+	$('#error_on_create_member').fadeIn().delay(10000).fadeOut();
+</script>
 
 </body>
 </html>

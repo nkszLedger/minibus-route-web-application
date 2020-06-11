@@ -16,9 +16,9 @@ class CreateDrivingLicenceCodesTable extends Migration
         Schema::create('driving_licence_codes', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('class');
-            $table->string('category');
-            $table->string('includes');
+            $table->longText('class')->nullable();
+            $table->longText('category')->nullable();
+            $table->longText('includes')->nullable();
             $table->timestamps();
         });
     }

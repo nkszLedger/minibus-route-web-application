@@ -16,7 +16,16 @@ class DatabaseSeeder extends Seeder
         $this->call(AssociationsTableSeeder::class);
         $this->call(RoutesTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
+        $this->call(PermissionTableSeeder::class);
+        $this->call(GenderTableSeeder::class);
+        $this->call(ProvincesTableSeeder::class);
+        $this->call(VehicleTypeTableSeeder::class);
+        $this->call(DrivingLicenceCodeTableSeeder::class);
+        $this->call(VehicleClassTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(EmployeeTableSeeder::class);
+        
+
 
     }
 }

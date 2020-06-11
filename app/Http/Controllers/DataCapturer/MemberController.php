@@ -10,6 +10,7 @@ use App\MemberDriver;
 use App\MemberOperator;
 use App\MemberPortrait;
 use App\Region;
+use App\Gender;
 use App\Route;
 use App\Vehicle;
 use App\City;
@@ -17,6 +18,7 @@ use App\MemberFingerprint;
 use App\RouteVehicle;
 use App\Http\Controllers\Controller;
 use App\MemberRegionAssociation;
+use App\DrivingLicenceCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -50,6 +52,8 @@ class MemberController extends Controller
     {
         $all_cities = City::all();
         $all_regions = Region::all();
+        $all_gender = Gender::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
         $all_associations = Association::all();
         $all_membership_types = MembershipType::all();
 
@@ -57,7 +61,8 @@ class MemberController extends Controller
                             compact(['all_membership_types',
                                         'all_regions',
                                         'all_associations', 
-                                        'all_cities'
+                                        'all_cities', 'all_gender',
+                                        'all_driving_licence_codes'
                                     ]));
     }
 
@@ -69,6 +74,14 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        /* Redirects Mass Data */
+        $all_cities = City::all();
+        $all_regions = Region::all();
+        $all_gender = Gender::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
+        $all_associations = Association::all();
+        $all_membership_types = MembershipType::all();
+
         /* Init instances */
         $member = new Member();
         $vehicle = new Vehicle();
@@ -77,6 +90,21 @@ class MemberController extends Controller
         $member_operator = new MemberOperator();
         $route_vehicle = new RouteVehicle();
         $member_region_association = new MemberRegionAssociation();
+
+        if(  count(Member::where('id_number', $request->get('idnumber'))
+                ->get() ) > 0)
+        {
+            $error = 'Member ID Number already exists';
+
+            return view('datacapturer.members.create',      
+                                compact(['all_membership_types',
+                                            'all_regions',
+                                            'all_associations', 
+                                            'all_cities', 'all_gender',
+                                            'all_driving_licence_codes',
+                                            'error'
+                                        ]));
+        }
 
         if( $request->get('member_id') == null )
         {
@@ -88,16 +116,37 @@ class MemberController extends Controller
             $member->phone_number = $request->get('phonenumber');
             $member->address_line = $request->get('addressline1');
             $member->postal_code = $request->get('postal-code');
+            $member->emergency_contact_name = $request->get('emergency_contact_name');
+            $member->emergency_contact_relationship = $request->get('emergency_contact_relationship');
+            $member->emergency_contact_number = $request->get('emergency_contact_number');
+            $member->surburb = $request->get('surburb');
+            $member->gender_id = $request->get('gender');
             $member->city_id = $request->get('city');
             $member->is_member_associated =  $request->has('ismemberassociated');
             $member->membership_type_id = $request->get('membership-type'); 
 
-            $member->save();
+            if( $member->save() )
+            {
+
+            }
+            else
+            {
+                $error = 'Unexpected error occured. Please fill all fields';
+
+                return view('datacapturer.members.create',      
+                                        compact(['all_membership_types',
+                                                    'all_regions',
+                                                    'all_associations', 
+                                                    'all_cities', 'all_gender',
+                                                    'all_driving_licence_codes',
+                                                    'error'
+                                                ]));
+            }
 
             $member_record = Member::with(['membership_type',
                                             'city'])->findOrFail($member->id);
 
-            $driver = MemberDriver::where('member_id', $member->id)->get();
+            $driver = MemberDriver::where(['codes'])->findOrFail($member->id);
             $operator = MemberOperator::where('member_id', $member->id)->get();
             
             $all_membership_types = MembershipType::all();
@@ -201,7 +250,7 @@ class MemberController extends Controller
 
             return view('datacapturer.members.create', compact(['member_record', 
                                                     'driver', 
-                                                    'operator','member',
+                                                    'operator',
                                                     'all_associations',
                                                     'all_membership_types',
                                                     'all_regions', 'all_cities'
@@ -408,13 +457,15 @@ class MemberController extends Controller
 
         $member_vehicle_id = $member_vehicle[0]['id'];
 
-        $driver = MemberDriver::where('member_id', $id)->get();
+        $driver = MemberDriver::with(['codes'])->findOrFail($id);
         $operator = MemberOperator::where('member_id', $id)->get();
         
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
+        $all_gender = Gender::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
         
         if( $member_record->is_member_associated )
         {
@@ -433,9 +484,10 @@ class MemberController extends Controller
                                                 'vehicle', 'driver', 
                                                 'operator','all_routes', 
                                                 'region', 'association',
-                                                'all_associations',
+                                                'all_associations', 'all_gender',
                                                 'all_membership_types',
-                                                'all_regions', 'all_cities'
+                                                'all_regions', 'all_cities',
+                                                'all_driving_licence_codes',
                                                 ]));
         }
         else
@@ -444,7 +496,8 @@ class MemberController extends Controller
                                                 'vehicle', 
                                                 'driver', 'operator',
                                                 'all_membership_types',
-                                                'all_cities'
+                                                'all_cities', 'all_gender',
+                                                'all_driving_licence_codes',
                                                 ]));
         }
     }

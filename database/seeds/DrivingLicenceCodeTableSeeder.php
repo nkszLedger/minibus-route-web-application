@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DrivingLicenceCodeSeeder extends Seeder
+class DrivingLicenceCodeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

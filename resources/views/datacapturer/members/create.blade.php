@@ -20,6 +20,10 @@
 
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
+						<h6 class="box-subtitle text-danger text-center" id="error_on_create_member">
+							{{ $error ?? ''}}
+						</h6>
+						<hr class="mb-15 mt-0">
 						<section>
 							<div class="row">
 
@@ -83,12 +87,12 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>Upload Operating licence... </label>
+										<label id="attachment">Upload</label>
 										<label class="file">
 											@if( isset($operator[0]['license_path']) )
 											<input type="file" id="createoperatinglicensefile" name="operatinglicensefile" title="{{ $operator[0]['license_path'] }}" >
                                             @else
-                                            <input type="file" id="createoperatinglicensefile" name="operatinglicensefile" title="No file uploaded" >
+                                            <input type="file" id="createoperatinglicensefile" name="operatinglicensefile" value="No file uploaded" >
                                             @endif
 										</label>
 									</div>
@@ -112,6 +116,36 @@
 
 								<div class="col-md-6">
 									<div class="form-group" id="membershiplicensenumbertype"></div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="drivinglicencecodes">Driving Licence Code : <span class="text-danger">*</span> </h5>
+										<select class="custom-select form-control required" id="drivinglicencecodes" name="drivinglicencecodes">
+										@if( isset($driver) )
+											<option value="{{$driver['codes']['code']}}">
+												Code: {{$driver['codes']['code']}}; 
+												Category: {{$driver['codes']['category']}}
+											</option>
+											@foreach ($all_driving_licence_codes as $code)
+												@if( $code->id != $driver['codes']['code'])
+													<option value="{{$code->id}}">
+														Code: {{$code->code}}; 
+														Category: {{$code->category}}
+													</option>
+												@endif
+											@endforeach
+										@else
+											<option value="">Please select Code</option>
+											@foreach ($all_driving_licence_codes as $code)
+												<option value="{{$code->id}}">
+													Code: {{$code->code}}; 
+													Category: {{$code->category}}
+												</option>
+											@endforeach
+										@endif
+										</select>
+									</div>
 								</div>
 
 							</div>
@@ -153,7 +187,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" id="city" name="city">
+										<select class="custom-select form-control required" id="gender" name="gender">
 										@if( isset($member_record) )
 											<option value="{{$member_record['gender']['id']}}">
 												{{$member_record['gender']['type']}}
@@ -233,7 +267,8 @@
 											maxlength="10" value="{{$member_record->emergency_contact_number ?? '' }}">
 									</div>
 								</div>
-
+							</div>
+							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
@@ -244,9 +279,6 @@
 											maxlength="25" value="{{$member_record->emergency_contact_relationship ?? '' }}">
 									</div>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
@@ -269,6 +301,10 @@
 										</select>
 									</div>
 								</div>
+							</div>
+
+							<div class="row">
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="postal-code">Postal Code : <span class="text-danger">*</span> </label>

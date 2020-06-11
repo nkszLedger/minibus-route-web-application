@@ -12,4 +12,9 @@ class MemberDriver extends Model
     {
         return $this->belongsTo(Member::class);
     }
+
+    public function codes()
+    {
+        return $this->belongsTo(DrivingLicenceCode::class);
+    }
 }
