@@ -15,11 +15,14 @@ class CreateVehicleClassTable extends Migration
     {
         Schema::create('vehicle_class', function (Blueprint $table) {
             $table->id();
+            $table->integer('vehicle_type_id');
             $table->string('make');
             $table->string('model');
             $table->string('year')->nullable();
             $table->integer('seats_number')->nullable();
             $table->timestamps();
+
+            $table->foreign('vehicle_type_id')->references('id')->on('vehicle_types');
         });
     }
 

@@ -18,6 +18,7 @@ class CreateMemberDriverTable extends Migration
             $table->integer('member_id');
             $table->integer('driving_licence_code_id');
             $table->string('license_number')->unique();
+            $table->string('license_path')->nullable();
             $table->date('valid_since')->nullable();
             $table->date('valid_until')->nullable();
             $table->timestamps();
