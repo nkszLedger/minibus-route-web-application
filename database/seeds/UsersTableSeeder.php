@@ -15,6 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = User::create([
+            'name' => 'Luma',
+            'surname' => 'Makhi',
         	'email' => 'lmakhi@dot.gov.za',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => bcrypt('password'),
@@ -29,6 +31,8 @@ class UsersTableSeeder extends Seeder
         $user->assignRole([$role->id]);
 
         $user = User::create([
+            'name' => 'Sam',
+            'surname' => 'Kunene',
         	'email' => 'skunene@dot.gov.za',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => bcrypt('password1'),

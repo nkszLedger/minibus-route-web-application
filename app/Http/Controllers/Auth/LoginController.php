@@ -55,11 +55,12 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)) 
         {
             $user = Auth::user();
-            if($user->roles->pluck( 'name' )->contains( 'Data Capturer') )
+            if($user->roles->pluck( 'name' )->contains('Data Capturer') )
             {
                 return redirect()->intended('employees');
             }
-            else{
+            else
+            {
                 return redirect()->intended('users');
             }
         }

@@ -19,9 +19,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $all_users = User::with(['employee'])->get();
+        $all_users = User::all();
 
-        return view('admin.users.index',compact(['all_users']));
+        return view('admin.users.index',
+                        compact(['all_users']));
     }
 
     

@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../minibus/images/favicon.ico">
 
-    <title> MiniBus Route Registration App</title>
+    <title> MiniBus Taxi Registration</title>
 
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
@@ -77,7 +77,10 @@
 									<!-- /.col -->
 									<div class="col-6">
 									 <div class="fog-pwd text-right">
-										<a href="#myModal-forgot-psswd" data-toggle="modal" class="hover-info text-white"><i class="ion ion-locked"></i> Forgot password?</a><br>
+										<a href="#myModal-forgot-psswd" data-toggle="modal" 
+											class="hover-info text-white">
+												<i class="ion ion-locked"></i> Forgot password?
+										</a><br>
 									  </div>
 									</div>
 									<!-- /.col -->
@@ -88,7 +91,11 @@
 								  </div>
 							</form>
 							<div class="text-center text-white">
-								<p class="mt-15 mb-0">Don't have an account? <a href="#" data-toggle="modal" data-target="#myModal" class="text-white ml-5">Sign Up</a></p>
+								<p class="mt-15 mb-0">Don't have an account? 
+									<a href="{{ route('register') }}" 
+										class="text-white ml-5">Sign Up
+									</a>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -110,7 +117,9 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <p>This feature is not yet implemented. If you want to create an account please consult the administrator at admin@dot.gov.za!</p>
+                    <p>This feature is not yet implemented. If you want to create an 
+					account please consult the administrator at admin@dot.gov.za!
+					</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>

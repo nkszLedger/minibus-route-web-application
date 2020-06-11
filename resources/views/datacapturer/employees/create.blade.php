@@ -235,7 +235,9 @@
                                     <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
                                     <select class="custom-select form-control required" id="province" name="province">
                                     @if( isset($employee))
-                                        <option selected value="{{$employee['province']['id']}}">{{$employee['province']['name']}}</option>
+                                        <option selected value="{{$employee['province']['id']}}">
+                                            {{$employee['province']['name']}}
+                                        </option>
                                     @else
                                         <option value="">Please Select Province</option>
                                     @endif

@@ -31,7 +31,8 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Full Names</th>
+											<th>Name</th>
+											<th>Surname</th>
 											<th>Email</th>
 											<th>Role</th>
 											<th>Date Created</th>
@@ -48,7 +49,8 @@
 									@foreach($all_users as $user )
 										<tr>
 											<td>{{$count}}</td>
-											<td>{{ $user['employee']['name'] }} {{ $user['employee']['surname']  }}</td>
+											<td>{{ $user['name'] }}</td>
+											<td>{{ $user['surname']  }}</td>
 											<td>{{ $user['email'] }}</td>
 											<td>{{ $user->roles[0]['name'] }}</td>
 											<td>
