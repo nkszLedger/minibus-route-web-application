@@ -28,36 +28,31 @@ Route::resources([
     'dashboard' => 'Oversight\DashboardController'
 ]);
 
+
 Route::get('members/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID')->name('associations');
-// Route::get('members/{member_id}/getAssociations/{region_id}', 
-//             function($member_id, $region_id) {
-//                 return App::make('App\http\Controllers\Controller')
-//                 ->getAssociationsByRegionID($region_id);
-// });        
-
+Route::get('members/{member_id}/getAssociations/{region_id}', 
+            function($member_id, $region_id) {
+                return App::make('App\http\Controllers\Controller')
+                ->getAssociationsByRegionID($region_id);
+});        
 
 Route::get('members/getRoutesPerAssociation/{association_id}', 
             'Controller@getRoutesByAssociationID')->name('regions');
-// Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}', 
-//             function($member_id, $association_id) {
-//                 return App::make('App\http\Controllers\Controller')
-//                 ->getRoutesByAssociationID($association_id);
-// });   
+Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}', 
+            function($member_id, $association_id) {
+                return App::make('App\http\Controllers\Controller')
+                ->getRoutesByAssociationID($association_id);
+});   
 
-// Route::get('showregpage', 'MemberController@showregpage');
-// Route::get('showtestregpage', 'MemberController@showtestregpage');
+Route::get('members/getCarRegNumberCount/{carregnumber}', 
+            'Controller@getCarRegNumberCount');
 
-// Route::get('create_member', 'MemberController@create_member');
-// Route::get('test_create_member', 'MemberController@test_create_member');
-// Route::get('list_members', 'MemberController@list_members');
-// Route::get('show_member/{id}', 'MemberController@show_member')->name('show_member');
+Route::get('members/membershipNumberExists/{membershipnumber}', 
+            'Controller@membershipNumberExists');
 
-// Route::get('admin/', 'Admin\UserController@list_users')->name('users');
-// Route::get('admin/employees', 'Admin\EmployeeController@list_employees')->name('employees');
-// Route::get('admin/employees/create', 'Admin\EmployeeController@create_employee')->name('create_employee');
-// Route::get('admin/employees/registration', 'Admin\EmployeeController@register')->name('register_employee');
+Route::get('members/driversLicenseNumberExists/{licencenumber}', 
+            'Controller@driversLicenseNumberExists');
 
-// Route::get('showmodal/{id}', 'MemberController@showmodal')->name('showmodal');
-// Route::get('getAssociations/{region_id}', 'Controller@getAssociationsByRegionID')->name('regions');
-// Route::get('getRoutesPerAssociation/{association_id}', 'Controller@getRoutesByAssociationID')->name('regions');
+Route::get('members/idExists/{idnumber}', 
+            'Controller@idExists');

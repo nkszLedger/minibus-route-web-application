@@ -26,4 +26,9 @@ class Member extends Model
         return $this->belongsTo(City::class,'city_id');
     }
 
+    public function gender()
+    {
+        return $this->belongsTo(City::class,'gender_id');
+    }
+
 }

@@ -93,60 +93,6 @@ class MemberController extends Controller
         $route_vehicle = new RouteVehicle();
         $member_region_association = new MemberRegionAssociation();
 
-        if(  count(Member::where('id_number', $request->get('idnumber'))
-                ->get() ) > 0)
-        {
-            $error = 'Member ID Number already exists';
-
-            return view('datacapturer.members.create',      
-                                compact(['all_membership_types',
-                                            'all_regions',
-                                            'all_associations', 
-                                            'all_cities', 'all_gender',
-                                            'all_driving_licence_codes',
-                                            'error'
-                                        ]));
-        }
-
-
-        if(  count(MemberDriver::where('license_number', 
-                $request->get('licensenumber'))
-                                ->get() ) > 0 ||
-            count(MemberOperator::where('license_number', 
-            $request->get('licensenumber'))
-                            ->get() ) > 0)
-        {
-            $error = 'Licence ID Number already exists';
-
-            return view('datacapturer.members.create',      
-                                compact(['all_membership_types',
-                                            'all_regions',
-                                            'all_associations', 
-                                            'all_cities', 'all_gender',
-                                            'all_driving_licence_codes',
-                                            'error'
-                                        ]));
-        }
-
-        if(  count(MemberDriver::where('membership_number', 
-                $request->get('membershiplicensenumbertype'))
-                                ->get() ) > 0 ||
-            count(MemberOperator::where('membership_number', 
-            $request->get('membershiplicensenumbertype'))
-                            ->get() ) > 0)
-        {
-            $error = 'Membership Number already exists';
-
-            return view('datacapturer.members.create',      
-                                compact(['all_membership_types',
-                                            'all_regions',
-                                            'all_associations', 
-                                            'all_cities', 'all_gender',
-                                            'all_driving_licence_codes',
-                                            'error'
-                                        ]));
-        }
-
         if( $request->get('member_id') == null )
         {
             /* capture MEMBER details */
@@ -256,7 +202,9 @@ class MemberController extends Controller
             }
             else
             {
-                $error = 'Unexpected error occured. Please fill all fields';
+                $error = 'Unexpected error occured. 
+                            Member Profile could not be created.
+                                Please try again later';
 
                 return view('datacapturer.members.create',      
                                         compact(['all_membership_types',
@@ -268,12 +216,18 @@ class MemberController extends Controller
                                                 ]));
             }
 
+            /* finally */
+            $member_record = Member::with(['membership_type', 'gender',
+                                        'city'])->findOrFail($member->id);
+
             return view('datacapturer.members.create',      
-                                        compact(['all_membership_types',
+                                        compact([   'member_record',
+                                                    'all_membership_types',
                                                     'all_regions',
                                                     'all_associations', 
                                                     'all_cities', 'all_gender',
                                                     'all_driving_licence_codes',
+                                                    'all_vehicle_classes',
                                                     'member_driver', 
                                                     'member_operator'
                                                 ]));
@@ -312,6 +266,8 @@ class MemberController extends Controller
                 }
                 
             }
+
+            return $this->index();
 
 
         }								
