@@ -214,12 +214,16 @@
                                     <label for="eregion">Region: <span class="text-danger">*</span> </label>
                                     <select class="custom-select form-control required" id="eregion" name="eregion">
                                         @if( isset($employee))
-                                            <option value="{{$employee['region']['region_id']}}">{{$employee['region']['region_name']}}</option>
-                                                @foreach ($all_regions as $region)
-                                                    @if( $region->region_id != $employee['region']['region_id'] )
-                                                        <option value="{{$region->region_id}}">{{$region->region_name}}</option>
-                                                    @endif
-                                                @endforeach
+                                            <option value="{{$employee['region']['region_id']}}">
+                                                {{$employee['region']['region_name']}}
+                                            </option>
+                                            @foreach ($all_regions as $region)
+                                                @if( $region->region_id != $employee['region']['region_id'] )
+                                                    <option value="{{$region->region_id}}">
+                                                        {{$region->region_name}}
+                                                    </option>
+                                                @endif
+                                            @endforeach
                                         @else
                                             <option value="">Please select Region</option>
                                             @foreach ($all_regions as $region)

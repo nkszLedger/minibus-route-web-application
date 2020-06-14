@@ -586,7 +586,7 @@
 	$('#membership-type').change(function(){
 			var desc = $(this).find(":selected").text();
 
-			console.log(desc);
+			console.log(desc.trim());
 
 			// clear area
 			$("#title").html('');
@@ -594,7 +594,7 @@
 			if( $(this).val() != "")
 			{
 				$("#title").html( 'Create <b>' + desc +'</b> Member Profile');
-				if( desc == "Driver")
+				if( desc.trim() == "Driver")
 				{
 					$("#licensenumbertypelabel").html( 'Association Membership Number : <span class="text-danger">*</span>' );
 					document.getElementById("licensenumber").disabled = false;
@@ -618,8 +618,7 @@
 				}
 				else if( desc == "Both Driver and Operator")
 				{
-					$("#licensenumbertypelabel").html( 'Operating License Number : \
-						<span class="text-danger">*</span>' );
+					$("#licensenumbertypelabel").html( 'Operating License Number : <span class="text-danger">*</span>' );
 
 					document.getElementById("licensenumber").disabled = false;
 					document.getElementById("operatinglicensenumber").disabled = false;
@@ -642,12 +641,7 @@
 				else
 				{
 					// should never reach
-					document.getElementById("licensenumber").disabled = true;
-					document.getElementById("operatinglicensenumber").disabled = true;
-					document.getElementById("createoperatinglicensefile").disabled = true;
-					document.getElementById("drivinglicencecodes").disabled = true;
-					document.getElementById("membershiplicensenumbertype").disabled = true;
-					$("#attachment").html( '' );
+					
 				}
 			}
 			else
@@ -898,6 +892,43 @@
 	$('#error_on_id_number').fadeIn().delay(10000).fadeOut();
 	$('#error_on_employee_number').fadeIn().delay(10000).fadeOut();
 	$('#error_on_create_member').fadeIn().delay(10000).fadeOut();
+	//$('#vehicleregnoexistance').fadeIn().delay(10000).fadeOut();
+</script>
+
+<script>
+	$("#regnumber").change(function() {
+		var text = $(this).val();
+		//console.log(text);
+        $.ajax({
+			url: 'getCarRegNumberCount/'+ text.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				var count = 0;
+
+				if(response['data'] != null){
+					count = response['data'];
+					console.log(text);
+				}
+
+				if(count > 0)
+				{
+					// clear area
+					$("#vehicleregnoexistance").html('');
+					$("#vehicleregnoexistance").html('<h5 class="text-warning" >\
+														Drivers exist for this vehicle</h5>');
+				}
+				else
+				{
+					// clear area
+					$("#vehicleregnoexistance").html('');
+					$("#vehicleregnoexistance").html('<h5 class="text-success" >\
+														There are no drivers for this vehicle</h5>');
+				}
+			}
+		});
+	});
 </script>
 
 </body>

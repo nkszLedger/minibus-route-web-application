@@ -53,7 +53,7 @@ class Controller extends BaseController
      */
     public function idExists($idnumber) {
 
-        $count = count(Member::where('id_number', $idnumber));
+        $count = count(Member::where('id_number', $idnumber)->get());
 
         return response()->json(['data' =>$count]);
 
@@ -67,7 +67,7 @@ class Controller extends BaseController
      */
     public function driversLicenseNumberExists($licencenumber) {
 
-        $count = count(MemberDriver::where('license_number', $licencenumber));
+        $count = count(MemberDriver::where('license_number', $licencenumber)->get());
 
         return response()->json(['data' =>$count]);
 
@@ -81,8 +81,8 @@ class Controller extends BaseController
      */
     public function membershipNumberExists($membershipnumber) {
 
-        $count_dr = count(MemberDriver::where('membership_number', $membershipnumber));
-        $count_op = count(MemberOperator::where('membership_number', $membershipnumber));
+        $count_dr = count(MemberDriver::where('membership_number', $membershipnumber)->get());
+        $count_op = count(MemberOperator::where('membership_number', $membershipnumber)->get());
 
         $total = $count_dr + $count_op;
 
@@ -98,7 +98,7 @@ class Controller extends BaseController
      */
     public function getCarRegNumberCount($carregnumber) {
 
-        $count = count(Vehicle::where('registration_number', $carregnumber));
+        $count = count(Vehicle::where('registration_number', $carregnumber)->get());
 
         return response()->json(['data' =>$count]);
 

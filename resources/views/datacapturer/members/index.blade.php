@@ -45,7 +45,7 @@
 										<span class="badge badge-pill badge-danger">Not Verified</span>
 									</td>
 									<td>
-										<a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> |
+										{{-- <a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> | --}}
 										{{-- <a href="#" data-toggle="modal" data-target="#modal-default" id="modal-button-id"  > <b>Profile</b></a> |--}}
 										<a href="{{ route('members.show', $member->id)}}"> <b>View Profile</b></a>
 

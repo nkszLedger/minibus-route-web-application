@@ -10,7 +10,12 @@ class VehicleClass extends Model
 
     public function vehicleType()
     {
-        return $this->belongsTo(VehicleType::class);
+        return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
+    }
+
+    public function vehicle()
+    {
+        return $this->hasMany(Vehicle::class);
     }
 
 }

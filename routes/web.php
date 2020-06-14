@@ -45,14 +45,14 @@ Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}',
                 ->getRoutesByAssociationID($association_id);
 });   
 
-Route::get('members/getCarRegNumberCount/{carregnumber}', 
+Route::get('getCarRegNumberCount/{carregnumber}', 
             'Controller@getCarRegNumberCount');
 
-Route::get('members/membershipNumberExists/{membershipnumber}', 
+Route::get('membershipNumberExists/{membershipnumber}', 
             'Controller@membershipNumberExists');
 
-Route::get('members/driversLicenseNumberExists/{licencenumber}', 
+Route::get('driversLicenseNumberExists/{licencenumber}', 
             'Controller@driversLicenseNumberExists');
 
-Route::get('members/idExists/{idnumber}', 
+Route::get('idExists/{idnumber}', 
             'Controller@idExists');

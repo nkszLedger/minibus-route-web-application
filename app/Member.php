@@ -15,11 +15,6 @@ class Member extends Model
     {
         return $this->belongsTo(MembershipType::class, 'membership_type_id');
     }
-
-    public function vehicles()
-    {
-        return $this->belongsToMany(Vehicle::class);
-    }
     
     public function city()
     {
@@ -28,7 +23,29 @@ class Member extends Model
 
     public function gender()
     {
-        return $this->belongsTo(City::class,'gender_id');
+        return $this->belongsTo(Gender::class,'gender_id');
     }
+
+    public function portrait()
+    {
+        return $this->hasOne(MemberPortrait::class);
+    }
+
+    public function fingerprint()
+    {
+        return $this->hasOne(MemberFingerprint::class);
+    }
+
+    public function driver()
+    {
+        return $this->hasOne(MemberDriver::class);
+    }
+
+    public function operator()
+    {
+        return $this->hasOne(MemberOperator::class);
+    }
+
+
 
 }

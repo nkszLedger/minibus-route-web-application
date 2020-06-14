@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DataCapturer;
 
+use Carbon\Carbon;
 use App\Association;
 use App\Member;
 use App\MembershipType;
@@ -130,8 +131,8 @@ class MemberController extends Controller
                         
                         $member_driver->member_id = $member->id;
                         $member_driver->license_path = $path;
-                        $member_driver->valid_since = $request->get('valid_since');
-                        $member_driver->valid_until = $request->get('valid_until');
+                        $member_driver->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
+                        $member_driver->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
                         $member_driver->license_number = $request->get('licensenumber');
                         $member_driver->membership_number = $request->get('operatinglicensenumber');
                         $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
@@ -153,8 +154,8 @@ class MemberController extends Controller
                         $member_operator->member_id = $member->id;
                         $member_operator->membership_number = $request->get('');
                         $member_operator->license_number = $request->get('operatinglicensenumber');
-                        $member_operator->valid_since = $request->get('valid_since');
-                        $member_operator->valid_until = $request->get('valid_until');
+                        $member_operator->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
+                        $member_operator->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
                         $member_operator->save();
                         break;
 
@@ -220,6 +221,9 @@ class MemberController extends Controller
             $member_record = Member::with(['membership_type', 'gender',
                                         'city'])->findOrFail($member->id);
 
+            $portrait = MemberPortrait::where('member_id', $member->id)->get();
+            $fingerprint = MemberFingerprint::where('member_id', $member->id)->get();
+
             return view('datacapturer.members.create',      
                                         compact([   'member_record',
                                                     'all_membership_types',
@@ -229,17 +233,27 @@ class MemberController extends Controller
                                                     'all_driving_licence_codes',
                                                     'all_vehicle_classes',
                                                     'member_driver', 
-                                                    'member_operator'
+                                                    'member_operator',
+                                                    'portrait', 'fingerprint'
                                                 ]));
 
         }
         else
         {
             /* capture Vehicle Details */
-            $vehicle->vehicle_class_id = $request->get('vehicle_class');
-            $vehicle->info = $request->get('info');
-            $vehicle->registration_number = $request->get('regnumber');
-            $vehicle->save();
+            if( Vehicle::where('registration_number', $request->get('regnumber') )->count() > 0)
+            {
+                $vehicle = Vehicle::where('registration_number', $request->get('regnumber') );
+                $vehicle->info = $request->get('notes');
+                $vehicle->update();
+            }
+            else
+            {
+                $vehicle->vehicle_class_id = $request->get('vehicle_class');
+                $vehicle->info = $request->get('notes');
+                $vehicle->registration_number = $request->get('regnumber');
+                $vehicle->save();
+            }
           
             /* capture MEMBER VEHICLE details */
             $member_vehicle->member_id = $request->get('member_id');
@@ -249,11 +263,11 @@ class MemberController extends Controller
             if( $request->has('ismemberassociated') )
             {
                 /* capture MEMBER REGION, ASSOCIATION details */
-                $member_region_association->member_id = $member->id;
+                $member_region_association->member_id = $request->get('member_id');
                 $member_region_association->region_id = $request->get('region');
                 $member_region_association->association_id = $request->get('association');
                 $member_region_association->save();
-
+                
                 if( !empty($request->get('route')) ) 
                 {
                     foreach ((array)$request->get('route') as $checkbox_value) 
@@ -267,7 +281,32 @@ class MemberController extends Controller
                 
             }
 
-            return $this->index();
+            /* finally */
+            $member_id = $member_vehicle->member_id;
+            
+            $member_record = Member::with(['membership_type', 'gender',
+                                            'city'])->findOrFail($member_id);
+
+            $member_driver = MemberDriver::with(['codes'])
+                                          ->findOrFail($member_id);
+
+            $member_operator = MemberOperator::where('member_id', $member_id)->get();
+
+            $member_vehicles = MemberVehicle::with(['vehicle.vehicleclass.vehicleType'])
+                                            ->findOrFail($member_id);
+
+            return view('datacapturer.members.create',      
+                                        compact([   'member_record',
+                                                    'all_membership_types',
+                                                    'all_regions',
+                                                    'all_associations', 
+                                                    'all_cities', 'all_gender',
+                                                    'all_driving_licence_codes',
+                                                    'all_vehicle_classes',
+                                                    'member_driver', 
+                                                    'member_operator',
+                                                    'member_vehicles',
+                                                ]));
 
 
         }								
@@ -282,16 +321,13 @@ class MemberController extends Controller
     public function show($id)
     {
         $member_record = Member::with(['membership_type',
-                                        'city'])->findOrFail($id);
+                                        'city', 'gender'])->findOrFail($id);
         
-        $member_vehicle = MemberVehicle::where('member_id', $id)->get();
-        
-        $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
+        $member_vehicle = MemberVehicle::with(['vehicle'])
+                                        ->findOrFail($id);
         
         $portrait = MemberPortrait::where('member_id', $id)->get();
         $fingerprint = MemberFingerprint::where('member_id', $id)->get();
-
-        $member_vehicle_id = $member_vehicle[0]['id'];
 
         $driver = MemberDriver::where('member_id', $id)->get();
         $operator = MemberOperator::where('member_id', $id)->get();
@@ -300,11 +336,17 @@ class MemberController extends Controller
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
+        $all_gender = Gender::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
         
-        if( $member_record->is_member_associated )
+        if( $member_record->is_member_associated & 
+            count(MemberVehicle::where('member_id', $id)->get()) > 0 )
         {
+            $member_vehicle_id = $member_vehicle['vehicle']['id'];
             $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
-            $association = Association::where('association_id', $member_region_association[0]['association_id'] )->get()[0];
+            $association = Association::where('association_id', 
+                $member_region_association[0]['association_id'] )->get()[0];
+
             $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
             $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
             $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
@@ -316,9 +358,8 @@ class MemberController extends Controller
                                 
             return view('datacapturer.members.show', 
                                     compact(['member_record', 
-                                                'vehicle', 'portrait',
-                                                'driver', 'operator',
-                                                'fingerprint','all_routes', 
+                                                'vehicle', 'driver', 
+                                                'operator','all_routes', 
                                                 'region', 'association',
                                                 'all_associations',
                                                 'all_membership_types',
@@ -329,11 +370,10 @@ class MemberController extends Controller
         {
             return view('datacapturer.members.show', 
                                 compact(['member_record', 
-                                            'vehicle', 'portrait',
-                                            'driver', 'operator',
-                                            'fingerprint',
+                                            'vehicle', 'driver',
+                                            'operator',
                                             'all_membership_types',
-                                            'all_cities'
+                                            'all_cities', 'all_gender'
                                             ]));
         }
 

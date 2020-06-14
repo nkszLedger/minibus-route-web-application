@@ -8,12 +8,13 @@ class Vehicle extends Model
 {
     protected $table = 'vehicle';
 
-    public function members()
-    {
-        return $this->belongsToMany(Member::class);
-    }
     public function vehicleclass()
     {
-        return $this->belongsTo(VehicleClass::class);
+        return $this->belongsTo(VehicleClass::class,'vehicle_class_id');
+    }
+
+    public function membervehicle()
+    {
+        return $this->hasMany(MemberVehicle::class);
     }
 }
