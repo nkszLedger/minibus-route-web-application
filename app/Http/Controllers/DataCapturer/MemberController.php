@@ -292,9 +292,10 @@ class MemberController extends Controller
 
             $member_operator = MemberOperator::where('member_id', $member_id)->get();
 
-            $member_vehicles = MemberVehicle::with(['vehicle.vehicleclass.vehicleType'])
-                                            ->findOrFail($member_id);
-
+            $member_vehicles = MemberVehicle::where('member_id', $member_id)
+                                            ->with(['vehicles.vehicleclass.type'])
+                                            ->get();
+            
             return view('datacapturer.members.create',      
                                         compact([   'member_record',
                                                     'all_membership_types',
@@ -323,14 +324,24 @@ class MemberController extends Controller
         $member_record = Member::with(['membership_type',
                                         'city', 'gender'])->findOrFail($id);
         
-        $member_vehicle = MemberVehicle::with(['vehicle'])
-                                        ->findOrFail($id);
+        $member_vehicles = MemberVehicle::where('member_id', $id)
+                                        ->with(['vehicles.vehicleclass.type'])
+                                        ->get();
         
         $portrait = MemberPortrait::where('member_id', $id)->get();
         $fingerprint = MemberFingerprint::where('member_id', $id)->get();
 
-        $driver = MemberDriver::where('member_id', $id)->get();
-        $operator = MemberOperator::where('member_id', $id)->get();
+        $member_driver = MemberDriver::where('member_id', $id)->get();
+        $member_operator = MemberOperator::where('member_id', $id)->get();
+
+        return view('datacapturer.members.show', 
+                                    compact(['member_record', 
+                                                'portrait',
+                                                'fingerprint',
+                                                'member_driver', 
+                                                'member_operator',
+                                                'member_vehicles',
+                                            ]));
         
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
@@ -342,39 +353,40 @@ class MemberController extends Controller
         if( $member_record->is_member_associated & 
             count(MemberVehicle::where('member_id', $id)->get()) > 0 )
         {
-            $member_vehicle_id = $member_vehicle['vehicle']['id'];
-            $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
-            $association = Association::where('association_id', 
-                $member_region_association[0]['association_id'] )->get()[0];
+            // $member_vehicle_id = $member_vehicles['vehicle']['id'];
+            // $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
+            // $association = Association::where('association_id', 
+            //     $member_region_association[0]['association_id'] )->get()[0];
 
-            $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
-            $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
-            $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
-                                                            $query->select('route_id')
-                                                                ->from('route_vehicle')
-                                                                ->whereColumn('route_id', 'routes.id')
-                                                                ->where('vehicle_id','=' , $member_vehicle_id);
-                                                            })->get();
+            // $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
+            // $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
+            // $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
+            //                                                 $query->select('route_id')
+            //                                                     ->from('route_vehicle')
+            //                                                     ->whereColumn('route_id', 'routes.id')
+            //                                                     ->where('vehicle_id','=' , $member_vehicle_id);
+            //                                                 })->get();
                                 
-            return view('datacapturer.members.show', 
-                                    compact(['member_record', 
-                                                'vehicle', 'driver', 
-                                                'operator','all_routes', 
-                                                'region', 'association',
-                                                'all_associations',
-                                                'all_membership_types',
-                                                'all_regions', 'all_cities'
-                                                ]));
+            // return view('datacapturer.members.show', 
+            //                         compact(['member_record', 
+            //                                     'vehicle', 'driver',
+            //                                     'region', 'association',
+
+            //                                     'operator','all_routes', 
+            //                                     'all_associations',
+            //                                     'all_membership_types',
+            //                                     'all_regions', 'all_cities'
+            //                                     ]));
         }
         else
         {
-            return view('datacapturer.members.show', 
-                                compact(['member_record', 
-                                            'vehicle', 'driver',
-                                            'operator',
-                                            'all_membership_types',
-                                            'all_cities', 'all_gender'
-                                            ]));
+            // return view('datacapturer.members.show', 
+            //                     compact(['member_record', 
+            //                                 'vehicle', 'driver',
+            //                                 'operator',
+            //                                 'all_membership_types',
+            //                                 'all_cities', 'all_gender'
+            //                                 ]));
         }
 
     }
@@ -387,58 +399,40 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $member_record = Member::with(['membership_type',
+        $member_record = Member::with(['membership_type', 'gender',
                                         'city'])->findOrFail($id);
-        
-        $member_vehicle = MemberVehicle::where('member_id', $id)->get();
-        
-        $vehicle = Vehicle::where('id', $member_vehicle[0]['vehicle_id'])->get();
 
-        $member_vehicle_id = $member_vehicle[0]['id'];
+        $member_driver = MemberDriver::with(['codes'])
+                                        ->findOrFail($id);
+                                        
+        $member_operator = MemberOperator::where('member_id', $id)
+                                        ->get();
+                                        
+        $member_vehicles = MemberVehicle::where('member_id', $id)
+                                        ->with(['vehicles.vehicleclass.type'])
+                                        ->get();
 
-        $driver = MemberDriver::with(['codes'])->findOrFail($id);
-        $operator = MemberOperator::where('member_id', $id)->get();
-        
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
         $all_gender = Gender::all();
         $all_driving_licence_codes = DrivingLicenceCode::all();
-        
-        if( $member_record->is_member_associated )
-        {
-            $member_region_association = MemberRegionAssociation::where('member_id', $id)->get();
-            $association = Association::where('association_id', $member_region_association[0]['association_id'] )->get()[0];
-            $region = Region::where('region_id', $member_region_association[0]['region_id'] )->get()[0];
-            $route_vehicle = RouteVehicle::where('vehicle_id', $member_vehicle_id )->get();
-            $all_routes = Route::whereIn('id', function ($query) use($member_vehicle_id){
-                                                            $query->select('route_id')
-                                                                ->from('route_vehicle')
-                                                                ->whereColumn('route_id', 'routes.id')
-                                                                ->where('vehicle_id','=' , $member_vehicle_id);
-                                                            })->get();
-                                
-            return view('datacapturer.members.edit', compact(['member_record', 
-                                                'vehicle', 'driver', 
-                                                'operator','all_routes', 
-                                                'region', 'association',
-                                                'all_associations', 'all_gender',
+        $all_vehicle_classes = VehicleClass::all();
+
+        return view('datacapturer.members.edit',      
+                                    compact([   'member_record',
+                                                'member_driver', 
+                                                'member_operator',
+                                                'member_vehicles',
                                                 'all_membership_types',
-                                                'all_regions', 'all_cities',
-                                                'all_driving_licence_codes',
-                                                ]));
-        }
-        else
-        {
-            return view('datacapturer.members.edit', compact(['member_record', 
-                                                'vehicle', 
-                                                'driver', 'operator',
-                                                'all_membership_types',
+                                                'all_regions',
+                                                'all_associations', 
                                                 'all_cities', 'all_gender',
                                                 'all_driving_licence_codes',
-                                                ]));
-        }
+                                                'all_vehicle_classes',
+                                            ]));
+                                    
     }
 
     /**

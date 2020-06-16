@@ -81,7 +81,7 @@
 					</ul>
 				</li> --}}
 				
-				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+				{{-- <li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
 					<ul>
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
@@ -92,7 +92,7 @@
 						<li><a href="{{ route('members.create') }}">Register Member</a></li>
 						<li><a href="{{ route('members.index') }}">View Members</a></li>
 					</ul>
-				</li>
+				</li> --}}
 			</ul>
 		</nav>
 		<!-- Header Navbar -->

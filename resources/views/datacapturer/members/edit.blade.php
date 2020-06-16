@@ -2,224 +2,581 @@
 
 @section('content')
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<!-- Validation wizard -->
+			<div class="box box-default">
+				<div class="box-header with-border">
+                    <h4 class="box-title"> Member Management: UPDATE Member Profile</h4>
+                    <h4 class="box-subtitle">Current Member details</h4>
+                </div>
+				<!-- /.box-header -->
+				<div class="box-body wizard-content">
+					<form action="{{ route('members.update', $member_record->id) }}" method="POST" 
+						id="member-form" class="validation-wizard wizard-circle" 
+							enctype='multipart/form-data'>
+                        <?php echo method_field('PUT'); ?>
 
-            <div class="col-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h4 class="box-title"> Member Management: UPDATE Member Profile</h4>
-					    <h4 class="box-subtitle">Current Member details</h4>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
+						{{ csrf_field() }}
 
-                        <h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
+						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
+						<hr class="mb-15 mt-0">
+						<h6 class="box-subtitle text-danger text-center" id="error_on_create_member">
+							{{ $error ?? ''}}
+						</h6>
 						<hr class="mb-15 mt-0">
 						<section>
 							<div class="row">
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="membership-type"> Selected Type of Member : </label>
-										<select class="custom-select form-control required" readonly 
+										<label for="membership-type"> Select Type of Member : 
+											<span class="text-danger">*</span> 
+                                        </label>
+										
+										<select class="custom-select form-control required" 
 											id="membership-type" name="membership-type">
-											<option selected value="{{ $member_record['membership_type']['id'] }}">
+											<option value="{{ $member_record['membership_type']['id'] }}">
 												{{ $member_record['membership_type']['membership_type'] }}
-											</option>		
+											</option>	
+											@foreach ($all_membership_types as $membership_type)		
+												@if( $membership_type->id != $member_record['membership_type']['id'] )
+                                                <option value="{{$membership_type->id}}">
+													{{$membership_type->membership_type}}
+												</option>
+                                                @endif
+											@endforeach
 										</select>
 									</div>
 								</div>
-                                
-								<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="licensenumber">Driver's License Number :</label>
-                                        <input type="text" class="form-control required" 
-											{{ (count($driver) == 0) ? 'readonly' : '' }} 
-											id="updatelicensenumber" value="{{$driver[0]['license_id'] ?? ''}}" 
-											name="licensenumber" > 
-									</div>
-                                </div>
-
+								
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="operatinglicensenumber">Operating License Number : </label>
-										<input type="text" class="form-control required"  
-											{{ (count($operator) == 0) ? 'readonly' : '' }} 
-											id="updateoperatinglicensenumber" value="{{$operator[0]['license_id'] ?? ''}}" 
-											name="operatinglicensenumber" >
+										<label for="licensenumber">Driver's License Number : 
+											<span class="text-danger">*</span> 
+										</label>
+                                        <input type="text" class="form-control required" 
+                                            id="licensenumber" name="licensenumber" 
+                                            value="{{$member_driver['license_number'] ?? ''}}"
+                                            maxlength="12">
 									</div>
 								</div>
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>Operating License</label>
-										<label class="file">
-                                            @if( isset($operator[0]['license_path']) )
-											<input type="file" id="updateoperatinglicensefile" name="operatinglicensefile" title="{{ $operator[0]['license_path'] }}" >
-                                            @else
-                                            <input type="file" id="updateoperatinglicensefile" name="operatinglicensefile" title="No file uploaded" >
-                                            @endif
-										</label>
+										<label for="operatinglicensenumber" id="licensenumbertypelabel">
+											Operating License : <span class="text-danger">*</span> 
+                                        </label>
+                                        <input type="text" class="form-control required" 
+                                            id="operatinglicensenumber" 
+                                            name="operatinglicensenumber" maxlength="12"
+                                            value="{{$member_operator['membership_number'] ?? ''}}" > 
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+                                        @if( isset($member_operator['license_path']) )
+										<label id="attachment">{{ $member_operator['license_path'] }}</label>
+                                        @else
+                                        <label id="attachment">No documents found</label>
+                                        @endif
+										<input type="file" id="createoperatinglicensefile" 
+											name="operatinglicensefile">
 									</div>
 									<div class="form-group">
 										<div class="checkbox checkbox-success">
-                                            @if( $member_record->is_member_associated )
-											    <input id="isMemberAssociated" type="checkbox" checked disabled>
-                                                <label for="isMemberAssociated"> This member <span class="text-danger">BELONGS</span> to an association</label>
-                                            @else
-                                                <input id="isMemberAssociated" type="checkbox" disabled>
-                                                <label for="isMemberAssociated"> This member <span class="text-danger">DOES NOT</span> belong to any association</label>
-                                            @endif
+											@if( isset($member_record) )
+												@if( $member_record->is_member_associated )
+													<input id="ismemberassociated" 
+														type="checkbox" name="ismemberassociated" 
+														checked disabled>
+													<label for="ismemberassociated"> This member 
+														<span class="text-danger">BELONGS</span> 
+															to an association
+													</label>
+												@else
+													<input id="ismemberassociated" 
+														type="checkbox" name="ismemberassociated" disabled>
+													<label for="ismemberassociated"> This member 
+														<span class="text-danger">DOES NOT</span> 
+															belong to any association
+													</label>
+                                            	@endif
+											@else
+											@endif
 										</div>
 									</div>
 								</div>
 
+								<div class="col-md-6">
+									<div class="form-group" id="membershiplicensenumbertype">
+										@if( isset($member_driver->membership_number) )
+											<label for="associationmembershipnumber">
+												Association Membership Number : 
+												<span class="text-danger">*</span> 
+											</label> 
+											<input type="text" class="form-control required" 
+												id="associationmembershipnumber" 
+												name="associationmembershipnumber" maxlength="12" 
+												value="{{$member_driver['membership_number'] ?? ''}}"> 
+										@else
+											<label for="associationmembershipnumber">
+												Association Membership Number : 
+												<span class="text-danger">*</span> 
+											</label> 
+											<input type="text" class="form-control required" 
+												id="associationmembershipnumber"  
+												name="associationmembershipnumber" maxlength="12">
+										@endif
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="drivinglicencecodes">Driving Licence Code : 
+											<span class="text-danger">*</span> </h5>
+										<select class="custom-select form-control required" 
+											id="drivinglicencecodes" name="drivinglicencecodes">
+											<option value="{{$member_driver['codes']['code']}}">
+												Code: {{$member_driver['codes']['code']}}; 
+												Category: {{$member_driver['codes']['category']}}
+											</option>
+											@foreach ($all_driving_licence_codes as $code)
+												@if( $code->id != $member_driver['codes']['code'] )
+													<option value="{{$code->id}}">
+														Code: {{$code->code}}; 
+														Category: {{$code->category}}
+													</option>
+												@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group" id="valid-from">
+										@if( isset($member_driver['valid_from']) )
+										<h5 for="valid-from">
+											Driver's Licence Valid From : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_driver['valid_from'] ?? ''}}" 
+												name="valid-from">
+
+										@elseif( isset($member_operator['valid_from']) )
+										<h5 for="valid-from">
+											Operating Licence Valid From : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_operator['valid_from'] ?? ''}}" 
+												name="valid-from">
+
+										@else
+										<h5 for="valid-from">
+											Licence Valid From : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+											name="valid-from">
+										@endif
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" id="valid-until">
+										@if( isset($member_driver['valid_until']) )
+										<h5 for="valid-until">
+											Driver's Licence Valid Until :
+												<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_driver['valid_until'] ?? ''}}" 
+												name="valid-until">
+
+										@elseif( isset($member_operator['valid_until']) )
+										<h5 for="valid-until">
+											Operator's Licence Valid Until :
+												<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_operator['valid_until'] ?? ''}}" 
+												name="valid-until">
+										@else
+										<h5 for="valid-until">
+											Licence Valid Until :
+												<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date"  
+												name="valid-until">
+										@endif
+									</div>
+								</div>
 							</div>
 						</section>
 
-                        <hr class="mb-15 mt-0">
+						<!-- Step 1 -->
+						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Personal Details</h4>
 						<hr class="mb-15 mt-0">
-                        <section>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="wfirstName2"> First Name : </label>
-                                        <input type="text" class="form-control required"  id="wfirstName2" value="{{$member_record->name}}" name="firstName">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="wlastName2"> Last Name : </label>
-                                        <input type="text" class="form-control required"  id="wlastName2" value="{{$member_record->surname}}" name="lastName">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="idnumber"> ID Number </label>
-                                        <input type="text" class="form-control required"  id="idnumber" value="{{$member_record->id_number}}" name="idnumber"> </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="wemailAddress2"> Email Address :</label>
-                                        <input type="email" class="form-control"  id="emailAddress" value="{{$member_record->email}}" name="emailAddress"> </div>
-                                </div>
-                               
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="wphoneNumber2">Phone Number : </label>
-                                        <input type="tel" class="form-control required"  id="phonenumber" value="{{$member_record->phone_number}}" name="phonenumber"> </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="addressline1">Address Line : </label>
-                                        <input type="text" class="form-control required"  id="addressline1" value="{{$member_record->address_line}}" name="addressline1"> </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="city">City/Town : </label>
-                                        <select class="custom-select form-control" id="city" name="city">
-                                            <option selected value="{{$member_record['city']['city_id']}}">{{$member_record['city']['city']}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+						<section>
+							<div class="row">
+								<div class="col-md-6">
 									<div class="form-group">
-										<label for="postal-code">Postal Code : </label>
-										<input type="text" class="form-control"  id="postal-code" value="{{$member_record->postal_code}}">
+										<label for="wfirstName2"> First Name : 
+											<span class="text-danger">*</span> 
+										</label>
+										<input type="text" class="form-control required" 
+                                            id="wfirstName2" name="firstName" maxlength="25" 
+                                            value="{{$member_record->name ?? ''}}"> 
 									</div>
 								</div>
-                            </div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="wlastName2"> Last Name : 
+											<span class="text-danger">*</span> 
+										</label>
+										<input type="text" class="form-control required" 
+                                            id="wlastName2" name="lastName" maxlength="25" 
+                                            value="{{$member_record->surname ?? ''}}"> 
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="idnumber"> ID Number : 
+                                        <span class="text-danger">*</span> </label>
+										<input type="text" class="form-control required" 
+                                        id="idnumber" name="idnumber" maxlength="13" 
+                                        value="{{$member_record->id_number ?? ''}}"> 
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="gender">Gender : 
+                                            <span class="text-danger">*</span> 
+                                        </h5>
+										<select class="custom-select form-control required" 
+											id="gender" name="gender">
+											<option value="{{$member_record['gender']['id']}}">
+												{{$member_record['gender']['type']}}
+											</option>
+											@foreach ($all_gender as $gender)
+                                                @if( $gender->id != $member_record['gender']['id'] )
+												<option value="{{$gender->id}}">{{$gender->type}}</option>
+                                                @endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+							</div>
 
-                        </section>
-                            
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="wemailAddress2"> 
+                                            Email Address :
+                                        </label>
+										<input type="email" class="form-control" 
+                                            id="wemailAddress2" 
+											name="emailAddress" maxlength="25" 
+											value="{{$member_record->email ?? ''}}"> 
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="wphoneNumber2">Phone Number : 
+										<span class="text-danger">*</span></h5>
+										<input type="tel" class="form-control required" 
+                                            id="wphoneNumber2" 
+											name="phonenumber" maxlength="10" 
+											value="{{$member_record->phone_number ?? ''}}"> 
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="addressline1">Address Line : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input type="text" class="form-control required" 
+											id="addressline1" 
+											name="addressline1" maxlength="25" 
+											value="{{$member_record->address_line ?? ''}}"> 
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for=surburb">Surburb
+                                            <span class="text-danger"> *</span>  
+                                        </h5>
+										<input type="text" class="form-control required" 
+                                            id="surburb" name="surburb" maxlength="25" 
+											value="{{$member_record->surburb ?? '' }}"> 
+									</div>
+                           		</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergency_contact_name"> 
+                                            Emergency Contact Name : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_name" 
+											name="emergency_contact_name" maxlength="25" 
+											value="{{$member_record->emergency_contact_name ?? '' }}"> 
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergency_contact_number">Emergency Contact Number : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_number" name="emergency_contact_number" 
+											maxlength="10" 
+											value="{{$member_record->emergency_contact_number ?? '' }}"> 
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
+											<span class="text-danger"> *</span>  
+										</h5>
+										<input type="text" class="form-control required" 
+											id="emergency_contact_relationship" 
+											name="emergency_contact_relationship" maxlength="25" 
+											value="{{$member_record->emergency_contact_relationship ?? '' }}"> 
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
+										<select class="custom-select form-control required" id="city" 
+											name="city">
+                                            <option value="{{$member_record['city']['city_id']}}">
+                                                {{$member_record['city']['city']}}
+                                            </option>
+                                            @foreach ($all_cities as $city)
+                                                @if( $city->city_id != $member_record['city']['city_id'])
+                                                    <option value="{{$city->city_id}}">{{$city->city}}</option>
+                                                @endif
+                                            @endforeach
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="postal-code">Postal Code : 
+											<span class="text-danger">*</span> </label>
+										<input type="text" class="form-control" id="postal-code" 
+											name="postal-code" maxlength="4" 
+											value="{{$member_record->postal_code ?? ''}}"> 
+									</div>
+								</div>
+							</div>
+
+							
+
+						</section>
+
+						@if( isset($member_record) )
+							<div class="row">
+								<div class="col-6 text-right">
+									<input class="btn btn-info mb-5" type="submit" value="Update">
+								</div>
+								<div class="col-6 text-left">
+									<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>
+								</div>
+							</div>
+						@endif
+					</form>
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+		</div>
+	</div>
+
+</section>
+
+@if( isset($member_record) )
+<section class="content">
+	<div class="row">
+
+		<div class="col-12">
+			<div class="box">
+				<div class="box-header with-border">
+					<h4 class="box-title">Vehicle Management: Vehicle Profiles</h4>
+					<h4 class="box-subtitle">Showing Registered Vehicles Profiles</h4>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+						<table id="example2" class="table table-striped table-bordered 
+								table-hover display nowrap margin-top-10 w-p100">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Registration Number</th>
+									<th>Make</th>
+									<th>Model</th>
+									<th>Year</th>
+									<th>Seat Count</th>
+									{{-- <th>Association</th>
+									<th>Routes Assigned</th> --}}
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+									$count = 1;
+								?>
+								@if( isset($member_vehicles) )
+								@foreach($member_vehicles as $vehicle)
+								<tr>
+									<td>{{ $count }}</td>
+									<td>{{ $vehicle['vehicles']['registration_number'] }}</td> 
+									<td>{{ $vehicle['vehicles']['vehicleclass']['make'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['model'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
+									<td>
+										<a href="#"> <b>Edit</b> </a> | 
+										<a href="#"> <b>Delete</b> </a>
+									</td>
+								</tr>
+								<?php $count++?>
+								@endforeach
+								@endif
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>#</th>
+									<th>Registration Number</th>
+									<th>Make</th>
+									<th>Model</th>
+									<th>Year</th>
+									<th>Seat Count</th>
+									{{-- <th>Association</th>
+									<th>Routes Assigned</th> --}}
+									<th>Action</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</div>
+</section>
+@endif
+
+@if( isset($member_record) )
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<!-- Validation wizard -->
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h4 class="box-title" id="title">Vehicle Registration: Update Vehicle Profile</h4>
+					<h4 class="box-subtitle">Complete the following details to update profile</h4>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body wizard-content">
+					<form action="{{ route('members.store') }}" method="POST" 
+						id="member-form" class="validation-wizard wizard-circle" enctype='multipart/form-data'>
+						{{ csrf_field() }}
+						<input type="hidden" class="form-control required" id="member_id" 
+							value="{{$member_record->id ?? ''}}" name="member_id">
+						<!-- Step 2 -->
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-car mr-15"></i> Vehicle Details</h4>
 						<hr class="mb-15 mt-0">
-                        <section>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="regnumber">Registration Number : </label>
-                                        <input type="text" class="form-control required"  id="regnumber" value="{{ $vehicle[0]['registration_number'] }}" name="regnumber">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="vehiclemake">Make : </label>
-                                        <input type="text" class="form-control required"   id="vehiclemake" value="{{ $vehicle[0]['make'] }}" name="vehiclemake"> </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="vehiclemodel">Model : </label>
-                                        <input type="text" class="form-control required"  id="vehiclemodel" value="{{ $vehicle[0]['model'] }}" name="vehiclemodel">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="webUrl3">Year : </label>
-                                        <input type="text" class="form-control required"  id="webUrl3" value="{{ $vehicle[0]['year'] }}" name="vehicleyear"> </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="vehicleseats">Number of seats : </label>
-                                        <input type="number" class="form-control required"   id="vehicleseats" value="{{ $vehicle[0]['seats_number'] }}"  name="vehicleseats">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        @if( isset( $region )  )
-                        <hr class="mb-15 mt-0">
-						<h4 class="box-title text-info"><i class="ti-map-alt mr-15"></i> Routes & Associations</h4>
-						<hr class="mb-15 mt-0">
-                        <section>
-                            <div class="row">
+						<section>
+							<div class="row">
 								<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label><span class="text-danger">Current Region: </span></label>
-                                        <input type="text" class="form-control required" readonly value="{{ $region->region_name }}">
-                                    </div>
-                                </div>
-								<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label><span class="text-danger">Current Association: </span></label>
-                                        <input type="text" class="form-control required" readonly value="{{ $association->name}}">
-                                    </div>
-                                </div>
-								<div class="col-md-12">
 									<div class="form-group">
-										<label><span class="text-danger">Current Vehicle Route Details: </span></label>
-										<hr class="mb-15 mt-0">
-										<div>
-										@foreach ($all_routes as $route)
-                                            {{-- @if($route->route_id === $member_vehicle_routes[0]['routes'][0]['route_id']) --}}
-                                                <input checked="checked"  name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}" disabled>
-                                                {{-- <label for="{{$route->id}}" class="d-block">{{$route->id.' : '}}{{$member_vehicle_routes[0]['routes'][0]['origin'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['via'].' - '}}{{$member_vehicle_routes[0]['routes'][0]['destination']}}</label> --}}
-                                                <label for="{{$route->id}}" class="d-block">{{$route->route_id.' : '}}{{$route->origin.' - '}}{{$route->via.' - '}}{{$route->destination}}</label>
-                                            {{-- @endif --}}
-                                        @endforeach
-										</div>
+										<label for="regnumber">Registration Number : 
+											<span class="text-danger">*</span> 
+										</label>
+										<input type="text" class="form-control required" 
+											id="regnumber" name="regnumber" maxlength="10">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<h5 for="vehicle_class">Vehicle : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<select class="custom-select form-control required" 
+											id="vehicle_class" name="vehicle_class">
+											<option value="">Please select Vehicle</option>
+											@foreach ($all_vehicle_classes as $vehicle_class)
+												<option value="{{$vehicle_class->id}}">
+													{{$vehicle_class->make}}; 
+													{{$vehicle_class->model}}; 
+													{{$vehicle_class->year}} - range; 
+													{{$vehicle_class->seats_number}} - seater; 
+												</option>
+											@endforeach
+										</select>
 									</div>
 								</div>
 
-								<hr class="mb-15 mt-0">
+								<div class="col-md-6">
+									<div class="form-group" id="vehicleregnoexistance"></div>
+								</div>
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="update-region">Select New Region (If applicable): </label>
-										<select class="custom-select form-control required" id="update-region" name="region">
+										<label for="notes">About Vehicle : 
+											<span class="text-danger">*</span> 
+										</label>
+										<textarea class="form-control" 
+											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
+											id="notes" name="notes">
+										</textarea>
+									</div>
+								</div>
+							</div>
+						</section>
+						<!-- Step 3 -->
+						<hr class="mb-15 mt-0">
+						<h4 class="box-title text-info">
+                            <i class="ti-map-alt mr-15"></i> Routes & Associations
+                        </h4>
+						<hr class="mb-15 mt-0">
+						<section id="create-member-routes-associations-section" disabled>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="wintType1">Region: 
+                                            <span class="text-danger">*</span> 
+                                        </label>
+										<select class="custom-select form-control required" 
+                                            id="region" data-placeholder="Type to search cities" name="region">
 											<option selected value="">Please select Region</option>
 											@foreach ($all_regions as $region)
-												<option value="{{$region->region_id}}">{{$region->region_name}}</option>
+												<option value="{{$region->region_id}}">
+                                                    {{$region->region_name}}
+                                                </option>
 											@endforeach
 										</select>
 									</div>
@@ -228,38 +585,46 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="update-association">Select New Association (If applicable):</label>
-										<select class="custom-select form-control required " id="update-association" name="association">
+										<label for="association">Association :
+                                            <span class="text-danger">*</span>  
+                                        </label>
+										<select class="custom-select form-control required " 
+                                            id="association" name="association">
 											<option selected value="">Please select Association</option>
 											@foreach ($all_associations as $association)
-												<option value="{{$association->association_id}}">{{$association->name}}</option>
+												<option value="{{$association->association_id}}">
+                                                    {{$association->name}}
+                                                </option>
 											@endforeach
 										</select>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Vehicle Route Details : </label>
+										<label>Vehicle Route Details : <span class="text-danger">*</span></label>
 										<hr class="mb-15 mt-0">
-										<div id="update-route" name="route"></div>
+										<div id="route" name="route"></div>
 									</div>
 								</div>
-
-                            </div>
-                            @endif
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <a href="{{ route('members.show', $member_record->id )}}" type="submit" id="cancel_button" class="btn btn-warning ">Cancel </a>
-                                    <a href="{{ route('members.update', $member_record->id )}}" type="submit" id="update_button" class="btn btn-primary float-right">Update </a>
-                                </div>
-                            </div>
-                        </section>
-
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-            </div>
-        </div>
-    </section>
+							</div>
+							
+						</section>
+						
+						<div class="row">
+							<div class="col-6 text-right">
+								<input class="btn btn-info mb-5" type="submit" value="Add">
+							</div>
+							<div class="col-6 text-left">
+								<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+@endif
+	
 @endsection

@@ -13,12 +13,17 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
+					@if( isset($member_record) )
+					<form action="{{ route('members.edit', $member_record->id) }}" method="GET" 
+						id="member-form" class="validation-wizard wizard-circle" 
+							enctype='multipart/form-data'>
+					@else
 					<form action="{{ route('members.store') }}" method="POST" 
 						id="member-form" class="validation-wizard wizard-circle" 
 							enctype='multipart/form-data'>
+					@endif
 						{{ csrf_field() }}
 						
-
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
 						<h6 class="box-subtitle text-danger text-center" id="error_on_create_member">
@@ -198,17 +203,17 @@
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-												value="{{ $member_driver['valid_from'] ?? ''}}" 
+												value="{{ $member_driver->valid_from ?? ''}}" 
 												name="valid-from"
 												{{ isset($member_driver) ? 'readonly' : '' }}>
 
-										@elseif( isset($member_operator['valid_from']) )
+										@elseif( isset($member_operator->valid_from) )
 										<h5 for="valid-from">
 											Operating Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-												value="{{ $member_operator['valid_from'] ?? ''}}" 
+												value="{{ $member_operator->valid_from ?? ''}}" 
 												name="valid-from"
 												{{ isset($member_operator) ? 'readonly' : '' }}>
 
@@ -217,8 +222,7 @@
 											Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
-										<input class="form-control" type="date"  
-											value="2020-01-01" 
+										<input class="form-control" type="date" 
 											name="valid-from">
 										@endif
 									</div>
@@ -249,8 +253,7 @@
 											Licence Valid Until :
 												<span class="text-danger">*</span> 
 										</h5>
-										<input class="form-control" type="date" 
-												value="<?php echo date('Y-m-d');?>" 
+										<input class="form-control" type="date"  
 												name="valid-until">
 										@endif
 									</div>
@@ -509,14 +512,14 @@
 									$count = 1;
 								?>
 								@if( isset($member_vehicles) )
-								@foreach($member_vehicles['vehicle'] as $vehicle)
+								@foreach($member_vehicles as $vehicle)
 								<tr>
 									<td>{{ $count }}</td>
-									<td>{{ $vehicle['vehicle']['registration_number'] }}</td>
-									<td>{{ vehicles['vehicle']['vehicleclass']['vehicleType']['make'] }}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['model'] --}}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['year'] --}}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['seats_number'] --}}</td>
+									<td>{{ $vehicle['vehicles']['registration_number'] }}</td> 
+									<td>{{ $vehicle['vehicles']['vehicleclass']['make'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['model'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
 									<td>
 										<a href="#"> <b>Edit</b> </a> | 
 										<a href="#"> <b>Delete</b> </a>
@@ -611,8 +614,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<textarea class="form-control" 
-											placeholder="e.g. This is a 2015, VW XY model,
-															currently taking 8 seats"
+											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
 											id="notes" name="notes">
 										</textarea>
 									</div>

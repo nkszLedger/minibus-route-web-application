@@ -8,7 +8,7 @@ class VehicleClass extends Model
 {
     protected $table = 'vehicle_class';
 
-    public function vehicleType()
+    public function type()
     {
         return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
     }

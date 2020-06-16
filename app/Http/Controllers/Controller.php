@@ -103,4 +103,6 @@ class Controller extends BaseController
         return response()->json(['data' =>$count]);
 
     }
+
+    
 }

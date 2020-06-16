@@ -406,9 +406,6 @@
 									<th>Model</th>
 									<th>Year</th>
 									<th>Seat Count</th>
-									{{-- <th>Association</th>
-									<th>Routes Assigned</th> --}}
-									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -419,12 +416,11 @@
 								@foreach($member_vehicles as $vehicle)
 								<tr>
 									<td>{{ $count }}</td>
-									<td>{{ $vehicle }}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['make'] --}}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['model'] --}}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['year'] --}}</td>
-									<td>{{-- $member_vehicles['vehicle']['vehicleclass']['vehicleType']['seats_number'] --}}</td>
-									<td><<a href="#"><b>Edit</b></a>/td>
+									<td>{{ $vehicle['vehicles']['registration_number'] }}</td> 
+									<td>{{ $vehicle['vehicles']['vehicleclass']['make'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['model'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
+									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
 								</tr>
 								<?php $count++?>
 								@endforeach
