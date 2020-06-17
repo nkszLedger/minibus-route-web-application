@@ -791,13 +791,13 @@
 
 <script>
 
-	$('#update-region').change(function(){
+	$('#editregion').change(function(){
 		var id = $(this).val();
 
 		// clear area
-		$("#update-route").html('');
+		$("#editroute").html('');
 
-		$('#update-association').find('option').not(':first').remove();
+		$('#editassociation').find('option').not(':first').remove();
 
 		$.ajax({
 			url: 'getAssociations/'+ id.toString(),
@@ -824,7 +824,7 @@
 
 						console.log('the option to append');
 						console.log(option);
-						$("#update-association").append(option);
+						$("#editassociation").append(option);
 					}
 					console.log('outside loop');
 				}
@@ -838,7 +838,7 @@
 
 	//routes per association ajax function //TODO pull routes based of the selected association ID.
 
-	$('#update-association').change(function(){
+	$('#editassociation').change(function(){
 		var id = $(this).val();
 
 		$.ajax({
@@ -850,7 +850,7 @@
 				var len = 0;
 
 				// clear area
-				$("#update-route").html('');
+				$("#editroute").html('');
 
 				if(response['data'] != null){
 					len = response['data'].length;
@@ -862,9 +862,15 @@
 					for(var i=0; i<len; i++){
 
 						var id = response['data'][i].id;
-						var route_name = response['data'][i].route_id +" : " + response['data'][i].origin + " - " + response['data'][i].via + " - " + response['data'][i].destination;
+						var route_name = response['data'][i].route_id +" : " + 
+										response['data'][i].origin + " - " + 
+										response['data'][i].via + " - " + 
+										response['data'][i].destination;
 							
-						var input = "<input name=" + "'route[]'" + " type='" + "checkbox'" + " id='" + id + "'" + " value='" + id + "' " + ">";
+						var input = "<input name=" + "'route[]'" + 
+										" type='" + "checkbox'" + " id='" + 
+											id + "'" + " value='" + id + "' " + ">";
+
 						var label = "<label for='"+id+"' >" + route_name + "</label>";
 
 						var option = "<div>" + input + label + "</div>";
@@ -873,7 +879,7 @@
 						console.log(option);
 
 						
-						$("#update-route").append(option);
+						$("#editroute").append(option);
 					}
 					console.log('outside loop');
 
@@ -907,8 +913,8 @@
 
 				var count = 0;
 
-				if(response['data'] != null){
-					count = response['data'];
+				if(response['count'] != null){
+					count = response['count'];
 					console.log(text);
 				}
 
@@ -917,13 +923,55 @@
 					// clear area
 					$("#vehicleregnoexistance").html('');
 					$("#vehicleregnoexistance").html('<h5 class="text-warning" >\
-														Drivers exist for this vehicle</h5>');
+														Vehicle already exists</h5>');
+
+					console.log("vehicles");
+
 				}
 				else
 				{
 					// clear area
 					$("#vehicleregnoexistance").html('');
 					$("#vehicleregnoexistance").html('<h5 class="text-success" >\
+														There are no drivers for this vehicle</h5>');
+				}
+			}
+		});
+	});
+</script>
+
+<script>
+	$("#editregnumber").change(function() {
+		var text = $(this).val();
+		//console.log(text);
+        $.ajax({
+			url: 'getCarRegNumberCount/'+ text.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				var count = 0;
+
+				if(response['count'] != null){
+					count = response['count'];
+					console.log(text);
+				}
+
+				if(count > 0)
+				{
+					// clear area
+					$("#editvehicleregnoexistance").html('');
+					$("#editvehicleregnoexistance").html('<h5 class="text-warning" >\
+														Vehicle already exists</h5>');
+
+					console.log("vehicles");
+
+				}
+				else
+				{
+					// clear area
+					$("#editvehicleregnoexistance").html('');
+					$("#editvehicleregnoexistance").html('<h5 class="text-success" >\
 														There are no drivers for this vehicle</h5>');
 				}
 			}

@@ -47,6 +47,11 @@ Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}',
 
 Route::get('getCarRegNumberCount/{carregnumber}', 
             'Controller@getCarRegNumberCount');
+Route::get('members/{member_id}/getCarRegNumberCount/{carregnumber}', 
+            function($member_id, $carregnumber) {
+                return App::make('App\http\Controllers\Controller')
+                ->getCarRegNumberCount($carregnumber);
+});  
 
 Route::get('membershipNumberExists/{membershipnumber}', 
             'Controller@membershipNumberExists');

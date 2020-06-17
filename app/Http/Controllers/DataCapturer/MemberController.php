@@ -270,7 +270,7 @@ class MemberController extends Controller
                 
                 if( !empty($request->get('route')) ) 
                 {
-                    foreach ((array)$request->get('route') as $checkbox_value) 
+                    foreach((array)$request->get('route') as $checkbox_value) 
                     {
                         /* capture ROUTE VEHICLE details */
                         $route_vehicle->route_id = $checkbox_value;
@@ -324,31 +324,39 @@ class MemberController extends Controller
         $member_record = Member::with(['membership_type',
                                         'city', 'gender'])->findOrFail($id);
         
-        $member_vehicles = MemberVehicle::where('member_id', $id)
-                                        ->with(['vehicles.vehicleclass.type'])
-                                        ->get();
-        
         $portrait = MemberPortrait::where('member_id', $id)->get();
         $fingerprint = MemberFingerprint::where('member_id', $id)->get();
 
-        $member_driver = MemberDriver::where('member_id', $id)->get();
+        $member_driver = MemberDriver::with(['codes'])
+                                          ->findOrFail($id);
+
         $member_operator = MemberOperator::where('member_id', $id)->get();
 
-        return view('datacapturer.members.show', 
-                                    compact(['member_record', 
-                                                'portrait',
-                                                'fingerprint',
-                                                'member_driver', 
-                                                'member_operator',
-                                                'member_vehicles',
-                                            ]));
-        
+        $member_vehicles = MemberVehicle::where('member_id', $id)
+                                        ->with(['vehicles.vehicleclass.type'])
+                                        ->get();
+
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
         $all_cities = City::all();
         $all_gender = Gender::all();
         $all_driving_licence_codes = DrivingLicenceCode::all();
+
+        return view('datacapturer.members.show', 
+        compact(['member_record', 
+                    'portrait',
+                    'fingerprint',
+                    'member_driver', 
+                    'member_operator',
+                    'member_vehicles',
+                    'all_membership_types',
+                    'all_associations',
+                    'all_regions',
+                    'all_cities',
+                    'all_gender',
+                    'all_driving_licence_codes'
+                ]));
         
         if( $member_record->is_member_associated & 
             count(MemberVehicle::where('member_id', $id)->get()) > 0 )

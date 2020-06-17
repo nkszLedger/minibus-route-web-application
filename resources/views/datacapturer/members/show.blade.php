@@ -31,25 +31,22 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="membership-type"> Select Type of Member : 
-											<span class="text-danger">*</span> </label>
-										@if (isset($member_record) )
-										<select class="custom-select form-control required" readonly 
-											id="membership-type" name="membership-type">
-											{{-- <option selected value="{{ $member_record['membership_type']['id'] }}">
-												{{ $member_record['membership_type']['membership_type'] }}
-											</option>		 --}}
-										</select>
-										@else
+											<span class="text-danger">*</span> 
+										</label>
 										<select class="custom-select form-control required" 
-											id="membership-type" name="membership-type">
-											<option value="">Please select Membership Type</option>
-											@foreach ($all_membership_types as $membership_type)		
-												<option value="{{$membership_type->id}}">
-													{{$membership_type->membership_type}}
-												</option>
+											id="membership-type" name="membership-type" 
+											{{  isset($member_record) ? 'disabled' : '' }} >
+											<option value="{{ $member_record['membership_type']['id'] }}">
+												{{ $member_record['membership_type']['membership_type'] }}
+											</option>		
+											@foreach ($all_membership_types as $membership_type)	
+												@if( $membership_type->id !=$member_record['membership_type']['id'] )	
+													<option value="{{$membership_type->id}}">
+														{{$membership_type->membership_type}}
+													</option>
+												@endif
 											@endforeach
 										</select>
-										@endif
 									</div>
 								</div>
 								
@@ -58,9 +55,9 @@
 										<label for="licensenumber">Driver's License Number : 
 											<span class="text-danger">*</span> 
 										</label>
-                                        {{-- <input type="text" class="form-control required"
-                                            id="licensenumber" name="licensenumber" 
-                                            value="{{$driver[0]['license_number'] ?? ''}}" maxlength="12"> --}}
+                                        <input type="text" class="form-control required"  
+											id="licensenumber" value="{{$member_driver->license_number ?? ''}}" 
+											name="licensenumber" maxlength="12" readonly > 
 									</div>
 								</div>
 
@@ -69,18 +66,17 @@
 										<label for="operatinglicensenumber" id="licensenumbertypelabel">
 											Operating License : <span class="text-danger">*</span> 
                                         </label>
-										
-                                        {{-- <input type="text" class="form-control required" 
-                                            id="operatinglicensenumber" name="operatinglicensenumber" 
-                                            value="{{$operator[0]['membership_number'] ?? ''}}"
-                                            maxlength="12">  --}}
+										<input type="text" class="form-control required" 
+											id="operatinglicensenumber"
+											value="{{ isset($member_operator->membership_number) ?? ''}}" 
+											name="operatinglicensenumber" maxlength="12" readonly> 
 							
 									</div>
 								</div>
 
 								<div class="col-md-6">
 									<div class="form-group">
-										{{-- <label id="attachment">{{ $operator[0]['license_path'] ?? '' }}</label> --}}
+										<label id="attachment">{{ isset($member_operator->license_path) ?? '' }}</label>
 										<input type="file" id="createoperatinglicensefile" 
 											name="operatinglicensefile">
 									</div>
@@ -115,45 +111,62 @@
 										<h5 for="drivinglicencecodes">Driving Licence Code : 
 											<span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" 
-											id="drivinglicencecodes" name="drivinglicencecodes">
-										
-											{{-- <option value="{{$driver[0]['codes']['code']}}">
-												Code: {{$driver[0]['codes']['code']}}; 
-												Category: {{$driver[0]['codes']['category']}}
+											id="drivinglicencecodes" name="drivinglicencecodes"
+											{{  isset($member_driver) ? 'disabled' : '' }} >
+											<option value="{{$member_driver['codes']['code']}}">
+												Code: {{$member_driver['codes']['code']}}; 
+												Category: {{$member_driver['codes']['category']}}
 											</option>
-											@foreach ($all_driving_licence_codes as $code)
-												@if( $code->id != $driver[0]['codes']['code'])
-													<option value="{{$code->id}}">
-														Code: {{$code->code}}; 
-														Category: {{$code->category}}
-													</option>
-												@endif
-											@endforeach --}}
 										</select>
 									</div>
 								</div>
 
 								<div class="col-md-6">
 									<div class="form-group" id="valid-from">
+										@if(  isset($member_driver->valid_from) )
 										<h5 for="valid-from">
-											Licence Valid From : 
+											Driving Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
-										{{-- <input class="form-control" type="date" 
-												value="{{$driver[0]['valid_from'] ?? ''}}" 
-												name="valid-from"> --}}
+										<input class="form-control" type="date" 
+												value="{{ $member_driver->valid_from ?? ''}}" 
+												name="valid-from"
+												{{ isset($member_driver) ? 'readonly' : '' }}>
+										@endif
+										@if(  isset($member_operator->valid_from) )
+										<h5 for="valid-from">
+											Operating Licence Valid From : 
+											<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_operator->valid_from ?? ''}}" 
+												name="valid-from"
+												{{ isset($member_operator) ? 'readonly' : '' }}>
+										@endif
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group" id="valid-until">
+										@if( isset($member_driver->valid_until) )
 										<h5 for="valid-until">
-											Licence Valid Until :
+											Driving Licence Valid Until :
 												<span class="text-danger">*</span> 
 										</h5>
-										{{-- <input class="form-control" type="date" 
-                                                value="{{$driver[0]['valid_until'] ?? 
-                                                '<?php echo date('Y-m-d');?>'}}" 
-												name="valid-until"> --}}
+										<input class="form-control" type="date" 
+												value="{{ $member_driver->valid_until ?? ''}}" 
+												name="valid-from"
+												{{ isset($member_driver) ? 'readonly' : '' }}>
+										@endif
+										@if( isset($member_operator->valid_until) )
+										<h5 for="valid-until">
+											Operating Licence Valid Until :
+												<span class="text-danger">*</span> 
+										</h5>
+										<input class="form-control" type="date" 
+												value="{{ $member_operator->valid_until ?? ''}}" 
+												name="valid-from"
+												{{ isset($member_operator) ? 'readonly' : '' }}>
+										@endif
 									</div>
 								</div>
 							</div>
@@ -175,7 +188,7 @@
 										</label>
 										<input type="text" class="form-control required" 
 										id="wfirstName2" name="firstName" maxlength="25" 
-										value="{{$member_record->name ?? ''}}"> 
+										value="{{$member_record->name ?? ''}}" readonly> 
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -184,7 +197,8 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control required" id="wlastName2" 
-										name="lastName" maxlength="25" value="{{$member_record->surname ?? ''}}"> 
+										name="lastName" maxlength="25" 
+										value="{{$member_record->surname ?? ''}}" readonly> 
 									</div>
 								</div>
 							</div>
@@ -193,23 +207,17 @@
 									<div class="form-group">
 										<label for="idnumber"> ID Number : <span class="text-danger">*</span> </label>
 										<input type="text" class="form-control required" id="idnumber" 
-										name="idnumber" maxlength="13" value="{{$member_record->id_number ?? ''}}> 
+										name="idnumber" maxlength="13" value="{{$member_record->id_number ?? ''}}" readonly> 
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" 
-											id="gender" name="gender">
-
-											{{-- <option value="{{$member_record['gender']['id']}}">
+											id="gender" name="gender" disabled>
+											<option value="{{$member_record['gender']['id']}}">
 												{{$member_record['gender']['type']}}
 											</option>
-											@foreach ($all_gender as $gender)
-                                                @if( $gender->id != $member_record['gender']['id'] )
-                                                    <option value="{{$gender->id}}">{{$gender->type}}</option>
-                                                @endif
-											@endforeach --}}
 										</select>
 									</div>
 								</div>
@@ -221,7 +229,7 @@
 										<label for="wemailAddress2"> Email Address :</label>
 										<input type="email" class="form-control" id="wemailAddress2" 
 											name="emailAddress" maxlength="25" 
-											value="{{$member_record->email ?? ''}}"> 
+											value="{{$member_record->email ?? ''}}" readonly> 
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -230,7 +238,7 @@
 										<span class="text-danger">*</span></h5>
 										<input type="tel" class="form-control required" id="wphoneNumber2" 
 											name="phonenumber" maxlength="10" 
-											value="{{$member_record->phone_number ?? ''}}"> 
+											value="{{$member_record->phone_number ?? ''}}" readonly> 
 									</div>
 								</div>
 							</div>
@@ -242,9 +250,8 @@
 											<span class="text-danger">*</span> 
 										</h5>
 										<input type="text" class="form-control required" 
-											id="addressline1" 
-											name="addressline1" maxlength="25" 
-											value="{{$member_record->address_line ?? ''}}"> 
+											id="addressline1" name="addressline1" maxlength="25" 
+											value="{{$member_record->address_line ?? ''}}" readonly> 
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -252,7 +259,7 @@
 										<h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
 										<input type="text" class="form-control required" id="surburb" 
 											name="surburb" maxlength="25" 
-											value="{{$member_record->surburb ?? '' }}"> 
+											value="{{$member_record->surburb ?? '' }}" readonly> 
 									</div>
                            		</div>
 							</div>
@@ -264,7 +271,7 @@
 											<span class="text-danger"> *</span>  
 										</h5>
 										<input type="text" class="form-control required" 
-											id="emergency_contact_name" 
+											id="emergency_contact_name" readonly
 											name="emergency_contact_name" maxlength="25" 
 											value="{{$member_record->emergency_contact_name ?? '' }}"> 
 									</div>
@@ -277,7 +284,7 @@
 										</h5>
 										<input type="text" class="form-control required" 
 											id="emergency_contact_number" name="emergency_contact_number" 
-											maxlength="10" 
+											maxlength="10" readonly
 											value="{{$member_record->emergency_contact_number ?? '' }}"> 
 									</div>
 								</div>
@@ -289,7 +296,7 @@
 											<span class="text-danger"> *</span>  
 										</h5>
 										<input type="text" class="form-control required" 
-											id="emergency_contact_relationship" 
+											id="emergency_contact_relationship" readonly
 											name="emergency_contact_relationship" maxlength="25" 
 											value="{{$member_record->emergency_contact_relationship ?? '' }}"> 
 									</div>
@@ -298,15 +305,10 @@
 									<div class="form-group">
 										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" id="city" 
-											name="city">
-											{{-- <option value="{{$member_record['city']['city_id']}}">
+											name="city" disabled>
+											<option value="{{$member_record['city']['city_id']}}">
 												{{$member_record['city']['city']}}
 											</option>
-											@foreach ($all_cities as $city)
-												@if( $city->city_id != $member_record['city']['city_id'])
-													<option value="{{$city->city_id}}">{{$city->city}}</option>
-												@endif
-											@endforeach --}}
 										</select>
 									</div>
 								</div>
@@ -319,7 +321,7 @@
 										<label for="postal-code">Postal Code : 
 											<span class="text-danger">*</span> </label>
 										<input type="text" class="form-control" id="postal-code" 
-											name="postal-code" maxlength="4" 
+											name="postal-code" maxlength="4" readonly 
 											value="{{$member_record->postal_code ?? ''}}"> 
 									</div>
 								</div>
@@ -332,7 +334,7 @@
                         <hr class="mb-15 mt-0">
                         <section>
                             <div class="row">
-                                {{-- <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="idnumber"> Portrait :  </label>
                                         @if( isset($portrait[0]['id']) )
@@ -361,7 +363,7 @@
                                             <img src="/minibus/fingerprint-gey.png" height="225" width="225">
                                         @endif
                                     </div>
-                                </div> --}}
+                                </div>
 
                             </div>
                         </section>
@@ -406,6 +408,7 @@
 									<th>Model</th>
 									<th>Year</th>
 									<th>Seat Count</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -421,6 +424,9 @@
 									<td>{{ $vehicle['vehicles']['vehicleclass']['model'] }}</td>
 									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
 									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
+									<td>
+										<a href="#"> <b>Edit</b> </a>
+									</td>
 								</tr>
 								<?php $count++?>
 								@endforeach

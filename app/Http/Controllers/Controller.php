@@ -8,7 +8,9 @@ use App\Association;
 use App\Member;
 use App\MemberDriver;
 use App\MemberOperator;
-
+use App\MemberRegionAssociation;
+use App\MemberVehicle;
+use App\RouteVehicle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -98,9 +100,30 @@ class Controller extends BaseController
      */
     public function getCarRegNumberCount($carregnumber) {
 
-        $count = count(Vehicle::where('registration_number', $carregnumber)->get());
+        $vehicle = Vehicle::where('registration_number', $carregnumber)->get();
+        $member_vehicles = new MemberVehicle();
+        $route_vehicle = new RouteVehicle();
+        $member_region_association = new MemberRegionAssociation();
 
-        return response()->json(['data' =>$count]);
+        if( count($vehicle) > 0 )
+            $member_vehicles = MemberVehicle::where('vehicle_id', $vehicle[0]['id'])
+                                            ->with(['vehicles.vehicleclass.type'])
+                                            ->get();
+
+            $route_vehicle = RouteVehicle::where('vehicle_id', $vehicle[0]['id'])
+                                            ->get();
+
+            $member_region_association = MemberRegionAssociation::where('member_id', 
+                                            $member_vehicles[0]['member_id'] )
+                                            ->get();
+
+        $count = count($vehicle);
+
+        return response()->json(['count' => $count, 
+                                    'datamv' => $member_vehicles,
+                                    'datarv' => $route_vehicle,
+                                    'datamra' => $member_region_association
+                                ]);
 
     }
 

@@ -14,7 +14,7 @@
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
 					<form action="{{ route('members.update', $member_record->id) }}" method="POST" 
-						id="member-form" class="validation-wizard wizard-circle" 
+						id="editmember-form" class="validation-wizard wizard-circle" 
 							enctype='multipart/form-data'>
                         <?php echo method_field('PUT'); ?>
 
@@ -22,7 +22,7 @@
 
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
-						<h6 class="box-subtitle text-danger text-center" id="error_on_create_member">
+						<h6 class="box-subtitle text-danger text-center" id="editerror_on_create_member">
 							{{ $error ?? ''}}
 						</h6>
 						<hr class="mb-15 mt-0">
@@ -36,7 +36,7 @@
                                         </label>
 										
 										<select class="custom-select form-control required" 
-											id="membership-type" name="membership-type">
+											id="editmembership-type" name="membership-type">
 											<option value="{{ $member_record['membership_type']['id'] }}">
 												{{ $member_record['membership_type']['membership_type'] }}
 											</option>	
@@ -57,7 +57,7 @@
 											<span class="text-danger">*</span> 
 										</label>
                                         <input type="text" class="form-control required" 
-                                            id="licensenumber" name="licensenumber" 
+                                            id="editlicensenumber" name="licensenumber" 
                                             value="{{$member_driver['license_number'] ?? ''}}"
                                             maxlength="12">
 									</div>
@@ -65,11 +65,11 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="operatinglicensenumber" id="licensenumbertypelabel">
+										<label for="operatinglicensenumber" id="editlicensenumbertypelabel">
 											Operating License : <span class="text-danger">*</span> 
                                         </label>
                                         <input type="text" class="form-control required" 
-                                            id="operatinglicensenumber" 
+                                            id="editoperatinglicensenumber" 
                                             name="operatinglicensenumber" maxlength="12"
                                             value="{{$member_operator['membership_number'] ?? ''}}" > 
 									</div>
@@ -78,18 +78,18 @@
 								<div class="col-md-6">
 									<div class="form-group">
                                         @if( isset($member_operator['license_path']) )
-										<label id="attachment">{{ $member_operator['license_path'] }}</label>
+										<label id="editattachment">{{ $member_operator['license_path'] }}</label>
                                         @else
-                                        <label id="attachment">No documents found</label>
+                                        <label id="editattachment">No documents found</label>
                                         @endif
-										<input type="file" id="createoperatinglicensefile" 
+										<input type="file" id="editcreateoperatinglicensefile" 
 											name="operatinglicensefile">
 									</div>
 									<div class="form-group">
 										<div class="checkbox checkbox-success">
 											@if( isset($member_record) )
 												@if( $member_record->is_member_associated )
-													<input id="ismemberassociated" 
+													<input id="editismemberassociated" 
 														type="checkbox" name="ismemberassociated" 
 														checked disabled>
 													<label for="ismemberassociated"> This member 
@@ -97,7 +97,7 @@
 															to an association
 													</label>
 												@else
-													<input id="ismemberassociated" 
+													<input id="editismemberassociated" 
 														type="checkbox" name="ismemberassociated" disabled>
 													<label for="ismemberassociated"> This member 
 														<span class="text-danger">DOES NOT</span> 
@@ -111,14 +111,14 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group" id="membershiplicensenumbertype">
+									<div class="form-group" id="editmembershiplicensenumbertype">
 										@if( isset($member_driver->membership_number) )
 											<label for="associationmembershipnumber">
 												Association Membership Number : 
 												<span class="text-danger">*</span> 
 											</label> 
 											<input type="text" class="form-control required" 
-												id="associationmembershipnumber" 
+												id="editassociationmembershipnumber" 
 												name="associationmembershipnumber" maxlength="12" 
 												value="{{$member_driver['membership_number'] ?? ''}}"> 
 										@else
@@ -127,7 +127,7 @@
 												<span class="text-danger">*</span> 
 											</label> 
 											<input type="text" class="form-control required" 
-												id="associationmembershipnumber"  
+												id="editassociationmembershipnumber"  
 												name="associationmembershipnumber" maxlength="12">
 										@endif
 									</div>
@@ -138,7 +138,7 @@
 										<h5 for="drivinglicencecodes">Driving Licence Code : 
 											<span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" 
-											id="drivinglicencecodes" name="drivinglicencecodes">
+											id="editdrivinglicencecodes" name="drivinglicencecodes">
 											<option value="{{$member_driver['codes']['code']}}">
 												Code: {{$member_driver['codes']['code']}}; 
 												Category: {{$member_driver['codes']['category']}}
@@ -156,7 +156,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group" id="valid-from">
+									<div class="form-group" id="editvalid-from">
 										@if( isset($member_driver['valid_from']) )
 										<h5 for="valid-from">
 											Driver's Licence Valid From : 
@@ -186,7 +186,7 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group" id="valid-until">
+									<div class="form-group" id="editvalid-until">
 										@if( isset($member_driver['valid_until']) )
 										<h5 for="valid-until">
 											Driver's Licence Valid Until :
@@ -229,7 +229,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control required" 
-                                            id="wfirstName2" name="firstName" maxlength="25" 
+                                            id="editwfirstName2" name="firstName" maxlength="25" 
                                             value="{{$member_record->name ?? ''}}"> 
 									</div>
 								</div>
@@ -239,7 +239,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control required" 
-                                            id="wlastName2" name="lastName" maxlength="25" 
+                                            id="editwlastName2" name="lastName" maxlength="25" 
                                             value="{{$member_record->surname ?? ''}}"> 
 									</div>
 								</div>
@@ -250,7 +250,7 @@
 										<label for="idnumber"> ID Number : 
                                         <span class="text-danger">*</span> </label>
 										<input type="text" class="form-control required" 
-                                        id="idnumber" name="idnumber" maxlength="13" 
+                                        id="editidnumber" name="idnumber" maxlength="13" 
                                         value="{{$member_record->id_number ?? ''}}"> 
 									</div>
 								</div>
@@ -260,7 +260,7 @@
                                             <span class="text-danger">*</span> 
                                         </h5>
 										<select class="custom-select form-control required" 
-											id="gender" name="gender">
+											id="editgender" name="gender">
 											<option value="{{$member_record['gender']['id']}}">
 												{{$member_record['gender']['type']}}
 											</option>
@@ -281,7 +281,7 @@
                                             Email Address :
                                         </label>
 										<input type="email" class="form-control" 
-                                            id="wemailAddress2" 
+                                            id="editwemailAddress2" 
 											name="emailAddress" maxlength="25" 
 											value="{{$member_record->email ?? ''}}"> 
 									</div>
@@ -291,7 +291,7 @@
 										<h5 for="wphoneNumber2">Phone Number : 
 										<span class="text-danger">*</span></h5>
 										<input type="tel" class="form-control required" 
-                                            id="wphoneNumber2" 
+                                            id="editwphoneNumber2" 
 											name="phonenumber" maxlength="10" 
 											value="{{$member_record->phone_number ?? ''}}"> 
 									</div>
@@ -305,7 +305,7 @@
 											<span class="text-danger">*</span> 
 										</h5>
 										<input type="text" class="form-control required" 
-											id="addressline1" 
+											id="editaddressline1" 
 											name="addressline1" maxlength="25" 
 											value="{{$member_record->address_line ?? ''}}"> 
 									</div>
@@ -316,7 +316,7 @@
                                             <span class="text-danger"> *</span>  
                                         </h5>
 										<input type="text" class="form-control required" 
-                                            id="surburb" name="surburb" maxlength="25" 
+                                            id="editsurburb" name="surburb" maxlength="25" 
 											value="{{$member_record->surburb ?? '' }}"> 
 									</div>
                            		</div>
@@ -330,7 +330,7 @@
 											<span class="text-danger"> *</span>  
 										</h5>
 										<input type="text" class="form-control required" 
-											id="emergency_contact_name" 
+											id="editemergency_contact_name" 
 											name="emergency_contact_name" maxlength="25" 
 											value="{{$member_record->emergency_contact_name ?? '' }}"> 
 									</div>
@@ -342,7 +342,7 @@
 											<span class="text-danger"> *</span>  
 										</h5>
 										<input type="text" class="form-control required" 
-											id="emergency_contact_number" name="emergency_contact_number" 
+											id="editemergency_contact_number" name="emergency_contact_number" 
 											maxlength="10" 
 											value="{{$member_record->emergency_contact_number ?? '' }}"> 
 									</div>
@@ -355,7 +355,7 @@
 											<span class="text-danger"> *</span>  
 										</h5>
 										<input type="text" class="form-control required" 
-											id="emergency_contact_relationship" 
+											id="editemergency_contact_relationship" 
 											name="emergency_contact_relationship" maxlength="25" 
 											value="{{$member_record->emergency_contact_relationship ?? '' }}"> 
 									</div>
@@ -363,7 +363,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" id="city" 
+										<select class="custom-select form-control required" id="editcity" 
 											name="city">
                                             <option value="{{$member_record['city']['city_id']}}">
                                                 {{$member_record['city']['city']}}
@@ -384,7 +384,7 @@
 									<div class="form-group">
 										<label for="postal-code">Postal Code : 
 											<span class="text-danger">*</span> </label>
-										<input type="text" class="form-control" id="postal-code" 
+										<input type="text" class="form-control" id="editpostal-code" 
 											name="postal-code" maxlength="4" 
 											value="{{$member_record->postal_code ?? ''}}"> 
 									</div>
@@ -428,7 +428,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-						<table id="example2" class="table table-striped table-bordered 
+						<table id="editexample2" class="table table-striped table-bordered 
 								table-hover display nowrap margin-top-10 w-p100">
 							<thead>
 								<tr>
@@ -495,7 +495,7 @@
 			<!-- Validation wizard -->
 			<div class="box box-default">
 				<div class="box-header with-border">
-					<h4 class="box-title" id="title">Vehicle Registration: Update Vehicle Profile</h4>
+					<h4 class="box-title" id="edittitle">Vehicle Registration: Update Vehicle Profile</h4>
 					<h4 class="box-subtitle">Complete the following details to update profile</h4>
 				</div>
 				<!-- /.box-header -->
@@ -517,7 +517,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control required" 
-											id="regnumber" name="regnumber" maxlength="10">
+											id="editregnumber" name="regnumber" maxlength="10">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -526,7 +526,7 @@
 											<span class="text-danger">*</span> 
 										</h5>
 										<select class="custom-select form-control required" 
-											id="vehicle_class" name="vehicle_class">
+											id="editvehicle_class" name="vehicle_class">
 											<option value="">Please select Vehicle</option>
 											@foreach ($all_vehicle_classes as $vehicle_class)
 												<option value="{{$vehicle_class->id}}">
@@ -541,7 +541,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group" id="vehicleregnoexistance"></div>
+									<div class="form-group" id="editvehicleregnoexistance"></div>
 								</div>
 
 								<div class="col-md-6">
@@ -551,7 +551,7 @@
 										</label>
 										<textarea class="form-control" 
 											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
-											id="notes" name="notes">
+											id="editnotes" name="notes">
 										</textarea>
 									</div>
 								</div>
@@ -563,7 +563,7 @@
                             <i class="ti-map-alt mr-15"></i> Routes & Associations
                         </h4>
 						<hr class="mb-15 mt-0">
-						<section id="create-member-routes-associations-section" disabled>
+						<section id="editcreate-member-routes-associations-section" disabled>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -571,7 +571,7 @@
                                             <span class="text-danger">*</span> 
                                         </label>
 										<select class="custom-select form-control required" 
-                                            id="region" data-placeholder="Type to search cities" name="region">
+                                            id="editregion" data-placeholder="Type to search cities" name="region">
 											<option selected value="">Please select Region</option>
 											@foreach ($all_regions as $region)
 												<option value="{{$region->region_id}}">
@@ -589,7 +589,7 @@
                                             <span class="text-danger">*</span>  
                                         </label>
 										<select class="custom-select form-control required " 
-                                            id="association" name="association">
+                                            id="editassociation" name="association">
 											<option selected value="">Please select Association</option>
 											@foreach ($all_associations as $association)
 												<option value="{{$association->association_id}}">
@@ -603,7 +603,7 @@
 									<div class="form-group">
 										<label>Vehicle Route Details : <span class="text-danger">*</span></label>
 										<hr class="mb-15 mt-0">
-										<div id="route" name="route"></div>
+										<div id="editroute" name="route"></div>
 									</div>
 								</div>
 							</div>

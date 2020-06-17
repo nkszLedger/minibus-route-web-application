@@ -132,7 +132,7 @@
 											@else
 											<input type="checkbox" id="ismemberassociated" name="ismemberassociated">
 											<label for="ismemberassociated"> <span class="text-danger">
-												Does member belong to any association ? </span>
+												Member BELONGS to association </span>
 											</label>
 											@endif
 										</div>
@@ -609,13 +609,13 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group">
+									<div class="form-group" id="notes" >
 										<label for="notes">About Vehicle : 
 											<span class="text-danger">*</span> 
 										</label>
 										<textarea class="form-control" 
 											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
-											id="notes" name="notes">
+											name="notes">
 										</textarea>
 									</div>
 								</div>
