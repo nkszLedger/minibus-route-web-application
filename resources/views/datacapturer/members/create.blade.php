@@ -16,11 +16,11 @@
 					@if( isset($member_record) )
 					<form action="{{ route('members.edit', $member_record->id) }}" method="GET" 
 						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+							enctype='multipart/form-data' onsubmit="return validate(this);">
 					@else
 					<form action="{{ route('members.store') }}" method="POST" 
 						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+							enctype='multipart/form-data' onsubmit="return validate(this);">
 					@endif
 						{{ csrf_field() }}
 						
@@ -462,7 +462,7 @@
 						@else
 							<div class="row">
 								<div class="col-6 text-right">
-									<input class="btn btn-info mb-5" type="submit" value="Submit">
+									<input class="btn btn-info mb-5" type="submit" id="submit" value="Submit">
 								</div>
 								<div class="col-6 text-left">
 									<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>

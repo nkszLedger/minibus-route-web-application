@@ -53,11 +53,14 @@ Route::get('members/{member_id}/getCarRegNumberCount/{carregnumber}',
                 ->getCarRegNumberCount($carregnumber);
 });  
 
-Route::get('membershipNumberExists/{membershipnumber}', 
+Route::get('members/membershipNumberExists/{membershipnumber}', 
             'Controller@membershipNumberExists');
 
-Route::get('driversLicenseNumberExists/{licencenumber}', 
+Route::get('members/driversLicenseNumberExists/{licencenumber}', 
             'Controller@driversLicenseNumberExists');
 
-Route::get('idExists/{idnumber}', 
+Route::get('members/operatingLicenseNumberExists/{licencenumber}', 
+            'Controller@operatingLicenseNumberExists');
+
+Route::get('members/idExists/{idnumber}', 
             'Controller@idExists');

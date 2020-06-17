@@ -10,6 +10,7 @@ use App\MemberDriver;
 use App\MemberOperator;
 use App\MemberRegionAssociation;
 use App\MemberVehicle;
+use App\Region;
 use App\RouteVehicle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -76,6 +77,20 @@ class Controller extends BaseController
     }
 
     /**
+     * Check existence of Operating Licence numbers.
+     *
+     * @param  int  $licencenumber
+     * @return \Illuminate\Http\Response
+     */
+    public function operatingLicenseNumberExists($licencenumber) {
+
+        $count = count(MemberOperator::where('license_number', $licencenumber)->get());
+
+        return response()->json(['data' =>$count]);
+
+    }
+
+    /**
      * Check existence of Membership numbers.
      *
      * @param  int  $membershipnumber
@@ -100,12 +115,16 @@ class Controller extends BaseController
      */
     public function getCarRegNumberCount($carregnumber) {
 
-        $vehicle = Vehicle::where('registration_number', $carregnumber)->get();
+        $vehicle = Vehicle::where('registration_number', 
+                            $carregnumber)->get();
         $member_vehicles = new MemberVehicle();
         $route_vehicle = new RouteVehicle();
+        $region = new Region();
+        $association = new Association();
         $member_region_association = new MemberRegionAssociation();
 
         if( count($vehicle) > 0 )
+        {
             $member_vehicles = MemberVehicle::where('vehicle_id', $vehicle[0]['id'])
                                             ->with(['vehicles.vehicleclass.type'])
                                             ->get();
@@ -117,15 +136,24 @@ class Controller extends BaseController
                                             $member_vehicles[0]['member_id'] )
                                             ->get();
 
-        $count = count($vehicle);
-
-        return response()->json(['count' => $count, 
-                                    'datamv' => $member_vehicles,
-                                    'datarv' => $route_vehicle,
-                                    'datamra' => $member_region_association
-                                ]);
-
-    }
-
+            if( count($member_region_association) > 0 )
+            {
+                $region = Region::where('region_id', 
+                                        $member_region_association[0]['region_id'])
+                                        ->get();
+                $association = Association::where('association_id', 
+                                        $member_region_association[0]['association_id'])
+                                        ->get();
+            }
     
+            $count = count($vehicle);
+
+            return response()->json(['count' => $count, 
+                                        'datamv' => $member_vehicles,
+                                        'datarv' => $route_vehicle,
+                                        'datar' => $region,
+                                        'dataa' => $association
+                                    ]);
+        }
+    }
 }

@@ -241,54 +241,58 @@ class MemberController extends Controller
         else
         {
             /* capture Vehicle Details */
-            if( Vehicle::where('registration_number', $request->get('regnumber') )->count() > 0)
+            if(  empty($request->get('vehicle_id')) )
             {
-                $vehicle = Vehicle::where('registration_number', $request->get('regnumber') );
-                $vehicle->info = $request->get('notes');
-                $vehicle->update();
-            }
-            else
-            {
-                $vehicle->vehicle_class_id = $request->get('vehicle_class');
-                $vehicle->info = $request->get('notes');
-                $vehicle->registration_number = $request->get('regnumber');
-                $vehicle->save();
-            }
-          
-            /* capture MEMBER VEHICLE details */
-            $member_vehicle->member_id = $request->get('member_id');
-            $member_vehicle->vehicle_id = $vehicle->id;
-            $member_vehicle->save();
-
-            if( $request->has('ismemberassociated') )
-            {
-                /* capture MEMBER REGION, ASSOCIATION details */
-                $member_region_association->member_id = $request->get('member_id');
-                $member_region_association->region_id = $request->get('region');
-                $member_region_association->association_id = $request->get('association');
-                $member_region_association->save();
-                
-                if( !empty($request->get('route')) ) 
+                if( Vehicle::where('registration_number', $request->get('regnumber') )->count() > 0)
                 {
-                    foreach((array)$request->get('route') as $checkbox_value) 
-                    {
-                        /* capture ROUTE VEHICLE details */
-                        $route_vehicle->route_id = $checkbox_value;
-                        $route_vehicle->vehicle_id = $vehicle->id;
-                        $route_vehicle->save();
-                    }
+                    $vehicle = Vehicle::where('registration_number', 
+                                                $request->get('regnumber') );
+                    $vehicle->info = $request->get('notes');
+                    $vehicle->update();
                 }
-                
+                else
+                {
+                    $vehicle->vehicle_class_id = $request->get('vehicle_class');
+                    $vehicle->info = $request->get('notes');
+                    $vehicle->registration_number = $request->get('regnumber');
+                    $vehicle->save();
+                }
+            
+                /* capture MEMBER VEHICLE details */
+                $member_vehicle->member_id = $request->get('member_id');
+                $member_vehicle->vehicle_id = $vehicle->id;
+                $member_vehicle->save();
+
+                if( $request->has('ismemberassociated') )
+                {
+                    /* capture MEMBER REGION, ASSOCIATION details */
+                    $member_region_association->member_id = $request->get('member_id');
+                    $member_region_association->region_id = $request->get('region');
+                    $member_region_association->association_id = $request->get('association');
+                    $member_region_association->save();
+                    
+                    if( !empty($request->get('route')) ) 
+                    {
+                        foreach((array)$request->get('route') as $checkbox_value) 
+                        {
+                            /* capture ROUTE VEHICLE details */
+                            $route_vehicle->route_id = $checkbox_value;
+                            $route_vehicle->vehicle_id = $vehicle->id;
+                            $route_vehicle->save();
+                        }
+                    }
+                    
+                }
             }
 
             /* finally */
             $member_id = $member_vehicle->member_id;
-            
+                
             $member_record = Member::with(['membership_type', 'gender',
                                             'city'])->findOrFail($member_id);
 
             $member_driver = MemberDriver::with(['codes'])
-                                          ->findOrFail($member_id);
+                                        ->findOrFail($member_id);
 
             $member_operator = MemberOperator::where('member_id', $member_id)->get();
 
@@ -308,7 +312,6 @@ class MemberController extends Controller
                                                     'member_operator',
                                                     'member_vehicles',
                                                 ]));
-
 
         }								
     }

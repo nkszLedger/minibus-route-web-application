@@ -505,6 +505,9 @@
 						{{ csrf_field() }}
 						<input type="hidden" class="form-control required" id="member_id" 
 							value="{{$member_record->id ?? ''}}" name="member_id">
+
+						<input type="hidden" class="form-control required" id="vehicle_id" 
+							 name="vehicle_id">
 						<!-- Step 2 -->
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-car mr-15"></i> Vehicle Details</h4>
@@ -550,7 +553,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<textarea class="form-control" 
-											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
+											value="e.g. This is a 2015, VW XY model, currently taking 8 seats"
 											id="editnotes" name="notes">
 										</textarea>
 									</div>
@@ -563,7 +566,7 @@
                             <i class="ti-map-alt mr-15"></i> Routes & Associations
                         </h4>
 						<hr class="mb-15 mt-0">
-						<section id="editcreate-member-routes-associations-section" disabled>
+						<section id="editcreate-member-routes-associations-section">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -572,7 +575,7 @@
                                         </label>
 										<select class="custom-select form-control required" 
                                             id="editregion" data-placeholder="Type to search cities" name="region">
-											<option selected value="">Please select Region</option>
+											<option value="">Please select Region</option>
 											@foreach ($all_regions as $region)
 												<option value="{{$region->region_id}}">
                                                     {{$region->region_name}}
@@ -590,7 +593,7 @@
                                         </label>
 										<select class="custom-select form-control required " 
                                             id="editassociation" name="association">
-											<option selected value="">Please select Association</option>
+											<option value="">Please select Association</option>
 											@foreach ($all_associations as $association)
 												<option value="{{$association->association_id}}">
                                                     {{$association->name}}
@@ -612,7 +615,7 @@
 						
 						<div class="row">
 							<div class="col-6 text-right">
-								<input class="btn btn-info mb-5" type="submit" value="Add">
+								<input class="btn btn-info mb-5" type="submit" id="editadd" value="Add">
 							</div>
 							<div class="col-6 text-left">
 								<a class="btn btn-warning mb-5" href="{{ route('members.index')}}">Cancel</a>

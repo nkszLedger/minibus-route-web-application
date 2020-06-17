@@ -962,10 +962,89 @@
 					// clear area
 					$("#editvehicleregnoexistance").html('');
 					$("#editvehicleregnoexistance").html('<h5 class="text-warning" >\
-														Vehicle already exists</h5>');
+														Vehicle already exists. Please click edit again</h5>');
+					
+					if(typeof response['datamv'] !== 'undefined' && 
+						response['datamv'].length > 0 )
+					{
+						document.getElementById("vehicle_id").value = response['datamv'][0]['vehicles']
+																	['vehicleclass']['id'].toString();
+																	
+						vehicle_class_id = response['datamv'][0]['vehicles']['vehicleclass']['id'].toString() ;
+						vehicle_class = response['datamv'][0]['vehicles']['vehicleclass']['make'] + ';';
+						vehicle_class += response['datamv'][0]['vehicles']['vehicleclass']['model'] + ';';
+						vehicle_class += response['datamv'][0]['vehicles']['vehicleclass']['year'] + ' - range;';
+						vehicle_class += response['datamv'][0]['vehicles']['vehicleclass']['seats_number'] + ' - seater;';
+						
+						vehicle_class_html = "<option value=\"" + vehicle_class_id + "\">";
+						vehicle_class_html += vehicle_class.toString() + "</option>";
+						$("#editvehicle_class").html('');
+						$("#editvehicle_class").html(vehicle_class_html);
+					
+						notes = response['datamv'][0]['vehicles']['info'].toString();
+						$("#editnotes").html('');
+						$("#editnotes").html(notes);
+					}
+					if(typeof response['datar'] !== 'undefined' && 
+									response['datar'].length > 0 )
+					{
+						region_id = response['datar'][0]['region_id'].toString();
+						region_html += "<option selected value=\"";
+						region_html +=  region_id.toString() + "\">";
+						region_html += response['datamra'][0]['region_name'].toString();
+						region_html += "</option>";
+						$("#editregion").html('');
+						$("#editregion").html(region_html);
+					}
 
-					console.log("vehicles");
+					if(typeof response['dataa'] !== 'undefined' && 
+									response['dataa'].length > 0 )
+					{
+						association_id = response['dataa'][0]['association_id'].toString();
+						association_html += "<option selected value=\"";
+						association_html +=  association_id.toString() + "\">";
+						association_html += response['datamra'][0]['association_name'].toString();
+						association_html += "</option>";
+						$("#editassociation").html('');
+						$("#editassociation").html(association_html);
+					}
+					
+					document.getElementById("editvehicle_class").disabled = true;
+					document.getElementById("editnotes").disabled = true;
+					document.getElementById("editregion").disabled = true;
+					document.getElementById("editassociation").disabled = true;
+					document.getElementById("editadd").disabled = true;
+					$("#vehicleregnoexistance").html('');
 
+					// clear area
+					if(typeof response['dataa'] !== 'undefined' && 
+									response['dataa'].length > 0 )
+					{
+						$("#editroute").html('');
+						for(var i=0; i<response['datarv'].length; i++){
+
+							var id = response['datarv'][i].id;
+							var route_name = response['datarv'][i].route_id +" : " + 
+											response['datarv'][i].origin + " - " + 
+											response['datarv'][i].via + " - " + 
+											response['datarv'][i].destination;
+								
+							var input = "<input name=" + "'route[]'" + 
+											" type='" + "checkbox'" + " id='" + 
+												id + "'" + " value='" + id + "' " + ">";
+												
+							var label = "<label for='"+id+"' >" + route_name + "</label>";
+
+							var option = "<div>" + input + label + "</div>";
+
+							console.log('the option to append');
+							console.log(option);
+
+							
+							$("#editroute").append(option);
+							document.getElementById("editroute").disabled = true;
+						}
+					}
 				}
 				else
 				{
@@ -973,11 +1052,119 @@
 					$("#editvehicleregnoexistance").html('');
 					$("#editvehicleregnoexistance").html('<h5 class="text-success" >\
 														There are no drivers for this vehicle</h5>');
+					
+					document.getElementById("vehicle_id").value = "";
+
+					document.getElementById("editvehicle_class").disabled = false;
 				}
 			}
 		});
 	});
 </script>
+
+<script>
+	function validate(form) {
+		var id_number = document.getElementById("idnumber").value;
+		var dlicencenumber = document.getElementById("licensenumber").value;
+		var olicencenumber = document.getElementById("operatinglicensenumber").value;
+		var amembershipnumber = document.getElementById("associationmembershipnumber").value;
+		var isValid = null;
+
+		$.ajax({
+			url: 'idExists/'+ id_number.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				if( response['data'] > 0)
+				{
+					return swal("Submission Cancelled", 
+					"Member ID number already exists", 
+					"error");
+					isValid = false;
+				}
+				
+			}
+		});
+
+		$.ajax({
+			url: 'operatingLicenseNumberExists/'+ olicencenumber.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				if( response['data'] > 0)
+				{
+					return swal("Submission Cancelled", 
+					"Member Operating Licence number already exists", 
+					"error");
+					isValid = false;
+				}
+				
+			}
+		});
+
+		$.ajax({
+			url: 'driversLicenseNumberExists/'+ dlicencenumber.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				if( response['data'] > 0)
+				{
+					return swal("Submission Cancelled", 
+					"Member Driver Licence number already exists", 
+					"error");
+					isValid = false;
+				}
+				
+			}
+		});
+
+		$.ajax({
+			url: 'membershipNumberExists/'+ amembershipnumber.toString(),
+			type: 'GET',
+			dataType: 'json',
+			success: function(response){
+
+				if( response['data'] > 0)
+				{
+					return swal("Submission Cancelled", 
+					"Membership number already exists", 
+					"error");
+					isValid = false;
+				}
+				
+			}
+		});
+
+		if( isValid )
+		{
+			return swal({   
+					title: "Member Submission",   
+					text: "Are you sure you want to submit form ?",   
+					type: "warning",   
+					showCancelButton: true,   
+					confirmButtonColor: "#DD6B55",   
+					confirmButtonText: "Yes, submit it!",   
+					cancelButtonText: "No, cancel plx!",   
+					closeOnConfirm: false,   
+					closeOnCancel: false 
+				}, 
+				function(isConfirm)
+				{   
+					if (isConfirm) {     
+						swal("Sumitted!", "Member Profile has been created", "success");   
+					} else {     
+						swal("Cancelled", "Member Profile not submitted", "error");   
+					}
+				} 
+			});
+		}
+
+	}
+</script>
+
 
 </body>
 </html>
