@@ -241,47 +241,44 @@ class MemberController extends Controller
         else
         {
             /* capture Vehicle Details */
-            if(  empty($request->get('vehicle_id')) )
+            if( Vehicle::where('registration_number', 
+                    $request->get('regnumber') )->count() > 0)
             {
-                if( Vehicle::where('registration_number', $request->get('regnumber') )->count() > 0)
-                {
-                    $vehicle = Vehicle::where('registration_number', 
-                                                $request->get('regnumber') );
-                    $vehicle->info = $request->get('notes');
-                    $vehicle->update();
-                }
-                else
-                {
-                    $vehicle->vehicle_class_id = $request->get('vehicle_class');
-                    $vehicle->info = $request->get('notes');
-                    $vehicle->registration_number = $request->get('regnumber');
-                    $vehicle->save();
-                }
-            
-                /* capture MEMBER VEHICLE details */
-                $member_vehicle->member_id = $request->get('member_id');
-                $member_vehicle->vehicle_id = $vehicle->id;
-                $member_vehicle->save();
+                $vehicle = Vehicle::where('registration_number', 
+                                            $request->get('regnumber') );
+                $vehicle->info = $request->get('notes');
+                $vehicle->update();
+            }
+            else
+            {
+                $vehicle->vehicle_class_id = $request->get('vehicle_class');
+                $vehicle->info = $request->get('notes');
+                $vehicle->registration_number = $request->get('regnumber');
+                $vehicle->save();
+            }
+        
+            /* capture MEMBER VEHICLE details */
+            $member_vehicle->member_id = $request->get('member_id');
+            $member_vehicle->vehicle_id = $vehicle->id;
+            $member_vehicle->save();
 
-                if( $request->has('ismemberassociated') )
+            if( $request->has('ismemberassociated') )
+            {
+                /* capture MEMBER REGION, ASSOCIATION details */
+                $member_region_association->member_id = $request->get('member_id');
+                $member_region_association->region_id = $request->get('region');
+                $member_region_association->association_id = $request->get('association');
+                $member_region_association->save();
+                
+                if( !empty($request->get('route')) ) 
                 {
-                    /* capture MEMBER REGION, ASSOCIATION details */
-                    $member_region_association->member_id = $request->get('member_id');
-                    $member_region_association->region_id = $request->get('region');
-                    $member_region_association->association_id = $request->get('association');
-                    $member_region_association->save();
-                    
-                    if( !empty($request->get('route')) ) 
+                    foreach((array)$request->get('route') as $checkbox_value) 
                     {
-                        foreach((array)$request->get('route') as $checkbox_value) 
-                        {
-                            /* capture ROUTE VEHICLE details */
-                            $route_vehicle->route_id = $checkbox_value;
-                            $route_vehicle->vehicle_id = $vehicle->id;
-                            $route_vehicle->save();
-                        }
+                        /* capture ROUTE VEHICLE details */
+                        $route_vehicle->route_id = $checkbox_value;
+                        $route_vehicle->vehicle_id = $vehicle->id;
+                        $route_vehicle->save();
                     }
-                    
                 }
             }
 

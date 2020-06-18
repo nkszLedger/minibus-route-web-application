@@ -16,6 +16,7 @@ class CreateEmployeeFingerprintTable extends Migration
         Schema::create('employee_fingerprint', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
+            $table->binary('fingerprint_wsq')->nullable();
             $table->binary('fingerprint')->nullable();
             $table->string('comments')->nullable();
             $table->timestamps();

@@ -38,15 +38,15 @@
 										<label for="membership-type"> Select Type of Member : 
 											<span class="text-danger">*</span> </label>
 										@if (isset($member_record) )
-										<select class="custom-select form-control required" readonly 
+										<select class="custom-select form-control" readonly 
 											id="membership-type" name="membership-type">
 											<option selected value="{{ $member_record['membership_type']['id'] }}">
 												{{ $member_record['membership_type']['membership_type'] }}
 											</option>		
 										</select>
 										@else
-										<select class="custom-select form-control required" 
-											id="membership-type" name="membership-type">
+										<select class="custom-select form-control" 
+											id="membership-type" name="membership-type" required>
 											<option value="">Please select Membership Type</option>
 											@foreach ($all_membership_types as $membership_type)		
 												<option value="{{$membership_type->id}}">
@@ -64,13 +64,15 @@
 											<span class="text-danger">*</span> 
 										</label>
 										@if( isset($member_driver->license_number) )
-											<input type="text" class="form-control required" 
+											<input type="text" class="form-control" 
 												{{ isset($member_driver)  ? 'readonly' : '' }} 
 												id="licensenumber" value="{{$member_driver->license_number ?? ''}}" 
-												name="licensenumber" maxlength="12" > 
+												name="licensenumber" maxlength="12" 
+												required data-validation-required-message="This field is required"> 
 										@else
-											<input type="text" class="form-control required" id="licensenumber" 
-												name="licensenumber" maxlength="12">
+											<input type="text" class="form-control" id="licensenumber" 
+												name="licensenumber" maxlength="12"	
+												required data-validation-required-message="This field is required">
 										@endif
 										
 									</div>
@@ -82,16 +84,17 @@
 											Operating License : <span class="text-danger">*</span> </label>
 										
 										@if ( isset($member_operator->membership_number ) )
-											<input type="text" class="form-control required" 
+											<input type="text" class="form-control" 
 												id="operatinglicensenumber"
 												{{ isset($member_operator) ? 'readonly' : '' }} 
 												value="{{$member_operator->membership_number ?? ''}}" 
 												name="operatinglicensenumber" maxlength="12"> 
 										@else
-											<input type="text" class="form-control required" 
+											<input type="text" class="form-control" 
 												id="operatinglicensenumber" 
 												name="operatinglicensenumber" maxlength="12"
-												{{ isset($member_operator) ? 'readonly' : '' }} > 
+												{{ isset($member_operator) ? 'readonly' : '' }} 
+												required data-validation-required-message="This field is required"> 
 							
 										@endif
 									</div>
@@ -146,7 +149,7 @@
 												Association Membership Number : 
 												<span class="text-danger">*</span> 
 											</label> 
-											<input type="text" class="form-control required" 
+											<input type="text" class="form-control" 
 												id="associationmembershipnumber" readonly 
 												name="associationmembershipnumber" maxlength="12" 
 												value="{{$member_driver->membership_number ?? ''}}"> 
@@ -155,9 +158,9 @@
 												Association Membership Number : 
 												<span class="text-danger">*</span> 
 											</label> 
-											<input type="text" class="form-control required" 
-												id="associationmembershipnumber" readonly 
-												name="associationmembershipnumber" maxlength="12">
+											<input type="text" class="form-control" 
+												id="associationmembershipnumber"
+												name="associationmembershipnumber" maxlength="12"> 
 										@endif
 									</div>
 								</div>
@@ -166,7 +169,7 @@
 									<div class="form-group">
 										<h5 for="drivinglicencecodes">Driving Licence Code : 
 											<span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" 
+										<select class="custom-select form-control" required 
 											id="drivinglicencecodes" name="drivinglicencecodes"
 											{{  isset($member_record) ? 'disabled' : '' }} >
 										@if( isset($member_driver['codes']) )
@@ -205,7 +208,7 @@
 										<input class="form-control" type="date" 
 												value="{{ $member_driver->valid_from ?? ''}}" 
 												name="valid-from"
-												{{ isset($member_driver) ? 'readonly' : '' }}>
+												{{ isset($member_driver) ? 'readonly' : '' }} > 
 
 										@elseif( isset($member_operator->valid_from) )
 										<h5 for="valid-from">
@@ -215,7 +218,7 @@
 										<input class="form-control" type="date" 
 												value="{{ $member_operator->valid_from ?? ''}}" 
 												name="valid-from"
-												{{ isset($member_operator) ? 'readonly' : '' }}>
+												{{ isset($member_operator) ? 'readonly' : '' }} > 
 
 										@else
 										<h5 for="valid-from">
@@ -223,7 +226,8 @@
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-											name="valid-from">
+											name="valid-from"
+											required data-validation-required-message="This field is required"> 
 										@endif
 									</div>
 								</div>
@@ -254,7 +258,8 @@
 												<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date"  
-												name="valid-until">
+												name="valid-until" 
+												required data-validation-required-message="This field is required"> 
 										@endif
 									</div>
 								</div>
@@ -274,10 +279,11 @@
 										<label for="wfirstName2"> First Name : 
 											<span class="text-danger">*</span> 
 										</label>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 										id="wfirstName2" name="firstName" maxlength="25" 
 										value="{{$member_record->name ?? ''}}" 
-										{{ isset($member_record) ? 'readonly' : '' }}> 
+										{{ isset($member_record) ? 'readonly' : '' }}
+										required data-validation-required-message="This field is required">  
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -285,9 +291,10 @@
 										<label for="wlastName2"> Last Name : 
 											<span class="text-danger">*</span> 
 										</label>
-										<input type="text" class="form-control required" id="wlastName2" 
+										<input type="text" class="form-control" id="wlastName2" 
 										name="lastName" maxlength="25" value="{{$member_record->surname ?? ''}}"
-										{{ isset($member_record) ? 'readonly' : '' }}> 
+										{{ isset($member_record) ? 'readonly' : '' }} 
+										required data-validation-required-message="This field is required">  
 									</div>
 								</div>
 							</div>
@@ -295,16 +302,17 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="idnumber"> ID Number : <span class="text-danger">*</span> </label>
-										<input type="text" class="form-control required" id="idnumber" 
+										<input type="text" class="form-control" id="idnumber" 
 										name="idnumber" maxlength="13" value="{{$member_record->id_number ?? ''}}"
-										{{ isset($member_record) ? 'readonly' : '' }}> 
+										{{ isset($member_record) ? 'readonly' : '' }} 
+										required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" 
-											id="gender" name="gender"
+										<select class="custom-select form-control" 
+											id="gender" name="gender" required 
 											{{ isset($member_record) ? 'disabled' : '' }}>
 										@if( isset($member_record) )
 											<option value="{{$member_record['gender']['id']}}">
@@ -328,17 +336,19 @@
 										<input type="email" class="form-control" id="wemailAddress2" 
 											name="emailAddress" maxlength="25" 
 											value="{{$member_record->email ?? ''}}"
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="wphoneNumber2">Phone Number : 
 										<span class="text-danger">*</span></h5>
-										<input type="tel" class="form-control required" id="wphoneNumber2" 
+										<input type="tel" class="form-control" id="wphoneNumber2" 
 											name="phonenumber" maxlength="10" 
 											value="{{$member_record->phone_number ?? ''}}"
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }}
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 							</div>
@@ -349,20 +359,22 @@
 										<h5 for="addressline1">Address Line : 
 											<span class="text-danger">*</span> 
 										</h5>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 											id="addressline1" 
 											name="addressline1" maxlength="25" 
 											value="{{$member_record->address_line ?? ''}}" 
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
-										<input type="text" class="form-control required" id="surburb" 
+										<input type="text" class="form-control" id="surburb" 
 											name="surburb" maxlength="25" 
 											value="{{$member_record->surburb ?? '' }}"
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
                            		</div>
 							</div>
@@ -373,11 +385,12 @@
 										<h5 for="emergency_contact_name">Emergency Contact Name : 
 											<span class="text-danger"> *</span>  
 										</h5>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 											id="emergency_contact_name" 
 											name="emergency_contact_name" maxlength="25" 
 											value="{{$member_record->emergency_contact_name ?? '' }}"
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 
@@ -386,11 +399,12 @@
 										<h5 for="emergency_contact_number">Emergency Contact Number : 
 											<span class="text-danger"> *</span>  
 										</h5>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 											id="emergency_contact_number" name="emergency_contact_number" 
 											maxlength="10" 
 											value="{{$member_record->emergency_contact_number ?? '' }}" 
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 							</div>
@@ -400,17 +414,18 @@
 										<h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
 											<span class="text-danger"> *</span>  
 										</h5>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 											id="emergency_contact_relationship" 
 											name="emergency_contact_relationship" maxlength="25" 
 											value="{{$member_record->emergency_contact_relationship ?? '' }}" 
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required">  
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<h5 for="city">City/Town : <span class="text-danger">*</span> </h5>
-										<select class="custom-select form-control required" id="city" 
+										<select class="custom-select form-control" id="city" required 
 											name="city" {{ isset($member_record) ? 'disabled' : '' }}>
 										@if( isset($member_record) )
 											<option value="{{$member_record['city']['city_id']}}">
@@ -441,7 +456,8 @@
 										<input type="text" class="form-control" id="postal-code" 
 											name="postal-code" maxlength="4" 
 											value="{{$member_record->postal_code ?? ''}}" 
-											{{ isset($member_record) ? 'readonly' : '' }}> 
+											{{ isset($member_record) ? 'readonly' : '' }} 
+											required data-validation-required-message="This field is required"> 
 									</div>
 								</div>
 							</div>
@@ -567,7 +583,7 @@
 					<form action="{{ route('members.store') }}" method="POST" 
 						id="member-form" class="validation-wizard wizard-circle" enctype='multipart/form-data'>
 						{{ csrf_field() }}
-						<input type="hidden" class="form-control required" id="member_id" 
+						<input type="hidden" class="form-control" id="member_id" 
 							value="{{$member_record->id ?? ''}}" name="member_id">
 						<!-- Step 2 -->
 						<hr class="mb-15 mt-0">
@@ -580,7 +596,7 @@
 										<label for="regnumber">Registration Number : 
 											<span class="text-danger">*</span> 
 										</label>
-										<input type="text" class="form-control required" 
+										<input type="text" class="form-control" 
 											id="regnumber" name="regnumber" maxlength="10">
 									</div>
 								</div>
@@ -589,7 +605,7 @@
 										<h5 for="vehicle_class">Vehicle : 
 											<span class="text-danger">*</span> 
 										</h5>
-										<select class="custom-select form-control required" 
+										<select class="custom-select form-control" 
 											id="vehicle_class" name="vehicle_class">
 											<option value="">Please select Vehicle</option>
 											@foreach ($all_vehicle_classes as $vehicle_class)
@@ -630,7 +646,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="wintType1">Region: <span class="text-danger">*</span> </label>
-										<select class="custom-select form-control required" id="region" data-placeholder="Type to search cities" name="region">
+										<select class="custom-select form-control" id="region" data-placeholder="Type to search cities" name="region">
 											<option selected value="">Please select Region</option>
 											@foreach ($all_regions as $region)
 												<option value="{{$region->region_id}}">{{$region->region_name}}</option>
@@ -643,7 +659,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="association">Association :<span class="text-danger">*</span>  </label>
-										<select class="custom-select form-control required " id="association" name="association">
+										<select class="custom-select form-control " id="association" name="association">
 											<option selected value="">Please select Association</option>
 											@foreach ($all_associations as $association)
 												<option value="{{$association->association_id}}">{{$association->name}}</option>

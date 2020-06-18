@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Passport;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
@@ -82,6 +83,18 @@ class RegisterController extends Controller
         if( $user->save() )
         {
             $message = 'User Registered successfully. Please sign in';
+
+            // $oauth_client=new AppoAuthClient();
+            // $oauth_client->user_id=$user->id;
+            // $oauth_client->id=$user->email;
+            // $oauth_client->name=$user->name;
+            // $oauth_client->secret=base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
+            // $oauth_client->password_client=1;
+            // $oauth_client->personal_access_client=0;
+            // $oauth_client->redirect='';
+            // $oauth_client->revoked=0;
+            // $oauth_client->save();
+
             return view('auth.register', 
                         compact(['message', 'all_roles']));
         }

@@ -16,7 +16,9 @@ class CreateFingerprintsTable extends Migration
         Schema::create('member_fingerprint', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id');
+            $table->binary('fingerprint_left_thumb_wsq')->nullable();
             $table->binary('fingerprint_left_thumb')->nullable();
+            $table->binary('fingerprint_right_thumb_wsq')->nullable();
             $table->binary('fingerprint_right_thumb')->nullable();
             $table->timestamps();
 
