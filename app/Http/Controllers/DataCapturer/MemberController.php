@@ -40,7 +40,7 @@ class MemberController extends Controller
     {
         $all_members = Member::with(['membership_type', 
                                      'city'])->orderBy('id','desc')->get();
-
+                                     
         return view('datacapturer.members.index', 
                     compact(['all_members']));
     }
@@ -262,7 +262,7 @@ class MemberController extends Controller
             $member_vehicle->vehicle_id = $vehicle->id;
             $member_vehicle->save();
 
-            if( $request->has('ismemberassociated') )
+            if( $request->get('ismemberassociated') == true )
             {
                 /* capture MEMBER REGION, ASSOCIATION details */
                 $member_region_association->member_id = $request->get('member_id');

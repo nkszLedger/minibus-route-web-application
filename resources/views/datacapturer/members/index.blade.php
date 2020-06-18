@@ -42,7 +42,7 @@
 									<td>{{$member['city']['city']}}</td>
 									<td>{{$member['membership_type']['membership_type']}}</td>
 									<td>
-										<span class="badge badge-pill badge-danger">Not Verified</span>
+										<span class="badge badge-pill badge-danger">Coming Soon</span>
 									</td>
 									<td>
 										{{-- <a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> | --}}
