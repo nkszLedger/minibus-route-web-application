@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     
     Route::post('details', 'API\UserController@details');
     Route::get('members/{id}', 'API\MemberController@show');
+    Route::get('employees/{id}', 'API\EmployeeController@show');
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');
     Route::apiResource('usersportrait', 'API\UserPortraitController');

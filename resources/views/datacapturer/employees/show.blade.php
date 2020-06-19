@@ -194,6 +194,36 @@
                                 </div>
                             </div>
                         </div>
+
+                        <hr class="mb-15 mt-0">
+                        <h4 class="box-title text-info"><i class="ti-eye mr-15"></i> Biometrics Captured</h4>
+                        <hr class="mb-15 mt-0">
+                        <section>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @if( isset($portrait[0]['id']) )
+                                        <label> Portrait : (Captured) </label>
+                                        <img src="/minibus/portrait-green.png" height="225" width="225">
+                                        @else
+                                        <label> Portrait : (Not Captured) </label>
+                                        <img src="/minibus/portrait-grey.png" height="225" width="225">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @if( isset($fingerprint[0]['id']) )
+                                        <label> Fingerprint: (Captured) </label>
+                                        <img src="/minibus/fingerprint-green.jpg" height="225" width="225">
+                                        @else
+                                        <label> Fingerprint: (Not Captured) </label>
+                                        <img src="/minibus/fingerprint-gey.png" height="225" width="225">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     
                         <div class="box-footer text-right">
                             <a class="btn btn-warning mb-5" href="{{ route('employees.index') }}">

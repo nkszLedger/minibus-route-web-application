@@ -4,6 +4,8 @@ namespace App\Http\Controllers\DataCapturer;
 use App\User;
 use App\City;
 use App\Employee;
+use App\EmployeeFingerprint;
+use App\EmployeePortrait;
 use App\Province;
 use App\Region;
 use App\Http\Controllers\Controller;
@@ -139,8 +141,11 @@ class EmployeeController extends Controller
         $employee = Employee::with(['city', 'province','region'])
                              ->findOrFail($id);
 
+        $portrait = EmployeePortrait::where('employee_id', $id)->get();
+        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->get();
+
         return view('datacapturer.employees.show', 
-                        compact(['employee']));
+                        compact(['employee', 'portrait', 'fingerprint']));
         
     }
 
