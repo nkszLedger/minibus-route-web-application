@@ -1063,12 +1063,14 @@
 </script>
 
 <script>
-	function validate(form) {
+	function validate() {
 		var id_number = document.getElementById("idnumber").value;
 		var dlicencenumber = document.getElementById("licensenumber").value;
 		var olicencenumber = document.getElementById("operatinglicensenumber").value;
 		var amembershipnumber = document.getElementById("associationmembershipnumber").value;
 		var isValid = null;
+
+		console.log("validate");
 
 		$.ajax({
 			url: 'idExists/'+ id_number.toString(),

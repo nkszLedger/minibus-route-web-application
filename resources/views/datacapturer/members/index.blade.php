@@ -45,11 +45,9 @@
 										<span class="badge badge-pill badge-danger">Coming Soon</span>
 									</td>
 									<td>
-										{{-- <a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> | --}}
-										{{-- <a href="#" data-toggle="modal" data-target="#modal-default" id="modal-button-id"  > <b>Profile</b></a> |--}}
-										<a href="{{ route('members.edit', $member->id)}}"> <b>Edit</b></a> | 
-										<a href="{{ route('members.show', $member->id)}}"> <b>View Profile</b></a>
-
+										<a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> | 
+										<a href="{{ route('members.show', $member->id)}}"><b>View Profile</b></a> | 
+										<a href="{{ route('vehicles.create', $member->id)}}"><b>View Vehicles</b></a>
 									</td>
 								</tr>
 								<?php $count++?>

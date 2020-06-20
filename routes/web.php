@@ -28,26 +28,45 @@ Route::resources([
     'dashboard' => 'Oversight\DashboardController'
 ]);
 
+Route::get('vehicles/{member_id}', 
+            'DataCapturer\VehicleController@create')
+                ->name('vehicles.create');
 
-Route::get('members/getAssociations/{region_id}', 
+Route::get('vehicles/{id}', 
+            'DataCapturer\VehicleController@show')
+                ->name('vehicles.show');
+
+Route::post('vehicles', 
+            'DataCapturer\VehicleController@store')
+                ->name('vehicles.store');
+
+Route::get('vehicles/{id}', 
+            'DataCapturer\VehicleController@update')
+                ->name('vehicles.update');
+
+Route::get('vehicles/{id}', 
+            'DataCapturer\VehicleController@destroy')
+                ->name('vehicles.destroy');
+
+Route::get('vehicles/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID')->name('associations');
-Route::get('members/{member_id}/getAssociations/{region_id}', 
+Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
             function($member_id, $region_id) {
                 return App::make('App\http\Controllers\Controller')
                 ->getAssociationsByRegionID($region_id);
 });        
 
-Route::get('members/getRoutesPerAssociation/{association_id}', 
+Route::get('vehicles/getRoutesPerAssociation/{association_id}', 
             'Controller@getRoutesByAssociationID')->name('regions');
-Route::get('members/{member_id}/getRoutesPerAssociation/{association_id}', 
+Route::get('vehicles/{member_id}/getRoutesPerAssociation/{association_id}', 
             function($member_id, $association_id) {
                 return App::make('App\http\Controllers\Controller')
                 ->getRoutesByAssociationID($association_id);
 });   
 
-Route::get('getCarRegNumberCount/{carregnumber}', 
+Route::get('vehicles/getCarRegNumberCount/{carregnumber}', 
             'Controller@getCarRegNumberCount');
-Route::get('members/{member_id}/getCarRegNumberCount/{carregnumber}', 
+Route::get('vehicles/{member_id}/getCarRegNumberCount/{carregnumber}', 
             function($member_id, $carregnumber) {
                 return App::make('App\http\Controllers\Controller')
                 ->getCarRegNumberCount($carregnumber);

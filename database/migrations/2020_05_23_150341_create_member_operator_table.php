@@ -17,7 +17,7 @@ class CreateMemberOperatorTable extends Migration
             $table->id();
             $table->integer('member_id');
             $table->string('license_number')->unique();
-            $table->string('membership_number')->unique();
+            $table->string('membership_number')->nullable();
             $table->string('license_path')->nullable();
             $table->date('valid_since')->nullable();
             $table->date('valid_until')->nullable();

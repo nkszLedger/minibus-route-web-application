@@ -13,7 +13,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body wizard-content">
-					<form action="{{ route('members.store') }}" method="POST" 
+					<form action="{{ route('members.edit', $member_record->id) }}" method="GET" 
 						id="member-form" class="validation-wizard wizard-circle" 
 							enctype='multipart/form-data'>
 						{{ csrf_field() }}
@@ -40,7 +40,8 @@
 												{{ $member_record['membership_type']['membership_type'] }}
 											</option>		
 											@foreach ($all_membership_types as $membership_type)	
-												@if( $membership_type->id !=$member_record['membership_type']['id'] )	
+												@if( $membership_type->id != 
+														$member_record['membership_type']['id'] )	
 													<option value="{{$membership_type->id}}">
 														{{$membership_type->membership_type}}
 													</option>
@@ -56,7 +57,8 @@
 											<span class="text-danger">*</span> 
 										</label>
                                         <input type="text" class="form-control required"  
-											id="licensenumber" value="{{$member_driver->license_number ?? ''}}" 
+											id="licensenumber" 
+											value="{{$member_driver->license_number ?? ''}}" 
 											name="licensenumber" maxlength="12" readonly > 
 									</div>
 								</div>
@@ -76,7 +78,9 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label id="attachment">{{ isset($member_operator->license_path) ?? '' }}</label>
+										<label id="attachment">
+											{{ isset($member_operator->license_path) ?? '' }}
+										</label>
 										<input type="file" id="createoperatinglicensefile" 
 											name="operatinglicensefile">
 									</div>
@@ -205,7 +209,9 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="idnumber"> ID Number : <span class="text-danger">*</span> </label>
+										<label for="idnumber"> ID Number : 
+											<span class="text-danger">*</span> 
+										</label>
 										<input type="text" class="form-control required" id="idnumber" 
 										name="idnumber" maxlength="13" value="{{$member_record->id_number ?? ''}}" readonly> 
 									</div>
