@@ -55,25 +55,37 @@ class VehicleController extends Controller
         $member_vehicle = new MemberVehicle();
         $member_region_association = new MemberRegionAssociation();
 
-        $member_record = Member::where('member_id',$id)
-                                    ->get();
+        $member_record = Member::with(['membership_type'])
+        ->findOrFail($request->get('member_id'));
 
         $validator = Validator::make(
             [
-                'regnumber' => 'required|unique:vehicle',
-                'vehicle_class' => 'required|min:1',
-                'region' => 'required|min:1', 
-                'association' => 'required|min:1',
-                'route' => 'required|min:1'
+                'regnumber' => $request->get('regnumber'),
+                'vehicle_class' => $request->get('vehicle_class'),
+                'region' => $request->get('region'), 
+                'association' => $request->get('association'),
+                'route' => $request->get('route')
+                
+            ],
+            [
+                'regnumber' => 'required',
+                'vehicle_class' => 'required',
+                'region' => 'required', 
+                'association' => 'required',
+                'route' => 'required'
             ]
         );
 
+        //dd($validator->errors);
+
         if ($validator->fails()) 
         {
-            return redirect('datacapturer.vehicles.create')
-                        ->withErrors($validator)
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
                         ->withInput();
         }
+
+        dd("validation passed");
 
         /* capture Vehicle Details */
         if( Vehicle::where('registration_number', 

@@ -102,6 +102,17 @@
 						<input type="hidden" class="form-control" id="member_id" 
 							value="{{$member_record->id ?? ''}}" name="member_id">
 						<!-- Step 2 -->
+						<div class="form-group">
+							@if (count($errors) > 0)
+								<div class="text-danger">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<li>{{ $error }}</li>
+										@endforeach
+									</ul>
+								</div>
+							@endif
+						</div>
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-car mr-15"></i> Vehicle Details</h4>
 						<hr class="mb-15 mt-0">
@@ -113,7 +124,8 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control" 
-											id="regnumber" name="regnumber" maxlength="10">
+											id="regnumber" name="regnumber" 
+											maxlength="10" value="{{old('regnumber') ?? ''}}">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -137,7 +149,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group" id="vehicleregnoexistance">{{ $validator ?? '' }}</div>
+									<div class="form-group" id="vehicleregnoexistance"></div>
 								</div>
 
 								<div class="col-md-6">
@@ -146,8 +158,8 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<textarea class="form-control" 
-											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats"
-											name="notes">
+											placeholder="e.g. This is a 2015, VW XY model, currently taking 8 seats" 
+											 name="notes"> {{old('notes') ?? ''}}
 										</textarea>
 									</div>
 								</div>
