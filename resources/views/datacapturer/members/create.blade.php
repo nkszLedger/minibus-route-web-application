@@ -16,11 +16,11 @@
 					@if( isset($member_record) )
 					<form action="{{ route('members.edit', $member_record->id) }}" method="GET" 
 						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data' onsubmit="return validate()">
+							enctype='multipart/form-data'>
 					@else
 					<form action="{{ route('members.store') }}" method="POST" 
 						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data' onsubmit="return validate()">
+							enctype='multipart/form-data'>
 					@endif
 						{{ csrf_field() }}
 						
@@ -113,12 +113,14 @@
 										@if( isset($member_operator->license_path) )
 										<label id="attachment">{{ $member_operator->license_path }}</label>
 										<label class="file"></label>
-										<input type="file" id="createoperatinglicensefile" 
+										<input type="file" class="form-control-file" 
+											id="createoperatinglicensefile" 
 											name="operatinglicensefile" >
 										@else
 										<label id="attachment">Upload Docs</label>
-										<input type="file" id="createoperatinglicensefile" 
-											name="operatinglicensefile" accept="application/pdf" 
+										<input type="file" class="form-control-file" 
+											id="createoperatinglicensefile" 
+											name="operatinglicensefile"
 											value="No file uploaded" >
 										@endif
 									</div>
@@ -160,7 +162,7 @@
 											</label> 
 											<input type="text" class="form-control" 
 												id="associationmembershipnumber" readonly 
-												name="associationmembershipnumber" maxlength="12" 
+												name="associationmembershipnumber" maxlength="20" 
 												value="{{$member_driver->membership_number ?? ''}}"> 
 										@else
 											<label for="associationmembershipnumber">
@@ -169,7 +171,7 @@
 											</label> 
 											<input type="text" class="form-control" 
 												id="associationmembershipnumber"
-												name="associationmembershipnumber" maxlength="12"> 
+												name="associationmembershipnumber" maxlength="20"> 
 										@endif
 									</div>
 								</div>

@@ -143,11 +143,14 @@ class MemberController extends Controller
                 {
                     case "1":
                         /* Member is a Driver */
-                        if( $request->hasFile('createoperatinglicensefile') )
+                        if( $request->hasFile('operatinglicensefile') )
                         {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                            //dd($request->file('operatinglicensefile')->getClientOriginalName());
+                            $file = $request->file('operatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . 
+                                    $request->file('operatinglicensefile')
+                                            ->getClientOriginalName();
+                            $path = Storage::disk('public')->putFileAs('driverlicensefile', 
                                                             $file, $name);
                         }
                         
@@ -164,11 +167,11 @@ class MemberController extends Controller
 
                     case "2":
                         /* Member is a Operator */
-                        if( $request->hasFile('createoperatinglicensefile') )
+                        if( $request->hasFile('operatinglicensefile') )
                         {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                            $file = $request->file('operatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
                                                             $file, $name);
                         }
 
@@ -185,9 +188,10 @@ class MemberController extends Controller
                         /* Member is a Driver */
                         if( $request->hasFile('createoperatinglicensefile') )
                         {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                            
+                            $file = $request->file('operatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
                                                             $file, $name);
                         }
                         
@@ -201,11 +205,11 @@ class MemberController extends Controller
                         $member_driver->save();
 
                         /* Member is a Operator */
-                        if( $request->hasFile('createoperatinglicensefile') )
+                        if( $request->hasFile('operatinglicensefile') )
                         {
-                            $file = $request->file('createoperatinglicensefile');
-                            $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                            $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                            $file = $request->file('operatinglicensefile');
+                            $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
                                                             $file, $name);
                         }
 
@@ -261,6 +265,9 @@ class MemberController extends Controller
         $member_vehicles = MemberVehicle::where('member_id', $id)
                                         ->with(['vehicles.vehicleclass.type'])
                                         ->get();
+
+        dump($member_driver);
+        dd($member_operator);
 
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
