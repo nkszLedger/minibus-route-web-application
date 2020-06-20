@@ -602,7 +602,7 @@
 					document.getElementById("createoperatinglicensefile").disabled = false;
 					document.getElementById("drivinglicencecodes").disabled = false;
 					document.getElementById("membershiplicensenumbertype").style.display = "none";
-					$("#attachment").html( 'Upload Operating Sticker' );
+					$("#attachment").html( 'Upload Operating Licence' );
 				}
 				else if( desc == "Operator")
 				{

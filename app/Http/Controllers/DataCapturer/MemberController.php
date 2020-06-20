@@ -23,6 +23,7 @@ use App\MemberRegionAssociation;
 use App\DrivingLicenceCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
@@ -89,6 +90,31 @@ class MemberController extends Controller
         $member = new Member();
         $member_driver = new MemberDriver();
         $member_operator = new MemberOperator();
+
+        //dd("Validation now");
+        $validator = Validator::make(
+            [
+                'id_number' => $request->get('idnumber'),
+                'file' => $request->file('operatinglicensefile'),
+                'email' => $request->get('emailAddress'),
+                'license_number' => $request->get('licensenumber'),
+                'operatinglicensenumber' => $request->get('operatinglicensenumber')
+            ],
+            [
+                'id_number' => 'required|unique:members',
+                'file' => 'mimes:pdf|max:5000',
+                'email' => 'required|unique:members',
+                'license_number' => 'required|unique:member_driver', 
+                'license_number' => 'required|unique:member_operator'
+            ]
+        );
+
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
 
         if( $request->get('member_id') == null )
         {
@@ -199,36 +225,16 @@ class MemberController extends Controller
             }
             else
             {
-                $error = 'Unexpected error occured. 
+                $errors = 'Unexpected error occured. 
                             Member Profile could not be created.
                                 Please try again later';
 
-                return view('datacapturer.members.create',      
-                                        compact(['all_membership_types',
-                                                    'all_regions',
-                                                    'all_associations', 
-                                                    'all_cities', 'all_gender',
-                                                    'all_driving_licence_codes',
-                                                    'error'
-                                                ]));
+                    return back()->withErrors($errors)
+                            ->withInput();
             }
 
             /* finally */
-            $member_record = Member::with(['membership_type', 'gender',
-                                        'city'])->findOrFail($member->id);
-
-            $member_vehicles = MemberVehicle::where('member_id', $member->id)
-                                        ->with(['vehicles.vehicleclass.type'])
-                                        ->get();
-            
-            return view('datacapturer.members.createadd',      
-                                        compact([   'member_record',
-                                                    'all_regions',
-                                                    'all_associations', 
-                                                    'all_driving_licence_codes',
-                                                    'all_vehicle_classes',
-                                                    'member_vehicles'
-                                                ]));
+            return $this->index();
 
         }							
     }
@@ -394,7 +400,7 @@ class MemberController extends Controller
         $member->is_member_associated =  $request->has('ismemberassociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
-        if( $member->save() )
+        if( $member->update() )
         {
             /* capture MEMBER DRIVER & OPERATOR details */
             $path = '';
@@ -417,7 +423,7 @@ class MemberController extends Controller
                     $member_driver->license_number = $request->get('licensenumber');
                     $member_driver->membership_number = $request->get('operatinglicensenumber');
                     $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
-                    $member_driver->save();
+                    $member_driver->update();
                     break;
                     
 
@@ -437,7 +443,7 @@ class MemberController extends Controller
                     $member_operator->license_number = $request->get('operatinglicensenumber');
                     $member_operator->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
                     $member_operator->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
-                    $member_operator->save();
+                    $member_operator->update();
                     break;
 
                 case "3":
@@ -457,7 +463,7 @@ class MemberController extends Controller
                     $member_driver->license_number = $request->get('licensenumber');
                     $member_driver->membership_number = $request->get('associationmembershipnumber');
                     $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
-                    $member_driver->save();
+                    $member_driver->update();
 
                     /* Member is a Operator */
                     if( $request->hasFile('createoperatinglicensefile') )
@@ -474,7 +480,7 @@ class MemberController extends Controller
                     $member_operator->license_number = $request->get('operatinglicensenumber');
                     $member_operator->valid_since = $request->get('valid_since');
                     $member_operator->valid_until = $request->get('valid_until');
-                    $member_operator->save();
+                    $member_operator->update();
 
                     break;
                 default:

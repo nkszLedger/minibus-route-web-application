@@ -47,9 +47,10 @@
 									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
 									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
 									<td>
-										<a href="{{ route('vehicles.edit', $member_record->id) }}"> 
-											<b>Edit</b> 
-										</a> | 
+										<a href="#view_vehicle" data-toggle="modal" 
+											class="hover-info text-primary">
+												<i class="ion ion-locked"></i> <b>View Details</b>
+										</a>
 										<a href="{{ route('vehicles.destroy', $member_record->id) }}"> 
 											<b>Delete</b> 
 										</a>
@@ -83,6 +84,7 @@
 @endif
 
 @if( isset($member_record) )
+@if( $member_record->is_member_associated )
 <section class="content">
 	<div class="row">
 		<div class="col-12">
@@ -173,11 +175,17 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="wintType1">Region: <span class="text-danger">*</span> </label>
-										<select class="custom-select form-control" id="region" data-placeholder="Type to search cities" name="region">
+										<label for="wintType1">Region: 
+											<span class="text-danger">*</span> 
+										</label>
+										<select class="custom-select form-control" 
+											id="region" data-placeholder="Type to search cities" 
+												name="region">
 											<option selected value="">Please select Region</option>
 											@foreach ($all_regions as $region)
-												<option value="{{$region->region_id}}">{{$region->region_name}}</option>
+												<option value="{{$region->region_id}}">
+													{{$region->region_name}}
+												</option>
 											@endforeach
 										</select>
 									</div>
@@ -186,18 +194,25 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="association">Association :<span class="text-danger">*</span>  </label>
-										<select class="custom-select form-control " id="association" name="association">
+										<label for="association">Association :
+											<span class="text-danger">*</span>  
+										</label>
+										<select class="custom-select form-control " 
+											id="association" name="association">
 											<option selected value="">Please select Association</option>
 											@foreach ($all_associations as $association)
-												<option value="{{$association->association_id}}">{{$association->name}}</option>
+												<option value="{{$association->association_id}}">
+													{{$association->name}}
+												</option>
 											@endforeach
 										</select>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Vehicle Route Details : <span class="text-danger">*</span></label>
+										<label>Vehicle Route Details : 
+											<span class="text-danger">*</span>
+										</label>
 										<hr class="mb-15 mt-0">
 										<div id="route" name="route"></div>
 									</div>
@@ -221,6 +236,7 @@
 		</div>
 	</div>
 </section>
+@endif
 @endif
 
 @endsection

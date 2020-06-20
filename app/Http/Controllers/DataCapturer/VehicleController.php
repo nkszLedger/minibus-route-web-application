@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DataCapturer;
 use App\Member;
 use App\Vehicle;
 use App\Region;
+use App\Route;
 use App\Association;
 use App\DrivingLicenceCode;
 use App\VehicleClass;
@@ -27,6 +28,9 @@ class VehicleController extends Controller
     {
         $member_record = Member::with(['membership_type',
             'city', 'gender'])->findOrFail($member_id);
+        
+        $member_vehicles = MemberVehicle::where('member_id', $member_id)
+        ->with(['vehicles.vehicleclass.type'])->get();
 
         $all_regions = Region::all();
         $all_driving_licence_codes = DrivingLicenceCode::all();
@@ -35,7 +39,8 @@ class VehicleController extends Controller
 
         return view('datacapturer.vehicles.create', 
                     compact([ 'member_record',
-                             'all_regions',
+                             'all_regions', 
+                             'member_vehicles', 
                              'all_associations',
                              'all_vehicle_classes',
                              'all_driving_licence_codes']));
@@ -58,9 +63,14 @@ class VehicleController extends Controller
         $member_record = Member::with(['membership_type'])
         ->findOrFail($request->get('member_id'));
 
+        $all_associations = Association::all();
+        $all_regions = Region::all();
+        $all_vehicle_classes = VehicleClass::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
+
         $validator = Validator::make(
             [
-                'regnumber' => $request->get('regnumber'),
+                'registration_number' => $request->get('regnumber'),
                 'vehicle_class' => $request->get('vehicle_class'),
                 'region' => $request->get('region'), 
                 'association' => $request->get('association'),
@@ -68,7 +78,7 @@ class VehicleController extends Controller
                 
             ],
             [
-                'regnumber' => 'required',
+                'registration_number' => 'required|unique:vehicle',
                 'vehicle_class' => 'required',
                 'region' => 'required', 
                 'association' => 'required',
@@ -76,16 +86,12 @@ class VehicleController extends Controller
             ]
         );
 
-        //dd($validator->errors);
-
         if ($validator->fails()) 
         {
             $errors = $validator->errors()->first();
             return back()->withErrors($errors)
                         ->withInput();
         }
-
-        dd("validation passed");
 
         /* capture Vehicle Details */
         if( Vehicle::where('registration_number', 
@@ -130,12 +136,11 @@ class VehicleController extends Controller
         }
 
         /* finally */
-        $member_vehicles = MemberVehicle::where('member_id',
-                                         $member_record->id)
+        $member_vehicles = MemberVehicle::where('member_id', $member_record->id)
                                         ->with(['vehicles.vehicleclass.type'])
                                         ->get();
         
-        return view('datacapturer.members.create',      
+        return view('datacapturer.vehicles.create',      
                                     compact([   'member_record',
                                                 'all_regions',
                                                 'all_associations', 
@@ -158,7 +163,44 @@ class VehicleController extends Controller
                                         ->with(['vehicles.vehicleclass.type'])
                                         ->get();
 
-        return response()->json(['data' =>$member_vehicles]);
+        $vehicle = Vehicle::where('id', $id)->get();
+
+        $member_record = Member::with(['membership_type'])
+                                        ->findOrFail($member_vehicles->member_id);
+        
+        if( $member_record->is_member_associated )
+        {                           
+            $member_region_association = MemberRegionAssociation::where('member_id', 
+            $member_vehicles->member_id)->get();
+
+            $region = Region::where('region_id', 
+            $member_region_association->region_id)
+            ->get();
+
+            $association = Association::where('association_id', 
+            $member_region_association->association_id)
+            ->get();
+
+            $route_vehicle = RouteVehicle::where('vehicle_id', 
+            $vehicle->id )->get();
+
+            $all_routes = Route::whereIn('id', 
+                function ($query) use( $id ){
+                    $query->select('route_id')
+                        ->from('route_vehicle')
+                        ->whereColumn('route_id', 'routes.id')
+                        ->where('vehicle_id', '=' , $id);
+                    })->get();
+                                
+            return view('datacapturer.vehicles.show', compact(['member_record', 
+                                                'vehicle','all_routes', 
+                                                'region', 'association',
+                                                'all_associations',
+                                                'all_regions'
+                                                ]));
+        }
+        return back();
+
     }
 
     /**
@@ -226,16 +268,16 @@ class VehicleController extends Controller
         $vehicle = Vehicle::find($id);
         $route_vehicle = RouteVehicle::where('vehicle_id', $id);
         $member_vehicle = MemberVehicle::where('vehicle_id', $id);
-        $member_record = Member::where('id', $member_vehicle->member_id);
         $member_region_association = MemberRegionAssociation::where('member_id',
                                                 $member_vehicle->member_id);
 
+        $member_id = $member_vehicle->member_id;
+        
         $member_region_association->delete();
         $route_vehicle->delete();
         $member_vehicle->delete();
         $vehicle->delete();
 
-        return redirect()->intended('vehicles.edit', 
-                                        $member_record->id);
+        return $this->create($member_id);
     }
 }

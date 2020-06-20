@@ -27,7 +27,15 @@
 						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> Member Type</h4>
 						<hr class="mb-15 mt-0">
 						<h6 class="box-subtitle text-danger text-center" id="error_on_create_member">
-							{{ $error ?? ''}}
+							@if (count($errors) > 0)
+								<div class="text-danger">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<li>{{ $error }}</li>
+										@endforeach
+									</ul>
+								</div>
+							@endif
 						</h6>
 						<hr class="mb-15 mt-0">
 						<section>
@@ -110,7 +118,8 @@
 										@else
 										<label id="attachment">Upload Docs</label>
 										<input type="file" id="createoperatinglicensefile" 
-											name="operatinglicensefile" value="No file uploaded" >
+											name="operatinglicensefile" accept="application/pdf" 
+											value="No file uploaded" >
 										@endif
 									</div>
 									<div class="form-group">
@@ -281,7 +290,7 @@
 										</label>
 										<input type="text" class="form-control" 
 										id="wfirstName2" name="firstName" maxlength="25" 
-										value="{{$member_record->name ?? ''}}" 
+										value="{{ old('firstName') ?? $member_record->name ?? ''}}" 
 										{{ isset($member_record) ? 'readonly' : '' }}
 										required data-validation-required-message="This field is required">  
 									</div>
@@ -292,7 +301,8 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control" id="wlastName2" 
-										name="lastName" maxlength="25" value="{{$member_record->surname ?? ''}}"
+										name="lastName" maxlength="25" 
+										value="{{ old('lastName') ?? $member_record->surname ?? ''}}"
 										{{ isset($member_record) ? 'readonly' : '' }} 
 										required data-validation-required-message="This field is required">  
 									</div>
@@ -303,7 +313,8 @@
 									<div class="form-group">
 										<label for="idnumber"> ID Number : <span class="text-danger">*</span> </label>
 										<input type="text" class="form-control" id="idnumber" 
-										name="idnumber" maxlength="13" value="{{$member_record->id_number ?? ''}}"
+										name="idnumber" maxlength="13" 
+										value="{{ old('idnumber') ?? $member_record->id_number ?? ''}}"
 										{{ isset($member_record) ? 'readonly' : '' }} 
 										required data-validation-required-message="This field is required"> 
 									</div>
@@ -335,7 +346,7 @@
 										<label for="wemailAddress2"> Email Address :</label>
 										<input type="email" class="form-control" id="wemailAddress2" 
 											name="emailAddress" maxlength="25" 
-											value="{{$member_record->email ?? ''}}"
+											value="{{ old('emailAddress') ?? $member_record->email ?? ''}}"
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -346,7 +357,7 @@
 										<span class="text-danger">*</span></h5>
 										<input type="tel" class="form-control" id="wphoneNumber2" 
 											name="phonenumber" maxlength="10" 
-											value="{{$member_record->phone_number ?? ''}}"
+											value="{{ old('phonenumber') ?? $member_record->phone_number ?? ''}}"
 											{{ isset($member_record) ? 'readonly' : '' }}
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -362,7 +373,7 @@
 										<input type="text" class="form-control" 
 											id="addressline1" 
 											name="addressline1" maxlength="25" 
-											value="{{$member_record->address_line ?? ''}}" 
+											value="{{ old('addressline1') ?? $member_record->address_line ?? ''}}" 
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -372,7 +383,7 @@
 										<h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
 										<input type="text" class="form-control" id="surburb" 
 											name="surburb" maxlength="25" 
-											value="{{$member_record->surburb ?? '' }}"
+											value="{{ old('surburb') ?? $member_record->surburb ?? '' }}"
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -388,7 +399,7 @@
 										<input type="text" class="form-control" 
 											id="emergency_contact_name" 
 											name="emergency_contact_name" maxlength="25" 
-											value="{{$member_record->emergency_contact_name ?? '' }}"
+											value="{{ old('emergency_contact_name') ?? $member_record->emergency_contact_name ?? '' }}"
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -402,7 +413,8 @@
 										<input type="text" class="form-control" 
 											id="emergency_contact_number" name="emergency_contact_number" 
 											maxlength="10" 
-											value="{{$member_record->emergency_contact_number ?? '' }}" 
+											value="{{ old('emergency_contact_number') ?? 
+												$member_record->emergency_contact_number ?? '' }}" 
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>
@@ -417,7 +429,8 @@
 										<input type="text" class="form-control" 
 											id="emergency_contact_relationship" 
 											name="emergency_contact_relationship" maxlength="25" 
-											value="{{$member_record->emergency_contact_relationship ?? '' }}" 
+											value="{{ old('emergency_contact_relationship') ?? 
+												$member_record->emergency_contact_relationship ?? '' }}" 
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required">  
 									</div>
@@ -455,7 +468,8 @@
 											<span class="text-danger">*</span> </label>
 										<input type="text" class="form-control" id="postal-code" 
 											name="postal-code" maxlength="4" 
-											value="{{$member_record->postal_code ?? ''}}" 
+											value="{{ old('postal-code') ??
+												$member_record->postal_code ?? ''}}" 
 											{{ isset($member_record) ? 'readonly' : '' }} 
 											required data-validation-required-message="This field is required"> 
 									</div>

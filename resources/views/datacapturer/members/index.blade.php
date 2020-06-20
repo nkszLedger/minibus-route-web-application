@@ -47,7 +47,7 @@
 									<td>
 										<a href="{{ route('members.edit', $member->id)}}"><b>Edit</b></a> | 
 										<a href="{{ route('members.show', $member->id)}}"><b>View Profile</b></a> | 
-										<a href="{{ route('vehicles.create', $member->id)}}"><b>View Vehicles</b></a>
+										<a href="{{ route('vehicles.create', $member->id)}}"><b>Add Vehicles</b></a>
 									</td>
 								</tr>
 								<?php $count++?>
