@@ -116,6 +116,15 @@
 										<input type="file" class="form-control-file" 
 											id="createoperatinglicensefile" 
 											name="operatinglicensefile" >
+										@elseif( isset($member_driver->license_path) )
+										<label id="attachment">
+											{{ asset($member_driver->license_path) }}
+										</label>
+										<label class="file"></label>
+										<input type="file" class="form-control-file" 
+											id="createoperatinglicensefile" 
+											name="operatinglicensefile" 
+											value="{{ asset($member_driver->license_path) }}">
 										@else
 										<label id="attachment">Upload Docs</label>
 										<input type="file" class="form-control-file" 

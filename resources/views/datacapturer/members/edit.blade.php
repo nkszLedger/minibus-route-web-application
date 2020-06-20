@@ -78,9 +78,14 @@
 								<div class="col-md-6">
 									<div class="form-group">
                                         @if( isset($member_operator['license_path']) )
-										<label id="editattachment">{{ $member_operator['license_path'] }}</label>
+										<label id="editattachment">
+											{{ asset($member_operator->license_path) }}
+										</label>
                                         @else
-                                        <label id="editattachment">No documents found</label>
+                                        <a id="editattachment" 
+											href="{{ asset('storage/'.$member_driver->license_path) }}">
+											file.pdf
+										</a>
                                         @endif
 										<input type="file" id="editcreateoperatinglicensefile" 
 											name="operatinglicensefile">
