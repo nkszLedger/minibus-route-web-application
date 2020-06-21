@@ -97,15 +97,18 @@ class MemberController extends Controller
                 'id_number' => $request->get('idnumber'),
                 'file' => $request->file('operatinglicensefile'),
                 'email' => $request->get('emailAddress'),
+                'membership_number' => $request->get('associationmembershipnumber'),
                 'license_number' => $request->get('licensenumber'),
-                'operatinglicensenumber' => $request->get('operatinglicensenumber')
+                'license_number' => $request->get('operatinglicensenumber')
             ],
             [
                 'id_number' => 'required|unique:members',
-                'file' => 'mimes:pdf|max:5000',
+                'file' => 'nullable|mimes:pdf|max:5000',
                 'email' => 'required|unique:members',
+                'membership_number' =>'nullable|unique:member_driver',
+                'membership_number' =>'nullable|unique:member_operator',
                 'license_number' => 'required|unique:member_driver', 
-                'license_number' => 'required|unique:member_operator'
+                'license_number' => 'required|unique:member_operator',
             ]
         );
 

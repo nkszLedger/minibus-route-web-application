@@ -19,6 +19,7 @@ class CreateVehicleTable extends Migration
             $table->longText('info')->nullable();
             $table->string('registration_number')->unique();
             $table->timestamps();
+            $table->softDeletes()->nullable();
 
             $table->foreign('vehicle_class_id')->references('id')->on('vehicle_class');
         });

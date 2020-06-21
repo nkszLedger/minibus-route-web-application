@@ -93,29 +93,18 @@ class VehicleController extends Controller
                         ->withInput();
         }
 
-        /* capture Vehicle Details */
-        if( Vehicle::where('registration_number', 
-            $request->get('regnumber') )->count() > 0)
-        {
-            $vehicle = Vehicle::where('registration_number', 
-                                    $request->get('regnumber') );
-            $vehicle->info = $request->get('notes');
-            $vehicle->update();
-        }
-        else
-        {
-            $vehicle->vehicle_class_id = $request->get('vehicle_class');
-            $vehicle->info = $request->get('notes');
-            $vehicle->registration_number = $request->get('regnumber');
-            $vehicle->save();
-        }
-    
+        
+        $vehicle->vehicle_class_id = $request->get('vehicle_class');
+        $vehicle->info = $request->get('notes');
+        $vehicle->registration_number = $request->get('regnumber');
+        $vehicle->save();
+
         /* capture MEMBER VEHICLE details */
         $member_vehicle->member_id = $member_record->id;
         $member_vehicle->vehicle_id = $vehicle->id;
         $member_vehicle->save();
 
-        if( $member_record->is_member_associated == true )
+        if( $member_record->is_member_associated )
         {
             /* capture MEMBER REGION, ASSOCIATION details */
             $member_region_association->member_id = $member_record->id;

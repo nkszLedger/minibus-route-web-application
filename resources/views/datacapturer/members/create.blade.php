@@ -74,12 +74,14 @@
 										@if( isset($member_driver->license_number) )
 											<input type="text" class="form-control" 
 												{{ isset($member_driver)  ? 'readonly' : '' }} 
-												id="licensenumber" value="{{$member_driver->license_number ?? ''}}" 
+												id="licensenumber" 
+												value="{{ $member_driver->license_number ?? ''}}" 
 												name="licensenumber" maxlength="12" 
 												required data-validation-required-message="This field is required"> 
 										@else
 											<input type="text" class="form-control" id="licensenumber" 
 												name="licensenumber" maxlength="12"	
+												value="{{ old('licensenumber') ?? ''}}"
 												required data-validation-required-message="This field is required">
 										@endif
 										
@@ -101,7 +103,7 @@
 											<input type="text" class="form-control" 
 												id="operatinglicensenumber" 
 												name="operatinglicensenumber" maxlength="12"
-												{{ isset($member_operator) ? 'readonly' : '' }} 
+												value="{{ old('operatinglicensenumber') ?? ''}}"
 												required data-validation-required-message="This field is required"> 
 							
 										@endif
@@ -180,7 +182,8 @@
 											</label> 
 											<input type="text" class="form-control" 
 												id="associationmembershipnumber"
-												name="associationmembershipnumber" maxlength="20"> 
+												name="associationmembershipnumber" maxlength="20" 
+												value="{{ old('associationmembershipnumber') ?? ''}}"> 
 										@endif
 									</div>
 								</div>
@@ -193,12 +196,12 @@
 											id="drivinglicencecodes" name="drivinglicencecodes"
 											{{  isset($member_record) ? 'disabled' : '' }} >
 										@if( isset($member_driver['codes']) )
-											<option value="{{$member_driver['codes']['code']}}">
+											<option value="{{$member_driver['codes']['id']}}">
 												Code: {{$member_driver['codes']['code']}}; 
 												Category: {{$member_driver['codes']['category']}}
 											</option>
 											@foreach ($all_driving_licence_codes as $code)
-												@if( $code->id != $member_driver['codes']['code'])
+												@if( $code->id != $member_driver['codes']['id'])
 													<option value="{{$code->id}}">
 														Code: {{$code->code}}; 
 														Category: {{$code->category}}
@@ -247,6 +250,7 @@
 										</h5>
 										<input class="form-control" type="date" 
 											name="valid-from"
+											value="{{ old('valid-from') ?? ''}}"
 											required data-validation-required-message="This field is required"> 
 										@endif
 									</div>
@@ -279,6 +283,7 @@
 										</h5>
 										<input class="form-control" type="date"  
 												name="valid-until" 
+												value="{{ old('valid-until') ?? ''}}"
 												required data-validation-required-message="This field is required"> 
 										@endif
 									</div>
