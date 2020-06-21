@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\DataCapturer;
 use App\User;
 use App\City;
+use App\Gender;
 use App\Employee;
 use App\EmployeeFingerprint;
 use App\EmployeePortrait;
+use App\EmployeePosition;
 use App\Province;
 use App\Region;
 use App\Http\Controllers\Controller;
@@ -48,10 +50,14 @@ class EmployeeController extends Controller
     public function create()
     {
         $all_cities = City::all();
+        $all_positions = EmployeePosition::all();
+        $all_gender = Gender::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
 
         return view('datacapturer.employees.create', compact(['all_cities', 
+                                                                'all_positions',
+                                                                'all_gender',
                                                                 'all_provinces', 
                                                                 'all_regions'
                                                             ]));
@@ -71,40 +77,32 @@ class EmployeeController extends Controller
         }
         else
         {
+            $validator = Validator::make(
+                [
+                    'name' => $request->get('name'),
+                    'surname' => $request->get('surname'),
+                    'email' => $request->get('email'),
+                    'id_number' => $request->get('id_number'),
+                    'employee_number' => $request->get('employee_number')
+                ],
+                [
+                    'name' => 'required|alpha|max:20',
+                    'surname' => 'required|alpha|max:20',
+                    'email' => 'required|unique:employee',
+                    'id_number' => 'required|numeric|min:13|max:13|unique:employee',
+                    'employee_number' => 'nullable|numeric',
+                ]
+            );
+    
+            if ($validator->fails()) 
+            {
+                $errors = $validator->errors()->first();
+                return back()->withErrors($errors)
+                            ->withInput();
+            }
+
             $employee = new Employee();
 
-            if( $employee->employee_number == $request->get('employee_number') ||
-                count(Employee::where('employee_number', $request->get('employee_number'))->get() ) > 0)
-            {
-                $error_on_employee_number = 'Employee Number already exists';
-
-                return Redirect::to('datacapturer.employees.create', compact(['all_cities',
-                                                            'all_provinces', 
-                                                            'all_regions',
-                                                            'employee', 'error_on_employee_number']))
-                                                            ->withInput();
-            }
-            if( $employee->id_number == $request->get('id_number') ||
-                count(Employee::where('id_number', $request->get('id_number'))->get() ) > 0 )
-            {
-                $error_on_id_number = 'ID Number already exists';
-
-                return view('datacapturer.employees.create', compact(['all_cities',
-                                                            'all_provinces', 
-                                                            'all_regions',
-                                                            'employee', 'error_on_id_number']));
-            }
-            if( $employee->email == $request->get('email') ||
-                count(Employee::where('email', $request->get('email'))->get() ) > 0)
-            {
-                $error_on_email_number = 'Email already exists';
-
-                return view('datacapturer.employees.create', compact(['all_cities',
-                                                            'all_provinces', 
-                                                            'all_regions',
-                                                            'employee', 'error_on_email_number']));
-            }
-            
             /* Finally Capture */
             $employee->name = $request->get('name');
             $employee->surname = $request->get('surname');
@@ -122,6 +120,10 @@ class EmployeeController extends Controller
             $employee->province_id = $request->get('province');
             $employee->region_id = $request->get('eregion');
 
+            $employee->gender_id = $request->get('gender');
+            $employee->position_id = $request->get('position');
+            $employee->rank = $request->get('rank');
+
             /* store employee entry */
             $employee->save();
 
@@ -138,7 +140,9 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::with(['city', 'province','region'])
+        $employee = Employee::with(['city', 'province',
+                                    'region', 'position',
+                                    'gender'])
                              ->findOrFail($id);
 
         $portrait = EmployeePortrait::where('employee_id', $id)->get();
@@ -160,12 +164,18 @@ class EmployeeController extends Controller
         $all_cities = City::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
-        $employee = Employee::with(['city', 'province','region'])
+        $all_positions = EmployeePosition::all();
+        $all_gender = Gender::all();
+        $employee = Employee::with(['city', 'province',
+                                    'region', 'position',
+                                    'gender'])
                                 ->findOrFail($id);
 
         return view('datacapturer.employees.create', compact(['all_cities',
                                                         'all_provinces', 
                                                         'all_regions',
+                                                        'all_positions',
+                                                        'all_gender',
                                                         'employee']));
     }
 
@@ -178,10 +188,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $all_cities = City::all();
-        $all_provinces = Province::all();
-        $all_regions = Region::all();
-        $employee = Employee::with(['city', 'province','region'])
+        $employee = Employee::with(['city', 'province',
+                                    'region', 'position',
+                                    'gender'])
                                 ->findOrFail($request->get('id'));
         
         $update = array(
@@ -201,66 +210,6 @@ class EmployeeController extends Controller
             'province_id' => $request->get('province'),
             'region_id' => $request->get('eregion'),
         );
-
-        if( $employee->employee_number != $request->get('employee_number') )
-        {
-            $person = Employee::where('employee_number', $request->get('employee_number'))->get();
-            $n = count($person);
-            if( $n > 0)
-            {
-                $error_on_employee_number = 'Employee Number already exists';
-
-                return view('datacapturer.employees.create', compact(['all_cities',
-                                                            'all_provinces', 
-                                                            'all_regions',
-                                                            'employee', 
-                                                            'error_on_employee_number']));
-            }
-            else
-            {
-                $update['employee_number'] = $request->get('employee_number');
-            }
-            
-        }
-        if( $employee->id_number != $request->get('id_number')  )
-        {
-            $person = Employee::where('id_number', $request->get('id_number'))->get();
-            $n = count($person);
-            if( $n > 0)
-            {
-                $error_on_id_number = 'ID Number already exists';
-
-                return view('datacapturer.employees.create', compact(['all_cities',
-                                                        'all_provinces', 
-                                                        'all_regions',
-                                                        'employee', 
-                                                        'error_on_id_number']));
-            }
-            else
-            {
-                $update['id_number'] = $request->get('id_number');
-            }
-            
-        }
-        if( $employee->email != $request->get('email') )
-        {
-            $person = Employee::where('email', $request->get('email'))->get();
-            $n = count($person);
-            if( $n > 0)
-            {
-                $error_on_email_number = 'Email already exists';
-
-                return view('datacapturer.employees.create', compact(['all_cities',
-                                                            'all_provinces', 
-                                                            'all_regions',
-                                                            'employee', 
-                                                            'error_on_email_number']));
-            }
-            else
-            {
-                $update['email'] = $request->get('email');
-            }
-        }
         
         /* update employee entry */
         $employee->update($update);

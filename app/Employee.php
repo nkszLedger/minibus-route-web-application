@@ -66,6 +66,11 @@ class Employee extends Model
         return $this->belongsTo(City::class,'city_id');
     }
 
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class,'gender_id');
+    }
+
     public function position()
     {
         return $this->belongsTo(EmployeePosition::class,'position_id');

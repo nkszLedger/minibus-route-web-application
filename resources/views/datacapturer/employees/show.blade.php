@@ -64,6 +64,29 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5>National ID Number :<span class="text-danger"> *</span></h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="id_number" 
+                                            required data-validation-required-message="This field is required"
+                                                 value="{{$employee->id_number }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
+                                    <select class="custom-select form-control" 
+                                        id="gender" name="gender" disabled>
+                                            <option value="{{$employee['gender']['id']}}">
+                                                {{$employee['gender']['type']}}
+                                            </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5>Employee Number :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="employee_number"
@@ -75,12 +98,25 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>National ID Number :<span class="text-danger"> *</span></h5>
-                                    <div class="controls">
-                                        <input type="text" class="form-control" name="id_number" 
-                                            required data-validation-required-message="This field is required"
-                                                 value="{{$employee->id_number }}" readonly>
-                                    </div>
+                                    <h5 for="gender">Rank Position : <span class="text-danger">*</span> </h5>
+                                    <select class="custom-select form-control" 
+                                        id="gender" name="gender" disabled>
+                                            <option value="{{$employee['position']['id']}}">
+                                                {{$employee['position']['position']}}
+                                            </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" id="rank" >
+                                    <label for="rank">Taxi Rank : 
+                                        <span class="text-danger">*</span> 
+                                    </label>
+                                    <textarea class="form-control" 
+                                        placeholder="Taxi Rank A, Taxi Rank B, etc" 
+                                            name="rank" readonly> {{ $employee->rank ?? ''}}
+                                    </textarea>
                                 </div>
                             </div>
 
