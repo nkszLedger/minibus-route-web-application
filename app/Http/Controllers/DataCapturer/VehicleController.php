@@ -56,7 +56,6 @@ class VehicleController extends Controller
     {
         /* Init all instances */
         $vehicle = new Vehicle();
-        $route_vehicle = new RouteVehicle();
         $member_vehicle = new MemberVehicle();
         $member_region_association = new MemberRegionAssociation();
 
@@ -117,6 +116,7 @@ class VehicleController extends Controller
                 foreach((array)$request->get('route') as $checkbox_value) 
                 {
                     /* capture ROUTE VEHICLE details */
+                    $route_vehicle = new RouteVehicle();
                     $route_vehicle->route_id = $checkbox_value;
                     $route_vehicle->vehicle_id = $vehicle->id;
                     $route_vehicle->save();
