@@ -145,7 +145,6 @@ class MemberController extends Controller
                         /* Member is a Driver */
                         if( $request->hasFile('operatinglicensefile') )
                         {
-                            //dd($request->file('operatinglicensefile')->getClientOriginalName());
                             $file = $request->file('operatinglicensefile');
                             $name = 'MNDOTOPF' . $member->id . 
                                     $request->file('operatinglicensefile')
@@ -156,8 +155,8 @@ class MemberController extends Controller
                         
                         $member_driver->member_id = $member->id;
                         $member_driver->license_path = $path;
-                        $member_driver->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
-                        $member_driver->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
+                        $member_driver->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
+                        $member_driver->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
                         $member_driver->license_number = $request->get('licensenumber');
                         $member_driver->membership_number = $request->get('operatinglicensenumber');
                         $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
@@ -179,19 +178,19 @@ class MemberController extends Controller
                         $member_operator->member_id = $member->id;
                         $member_operator->membership_number = $request->get('');
                         $member_operator->license_number = $request->get('operatinglicensenumber');
-                        $member_operator->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
-                        $member_operator->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
+                        $member_operator->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
+                        $member_operator->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
                         $member_operator->save();
                         break;
 
                     case "3":
                         /* Member is a Driver */
-                        if( $request->hasFile('createoperatinglicensefile') )
+                        if( $request->hasFile('operatinglicensefile') )
                         {
                             
                             $file = $request->file('operatinglicensefile');
                             $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
+                            $path = Storage::disk('public')->putFileAs('driverlicensefile', 
                                                             $file, $name);
                         }
                         
@@ -217,8 +216,8 @@ class MemberController extends Controller
                         $member_operator->member_id = $member->id;
                         $member_operator->membership_number = $request->get('associationmembershipnumber');
                         $member_operator->license_number = $request->get('operatinglicensenumber');
-                        $member_operator->valid_since = $request->get('valid_since');
-                        $member_operator->valid_until = $request->get('valid_until');
+                        $member_operator->valid_since = $request->get('valid-from');
+                        $member_operator->valid_until = $request->get('valid-until');
                         $member_operator->save();
 
                         break;
@@ -312,7 +311,6 @@ class MemberController extends Controller
                                     compact(['member_record', 
                                                 'vehicle', 'driver',
                                                 'region', 'association',
-
                                                 'operator','all_routes', 
                                                 'all_associations',
                                                 'all_membership_types',
@@ -415,18 +413,19 @@ class MemberController extends Controller
             {
                 case "1":
                     /* Member is a Driver */
-                    if( $request->hasFile('createoperatinglicensefile') )
+                    if( $request->hasFile('operatinglicensefile') )
                     {
-                        $file = $request->file('createoperatinglicensefile');
-                        $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                        $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                        Storage::disk('public')->delete('storage/'.$member_driver->license_path);
+                        $file = $request->file('operatinglicensefile');
+                        $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                        $path = Storage::disk('public')->putFileAs('driverslicensefile', 
                                                         $file, $name);
+                        $member_driver->license_path = $path;
                     }
                     
-                    $member_driver->member_id = $member->id;
-                    $member_driver->license_path = $path;
-                    $member_driver->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
-                    $member_driver->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
+                    
+                    $member_driver->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
+                    $member_driver->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
                     $member_driver->license_number = $request->get('licensenumber');
                     $member_driver->membership_number = $request->get('operatinglicensenumber');
                     $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
@@ -436,57 +435,57 @@ class MemberController extends Controller
 
                 case "2":
                     /* Member is a Operator */
-                    if( $request->hasFile('createoperatinglicensefile') )
+                    if( $request->hasFile('operatinglicensefile') )
                     {
-                        $file = $request->file('createoperatinglicensefile');
-                        $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                        $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                        Storage::disk('public')->delete('storage/'.$member_operator->license_path);
+                        $file = $request->file('operatinglicensefile');
+                        $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                        $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
                                                         $file, $name);
+                        $member_operator->license_path = $path;
                     }
 
-                    $member_operator->license_path = $path;
-                    $member_operator->member_id = $member->id;
-                    $member_operator->membership_number = $request->get('');
+                    $member_operator->membership_number = $request->get('associationmembershipnumber');
                     $member_operator->license_number = $request->get('operatinglicensenumber');
-                    $member_operator->valid_since = Carbon::parse($request->get('valid_since'))->format('Y-m-d');
-                    $member_operator->valid_until = Carbon::parse($request->get('valid_until'))->format('Y-m-d');
+                    $member_operator->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
+                    $member_operator->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
                     $member_operator->update();
                     break;
 
                 case "3":
                     /* Member is a Driver */
-                    if( $request->hasFile('createoperatinglicensefile') )
+                    if( $request->hasFile('operatinglicensefile') )
                     {
-                        $file = $request->file('createoperatinglicensefile');
-                        $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                        $path = Storage::disk('local')->putFileAs('driveroperatinglicensefile', 
+                        Storage::disk('public')->delete('storage/'.$member_driver->license_path);
+                        $file = $request->file('operatinglicensefile');
+                        $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                        $path = Storage::disk('public')->putFileAs('driverslicensefile', 
                                                         $file, $name);
+                        $member_driver->license_path = $path;
                     }
                     
-                    $member_driver->member_id = $member->id;
-                    $member_driver->license_path = $path;
-                    $member_driver->valid_since = $request->get('valid_since');
-                    $member_driver->valid_until = $request->get('valid_until');
+                    $member_driver->valid_since = $request->get('valid-from');
+                    $member_driver->valid_until = $request->get('valid-until');
                     $member_driver->license_number = $request->get('licensenumber');
                     $member_driver->membership_number = $request->get('associationmembershipnumber');
                     $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
                     $member_driver->update();
 
                     /* Member is a Operator */
-                    if( $request->hasFile('createoperatinglicensefile') )
+                    if( $request->hasFile('operatinglicensefile') )
                     {
-                        $file = $request->file('createoperatinglicensefile');
-                        $name = 'MNDOTOPF' . $member->id . '.' . $file->guessExtension();
-                        $path = Storage::disk('local')->putFileAs('operatinglicensefile', 
+                        Storage::disk('public')->delete('storage/'.$member_operator->license_path);
+                        $file = $request->file('operatinglicensefile');
+                        $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
+                        $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
                                                         $file, $name);
+                        $member_operator->license_path = $path;
                     }
 
-                    $member_operator->license_path = $path;
-                    $member_operator->member_id = $member->id;
                     $member_operator->membership_number = $request->get('associationmembershipnumber');
                     $member_operator->license_number = $request->get('operatinglicensenumber');
-                    $member_operator->valid_since = $request->get('valid_since');
-                    $member_operator->valid_until = $request->get('valid_until');
+                    $member_operator->valid_since = $request->get('valid-from');
+                    $member_operator->valid_until = $request->get('valid-until');
                     $member_operator->update();
 
                     break;
