@@ -22,10 +22,10 @@ $(function () {
 	});
 
 	// SA Licence Code
-	$('#licensenumber').formatter({
-		'pattern': '{{9999999999}}{{aa}}',
-		'persistent': true
-	});
+	// $('#licensenumber').formatter({
+	// 	'pattern': '{{9999999999}}{{aa}}',
+	// 	'persistent': true
+	// });
 
 	// Phone Number 
 	$('#wphoneNumber2').formatter({

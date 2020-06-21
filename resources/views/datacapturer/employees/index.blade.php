@@ -61,7 +61,7 @@
 											<td>{{ $employee['region']['region_name'] }}</td>
 											<td>{{ $employee['province']['name'] }}</td>
 											<td>
-												<span class="badge badge-pill badge-danger">Not Complete</span>
+												<span class="badge badge-pill badge-danger">Coming Soon</span>
 											</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
