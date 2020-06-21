@@ -13,6 +13,7 @@ use App\Region;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -88,9 +89,9 @@ class EmployeeController extends Controller
                 [
                     'name' => 'required|alpha|max:20',
                     'surname' => 'required|alpha|max:20',
-                    'email' => 'required|unique:employee',
-                    'id_number' => 'required|numeric|min:13|max:13|unique:employee',
-                    'employee_number' => 'nullable|numeric',
+                    'email' => 'required|unique:employees',
+                    'id_number' => 'required|digits:13|unique:employees',
+                    'employee_number' => 'nullable|digits',
                 ]
             );
     
@@ -188,6 +189,30 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            [
+                'name' => $request->get('name'),
+                'surname' => $request->get('surname'),
+                'email' => $request->get('email'),
+                'id_number' => $request->get('id_number'),
+                'employee_number' => $request->get('employee_number')
+            ],
+            [
+                'name' => 'required|alpha|max:20',
+                'surname' => 'required|alpha|max:20',
+                'email' => 'required|unique:employees,email,'.$id,
+                'id_number' => 'required|digits:13|unique:employees,id_number,'.$id,
+                'employee_number' => 'nullable|digits',
+            ]
+        );  
+
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
+
         $employee = Employee::with(['city', 'province',
                                     'region', 'position',
                                     'gender'])

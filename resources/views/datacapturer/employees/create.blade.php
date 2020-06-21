@@ -120,11 +120,11 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Employee Number :<span class="text-danger"> *</span></h5>
+                                    <h5>Employee Number :</h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="employee_number" 
-                                            required data-validation-required-message="This field is required" 
-                                                value="{{ old('employee_number') ?? $employee->employee_number ?? '' }}">
+                                        <input type="text" class="form-control" name="employee_number"  
+                                                value="{{ old('employee_number') ?? 
+                                                $employee->employee_number ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                                             @endforeach
                                         @else
                                             <option value="">Please Select Position</option>
-                                            @foreach ($all_position as $position)
+                                            @foreach ($all_positions as $position)
                                                 <option value="{{$position->id}}">
                                                     {{$position->position}}
                                                 </option>
@@ -159,9 +159,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group" id="rank" >
-                                    <label for="rank">Taxi Rank : 
-                                        <span class="text-danger">*</span> 
-                                    </label>
+                                    <label for="rank">Taxi Rank :</label>
                                     <textarea class="form-control" 
                                         placeholder="Taxi Rank A, Taxi Rank B, etc" 
                                             name="rank"> {{old('rank') ?? $employee->rank ?? ''}}
@@ -171,7 +169,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="wphoneNumber2">Phone Number : <span class="text-danger"> *</span>  </h5>
+                                    <h5 for="wphoneNumber2">Phone Number : 
+                                        <span class="text-danger"> *</span>  
+                                        </h5>
                                     <input type="tel" class="form-control required" id="wphoneNumber2" 
                                         name="phone_number" maxlength="10" 
                                         value="{{ old('phone_number') ?? $employee->phone_number ?? '' }}">
@@ -191,9 +191,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergency_contact_name">Emergency Contact Name : 
-                                        <span class="text-danger"> *</span>  
-                                    </h5>
+                                    <h5 for="emergency_contact_name">Emergency Contact Name : </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_name" name="emergency_contact_name" 
                                         maxlength="25" 
@@ -204,9 +202,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergency_contact_number">Emergency Contact Number : 
-                                        <span class="text-danger"> *</span>  
-                                    </h5>
+                                    <h5 for="emergency_contact_number">Emergency Contact Number : </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_number" name="emergency_contact_number" 
                                         maxlength="10" 
@@ -217,11 +213,12 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergencycontactrelationship">Emergency Contact Relationship : 
-                                        <span class="text-danger"> *</span>  
+                                    <h5 for="emergencycontactrelationship">
+                                        Emergency Contact Relationship :
                                     </h5>
                                     <input type="text" class="form-control required" 
-                                        id="emergency_contact_relationship" name="emergency_contact_relationship" 
+                                        id="emergency_contact_relationship" 
+                                        name="emergency_contact_relationship" 
                                         maxlength="25" 
                                         value="{{ old('emergency_contact_relationship') ?? 
                                         $employee->emergency_contact_relationship ?? '' }}">
@@ -230,9 +227,11 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="addressline1">Address Line : <span class="text-danger"> *</span>  </h5>
+                                    <h5 for="addressline1">Address Line : 
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
                                     <input type="text" class="form-control required" id="address_line" 
-                                        name="address_line" maxlength="25" 
+                                        name="address_line" maxlength="25" required 
                                         value="{{ old('address_line') ?? $employee->address_line ?? '' }}">
                                 </div>
                             </div>
@@ -241,17 +240,19 @@
                                 <div class="form-group">
                                     <h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
                                     <input type="text" class="form-control required" id="surburb" 
-                                        name="surburb" maxlength="25" 
+                                        name="surburb" maxlength="25" required 
                                         value="{{ old('surburb') ?? $employee->surburb ?? '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="postal-code">Postal Code : <span class="text-danger"> *</span> </h5>
+                                    <h5 for="postal-code">Postal Code : 
+                                        <span class="text-danger"> *</span> 
+                                    </h5>
                                     <input type="text" class="form-control" 
                                         id="postal_code" name="postal_code" 
-                                        maxlength="4" 
+                                        maxlength="4" required
                                         value="{{ old('postal_code') ?? $employee->postal_code ?? '' }}">
                                 </div>
                             </div>
@@ -259,7 +260,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="city">City/Town : <span class="text-danger"> *</span> </h5>
-                                    <select class="custom-select form-control required" id="city" name="city">
+                                    <select class="custom-select form-control required"
+                                         id="city" name="city" required>
                                     @if( isset($employee))
                                         <option selected value="{{$employee['city']['city_id']}}">
                                             {{$employee['city']['city']}}
@@ -285,7 +287,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="eregion">Region: <span class="text-danger">*</span> </label>
-                                    <select class="custom-select form-control required" id="eregion" name="eregion">
+                                    <select class="custom-select form-control required" 
+                                        id="eregion" name="eregion" required>
                                         @if( isset($employee))
                                             <option value="{{$employee['region']['region_id']}}">
                                                 {{$employee['region']['region_name']}}
@@ -310,7 +313,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
-                                    <select class="custom-select form-control required" id="province" name="province">
+                                    <select class="custom-select form-control required" 
+                                        id="province" name="province" required>
                                     @if( isset($employee))
                                         <option selected value="{{$employee['province']['id']}}">
                                             {{$employee['province']['name']}}
