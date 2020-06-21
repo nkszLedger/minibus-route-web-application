@@ -340,7 +340,7 @@ class MemberController extends Controller
     {
         $member_record = Member::with(['membership_type', 'gender',
                                         'city'])->findOrFail($id);
-
+                                        
         $member_driver = MemberDriver::with(['codes'])
                                         ->findOrFail($id);
                                         
@@ -384,7 +384,7 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         /* Init instances */
-        $member = Member::where('id', $id)->get();
+        $member = Member::find($id);
         $member_driver = MemberDriver::where('member_id', $id);
         $member_operator = MemberOperator::where('member_id', $id);
 
@@ -405,8 +405,10 @@ class MemberController extends Controller
         $member->is_member_associated =  $request->has('ismemberassociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
-        if( $member->update() )
+        dd($request->has('ismemberassociated'));
+        if( $member->save() )
         {
+            dd("update passed");
             /* capture MEMBER DRIVER & OPERATOR details */
             $path = '';
             switch ( $request->get('membership-type') ) 
