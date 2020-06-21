@@ -92,26 +92,15 @@
 											name="operatinglicensefile">
 									</div>
 									<div class="form-group">
-										<div class="checkbox checkbox-success">
-											@if( isset($member_record) )
-												@if( $member_record->is_member_associated )
-													<input id="editismemberassociated" 
-														type="checkbox" name="ismemberassociated" 
-														checked disabled>
-													<label for="ismemberassociated"> This member 
-														<span class="text-danger">BELONGS</span> 
-															to an association
-													</label>
-												@else
-													<input id="editismemberassociated" 
-														type="checkbox" name="ismemberassociated" disabled>
-													<label for="ismemberassociated"> This member 
-														<span class="text-danger">DOES NOT</span> 
-															belong to any association
-													</label>
-                                            	@endif
-											@else
-											@endif
+										<div class="checkbox">
+											<input type="checkbox" id="editismemberassociated" 
+												name="ismemberassociated"
+												{{ $member_record->is_member_associated ?? 'checked'}}>
+											<label for="editismemberassociated"> 
+												<span class="text-danger">
+													Member BELONGS to association 
+												</span>
+											</label> 
 										</div>
 									</div>
 								</div>
@@ -150,7 +139,7 @@
 												Category: {{$member_driver['codes']['category']}}
 											</option>
 											@foreach ($all_driving_licence_codes as $code)
-												@if( $code->id != $member_driver['codes']['code'] )
+												@if( $code->id != $member_driver['codes']['id'] )
 													<option value="{{$code->id}}">
 														Code: {{$code->code}}; 
 														Category: {{$code->category}}
