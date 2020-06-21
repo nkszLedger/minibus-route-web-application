@@ -78,11 +78,19 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label id="attachment">
-											{{ isset($member_operator->license_path) ?? '' }}
-										</label>
-										<input type="file" id="createoperatinglicensefile" 
-											name="operatinglicensefile">
+										@if( !empty($member_operator['license_path']) )
+										<a id="editattachment" 
+											href="{{ asset('storage/'.$member_operator->license_path) }}">
+											Current Uploaded file.pdf
+										</a>
+                                        @elseif( !empty($member_driver['license_path']) )
+                                        <a id="editattachment" 
+											href="{{ asset('storage/'.$member_driver->license_path) }}">
+											Current Uploaded file.pdf
+										</a>
+										@else
+											NO documents uploaded
+                                        @endif
 									</div>
 									<div class="form-group">
 										<div class="checkbox checkbox-success">
@@ -117,7 +125,7 @@
 										<select class="custom-select form-control required" 
 											id="drivinglicencecodes" name="drivinglicencecodes"
 											{{  isset($member_driver) ? 'disabled' : '' }} >
-											<option value="{{$member_driver['codes']['code']}}">
+											<option value="{{$member_driver['codes']['id']}}">
 												Code: {{$member_driver['codes']['code']}}; 
 												Category: {{$member_driver['codes']['category']}}
 											</option>
@@ -127,23 +135,23 @@
 
 								<div class="col-md-6">
 									<div class="form-group" id="valid-from">
-										@if(  isset($member_driver->valid_from) )
+										@if(  isset($member_driver->valid_since) )
 										<h5 for="valid-from">
 											Driving Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-												value="{{ $member_driver->valid_from ?? ''}}" 
+												value="{{ $member_driver->valid_since ?? ''}}" 
 												name="valid-from"
 												{{ isset($member_driver) ? 'readonly' : '' }}>
 										@endif
-										@if(  isset($member_operator->valid_from) )
+										@if(  isset($member_operator->valid_since) )
 										<h5 for="valid-from">
 											Operating Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-												value="{{ $member_operator->valid_from ?? ''}}" 
+												value="{{ $member_operator->valid_since ?? ''}}" 
 												name="valid-from"
 												{{ isset($member_operator) ? 'readonly' : '' }}>
 										@endif

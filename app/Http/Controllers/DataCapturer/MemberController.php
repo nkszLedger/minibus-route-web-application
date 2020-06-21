@@ -265,9 +265,6 @@ class MemberController extends Controller
                                         ->with(['vehicles.vehicleclass.type'])
                                         ->get();
 
-        dump($member_driver);
-        dd($member_operator);
-
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();

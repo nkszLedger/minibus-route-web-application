@@ -134,7 +134,7 @@
 											<span class="text-danger">*</span> </h5>
 										<select class="custom-select form-control required" 
 											id="editdrivinglicencecodes" name="drivinglicencecodes">
-											<option value="{{$member_driver['codes']['code']}}">
+											<option value="{{$member_driver['codes']['id']}}">
 												Code: {{$member_driver['codes']['code']}}; 
 												Category: {{$member_driver['codes']['category']}}
 											</option>
