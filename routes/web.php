@@ -32,7 +32,7 @@ Route::get('vehicles/{member_id}',
             'DataCapturer\VehicleController@create')
                 ->name('vehicles.create');
 
-Route::get('vehicles/{id}', 
+Route::get('vehicles/details/{id}', 
             'DataCapturer\VehicleController@show')
                 ->name('vehicles.show');
 
@@ -44,7 +44,7 @@ Route::get('vehicles/{id}',
             'DataCapturer\VehicleController@update')
                 ->name('vehicles.update');
 
-Route::get('vehicles/{id}', 
+Route::get('vehicles/remove/{id}', 
             'DataCapturer\VehicleController@destroy')
                 ->name('vehicles.destroy');
 

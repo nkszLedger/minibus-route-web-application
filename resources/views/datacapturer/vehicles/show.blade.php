@@ -10,7 +10,9 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">
-                        Vehicle Management: Vehicle {{ $vehicle->registration_number ?? ''}} for MEMBER: 
+                        Vehicle Management: Vehicle 
+                        {{ $vehicle->registration_number ?? ''}} 
+                        for MEMBER: 
                         {{ $member_record->name }} {{ $member_record->surname }}
                     </h4>
 					<h4 class="box-subtitle">Showing Vehicle Details</h4>
@@ -28,7 +30,7 @@
                                         <span class="text-danger">*</span> 
                                     </label>
                                     <input type="text" class="form-control" readonly 
-                                        value="{{$vehicle->registration_number ?? ''}}">
+                                        value="{{ $vehicle->registration_number ?? ''}}">
                                 </div>
                             </div>
 
@@ -38,9 +40,7 @@
                                         <span class="text-danger">*</span> 
                                     </label>
                                     <input type="text" class="form-control" readonly  
-                                        value="{{$vehicle_class->make}} {{$vehicle_class->model}}
-										{{$vehicle_class->year}} - range 
-                                        {{$vehicle_class->seats_number}} - seater">
+                                        value="{{ $vehicle->vehicleclass->make }} - type; {{ $vehicle->vehicleclass->model }} - model; {{ $vehicle->vehicleclass->year }}; {{ $vehicle->vehicleclass->seats_number }} - seater;">
                                 </div>
                             </div>
 
@@ -49,9 +49,7 @@
                                     <label>About Vehicle : 
                                         <span class="text-danger">*</span> 
                                     </label>
-                                    <textarea class="form-control"> 
-                                        {{$vehicle->info ?? ''}}
-                                    </textarea>
+                                    <textarea class="form-control" readonly>{{ $vehicle->info ?? ''}}</textarea>
                                 </div>
                             </div>
 
@@ -61,7 +59,7 @@
                                         <span class="text-danger">*</span> 
                                     </label>
                                     <input type="text" class="form-control" readonly 
-                                        value="{{$region->region_name ?? ''}}">
+                                        value="{{ $region[0]['region_name'] ?? ''}}">
                                 </div>
                             </div>
 
@@ -71,7 +69,7 @@
                                         <span class="text-danger">*</span> 
                                     </label>
                                     <input type="text" class="form-control" readonly 
-                                        value="{{$association->name ?? ''}}">
+                                        value="{{ $association[0]['name'] ?? ''}}">
                                 </div>
                             </div>
 
@@ -81,7 +79,8 @@
                                     <hr class="mb-15 mt-0">
                                     <div>
                                     @foreach ($all_routes as $route)
-                                            <input checked="checked"  name="route" type="checkbox" id="{{$route->id}}" value="{{$route->id}}" disabled>
+                                            <input checked="checked"  name="route" type="checkbox" 
+                                                id="{{$route->id}}" value="{{$route->id}}" disabled>
                                             <label for="{{$route->id}}" class="d-block">
                                                 {{$route->route_id.' : '}}{{$route->origin.' - '}}
                                                 {{$route->via.' - '}}{{$route->destination}}
@@ -108,5 +107,5 @@
 
     </div>
 <section>
-
+@endif
 @endsection

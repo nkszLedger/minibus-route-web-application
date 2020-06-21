@@ -68,14 +68,24 @@
 									@if( isset($member_operator->membership_number) )
 									<div class="form-group">
 										<label for="operatinglicensenumber" id="licensenumbertypelabel">
-											Operating License : <span class="text-danger">*</span> 
+											Association Membership Number : <span class="text-danger">*</span> 
                                         </label>
 										<input type="text" class="form-control required" 
 											id="operatinglicensenumber" readonly 
 											value="{{ isset($member_operator->membership_number) ?? ''}}" 
 											name="operatinglicensenumber" maxlength="12" readonly> 
 									</div>
-								
+									@endif
+									@if( isset($member_operator->license_number) )
+									<div class="form-group">
+										<label for="operatinglicensenumber" id="licensenumbertypelabel">
+											Operating License : <span class="text-danger">*</span> 
+                                        </label>
+										<input type="text" class="form-control required" 
+											id="operatinglicensenumber" readonly 
+											value="{{ isset($member_operator->license_number) ?? ''}}" 
+											name="operatinglicensenumber" maxlength="12" readonly> 
+									</div>
 									@endif
 									@if( isset($member_driver->membership_number) )
 									<div class="form-group" id="editmembershiplicensenumbertype">

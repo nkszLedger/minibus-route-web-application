@@ -47,12 +47,12 @@
 									<td>{{ $vehicle['vehicles']['vehicleclass']['year'] }}</td>
 									<td>{{ $vehicle['vehicles']['vehicleclass']['seats_number'] }}</td>
 									<td>
-										<a href="#view_vehicle" data-toggle="modal" 
+										<a href="{{ route('vehicles.show', $vehicle->id) }}" 
 											class="hover-info text-primary">
-												<i class="ion ion-locked"></i> <b>View Details</b>
-										</a>
-										<a href="{{ route('vehicles.destroy', $member_record->id) }}"> 
-											<b>Delete</b> 
+												 <b>View Details</b>
+										</a> | 
+										<a href="{{ route('vehicles.destroy', $vehicle->id) }}"> 
+											<i class="ion ion-trash"></i> <b>Delete</b> 
 										</a>
 									</td>
 								</tr>

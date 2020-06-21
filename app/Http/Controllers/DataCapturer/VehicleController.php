@@ -152,26 +152,26 @@ class VehicleController extends Controller
                                         ->with(['vehicles.vehicleclass.type'])
                                         ->get();
 
-        $vehicle = Vehicle::where('id', $id)->get();
+        $vehicle = Vehicle::with(['vehicleclass.type'])->findOrFail($id);
 
         $member_record = Member::with(['membership_type'])
-                                        ->findOrFail($member_vehicles->member_id);
-        
+                                        ->findOrFail($member_vehicles->first()->member_id);
+
         if( $member_record->is_member_associated )
         {                           
             $member_region_association = MemberRegionAssociation::where('member_id', 
-            $member_vehicles->member_id)->get();
+            $member_vehicles->first()->member_id)->get();
 
             $region = Region::where('region_id', 
-            $member_region_association->region_id)
+            $member_region_association->first()->region_id)
             ->get();
 
             $association = Association::where('association_id', 
-            $member_region_association->association_id)
+            $member_region_association->first()->association_id)
             ->get();
 
             $route_vehicle = RouteVehicle::where('vehicle_id', 
-            $vehicle->id )->get();
+            $vehicle->first()->id )->get();
 
             $all_routes = Route::whereIn('id', 
                 function ($query) use( $id ){
@@ -184,8 +184,6 @@ class VehicleController extends Controller
             return view('datacapturer.vehicles.show', compact(['member_record', 
                                                 'vehicle','all_routes', 
                                                 'region', 'association',
-                                                'all_associations',
-                                                'all_regions'
                                                 ]));
         }
         return back();
@@ -254,17 +252,27 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        $vehicle = Vehicle::find($id);
-        $route_vehicle = RouteVehicle::where('vehicle_id', $id);
-        $member_vehicle = MemberVehicle::where('vehicle_id', $id);
-        $member_region_association = MemberRegionAssociation::where('member_id',
-                                                $member_vehicle->member_id);
+        $route_vehicle = RouteVehicle::where('vehicle_id', $id)->first();
 
-        $member_id = $member_vehicle->member_id;
-        
-        $member_region_association->delete();
+        $member_vehicle = MemberVehicle::where('vehicle_id', $id)
+        ->first();
+
+        $member_id = $member_vehicle->first()->member_id;
+        $member_region_association = MemberRegionAssociation::where('member_id',
+                $member_id)->first();
+
+        $vehicle = Vehicle::where('id', $id)->first();
+
+        $routes = RouteVehicle::where('vehicle_id', $id);
+
+        foreach((array)$routes as $route) 
+        {
+            $routes->delete();
+        }
+
         $route_vehicle->delete();
         $member_vehicle->delete();
+        $member_region_association->delete();
         $vehicle->delete();
 
         return $this->create($member_id);
