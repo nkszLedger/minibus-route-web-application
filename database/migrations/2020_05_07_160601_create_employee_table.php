@@ -26,14 +26,17 @@ class CreateEmployeeTable extends Migration
             $table->string('emergency_contact_relationship');
             $table->string('emergency_contact_number');
             $table->string('address_line');
+            $table->longText('ranks')->nullable();
             $table->string('surburb');
             $table->string('postal_code');
             $table->integer('city_id');
             $table->integer('province_id');
+            $table->integer('position_id');
             $table->integer('region_id');
             $table->timestamps();
             $table->softDeletes()->nullable();
 
+            $table->foreign('position_id')->references('id')->on('employee_positions');
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->foreign('city_id')->references('city_id')->on('city');
             $table->foreign('region_id')->references('region_id')->on('regions');
