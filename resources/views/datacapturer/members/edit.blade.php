@@ -95,7 +95,7 @@
 										<div class="checkbox">
 											<input type="checkbox" id="editismemberassociated" 
 												name="ismemberassociated"
-												{{ $member_record->is_member_associated ?? 'checked'}}>
+												@if( $member_record->is_member_associated ) checked @endif>
 											<label for="editismemberassociated"> 
 												<span class="text-danger">
 													Member BELONGS to association 

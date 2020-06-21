@@ -71,7 +71,7 @@
 											Operating License : <span class="text-danger">*</span> 
                                         </label>
 										<input type="text" class="form-control required" 
-											id="operatinglicensenumber"
+											id="operatinglicensenumber" readonly 
 											value="{{ isset($member_operator->membership_number) ?? ''}}" 
 											name="operatinglicensenumber" maxlength="12" readonly> 
 									</div>
@@ -84,7 +84,7 @@
 											<span class="text-danger">*</span> 
 										</label> 
 										<input type="text" class="form-control required" 
-											id="editassociationmembershipnumber" 
+											id="editassociationmembershipnumber" readonly 
 											name="associationmembershipnumber" maxlength="12" 
 											value="{{$member_driver->membership_number ?? ''}}"> 
 									</div>
@@ -111,7 +111,7 @@
 										<div class="checkbox">
 											<input type="checkbox" id="showismemberassociated" 
 												name="ismemberassociated" disabled 
-												{{ $member_record->is_member_associated ?? 'checked'}}>
+												@if( $member_record->is_member_associated ) checked @endif>
 											<label for="showismemberassociated"> 
 												<span class="text-danger">
 													Member BELONGS to association 
