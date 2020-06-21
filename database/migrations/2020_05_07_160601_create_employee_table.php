@@ -26,7 +26,7 @@ class CreateEmployeeTable extends Migration
             $table->string('emergency_contact_relationship')->nullable();
             $table->string('emergency_contact_number')->nullable();
             $table->string('address_line');
-            $table->longText('ranks')->nullable();
+            $table->longText('rank')->nullable();
             $table->string('surburb');
             $table->string('postal_code');
             $table->integer('city_id');
