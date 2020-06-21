@@ -340,7 +340,7 @@ class MemberController extends Controller
     {
         $member_record = Member::with(['membership_type', 'gender',
                                         'city'])->findOrFail($id);
-                                        
+
         $member_driver = MemberDriver::with(['codes'])
                                         ->findOrFail($id);
                                         
@@ -405,10 +405,8 @@ class MemberController extends Controller
         $member->is_member_associated =  $request->has('ismemberassociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
-        dd($request->has('ismemberassociated'));
         if( $member->save() )
         {
-            dd("update passed");
             /* capture MEMBER DRIVER & OPERATOR details */
             $path = '';
             switch ( $request->get('membership-type') ) 
@@ -425,13 +423,16 @@ class MemberController extends Controller
                         $member_driver->license_path = $path;
                     }
                     
-                    
-                    $member_driver->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
-                    $member_driver->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
-                    $member_driver->license_number = $request->get('licensenumber');
-                    $member_driver->membership_number = $request->get('operatinglicensenumber');
-                    $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
-                    $member_driver->update();
+                    /* Update member driver */
+                    $member_driver = DB::table('member_driver')
+                        ->where('member_id', $id)
+                        ->update(['valid_since' => Carbon::parse($request->get('valid-from'))->format('Y-m-d'),
+                                'valid_until' => Carbon::parse($request->get('valid-until'))->format('Y-m-d'),
+                                'license_number' => $request->get('licensenumber'),
+                                'license_path' => $path,
+                                'membership_number' => $request->get('operatinglicensenumber'),
+                                'driving_licence_code_id' => $request->get('drivinglicencecodes')
+                        ]);
                     break;
                     
 
@@ -447,11 +448,15 @@ class MemberController extends Controller
                         $member_operator->license_path = $path;
                     }
 
-                    $member_operator->membership_number = $request->get('associationmembershipnumber');
-                    $member_operator->license_number = $request->get('operatinglicensenumber');
-                    $member_operator->valid_since = Carbon::parse($request->get('valid-from'))->format('Y-m-d');
-                    $member_operator->valid_until = Carbon::parse($request->get('valid-until'))->format('Y-m-d');
-                    $member_operator->update();
+                    /* Update member operator */
+                    $member_operator = DB::table('member_operator')
+                        ->where('member_id', $id)
+                        ->update(['valid_since' => Carbon::parse($request->get('valid-from'))->format('Y-m-d'),
+                                'valid_until' => Carbon::parse($request->get('valid-until'))->format('Y-m-d'),
+                                'license_number' => $request->get('licensenumber'),
+                                'license_path' => $path,
+                                'membership_number' => $request->get('operatinglicensenumber')
+                        ]);
                     break;
 
                 case "3":
@@ -466,12 +471,16 @@ class MemberController extends Controller
                         $member_driver->license_path = $path;
                     }
                     
-                    $member_driver->valid_since = $request->get('valid-from');
-                    $member_driver->valid_until = $request->get('valid-until');
-                    $member_driver->license_number = $request->get('licensenumber');
-                    $member_driver->membership_number = $request->get('associationmembershipnumber');
-                    $member_driver->driving_licence_code_id = $request->get('drivinglicencecodes');
-                    $member_driver->update();
+                    /* Update member driver */
+                    $member_driver = DB::table('member_driver')
+                        ->where('member_id', $id)
+                        ->update(['valid_since' => Carbon::parse($request->get('valid-from'))->format('Y-m-d'),
+                                'valid_until' => Carbon::parse($request->get('valid-until'))->format('Y-m-d'),
+                                'license_number' => $request->get('licensenumber'),
+                                'license_path' => $path,
+                                'membership_number' => $request->get('operatinglicensenumber'),
+                                'driving_licence_code_id' => $request->get('drivinglicencecodes')
+                        ]);
 
                     /* Member is a Operator */
                     if( $request->hasFile('operatinglicensefile') )
@@ -484,11 +493,15 @@ class MemberController extends Controller
                         $member_operator->license_path = $path;
                     }
 
-                    $member_operator->membership_number = $request->get('associationmembershipnumber');
-                    $member_operator->license_number = $request->get('operatinglicensenumber');
-                    $member_operator->valid_since = $request->get('valid-from');
-                    $member_operator->valid_until = $request->get('valid-until');
-                    $member_operator->update();
+                    /* Update member operator */
+                    $member_operator = DB::table('member_operator')
+                        ->where('member_id', $id)
+                        ->update(['valid_since' => Carbon::parse($request->get('valid-from'))->format('Y-m-d'),
+                                'valid_until' => Carbon::parse($request->get('valid-until'))->format('Y-m-d'),
+                                'license_number' => $request->get('licensenumber'),
+                                'license_path' => $path,
+                                'membership_number' => $request->get('operatinglicensenumber')
+                        ]);
 
                     break;
                 default:

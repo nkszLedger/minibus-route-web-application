@@ -163,16 +163,16 @@
 
 								<div class="col-md-6">
 									<div class="form-group" id="editvalid-from">
-										@if( isset($member_driver['valid_from']) )
+										@if( isset($member_driver['valid_since']) )
 										<h5 for="valid-from">
 											Driver's Licence Valid From : 
 											<span class="text-danger">*</span> 
 										</h5>
 										<input class="form-control" type="date" 
-												value="{{ $member_driver['valid_from'] ?? ''}}" 
+												value="{{ $member_driver['valid_since'] ?? ''}}" 
 												name="valid-from">
 
-										@elseif( isset($member_operator['valid_from']) )
+										@elseif( isset($member_operator['valid_since']) )
 										<h5 for="valid-from">
 											Operating Licence Valid From : 
 											<span class="text-danger">*</span> 
