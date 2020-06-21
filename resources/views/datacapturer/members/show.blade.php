@@ -63,7 +63,9 @@
 									</div>
 								</div>
 
+								
 								<div class="col-md-6">
+									@if( isset($member_operator->membership_number) )
 									<div class="form-group">
 										<label for="operatinglicensenumber" id="licensenumbertypelabel">
 											Operating License : <span class="text-danger">*</span> 
@@ -72,10 +74,23 @@
 											id="operatinglicensenumber"
 											value="{{ isset($member_operator->membership_number) ?? ''}}" 
 											name="operatinglicensenumber" maxlength="12" readonly> 
-							
 									</div>
+								
+									@endif
+									@if( isset($member_driver->membership_number) )
+									<div class="form-group" id="editmembershiplicensenumbertype">
+										<label for="associationmembershipnumber">
+											Association Membership Number : 
+											<span class="text-danger">*</span> 
+										</label> 
+										<input type="text" class="form-control required" 
+											id="editassociationmembershipnumber" 
+											name="associationmembershipnumber" maxlength="12" 
+											value="{{$member_driver->membership_number ?? ''}}"> 
+									</div>
+									@endif
 								</div>
-
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										@if( !empty($member_operator['license_path']) )
@@ -93,23 +108,15 @@
                                         @endif
 									</div>
 									<div class="form-group">
-										<div class="checkbox checkbox-success">
-											@if( isset($member_record) )
-												@if( $member_record->is_member_associated )
-													<input id="isMemberAssociated" type="checkbox" 
-														checked disabled>
-													<label for="isMemberAssociated"> This member 
-														<span class="text-danger">BELONGS</span> 
-															to an association
-													</label>
-												@else
-													<input id="isMemberAssociated" type="checkbox" disabled>
-													<label for="isMemberAssociated"> This member 
-														<span class="text-danger">DOES NOT</span> 
-															belong to any association
-													</label>
-                                            	@endif
-											@endif
+										<div class="checkbox">
+											<input type="checkbox" id="showismemberassociated" 
+												name="ismemberassociated" disabled 
+												{{ $member_record->is_member_associated ?? 'checked'}}>
+											<label for="showismemberassociated"> 
+												<span class="text-danger">
+													Member BELONGS to association 
+												</span>
+											</label> 
 										</div>
 									</div>
 								</div>
