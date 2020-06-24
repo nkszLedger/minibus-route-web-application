@@ -24,7 +24,7 @@
 					<div class="box">
 						<div class="box-header">
 							<h3 class="box-title">Registered Employees Summary</h3>
-							<h6 class="box-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+							<h6 class="box-subtitle">Export data to CSV, Excel, PDF & Print</h6>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
