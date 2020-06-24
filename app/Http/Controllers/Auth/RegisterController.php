@@ -10,7 +10,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\Passport;
+use Illuminate\Support\Str;
+use Laravel\Passport\Client;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
@@ -71,6 +72,18 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
+        $validator = Validator::make($request->all(), [ 
+            'name' => 'required', 
+            'surname' => 'required',
+            'role' => 'required',
+            'email' => 'required|email|unique:users', 
+            'password' => 'required', 
+            'confirmed' => 'required|same:password', 
+        ]);
+        if ($validator->fails()) 
+        { 
+            return response()->json(['error'=>$validator->errors()], 401); 
+        }
         $user = new User();
         $all_roles = Role::all();
 
@@ -84,18 +97,20 @@ class RegisterController extends Controller
         {
             $message = 'User Registered successfully. Please sign in';
 
-            // $oauth_client=new AppoAuthClient();
-            // $oauth_client->user_id=$user->id;
-            // $oauth_client->id=$user->email;
-            // $oauth_client->name=$user->name;
-            // $oauth_client->secret=base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
-            // $oauth_client->password_client=1;
-            // $oauth_client->personal_access_client=0;
-            // $oauth_client->redirect='';
-            // $oauth_client->revoked=0;
-            // $oauth_client->save();
+            $oauth_client = new Client();
+            $oauth_client->user_id = $user->id;
+            $oauth_client->name = $user->name;
+            $oauth_client->secret = base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
+            $oauth_client->redirect = '';
+            $oauth_client->personal_access_client = false;
+            $oauth_client->password_client = true;
+            $oauth_client->revoked = false;
 
-            return view('auth.register', 
+            if( $oauth_client->save() )
+                return response()->json(['success' => $user->id], 
+                                            200); 
+            else
+                return view('auth.register', 
                         compact(['message', 'all_roles']));
         }
         else

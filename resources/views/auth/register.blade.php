@@ -39,7 +39,7 @@
 							<h2 class="text-white">New User Registration</h2>						
 						</div>
 						<div class="p-30">
-							<form action="{{ route('register') }}" method="POST">
+							<form action="{{ route('register') }}" onsubmit="myFunction()" method="POST">
                                 @csrf
 								<div class="form-group">
 									<div class="input-group mb-3">
@@ -67,7 +67,8 @@
 
                                 <div class="form-group">
 									<div class="input-group mb-3">
-										<select class="custom-select form-control required" id="role" name="role">
+										<select class="custom-select form-control required" 
+											id="role" name="role">
                                         @if( isset($user))
                                             <option value="{{$user->role}}">
                                                 Role - {{$employee['role']['name']}}
@@ -180,6 +181,12 @@
 	<!-- Bootstrap 4.0-->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+	<script>
+		function myFunction() 
+		{
+			alert("The form was submitted");
+		}
+	</script>
 </body>
 </html>
 
