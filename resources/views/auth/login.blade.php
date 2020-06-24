@@ -23,8 +23,8 @@
 	<link rel="stylesheet" href="/minibus/main/css/skin_color.css">
 
 </head>
-<body class="hold-transition theme-fruit bg-img" style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
-{{--<body class="hold-transition theme-fruit bg-img" style="background-image: url(/minibus/images/auth-bg/bg-2.jpg);">--}}
+<body class="hold-transition theme-fruit bg-img" 
+	style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
 	<div class="h-p100">
 		<div class="row align-items-center justify-content-md-center h-p100">
 			<div class="col-lg-8 col-12">
@@ -84,7 +84,7 @@
 									<!-- /.col -->
 									<div class="col-6">
 									 <div class="fog-pwd text-right">
-										<a href="#myModal-forgot-psswd" data-toggle="modal" 
+										<a href="{{ route('password.request') }}" 
 											class="hover-info text-white">
 												<i class="ion ion-locked"></i> Forgot password?
 										</a><br>
@@ -110,52 +110,6 @@
 			</div>
 		</div>
 	</div>
-
-    <!-- Trigger the modal with a button -->
-{{--    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--}}
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade modal-warning" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <p>This feature is not yet implemented. If you want to create an 
-					account please consult the administrator at admin@dot.gov.za!
-					</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="myModal-forgot-psswd" class="modal fade modal-warning" >
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <p>This feature is not yet implemented. If you want to reset your password please consult the administrator at admin@dot.gov.za!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 
     <!-- jQuery 3 -->
     <script src="/minibus/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
