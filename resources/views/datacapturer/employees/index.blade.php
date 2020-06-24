@@ -76,6 +76,21 @@
 						  			<?php $count++?>
 									@endforeach
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>#</th>
+											<th>Firstname</th>
+                                            <th>Surname</th>
+											<th>Employee Number</th>
+											<th>Phone Number</th>
+											<th>Address Line</th>
+                                            <th>City</th>
+											<th>Region</th>
+                                            <th>Province</th>
+											<th>Profile Status</th>
+											<th>Actions</th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>

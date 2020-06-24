@@ -1161,7 +1161,7 @@
 						swal("Cancelled", "Member Profile not submitted", "error");   
 					}
 				} 
-			});
+			);
 		}
 
 	}
