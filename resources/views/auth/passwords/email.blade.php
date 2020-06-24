@@ -37,7 +37,7 @@
 							</div>
 							<h2 class="text-white">RESET PASSWORD</h2>
 							<h6>
-								<span class="text-danger" id="error">
+								<span class="text-danger" id="reset_error">
 								@if($errors->has('errors')) 
 									{{ $errors->first('errors') }} 
 								@endif

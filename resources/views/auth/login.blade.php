@@ -43,6 +43,11 @@
 									{{ $errors->first('errors') }} 
 								@endif
 								<span>
+								<span class="text-info" id="info">
+								@if($message->has('message')) 
+									{{ $message->first('message') }} 
+								@endif
+								<span>
 							</h6>
 						</div>
 						<div class="p-30">

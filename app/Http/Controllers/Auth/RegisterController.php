@@ -72,7 +72,7 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [ 
+        $validator = Validator::make([ 
             'name' => 'required', 
             'surname' => 'required',
             'role' => 'required',
@@ -82,7 +82,9 @@ class RegisterController extends Controller
         ]);
         if ($validator->fails()) 
         { 
-            return response()->json(['error'=>$validator->errors()], 401); 
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
         }
         $user = new User();
         $all_roles = Role::all();
@@ -100,7 +102,9 @@ class RegisterController extends Controller
             $oauth_client = new Client();
             $oauth_client->user_id = $user->id;
             $oauth_client->name = 'Minibus Password Grant Client';
-            $oauth_client->secret = base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
+            $oauth_client->secret = base64_encode(hash_hmac('sha256',
+                                    $user->password, 'secret', true));
+
             $oauth_client->redirect = 'http://ptrms-test.csir.co.za';
             $oauth_client->personal_access_client = false;
             $oauth_client->password_client = true;
@@ -108,7 +112,10 @@ class RegisterController extends Controller
 
             if( $oauth_client->save() )
             {
-                return view('auth.login'); 
+                $message = 'User Registration successful. 
+                            Please check your email to verify.';
+
+                return view('auth.login', compact(['message'])); 
             }
             else
                 return view('auth.register', 

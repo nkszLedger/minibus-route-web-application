@@ -38,6 +38,17 @@
 							</div>
 							<h2 class="text-white">New User Registration</h2>					
 						</div>
+						<div class="form-group">
+							@if (count($errors) > 0)
+								<div class="text-danger">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<li>{{ $error }}</li>
+										@endforeach
+									</ul>
+								</div>
+							@endif
+						</div>
 						<div class="p-30">
 							<form action="{{ route('register') }}" onsubmit="myFunction()" method="POST">
                                 @csrf
@@ -49,7 +60,7 @@
                                             </span>
 										</div>
 										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Name" name="name">
+                                            placeholder="Name" name="name" value="{{ old(name) }}">
 									</div>
 								</div>
 
@@ -62,7 +73,7 @@
 										</div>
 										<input type="text" 
 											class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Surname" name="surname">
+                                            placeholder="Surname" name="surname" value="{{ old(surname) }}">
 									</div>
 								</div>
 
@@ -96,7 +107,7 @@
 											<span class="input-group-text text-white bg-transparent"><i class="ti-email"></i></span>
 										</div>
 										<input type="email" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Email" name="email">
+                                            placeholder="Email" name="email" value="{{ old(email) }}">
 									</div>
 								</div>
 								<div class="form-group">
