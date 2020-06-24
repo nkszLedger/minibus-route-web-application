@@ -99,16 +99,17 @@ class RegisterController extends Controller
 
             $oauth_client = new Client();
             $oauth_client->user_id = $user->id;
-            $oauth_client->name = $user->name;
+            $oauth_client->name = 'Minibus Password Grant Client';
             $oauth_client->secret = base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
-            $oauth_client->redirect = '';
+            $oauth_client->redirect = 'http://ptrms-test.csir.co.za';
             $oauth_client->personal_access_client = false;
             $oauth_client->password_client = true;
             $oauth_client->revoked = false;
 
             if( $oauth_client->save() )
-                return response()->json(['success' => $user->id], 
-                                            200); 
+            {
+                return view('auth.login'); 
+            }
             else
                 return view('auth.register', 
                         compact(['message', 'all_roles']));

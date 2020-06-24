@@ -36,7 +36,7 @@
 									<img src="/minibus/images/taxi.png"  alt="">
 								</a>
 							</div>
-							<h2 class="text-white">New User Registration</h2>						
+							<h2 class="text-white">New User Registration</h2>					
 						</div>
 						<div class="p-30">
 							<form action="{{ route('register') }}" onsubmit="myFunction()" method="POST">
@@ -60,7 +60,8 @@
                                                 <i class="ti-user"></i>
                                             </span>
 										</div>
-										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" 
+										<input type="text" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
                                             placeholder="Surname" name="surname">
 									</div>
 								</div>
@@ -181,12 +182,9 @@
 	<!-- Bootstrap 4.0-->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<script>
-		function myFunction() 
-		{
-			alert("The form was submitted");
-		}
-	</script>
+	<!-- Sweet-Alert  -->
+	<script src="/minibus/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
+
 </body>
 </html>
 

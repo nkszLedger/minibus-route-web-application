@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleTypeTableSeeder::class);
         $this->call(DrivingLicenceCodeTableSeeder::class);
         $this->call(VehicleClassTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        //$this->call(UsersTableSeeder::class);
         $this->call(EmployeePositionTableSeeder::class);
-        $this->call(EmployeeTableSeeder::class);
+        //$this->call(EmployeeTableSeeder::class);
         
 
 

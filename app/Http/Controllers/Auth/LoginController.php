@@ -66,11 +66,10 @@ class LoginController extends Controller
         }
         else
         {
-            dd('FAILED ATTEMPT');
-            
-            return redirect($this->loginPath)
-                ->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'Incorrect email address or password']);
+            $message = 'Incorrect password or email address';
+
+            return back()->withErrors(['errors' => $message ])
+                            ->withInput();
         }
     }
 

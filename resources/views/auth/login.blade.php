@@ -37,6 +37,13 @@
 								</a>
 							</div>
 							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
+							<h6>
+								<span class="text-danger" id="error">
+								@if($errors->has('errors')) 
+									{{ $errors->first('errors') }} 
+								@endif
+								<span>
+							</h6>
 						</div>
 						<div class="p-30">
 							<form action="{{ route('login') }}" method="POST">
@@ -44,33 +51,33 @@
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text text-white bg-transparent"><i class="ti-user"></i></span>
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-user"></i>
+											</span>
 										</div>
-										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" name="email" placeholder="Username">
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
+										<input type="text" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="email" placeholder="Username" value="{{ old('email') }}">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text text-white bg-transparent"><i class="ti-lock"></i></span>
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-lock"></i>
+											</span>
 										</div>
-										<input type="password" class="form-control pl-15 bg-transparent text-white plc-white" name="password" placeholder="Password">
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
+										<input type="password" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="password" placeholder="Password">
 									</div>
 								</div>
 								  <div class="row">
 									<div class="col-6">
 									  <div class="checkbox text-white">
-										<input type="checkbox" id="basic_checkbox_1" class="filled-in chk-col-danger" name="remember" checked="">
+										<input type="checkbox" id="basic_checkbox_1" 
+											class="filled-in chk-col-danger" 
+											name="remember" checked="">
 										<label for="basic_checkbox_1">Remember Me</label>
 									  </div>
 									</div>
@@ -158,7 +165,11 @@
 	<!-- popper -->
 	<script src="/minibus/assets/vendor_components/popper/dist/popper.min.js"></script>
 
-	<!-- Bootstrap 4.0-->
+	<!-- Bootstrap 4.0 -->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Login -->
+	<script src="/minibus/main/js/pages/login.js"></script>
+
 </body>
 </html>
