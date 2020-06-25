@@ -2,23 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use Spatie\Permission\Models\Role;
 use DB;
-use Dotenv\Validator;
-use Hash;
+use App\User;
+use App\Http\Controllers\Controller;
+use App\Mail\UserRegistered;
+use Spatie\Permission\Models\Role;
+use Laravel\Passport\Client;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $all_users = User::all();
 
@@ -36,7 +50,8 @@ class UserController extends Controller
     {
         $all_roles = Role::all();
 
-        return view('admin.users.create', compact('all_roles'));
+        return view('admin.users.create', 
+                    compact('all_roles'));
     }
 
     
@@ -53,13 +68,13 @@ class UserController extends Controller
                 'name' => $request->get('name'),
                 'surname' => $request->get('surname'),
                 'email' => $request->get('email'),
-                'roles' => $request->get('role')
+                'role' => $request->get('role')
             ],
             [
                 'name' => 'required',
                 'surname' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'roles' => 'required'
+                'role' => 'required'
             ]
         );  
 
@@ -70,14 +85,44 @@ class UserController extends Controller
                         ->withInput();
         }
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        $all_roles = Role::all();
 
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->surname = $request->get('surname');
+        $user->email = $request->get('email');
+        $user->remember_token = true;
+        $user->password = Hash::make( $this->randomPassword() );
+        $user->assignRole( $request->get('role') );
+        
+        if( $user->save() )
+        {
+            $oauth_client = new Client();
+            $oauth_client->user_id = $user->id;
+            $oauth_client->name = 'Minibus Password Grant Client';
+            $oauth_client->secret = base64_encode(hash_hmac('sha256',
+                                    $user->password, 'secret', true));
 
-        return redirect()->route('admin.users.index')
-                         ->with('success','User created successfully');
+            $oauth_client->redirect = 'http://ptrms-test.csir.co.za';
+            $oauth_client->personal_access_client = false;
+            $oauth_client->password_client = true;
+            $oauth_client->revoked = false;
+            $oauth_client->save();
+
+            // Mail::to($request->user())
+            //         ->send(new UserRegistered($user));
+
+            return $this->index();
+
+        }
+        else
+        {
+            $errors = 'Failed to create user. Please try again';
+            return view('admin.users.create', 
+                    compact('all_roles', 'errors'));
+        }
+
+
 
     }
     
@@ -103,11 +148,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $user = User::with('roles')->findOrFail($id);
+        $all_roles = Role::all();
 
-        return view('admin.users.edit',compact('user','roles','userRole'));
+        return view('admin.users.edit', 
+                    compact('user','all_roles'));
 
     }
 
@@ -121,36 +166,51 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $validator = Validator::make(
+            [
+                'name' => $request->get('name'),
+                'surname' => $request->get('surname'),
+                'email' => $request->get('email'),
+                'role' => $request->get('role')
+            ],
+            [
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email|unique:users,email,'.$id,
+                'role' => 'required'
+            ]
+        );  
 
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-            
-        ]);
-
-        $input = $request->all();
-
-        if(!empty($input['password']))
-        { 
-            $input['password'] = Hash::make($input['password']);
-        }
-        else
+        if ($validator->fails()) 
         {
-            $input = array_except($input,array('password'));    
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
         }
-
     
         $user = User::find($id);
-        $user->update($input);
+        DB::table('model_has_roles')
+            ->where('model_id',$id)
+            ->delete();
+            
+        $user->assignRole($request->get('role'));
 
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $update = array(
+            'name' => $request->get('name'),
+            'surname' => $request->get('surname'),
+            'email' => $request->get('email')
+        );
 
-        $user->assignRole($request->input('roles'));
-
-        return redirect()->route('admin.users.index')
-                         ->with('success','User updated successfully');
+        if( $user->update($update) )
+        {
+            return $this->index();
+        }
+        else
+        { 
+            $errors = 'User could not be updated';
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
 
     }
 
@@ -163,6 +223,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
+        Client::where('user_id', $user->id)->delete();
 
         return redirect()->route('admin.users.index')
                         ->with('success','User deleted successfully');

@@ -15,12 +15,10 @@
 				<div class="box-body wizard-content">
 					@if( isset($user) )
 					<form action="{{ route('users.edit', $user->id) }}" method="GET" 
-						id="user-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+						id="user-form" class="form">
 					@else
 					<form action="{{ route('users.store') }}" method="POST" 
-						id="user-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+						id="user-form" class="form">
 					@endif
 						{{ csrf_field() }}
 
@@ -28,15 +26,7 @@
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> User Profile</h4>
                         <h6 class="box-subtitle text-danger text-center" id="error_on_create_user">
-							@if (count($errors) > 0)
-								<div class="text-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
+							{{ $errors }}
 						</h6>
 						<hr class="mb-15 mt-0">
 						<section>
@@ -84,7 +74,7 @@
                                             id="role" name="role" required>
                                         @if( isset($user))
                                             <option value="{{$user->role}}">
-                                                Role - {{$user['role']['name']}}
+                                                Role - {{ $user->getRoleNames()->first() }}
                                             </option>
                                         @else
                                             <option value="">Please Select Role</option>
@@ -92,10 +82,14 @@
                                         @foreach ($all_roles as $role)
                                             @if( isset($user))
                                                 @if($role->id !== $user['role']['id'])
-                                                    <option value="{{$role->id}}">Role - {{$role->name}}</option>
+                                                    <option value="{{$role->id}}">
+                                                        Role - {{ $user->getRoleNames()->first() }}
+                                                    </option>
                                                 @endif
                                             @else
-                                                <option value="{{$role->id}}">Role - {{$role->name}}</option>
+                                                <option value="{{$role->id}}">
+                                                    Role - {{ $user->getRoleNames()->first() }}
+                                                </option>
                                             @endif
                                         @endforeach
                                         </select>
