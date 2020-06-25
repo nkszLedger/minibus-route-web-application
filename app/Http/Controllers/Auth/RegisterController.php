@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserRegistered;
 use App\Providers\RouteServiceProvider;
 use App\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,8 +100,6 @@ class RegisterController extends Controller
         
         if( $user->save() )
         {
-            $message = 'User Registered successfully. Please sign in';
-
             $oauth_client = new Client();
             $oauth_client->user_id = $user->id;
             $oauth_client->name = 'Minibus Password Grant Client';
@@ -115,11 +116,19 @@ class RegisterController extends Controller
                 $message = 'User Registration successful. 
                             Please check your email to verify.';
 
+                Mail::to($request->user())
+                        ->send(new UserRegistered($user));
+
                 return view('auth.login', compact(['message'])); 
             }
             else
+            {
+                $message = 'User Registration successful, 
+                            however, access will be limited';
+
                 return view('auth.register', 
                         compact(['message', 'all_roles']));
+            }
         }
         else
         {

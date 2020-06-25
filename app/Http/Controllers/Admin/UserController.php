@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Spatie\Permission\Models\Role;
 use DB;
+use Dotenv\Validator;
 use Hash;
 
 
@@ -47,13 +48,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make(
+            [
+                'name' => $request->get('name'),
+                'surname' => $request->get('surname'),
+                'email' => $request->get('email'),
+                'roles' => $request->get('role')
+            ],
+            [
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'roles' => 'required'
+            ]
+        );  
 
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
-        ]);
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);

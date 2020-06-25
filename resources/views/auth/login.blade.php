@@ -43,11 +43,11 @@
 									{{ $errors->first('errors') }} 
 								@endif
 								<span>
-								<span class="text-info" id="info">
-								@if($message->has('message')) 
+								{{-- <span class="text-info" id="info">
+								@if( $message->has('message')) 
 									{{ $message->first('message') }} 
 								@endif
-								<span>
+								<span> --}}
 							</h6>
 						</div>
 						<div class="p-30">
@@ -102,13 +102,13 @@
 									<!-- /.col -->
 								  </div>
 							</form>
-							<div class="text-center text-white">
+							{{-- <div class="text-center text-white">
 								<p class="mt-15 mb-0">Don't have an account? 
 									<a href="{{ route('register') }}" 
 										class="text-white ml-5">Sign Up
 									</a>
 								</p>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>

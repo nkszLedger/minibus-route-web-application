@@ -68,7 +68,20 @@
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
 				{{-- <li><a href="{{ route('dashboard.index') }}" class="current"><i class="ti-dashboard mx-5"></i>DASHBOARD</a></li> --}}
-                <li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+                @can(['user-create', 'user-list', 'user-edit', 'user-delete'])
+				<li><a href="{{ route('users.index') }}" class="current">
+						<i class="ti-files mx-5"></i>MANAGE USERS
+					</a>
+					<ul>
+						<li><a href="#">Add New Users</a></li>
+						<li><a href="{{ route('users.index') }}">View Users</a></li>
+					</ul>
+				</li>
+				@endcan
+				@can(['employee-list', 'employee-create',
+				'employee-edit', 'employee-delete', 'member-list',
+				'member-create', 'member-edit', 'member-delete'])
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
 					<ul>
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
@@ -80,6 +93,7 @@
 						<li><a href="{{ route('members.index') }}">View Members</a></li>
 					</ul>
 				</li>
+				@endcan
 			</ul>
 		</nav>
 		<!-- Header Navbar -->

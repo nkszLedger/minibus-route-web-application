@@ -1,4 +1,5 @@
-@extends('admin/home')
+@extends('datacapturer.home')
+
 
 @section('content')
 		<!-- Content Header (Page header) -->

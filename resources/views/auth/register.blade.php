@@ -60,7 +60,7 @@
                                             </span>
 										</div>
 										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Name" name="name" value="{{ old(name) }}">
+                                            placeholder="Name" name="name" value="{{ old('name') }}">
 									</div>
 								</div>
 
@@ -73,7 +73,7 @@
 										</div>
 										<input type="text" 
 											class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Surname" name="surname" value="{{ old(surname) }}">
+                                            placeholder="Surname" name="surname" value="{{ old('surname') }}">
 									</div>
 								</div>
 
@@ -107,7 +107,7 @@
 											<span class="input-group-text text-white bg-transparent"><i class="ti-email"></i></span>
 										</div>
 										<input type="email" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Email" name="email" value="{{ old(email) }}">
+                                            placeholder="Email" name="email" value="{{ old('email') }}">
 									</div>
 								</div>
 								<div class="form-group">
