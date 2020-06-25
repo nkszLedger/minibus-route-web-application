@@ -77,7 +77,7 @@
 						<i class="ti-files mx-5"></i>MANAGE USERS
 					</a>
 					<ul>
-						<li><a href="#">Add New Users</a></li>
+						<li><a href="{{ route('users.create') }}">Add New Users</a></li>
 						<li><a href="{{ route('users.index') }}">View Users</a></li>
 					</ul>
 				</li>

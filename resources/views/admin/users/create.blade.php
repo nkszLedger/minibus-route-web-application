@@ -23,10 +23,11 @@
 							enctype='multipart/form-data'>
 					@endif
 						{{ csrf_field() }}
-						
-						<h4 class="box-title text-info"><i class="ti-target mr-15"></i> User </h4>
+
+						<!-- Step 1 -->
 						<hr class="mb-15 mt-0">
-						<h6 class="box-subtitle text-danger text-center" id="error_on_create_user">
+						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> User Profile</h4>
+                        <h6 class="box-subtitle text-danger text-center" id="error_on_create_user">
 							@if (count($errors) > 0)
 								<div class="text-danger">
 									<ul>
@@ -37,10 +38,6 @@
 								</div>
 							@endif
 						</h6>
-
-						<!-- Step 1 -->
-						<hr class="mb-15 mt-0">
-						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> User Profile</h4>
 						<hr class="mb-15 mt-0">
 						<section>
 							<div class="row">
@@ -68,64 +65,66 @@
 										required data-validation-required-message="This field is required">  
 									</div>
 								</div>
-							</div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="wemailAddress2"> Email Address :</label>
-                                    <input type="email" class="form-control" id="wemailAddress2" 
-                                        name="email" maxlength="25" 
-                                        value="{{ old('emailAddress') ?? $user->email ?? ''}}"
-                                        {{ isset($user) ? 'readonly' : '' }} 
-                                        required data-validation-required-message="This field is required"> 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="wemailAddress2"> Email Address :</label>
+                                        <input type="email" class="form-control" id="wemailAddress2" 
+                                            name="email" maxlength="25" 
+                                            value="{{ old('emailAddress') ?? $user->email ?? ''}}"
+                                            {{ isset($user) ? 'readonly' : '' }} 
+                                            required data-validation-required-message="This field is required"> 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="role">System User Role: 
-											<span class="text-danger">*</span> 
-                                    </h5>
-                                    <select class="custom-select form-control required" 
-                                        id="role" name="role" required>
-                                    @if( isset($user))
-                                        <option value="{{$user->role}}">
-                                            Role - {{$user['role']['name']}}
-                                        </option>
-                                    @else
-                                        <option value="">Please Select Role</option>
-                                    @endif
-                                    @foreach ($all_roles as $role)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h5 for="role">System User Role: 
+                                            <span class="text-danger">*</span> 
+                                        </h5>
+                                        <select class="custom-select form-control required" 
+                                            id="role" name="role" required>
                                         @if( isset($user))
-                                            @if($role->id !== $user['role']['id'])
+                                            <option value="{{$user->role}}">
+                                                Role - {{$user['role']['name']}}
+                                            </option>
+                                        @else
+                                            <option value="">Please Select Role</option>
+                                        @endif
+                                        @foreach ($all_roles as $role)
+                                            @if( isset($user))
+                                                @if($role->id !== $user['role']['id'])
+                                                    <option value="{{$role->id}}">Role - {{$role->name}}</option>
+                                                @endif
+                                            @else
                                                 <option value="{{$role->id}}">Role - {{$role->name}}</option>
                                             @endif
-                                        @else
-                                            <option value="{{$role->id}}">Role - {{$role->name}}</option>
-                                        @endif
-                                    @endforeach
-                                    </select>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+						    </section>
+                        </div>
+                         
+                        <div class="box-footer with-border">
+                            @if( isset($user) )
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    <input class="btn btn-info mb-5" type="submit" value="Edit">
+                                </div>
+                                <div class="col-6 text-left">
+                                    <a class="btn btn-warning mb-5" href="{{ route('users.index')}}">Cancel</a>
                                 </div>
                             </div>
-						</section>
-
-						@if( isset($user) )
-							<div class="row">
-								<div class="col-6 text-right">
-									<input class="btn btn-info mb-5" type="submit" value="Edit">
-								</div>
-								<div class="col-6 text-left">
-									<a class="btn btn-warning mb-5" href="{{ route('users.index')}}">Cancel</a>
-								</div>
-							</div>
-						@else
-							<div class="row">
-								<div class="col-6 text-right">
-									<input class="btn btn-info mb-5" type="submit" id="submit" value="Submit">
-								</div>
-								<div class="col-6 text-left">
-									<a class="btn btn-warning mb-5" href="{{ route('users.index')}}">Cancel</a>
-								</div>
-							</div>
-						@endif
+                            @else
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    <input class="btn btn-info mb-5" type="submit" id="submit" value="Submit">
+                                </div>
+                                <div class="col-6 text-left">
+                                    <a class="btn btn-warning mb-5" href="{{ route('users.index')}}">Cancel</a>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
 					</form>
 				</div>
 				<!-- /.box-body -->
