@@ -59,9 +59,13 @@ class LoginController extends Controller
             {
                 return redirect()->intended('employees');
             }
-            else
+            else if($user->roles->pluck( 'name' )->contains('Systems Admin') )
             {
                 return redirect()->intended('users');
+            }
+            else
+            {
+                return redirect()->intended('dashboard');
             }
         }
         else

@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $association_count = count(Association::all());
         $route_count = count(Route::all());
 
-        return view('dashboard.index', compact(['driver_count',
+        return view('oversight.dashboard.index', compact(['driver_count',
                                                 'operator_count',
                                                 'association_count', 
                                                 'route_count'

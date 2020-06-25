@@ -67,9 +67,13 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				{{-- <li><a href="{{ route('dashboard.index') }}" class="current"><i class="ti-dashboard mx-5"></i>DASHBOARD</a></li> --}}
+				@can(['view-dashboard'])
+				<li><a href="{{ route('dashboard.index') }}">
+					<i class="ti-dashboard mx-5"></i>DASHBOARD</a>
+				</li>
+				@endcan
                 @can(['user-create', 'user-list', 'user-edit', 'user-delete'])
-				<li><a href="{{ route('users.index') }}" class="current">
+				<li><a href="{{ route('users.index') }}">
 						<i class="ti-files mx-5"></i>MANAGE USERS
 					</a>
 					<ul>
@@ -78,22 +82,26 @@
 					</ul>
 				</li>
 				@endcan
-				@can(['employee-list', 'employee-create',
-				'employee-edit', 'employee-delete', 'member-list',
-				'member-create', 'member-edit', 'member-delete'])
 				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
 					<ul>
+						@can(['employee-create'])
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
+						@endcan
+						@can(['employee-list'])
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
+						@endcan
 					</ul>
 				</li>
 				<li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
 					<ul>
+						@can(['member-create'])
 						<li><a href="{{ route('members.create') }}">Register Member</a></li>
+						@endcan
+						@can(['member-list'])
 						<li><a href="{{ route('members.index') }}">View Members</a></li>
+						@endcan
 					</ul>
 				</li>
-				@endcan
 			</ul>
 		</nav>
 		<!-- Header Navbar -->
@@ -109,7 +117,8 @@
 				</a>
 				<ul class="dropdown-menu animated flipInX">
 				  <!-- User image -->
-				  <li class="user-header bg-img" style="background-image: url(/minibus/images/user-info.jpg)" data-overlay="3">
+				  <li class="user-header bg-img" style="background-image: url(/minibus/images/user-info.jpg)" 
+				  		data-overlay="3">
 					  <div class="flexbox align-self-center">
 						<img src="/minibus/images/avatar/7.jpg" class="float-left rounded-circle" alt="User Image">
 						<h4 class="user-name align-self-center">
@@ -150,6 +159,37 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 	  <div class="container-full">
+	  	
+		<!-- Content Header (Page header) -->	  
+		<div class="content-header">
+			<div class="d-flex align-items-center justify-content-between">
+				<div class="d-md-block d-none">
+					@role('Systems Admin')
+					<h3 class="page-title br-0">Minibus Transport Registration System Administration</h3>
+					@endrole
+					@role('Data Capturer')
+					<h3 class="page-title br-0">Minibus Transport Registration Data Capturing</h3>
+					@endrole
+					@role('Oversight')
+					<h3 class="page-title br-0">Minibus Transport Registration Overview</h3>
+					@endrole
+				</div>
+				<div class="right-title w-170">
+					<span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
+						<span class="subheader_daterange-label">
+							<span class="subheader_daterange-title">
+								<span class="text-primary"> 
+									<b> Today </b>: {{ date("M d") }}
+								</span>
+							</span>
+						</span>
+						<a href="#" class="btn btn-rounded btn-sm btn-primary">
+							<i class="fa fa-book"></i>
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
 
 		<!-- Main content -->
 		@yield('content')
