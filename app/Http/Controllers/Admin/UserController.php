@@ -54,6 +54,12 @@ class UserController extends Controller
                     compact('all_roles'));
     }
 
+    private function sendmail($user)
+    {
+        Mail::to($user->email)
+                ->send(new UserRegistered($user));
+    }
+
     
     /**
      * Store a newly created resource in storage.
@@ -109,8 +115,19 @@ class UserController extends Controller
             $oauth_client->revoked = false;
             $oauth_client->save();
 
-            // Mail::to($request->user())
-            //         ->send(new UserRegistered($user));
+            // Mail::raw('This is an test e-mail', function ($message, $user) {
+            //     $message->to($user->email , 
+            //                     $user->name.' '.$user->surname);
+            //     $message->subject("hi checking");
+            //     $message->getSwiftMessage();
+            // });
+
+            Mail::send('emails.email_update', ['key' => 'value'], 
+                        function($message) use($user)
+            {
+                $message->to($user->email, $user->name.' '.$user->surname)
+                        ->subject('Welcome!');
+            });
 
             return $this->index();
 

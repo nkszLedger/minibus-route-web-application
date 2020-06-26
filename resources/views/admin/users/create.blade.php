@@ -26,7 +26,7 @@
 						<hr class="mb-15 mt-0">
 						<h4 class="box-title text-info"><i class="ti-user mr-15"></i> User Profile</h4>
                         <h6 class="box-subtitle text-danger text-center" id="error_on_create_user">
-							{{ $errors }}
+							{{ $errors->first() }}
 						</h6>
 						<hr class="mb-15 mt-0">
 						<section>
@@ -88,7 +88,7 @@
                                                 @endif
                                             @else
                                                 <option value="{{$role->id}}">
-                                                    Role - {{ $user->getRoleNames()->first() }}
+                                                    Role - {{ $role->name }}
                                                 </option>
                                             @endif
                                         @endforeach

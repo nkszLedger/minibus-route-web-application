@@ -37,18 +37,23 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 485),
-            'from' => [
-                'address' => env('ASTC', 'unathionangwe@gmail.com'),
-                'name' => env('ASTC', 'Minibus Admin'),
-            ],
+            'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
         ],
 
         'ses' => [
             'transport' => 'ses',
+        ],
+
+        'mailgun' => [
+            'transport' => 'mailgun',
+        ],
+
+        'postmark' => [
+            'transport' => 'postmark',
         ],
 
         'sendmail' => [
@@ -78,8 +83,8 @@ return [
     */
 
     'from' => [
-        'address' => env('ASTC', 'unathionangwe@gmail.com'),
-        'name' => env('ASTC', 'Minibus Web Admin'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*

@@ -36,12 +36,9 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->from(['address' => 'unathionangwe@gmail.com', 
-                            'name' => 'Minibus Transport Registration Web'])
+        return $this->from('unathionangwe@gmail.com')
+                    ->subject('Minibus Transport Registration Web')
                     ->view('emails.email_update')
-                    ->with([
-                        'name' => $this->user->name,
-                        'surname' => $this->user->surname,
-                    ]);
+                    ->with('user', $this->user);
     }
 }
