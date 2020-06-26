@@ -61,7 +61,7 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 40px 10px 10px 10px;">
                         <a href="#" target="_blank" style="text-decoration: none;">
-							<span style="display: block; font-family: 'Poppins', sans-serif; color: #3e8ef7; font-size: 36px;" border="0"><b>VoiceX</b> admin</span>
+							<span style="display: block; font-family: 'Poppins', sans-serif; color: #3e8ef7; font-size: 36px;" border="0"><b>Minibus Web</b> admin</span>
                         </a>
                     </td>
                 </tr>
@@ -83,8 +83,10 @@
             <![endif]-->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                 <tr>
-                    <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px;">
-                      <h1 style="font-size: 36px; font-weight: 600; margin: 0; font-family: 'Poppins', sans-serif;">Welcome!</h1>
+                    <td bgcolor="#ffffff" align="center" valign="top" 
+                      style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px;">
+                      <h1 style="font-size: 36px; font-weight: 600; margin: 0; 
+                        font-family: 'Poppins', sans-serif;">Welcome!</h1>
                     </td>
                 </tr>
             </table>
@@ -106,8 +108,11 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
               <!-- COPY -->
               <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                  <p style="margin: 0;">Thank you for signing up with VoiceX Admin! We hope you enjoy your time with us. Check your account and update your profile.</p>
+                <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; 
+                  color: #666666; font-family: 'Poppins', sans-serif; font-size: 16px; 
+                  font-weight: 400; line-height: 25px;">
+                  <p style="margin: 0;">Thank you for signing up with Minibus Web Admin! 
+                    Click your account below to set your password.</p>
                 </td>
               </tr>
               <!-- BULLETPROOF BUTTON -->
@@ -118,7 +123,14 @@
                       <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 30px 30px;">
                         <table border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                              <td align="center" style="border-radius: 3px;" bgcolor="#0bb2d4"><a href="#" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 12px 50px; border-radius: 2px; border: 1px solid #0bb2d4; display: inline-block;">My Account</a></td>
+                              <td align="center" style="border-radius: 3px;" 
+                                bgcolor="#0bb2d4"><a href="#" target="_blank" 
+                                style="font-size: 18px; font-family: Helvetica, 
+                                Arial, sans-serif; color: #ffffff; text-decoration: none; 
+                                color: #ffffff; text-decoration: none; padding: 12px 50px; 
+                                border-radius: 2px; border: 1px solid #0bb2d4; 
+                                display: inline-block;">My Account</a>
+                              </td>
                           </tr>
                         </table>
                       </td>
@@ -128,65 +140,19 @@
               </tr>
               <!-- COPY -->
               <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
-                  <p style="margin: 0;">If you have any questions, just reply to this email—we're always happy to help out.</p>
+                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; 
+                  color: #666666; font-family: 'Poppins', sans-serif; font-size: 16px; 
+                  font-weight: 400; line-height: 25px;">
+                  <p style="margin: 0;">If you have any questions, 
+                    just reply to this email—we're always happy to help out.</p>
                 </td>
               </tr>
               <!-- COPY -->
               <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 0px 0px; color: #666666; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 400; line-height: 25px;">
-                  <p style="margin: 0;">Cheers,<br>Team</p>
-                </td>
-              </tr>
-            </table>
-            <!--[if (gte mso 9)|(IE)]>
-            </td>
-            </tr>
-            </table>
-            <![endif]-->
-        </td>
-    </tr>
-    <!-- FOOTER -->
-    <tr>
-        <td align="center" style="padding: 10px 10px 50px 10px;">
-            <!--[if (gte mso 9)|(IE)]>
-            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-            <tr>
-            <td align="center" valign="top" width="600">
-            <![endif]-->
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-              <!-- NAVIGATION -->
-              <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 30px 30px 30px 30px; color: #aaaaaa; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; line-height: 18px;">
-                  <p style="margin: 0;">
-                    <a href="#" target="_blank" style="color: #999999; font-weight: 700;">Dashboard</a> -
-                    <a href="#" target="_blank" style="color: #999999; font-weight: 700;">Billing</a> -
-                    <a href="#" target="_blank" style="color: #999999; font-weight: 700;">Help</a>
-                  </p>
-                </td>
-              </tr>
-              <!-- PERMISSION REMINDER -->
-              <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 30px 30px; color: #aaaaaa; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; line-height: 18px;">
-                  <p style="margin: 0;">You received this email because you just signed up for a new account. If it looks weird, <a href="#" target="_blank" style="color: #999999; font-weight: 700;">view it in your browser</a>.</p>
-                </td>
-              </tr>
-              <!-- UNSUBSCRIBE -->
-              <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 30px 30px; color: #aaaaaa; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
-                  <p style="margin: 0;">If these emails get annoying, please feel free to <a href="#" target="_blank" style="color: #999999; font-weight: 700;">unsubscribe</a>.</p>
-                </td>
-              </tr>
-              <!-- ADDRESS -->
-              <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 30px 30px; color: #aaaaaa; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; line-height: 18px;">
-                  <p style="margin: 0;">Admin - 1234 Lorem Ipsum - Dummy, FL - 987456</p>
-                </td>
-              </tr>
-		      <!-- COPYRIGHT -->
-              <tr>
-                <td align="center" style="padding: 30px 30px 30px 30px; color: #333333; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; line-height: 18px;">
-                  <p style="margin: 0;">Copyright © 2018 Admin. All rights reserved.</p>
+                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; 
+                  border-radius: 0px 0px 0px 0px; color: #666666; font-family: 'Poppins', sans-serif; 
+                  font-size: 14px; font-weight: 400; line-height: 25px;">
+                  <p style="margin: 0;">Cheers,<br>Minibus Web Team</p>
                 </td>
               </tr>
             </table>

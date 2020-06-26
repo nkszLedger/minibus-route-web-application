@@ -122,7 +122,7 @@ class UserController extends Controller
             //     $message->getSwiftMessage();
             // });
 
-            Mail::send('emails.email_update', ['key' => 'value'], 
+            Mail::send('emails.email_welcome', ['key' => 'value'], 
                         function($message) use($user)
             {
                 $message->to($user->email, $user->name.' '.$user->surname)
