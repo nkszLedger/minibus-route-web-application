@@ -46,9 +46,20 @@
 						</div>
                         
 						<div class="p-30">
-							<form action="{{ route('password.reset', $token) }}" method="POST">
+							<form action="{{ route('password.update', $token) }}" method="POST">
 								@csrf
                                 <input type="hidden" class="form-control" name="token" value="{{$token}}">
+                                <div class="form-group">
+                                    @if (count($errors) > 0)
+                                        <div class="text-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                </div>
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
@@ -56,9 +67,10 @@
 												<i class="ti-lock"></i>
 											</span>
 										</div>
-										<input type="text" id="password" required 
+										<input type="password" id="password"
 											class="form-control pl-15 bg-transparent text-white plc-white" 
-											name="password" placeholder="password" value="{{ old('password') }}">
+											name="password" placeholder="password" value="{{ old('password') }}"
+                                            required data-validation-required-message="This field is required">
 									</div>
 								</div>
                                 <div class="form-group">
@@ -68,9 +80,10 @@
 												<i class="ti-lock"></i>
 											</span>
 										</div>
-										<input type="text" id="confirm-password" required 
+										<input type="password" id="confirm-password" required 
 											class="form-control pl-15 bg-transparent text-white plc-white" 
-											name="confirm-password" placeholder="confirm-password">
+											name="confirm-password" placeholder="confirm-password"
+                                            data-validation-match-match="password">
 									</div>
 								</div>
                                 <div class="form-group">
@@ -116,10 +129,21 @@
 	<script src="/minibus/assets/vendor_components/popper/dist/popper.min.js"></script>
 
 	<!-- Bootstrap 4.0 -->
-	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script> 
+
+    <!-- SlimScroll -->
+	<script src="/minibus/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	
+	<!-- FastClick -->
+	<script src="/minibus/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+    
+    <!-- Validation -->
+    <script src="/minibus/main/js/pages/form-validation.js"></script>
+    <script src="/minibus/main/js/pages/validation.js"></script>
 
 	<!-- Login -->
 	<script src="/minibus/main/js/pages/login.js"></script>
+    
 
 </body>
 </html>
