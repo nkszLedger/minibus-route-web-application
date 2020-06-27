@@ -86,7 +86,7 @@
                     <td bgcolor="#ffffff" align="center" valign="top" 
                       style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px;">
                       <h1 style="font-size: 36px; font-weight: 600; margin: 0; 
-                        font-family: 'Poppins', sans-serif;">Welcome!</h1>
+                        font-family: 'Poppins', sans-serif;">Welcome! {{ $userfullname ?? '' }}</h1>
                     </td>
                 </tr>
             </table>
@@ -124,12 +124,12 @@
                         <table border="0" cellspacing="0" cellpadding="0">
                           <tr>
                               <td align="center" style="border-radius: 3px;" 
-                                bgcolor="#0bb2d4"><a href="#" target="_blank" 
+                                bgcolor="#0bb2d4"><a href="{{ $link ?? '' }}" target="_blank" 
                                 style="font-size: 18px; font-family: Helvetica, 
                                 Arial, sans-serif; color: #ffffff; text-decoration: none; 
                                 color: #ffffff; text-decoration: none; padding: 12px 50px; 
                                 border-radius: 2px; border: 1px solid #0bb2d4; 
-                                display: inline-block;">My Account</a>
+                                display: inline-block;">Set Password</a>
                               </td>
                           </tr>
                         </table>

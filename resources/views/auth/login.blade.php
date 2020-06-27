@@ -43,11 +43,13 @@
 									{{ $errors->first('errors') }} 
 								@endif
 								<span>
-								{{-- <span class="text-info" id="info">
-								@if( $message->has('message')) 
-									{{ $message->first('message') }} 
+								@if( isset($message) )
+								<span class="text-info" id="info">
+								@if( $message->has('success')) 
+									{{ $message->first('success') }} 
 								@endif
-								<span> --}}
+								<span>
+								@endif
 							</h6>
 						</div>
 						<div class="p-30">

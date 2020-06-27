@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -36,9 +37,17 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
+        //Get the token just created above
+        $token = DB::table('password_resets')
+        ->where('email', $this->user->email)->first();
+        $userfullname = $this->user->name.' '. $this->user->surname;
+        $link = 'http://127.0.0.1:8000/password/reset/'.$token;
+        
         return $this->from('unathionangwe@gmail.com')
-                    ->subject('Minibus Transport Registration Web')
-                    ->view('emails.email_update')
+                    ->subject('Minibus Sys User Registration')
+                    ->view('emails.email_welcome', 
+                        compact(['link',
+                                'userfullname']) )
                     ->with('user', $this->user);
     }
 }

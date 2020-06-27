@@ -1,65 +1,125 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../minibus/images/favicon.ico">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <title> MiniBus Taxi Registration</title>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+	<!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+	<!-- theme style -->
+	<link rel="stylesheet" href="/minibus/main/css/horizontal-menu.css">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+	<!-- theme style -->
+	<link rel="stylesheet" href="/minibus/main/css/style.css">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+	<!-- VoiceX Admin skins -->
+	<link rel="stylesheet" href="/minibus/main/css/skin_color.css">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+</head>
+<body class="hold-transition theme-fruit bg-img" style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
+	<div class="h-p100">
+		<div class="row align-items-center justify-content-md-center h-p100">
+			<div class="col-lg-8 col-12">
+				<div class="row justify-content-center no-gutters">
+					<div class="col-xl-4 col-lg-7 col-md-6 col-12">
+						<div class="content-top-agile p-10">
+							<div class="logo">
+								<a href="#" class="aut-logo my-40 d-block">
+									<img src="/minibus/images/taxi.png"  alt="">
+								</a>
+							</div>
+							<h2 class="text-white">RESET PASSWORD</h2>
+							{{-- <h6>
+								<span class="text-danger" id="reset_error">
+								@if($errors->has('errors')) 
+									{{ $errors->first('errors') }} 
+								@endif
+								<span>
+							</h6> --}}
+						</div>
+                        
+						<div class="p-30">
+							<form action="{{ route('password.reset', $token) }}" method="POST">
+								@csrf
+                                <input type="hidden" class="form-control" name="token" value="{{$token}}">
+								<div class="form-group">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-lock"></i>
+											</span>
+										</div>
+										<input type="text" id="password" required 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="password" placeholder="password" value="{{ old('password') }}">
+									</div>
+								</div>
+                                <div class="form-group">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-lock"></i>
+											</span>
+										</div>
+										<input type="text" id="confirm-password" required 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="confirm-password" placeholder="confirm-password">
+									</div>
+								</div>
+                                <div class="form-group">
+                                    <h6 class="text-white text-center">
+                                        Must be at least 8 characters in length. 
+                                    </h6>
+                                    <h6 class="text-white text-center">
+                                        Must contain at least one lowercase letter.
+                                    </h6>
+                                    <h6 class="text-white text-center">
+                                        Must contain at least one uppercase letter.
+                                    </h6>
+                                    <h6 class="text-white text-center">
+                                        Must contain at least one digit.  
+                                    </h6>
+                                    <h6 class="text-white text-center">
+                                        Must contain a special character
+                                    </h6>
+                                </div>
+                                <!-- /.col -->
+                                <div class="form-group">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-warning btn-outline mt-10">
+                                            Reset 
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+    <!-- jQuery 3 -->
+    <script src="/minibus/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+	<!-- fullscreen -->
+    <script src="/minibus/assets/vendor_components/screenfull/screenfull.js"></script>
+	<!-- popper -->
+	<script src="/minibus/assets/vendor_components/popper/dist/popper.min.js"></script>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+	<!-- Bootstrap 4.0 -->
+	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+	<!-- Login -->
+	<script src="/minibus/main/js/pages/login.js"></script>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+</body>
+</html>

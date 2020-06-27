@@ -27,6 +27,13 @@ class UserController extends Controller
         return implode($pass); //turn the array into a string
     }
 
+    private static function quickRandom($length = 16)
+    {
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -122,12 +129,20 @@ class UserController extends Controller
             //     $message->getSwiftMessage();
             // });
 
-            Mail::send('emails.email_welcome', ['key' => 'value'], 
-                        function($message) use($user)
-            {
-                $message->to($user->email, $user->name.' '.$user->surname)
-                        ->subject('Welcome!');
-            });
+            // Mail::send('emails.email_welcome', ['key' => 'value'], 
+            //             function($message) use($user)
+            // {
+            //     $message->to($user->email, $user->name.' '.$user->surname)
+            //             ->subject('Welcome!');
+            // });
+
+            //Create Password Reset Token
+            DB::table('password_resets')->insert([
+                'email' => $user->email,
+                'token' => $this->quickRandom(60),
+                'created_at' => now()
+            ]);
+            Mail::to($user)->send(new UserRegistered($user));
 
             return $this->index();
 
