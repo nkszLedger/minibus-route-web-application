@@ -42,12 +42,15 @@ class UserRegistered extends Mailable
         ->where('email', $this->user->email)->first();
         $userfullname = $this->user->name.' '. $this->user->surname;
         $link = 'http://127.0.0.1:8000/password/reset/'.$token;
-        
-        return $this->from('unathionangwe@gmail.com')
-                    ->subject('Minibus Sys User Registration')
-                    ->view('emails.email_welcome', 
-                        compact(['link',
-                                'userfullname']) )
-                    ->with('user', $this->user);
+
+        dump($token);
+        dump($link);
+        dd($userfullname);        
+        // return $this->from('unathionangwe@gmail.com')
+        //             ->subject('Minibus Sys User Registration')
+        //             ->view('emails.email_welcome', 
+        //                 compact(['link',
+        //                         'userfullname']) )
+        //             ->with('user', $this->user);
     }
 }

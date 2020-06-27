@@ -40,8 +40,9 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
         $inputs = [
-            'password' => $request->get('password'),
             'token' => $request->get('token'),
+            'password' => $request->get('password'),
+            'confirm-password' => $request->get('confirm-password'),
         ];
     
         $rules = [
@@ -55,6 +56,7 @@ class ResetPasswordController extends Controller
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*#?&]/', // must contain a special character
             ],
+            'confirm-password' => 'required|same:password',
         ];
         
         $validator = Validator::make($inputs, $rules);
