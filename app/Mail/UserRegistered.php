@@ -41,16 +41,13 @@ class UserRegistered extends Mailable
         $token = DB::table('password_resets')
         ->where('email', $this->user->email)->first();
         $userfullname = $this->user->name.' '. $this->user->surname;
-        $link = 'http://127.0.0.1:8000/password/reset/'.$token;
-
-        dump($token);
-        dump($link);
-        dd($userfullname);        
-        // return $this->from('unathionangwe@gmail.com')
-        //             ->subject('Minibus Sys User Registration')
-        //             ->view('emails.email_welcome', 
-        //                 compact(['link',
-        //                         'userfullname']) )
-        //             ->with('user', $this->user);
+        $link = 'http://127.0.0.1:8000/password/reset/'.$token->token;
+             
+        return $this->from('unathionangwe@gmail.com')
+                    ->subject('Minibus Sys User Registration')
+                    ->view('emails.email_welcome', 
+                        compact(['link',
+                                'userfullname']) )
+                    ->with('user', $this->user);
     }
 }

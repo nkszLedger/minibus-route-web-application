@@ -46,9 +46,9 @@
 						</div>
                         
 						<div class="p-30">
-							<form action="{{ route('password.update', $token) }}" method="POST">
+							<form action="{{ route('password.update') }}" method="POST">
 								@csrf
-                                <input type="hidden" class="form-control" name="token" value="{{$token}}">
+                                <input type="hidden" class="form-control" name="token" value="{{$token ?? ''}}">
                                 <div class="form-group">
                                     @if (count($errors) > 0)
                                         <div class="text-danger">
@@ -60,6 +60,14 @@
                                         </div>
                                     @endif
                                 </div>
+                                @if( isset($message) )
+                                    <div class="form-group">
+                                        <h6 class="text-danger text-center">
+                                            {{ $message }}
+                                        </h6>
+                                    </div>
+                                @endif
+                                @if( isset($token) )
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
@@ -86,6 +94,7 @@
                                             data-validation-match-match="password">
 									</div>
 								</div>
+                                
                                 <div class="form-group">
                                     <h6 class="text-white text-center">
                                         Must be at least 8 characters in length. 
@@ -104,6 +113,7 @@
                                     </h6>
                                 </div>
                                 <!-- /.col -->
+                                
                                 <div class="form-group">
                                     <div class="col-12 text-center">
                                         <button type="submit" class="btn btn-warning btn-outline mt-10">
@@ -111,6 +121,16 @@
                                         </button>
                                     </div>
                                 </div>
+                                @else
+                                <div class="form-group">
+                                    <div class="col-12 text-center">
+                                        <a class="btn btn-warning btn-outline mt-10" 
+                                            href="{{ route('login')}}">
+                                                Cancel
+                                        </a>
+                                    </div>
+                                </div>
+                                @endif
                                 <!-- /.col -->
 							</form>
 						</div>

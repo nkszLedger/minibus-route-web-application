@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use App\Mail\UserResetPassword;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -30,23 +37,42 @@ class ResetPasswordController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    private function sendSuccessEmail($user)
+    {
+        Mail::to($user)->send(new UserResetPassword($user));
+    }
+
     public function showResetForm(Request $request, $token)
     {
-        //dd($token);
-        return view('auth.passwords.reset', 
+        /* Validate the token */
+        $tokenData = DB::table('password_resets')
+        ->where('token', $token)->first();
+
+        /* Redirect the user back to the password 
+            reset request form if the token is invalid */
+        if (!$tokenData) 
+        {    
+            $message = 'Invalid token. Please contact Systems Admin';
+            return view('auth.passwords.reset', 
+                            compact(['message']));
+        }
+        else
+        {
+            return view('auth.passwords.reset', 
                     compact(['token']));
+        }
+
+        
     }
 
     public function reset(Request $request)
     {
         $inputs = [
-            'token' => $request->get('token'),
             'password' => $request->get('password'),
             'confirm-password' => $request->get('confirm-password'),
         ];
     
         $rules = [
-            'token'    => 'required|unique:password_resets,token',
             'password' => [
                 'required',
                 'string',
@@ -69,8 +95,58 @@ class ResetPasswordController extends Controller
         }
         else
         {
-            $message = 'Great! Your password has been set. Please login';
-            return view('login', compact(['success'=> $message]));
+            $password = $request->get('password');
+            
+            /* Validate the token */
+            $tokenData = DB::table('password_resets')
+            ->where('token', $request->get('token'))->first();
+
+            /* Redirect the user back to the password 
+            reset request form if the token is invalid */
+            if (!$tokenData) 
+            {    
+                $message = 'Invalid token';
+                return view('auth.passwords.reset', 
+                                compact(['message']));
+            }
+
+            $user = User::where('email', $tokenData->email)->first();
+
+            /* Redirect the user back if the email is invalid */
+            if (!$user) 
+            {
+                $message = 'Email not found';
+                return view('auth.passwords.reset', 
+                                compact(['message']));
+            }
+
+            /* Hash and update the new password */
+            $update = array(
+                'email_verified_at' => now(),
+                'password' => Hash::make($password)
+            );
+            $user->update($update); 
+            
+            /* login the user immediately they change password successfully */
+            /*Auth::login($user);*/
+            
+            /* Delete the token */
+            DB::table('password_resets')->where('email', $user->email)
+                                        ->delete();
+            
+            /* Send Email Reset Success Email */
+            if ($this->sendSuccessEmail($user)) 
+            {
+                $message = 'Great! Your password has been set. Please login';
+                return view('auth.login', compact(['message']));
+            } 
+            else 
+            {
+                $message = 'A Network Error occurred. Please try again.';
+                return view('auth.passwords.reset', 
+                                compact(['message']));
+            }
+            
         }
 
     }
