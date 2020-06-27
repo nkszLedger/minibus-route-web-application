@@ -61,7 +61,8 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 40px 10px 10px 10px;">
                         <a href="#" target="_blank" style="text-decoration: none;">
-							<span style="display: block; font-family: 'Poppins', sans-serif; color: #3e8ef7; font-size: 36px;" border="0"><b>Minibus Web</b> admin</span>
+							<span style="display: block; font-family: 'Poppins', sans-serif; 
+                                color: #3e8ef7; font-size: 36px;" border="0"><b>Minibus Web</b> admin</span>
                         </a>
                     </td>
                 </tr>
@@ -86,7 +87,7 @@
                     <td bgcolor="#ffffff" align="center" valign="top" 
                       style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px;">
                       <h1 style="font-size: 36px; font-weight: 600; margin: 0; 
-                        font-family: 'Poppins', sans-serif;">{{ $Subject }}</h1>
+                        font-family: 'Poppins', sans-serif;">{{ $subject ?? '' }}</h1>
                     </td>
                 </tr>
             </table>

@@ -44,10 +44,8 @@
 								@endif
 								<span>
 								@if( isset($message) )
-								<span class="text-info" id="info">
-								@if( $message->has('success')) 
-									{{ $message->first('success') }} 
-								@endif
+								<span class="text-white" id="info">
+									{{ $message }} 
 								<span>
 								@endif
 							</h6>

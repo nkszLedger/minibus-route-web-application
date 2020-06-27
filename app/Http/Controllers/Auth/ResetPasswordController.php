@@ -62,7 +62,6 @@ class ResetPasswordController extends Controller
                     compact(['token']));
         }
 
-        
     }
 
     public function reset(Request $request)
@@ -76,13 +75,16 @@ class ResetPasswordController extends Controller
             'password' => [
                 'required',
                 'string',
+                'required_with:confirm-password',
+                'same:confirm-password',
                 'min:8',             // must be at least 8 characters in length
+                'max:20',           // must be at most 20 characters in length
                 'regex:/[a-z]/',      // must contain at least one lowercase letter
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*#?&]/', // must contain a special character
             ],
-            'confirm-password' => 'required|same:password',
+            'confirm-password' => 'required',
         ];
         
         $validator = Validator::make($inputs, $rules);
@@ -90,7 +92,9 @@ class ResetPasswordController extends Controller
         if ($validator->fails()) 
         {
             $errors = $validator->errors()->first();
-            return back()->withErrors($errors)
+
+            return view('auth.passwords.reset')
+                        ->withErrors($errors)
                         ->withInput();
         }
         else
@@ -135,18 +139,11 @@ class ResetPasswordController extends Controller
                                         ->delete();
             
             /* Send Email Reset Success Email */
-            if ($this->sendSuccessEmail($user)) 
-            {
-                $message = 'Great! Your password has been set. Please login';
-                return view('auth.login', compact(['message']));
-            } 
-            else 
-            {
-                $message = 'A Network Error occurred. Please try again.';
-                return view('auth.passwords.reset', 
-                                compact(['message']));
-            }
+            $this->sendSuccessEmail($user);
             
+            $message = 'Great! Your password has been set. Please login';
+            return view('auth.login', compact(['message']));
+
         }
 
     }

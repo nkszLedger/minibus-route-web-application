@@ -37,17 +37,15 @@ class UserResetPassword extends Mailable
      */
     public function build()
     {
+        $subject = 'Password Reset Successful';
         $userfullname = $this->user->name.' '. $this->user->surname;
-        $link = env('APP_URL', '');
-
-        dd($link);
-
+        $link = config('app.url');
         $title = 'Thank you for signing up with Minibus Web Admin! 
         Your password has been set. Please click below to dive into your account';
         $button_text = 'Login';
 
         return $this->from('unathionangwe@gmail.com')
-                    ->subject('Minibus Password Reset Successful')
+                    ->subject('Minibus Password Reset')
                     ->view('emails.email_notification', 
                         compact(['link', 'title', 
                                 'userfullname', 'button_text']) )

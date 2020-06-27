@@ -36,13 +36,6 @@
 								</a>
 							</div>
 							<h2 class="text-white">RESET PASSWORD</h2>
-							{{-- <h6>
-								<span class="text-danger" id="reset_error">
-								@if($errors->has('errors')) 
-									{{ $errors->first('errors') }} 
-								@endif
-								<span>
-							</h6> --}}
 						</div>
                         
 						<div class="p-30">
@@ -98,6 +91,9 @@
                                 <div class="form-group">
                                     <h6 class="text-white text-center">
                                         Must be at least 8 characters in length. 
+                                    </h6>
+                                    <h6 class="text-white text-center">
+                                        Must be at most 20 characters in length
                                     </h6>
                                     <h6 class="text-white text-center">
                                         Must contain at least one lowercase letter.
