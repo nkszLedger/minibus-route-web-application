@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\SerializesModels;
 
 class UserForgotPassword extends Mailable
@@ -18,8 +17,7 @@ class UserForgotPassword extends Mailable
      *
      * @var user
      */
-    protected $user;
-
+    public $user;
 
     /**
      * Create a new message instance.
@@ -38,19 +36,16 @@ class UserForgotPassword extends Mailable
      */
     public function build()
     {
-        //Get the token just created above
-        $token = DB::table('password_resets')
-        ->where('email', $this->user->email)->first();
-        $subject = 'Password Reset Request';
-        $userfullname = $this->user->name.' '. $this->user->surname;
-        $link = config('app.url').'/password/reset/'.$token->token;
+        $subject = 'Minibus Password Reset';
+        $userfullname = $this->user->name.' '.$this->user->surname;
+        $link = config('app.url').'/password/reset/';
         $title = 'You have requested for a password reset. Please contact us 
-        if you did not initiate this action. Please click below to set your password';
+        if you did not initiate this action. Please click below to set your password.';
         $button_text = 'Reset';
 
-        return $this->from('unathionangwe@gmail.com')
-                    ->subject('Minibus Password Reset')
-                    ->view('emails.email_notification', 
+        return $this->from(env('MAIL_FROM_ADDRESS'))
+                    ->subject($subject)
+                    ->view('emails.email_notification',
                         compact(['link', 'title', 
                                 'userfullname', 'button_text']) )
                     ->with('user', $this->user);

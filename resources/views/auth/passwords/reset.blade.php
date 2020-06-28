@@ -43,23 +43,17 @@
 								@csrf
                                 <input type="hidden" class="form-control" name="token" value="{{$token ?? ''}}">
                                 <div class="form-group">
-                                    @if (count($errors) > 0)
-                                        <div class="text-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
+                                    {{-- @if( isset($errors) )
+                                    <span class="text-danger" id="reset_error">
+                                        {{ $errors }} 
+                                    <span>
+                                    @endif --}}
+                                    @if( isset($message) )
+                                    <span class="text-danger" id="reset_message">
+                                        {{$message}} 
+                                    <span>
                                     @endif
                                 </div>
-                                @if( isset($message) )
-                                    <div class="form-group">
-                                        <h6 class="text-danger text-center">
-                                            {{ $message }}
-                                        </h6>
-                                    </div>
-                                @endif
                                 @if( isset($token) )
 								<div class="form-group">
 									<div class="input-group mb-3">

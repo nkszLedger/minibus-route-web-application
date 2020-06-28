@@ -43,7 +43,7 @@ class UserRegistered extends Mailable
         $userfullname = $this->user->name.' '. $this->user->surname;
         $link = config('app.url').'/password/reset/'.$token->token;
              
-        return $this->from('unathionangwe@gmail.com')
+        return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->subject('Minibus Sys User Registration')
                     ->view('emails.email_welcome', 
                         compact(['link',

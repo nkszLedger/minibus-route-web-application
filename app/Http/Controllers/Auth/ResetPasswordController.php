@@ -42,6 +42,11 @@ class ResetPasswordController extends Controller
         Mail::to($user)->send(new UserResetPassword($user));
     }
 
+    public function showLinkRequestForm(Request $request)
+    {
+        return view('auth.passwords.reset');
+    }
+
     public function showResetForm(Request $request, $token)
     {
         /* Validate the token */

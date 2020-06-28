@@ -37,15 +37,13 @@
 							</div>
 							<h2 class="text-white">RESET PASSWORD</h2>
 							<h6>
-								<span class="text-danger" id="reset_error">
-								@if($errors->has('errors')) 
-									{{ $errors->first('errors') }} 
-								@endif
+								@if( isset($errors) )
+								<span class="text-danger" id="email_error">
+									{{ $errors }} 
 								<span>
-							</h6>
-							<h6>
+								@endif
 								@if( isset($message) )
-								<span class="text-danger" id="reset_message">
+								<span class="text-danger" id="email_message">
 									{{ $message }} 
 								<span>
 								@endif

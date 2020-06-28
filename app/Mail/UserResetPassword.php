@@ -44,7 +44,7 @@ class UserResetPassword extends Mailable
         Your password has been set. Please click below to dive into your account';
         $button_text = 'Login';
 
-        return $this->from('unathionangwe@gmail.com')
+        return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->subject('Minibus Password Reset')
                     ->view('emails.email_notification', 
                         compact(['link', 'title', 

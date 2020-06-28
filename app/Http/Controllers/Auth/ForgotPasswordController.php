@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Mail\UserForgotPassword;
+
 use App\User;
+use App\Mail\UserForgotPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,6 +27,11 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
+    private function sendResetEmail($user)
+    {
+        Mail::to($user)->send(new UserForgotPassword($user));
+    }
+
     private static function quickRandom($length = 16)
     {
         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -40,7 +46,7 @@ class ForgotPasswordController extends Controller
                 'email' => $request->get('email'),
             ],
             [
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required',
             ]
         );  
 
@@ -50,7 +56,6 @@ class ForgotPasswordController extends Controller
             return view('auth.passwords.email', 
                         compact(['errors']));
         }
-
         if( count(User::where('email', 
             $request->get('email'))->get()) == 0)
         {
@@ -67,9 +72,9 @@ class ForgotPasswordController extends Controller
         ]);
 
         $user = User::where('email', $request->get('email'))->first();
-        
+
         /* Send email to user */
-        Mail::to($user)->send(new UserForgotPassword($user));
+        $this->sendResetEmail($user);
 
         $message = 'Great! Please check your email to set your password';
         return view('auth.login', compact(['message']));

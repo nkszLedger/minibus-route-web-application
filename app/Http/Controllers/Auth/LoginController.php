@@ -72,7 +72,7 @@ class LoginController extends Controller
         {
             $message = 'Incorrect password or email address';
 
-            return back()->withErrors(['message' => $message ])
+            return view('auth.login')->withErrors(['message' => $message ])
                             ->withInput();
         }
     }
