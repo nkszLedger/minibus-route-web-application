@@ -16,6 +16,22 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('auth.login');
+    }
+    
     private function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array(); //remember to declare $pass as an array
