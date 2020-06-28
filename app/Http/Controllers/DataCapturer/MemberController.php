@@ -32,6 +32,22 @@ use Illuminate\Validation\Rules\Exists;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('auth.login');
+    }
+    
     /**
      * Display a listing of the resource.
      *
