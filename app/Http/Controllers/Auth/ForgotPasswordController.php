@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserForgotPassword;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -24,42 +26,53 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
+    private static function quickRandom($length = 16)
+    {
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+    }
+
     public function sendResetLinkEmail(Request $request)
     {
-        $validator = Validator::make([ 
-            'email' => 'required|email|unique:users'
-        ]);
+        $validator = Validator::make(
+            [
+                'email' => $request->get('email'),
+            ],
+            [
+                'email' => 'required|email|unique:users,email',
+            ]
+        );  
 
         if ($validator->fails()) 
-        { 
-            $errors = $validator->errors()->first();
-            return back()->withErrors($errors)
-                        ->withInput();
-        }
-        else
         {
-            if( $user = User::where('email', $request->input('email') )->first() )
-            {
-                $token = app(Illuminate\Auth\Passwords\PasswordBroker::class)->createToken($user);
+            $errors = $validator->errors()->first();
+            return view('auth.passwords.email', 
+                        compact(['errors']));
+        }
 
-                DB::table(config('password_resets'))->insert([
-                    'email' => $user->email, 
-                    'token' => $token
-                ]);
-
-                Mail::q([
-                    'to'      => $user->email,
-                    'subject' => 'Your Password Reset Link',
-                    'view'    => config('auth.passwords.users.email'),
-                    'view_data' => [
-                        'token' => $token, 
-                        'user'  => $user
-                    ]
-                ]);
-            }
+        if( count(User::where('email', 
+            $request->get('email'))->get()) == 0)
+        {
+            $message = 'User email does not exist';
+            return view('auth.passwords.email', 
+                        compact(['message']));
         }
         
+        /* Create Password Reset Token */
+        DB::table('password_resets')->insert([
+            'email' => $request->get('email'),
+            'token' => $this->quickRandom(60),
+            'created_at' => now()
+        ]);
+
+        $user = User::where('email', $request->get('email'))->first();
+        
         /* Send email to user */
+        Mail::to($user)->send(new UserForgotPassword($user));
+
+        $message = 'Great! Please check your email to set your password';
+        return view('auth.login', compact(['message']));
 
     }
 

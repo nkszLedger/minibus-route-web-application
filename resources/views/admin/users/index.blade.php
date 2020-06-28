@@ -58,11 +58,11 @@
 												<span class="text-muted">{{ $user->created_at }}</span>
 											</td>
 											<td>
-												{{-- {% if user.is_active %} --}}
-												<span class="badge badge-pill badge-success">Active</span>
-												{{-- {% else %}
-													<span class="badge badge-pill badge-danger">Inactive</span>
-												{% endif %} --}}
+												@if( $user->email_verified_at !== null )
+												<span class="badge badge-pill badge-success">Verified</span>
+												@else
+													<span class="badge badge-pill badge-danger">Not Verified</span>
+												@endif
 									     	</td>
 											 <td>
 												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> 

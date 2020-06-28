@@ -75,16 +75,14 @@ class ResetPasswordController extends Controller
             'password' => [
                 'required',
                 'string',
-                'required_with:confirm-password',
-                'same:confirm-password',
-                'min:8',             // must be at least 8 characters in length
+                'min:8',            // must be at least 8 characters in length
                 'max:20',           // must be at most 20 characters in length
                 'regex:/[a-z]/',      // must contain at least one lowercase letter
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*#?&]/', // must contain a special character
             ],
-            'confirm-password' => 'required',
+            'confirm-password' => 'required|same:password',
         ];
         
         $validator = Validator::make($inputs, $rules);
@@ -92,7 +90,6 @@ class ResetPasswordController extends Controller
         if ($validator->fails()) 
         {
             $errors = $validator->errors()->first();
-
             return view('auth.passwords.reset')
                         ->withErrors($errors)
                         ->withInput();
@@ -126,9 +123,10 @@ class ResetPasswordController extends Controller
 
             /* Hash and update the new password */
             $update = array(
-                'email_verified_at' => now(),
                 'password' => Hash::make($password)
             );
+
+            $user->markEmailAsVerified();
             $user->update($update); 
             
             /* login the user immediately they change password successfully */

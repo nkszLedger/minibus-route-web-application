@@ -43,6 +43,13 @@
 								@endif
 								<span>
 							</h6>
+							<h6>
+								@if( isset($message) )
+								<span class="text-danger" id="reset_message">
+									{{ $message }} 
+								<span>
+								@endif
+							</h6>
 						</div>
                         
 						<div class="p-30">
@@ -52,7 +59,7 @@
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<span class="input-group-text text-white bg-transparent">
-												<i class="ti-user"></i>
+												<i class="ti-email"></i>
 											</span>
 										</div>
 										<input type="text" id="email" 

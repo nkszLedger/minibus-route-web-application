@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $all_users = User::all();
+        $all_users = User::orderBy('id','desc')->get();
 
         return view('admin.users.index',
                         compact(['all_users']));
@@ -121,20 +121,6 @@ class UserController extends Controller
             $oauth_client->password_client = true;
             $oauth_client->revoked = false;
             $oauth_client->save();
-
-            // Mail::raw('This is an test e-mail', function ($message, $user) {
-            //     $message->to($user->email , 
-            //                     $user->name.' '.$user->surname);
-            //     $message->subject("hi checking");
-            //     $message->getSwiftMessage();
-            // });
-
-            // Mail::send('emails.email_welcome', ['key' => 'value'], 
-            //             function($message) use($user)
-            // {
-            //     $message->to($user->email, $user->name.' '.$user->surname)
-            //             ->subject('Welcome!');
-            // });
 
             //Create Password Reset Token
             DB::table('password_resets')->insert([
