@@ -4,42 +4,86 @@
 
 <section class="content">
     <div class="row">
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="box box-body pb-10 bl-4 border-info pull-up">
-                <h6 class="text-uppercase">REGISTERED OPERATORS OR OWNERS</h6>
-                <div class="d-flex justify-content-between">
-                <span class=" font-size-30">{{ $operator_count }}</span>
-                <span class="font-size-30 text-info mdi mdi-account"></span>
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-danger"><i class="mdi mdi-hand-pointing-right"></i></h1>
+                        <h2>{{ $employee_count }}</h2>
+                        <span class="badge badge-pill badge-danger px-15 mb-10">REGISTERED EMPLOYEES</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="box box-body pb-10 bl-4 border-danger pull-up">
-                <h6 class="text-uppercase">REGISTERED DRIVERS</h6>
-                <div class="d-flex justify-content-between">
-                <span class=" font-size-30">{{ $driver_count }}</span>
-                <span class="font-size-30 text-danger mdi mdi-taxi"></span>
-                </div>
-            </div>
-        </div>				
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="box box-body pb-10 bl-4 border-primary pull-up">
-                <h6 class="text-uppercase">OPERATING ROUTES</h6>
-                <div class="d-flex justify-content-between">
-                <span class=" font-size-30">{{ $route_count }}</span>
-                <span class="font-size-30 text-primary mdi mdi-road"></span>
-                </div>
-            </div>
-        </div>								
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="box box-body pb-10 bl-4 border-warning pull-up">
-                <h6 class="text-uppercase">NUMBER OF ASSOCIATIONS</h6>
-                <div class="d-flex justify-content-between">
-                <span class=" font-size-30">{{ $association_count }}</span>
-                <span class="font-size-30 text-warning mdi mdi-briefcase"></span>
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-secondary"><i class="mdi mdi-verified"></i></h1>
+                        <h2>{{ $operator_count }}</h2>
+                        <span class="badge badge-pill badge-secondary px-15 mb-10">VERIFIED EMPLOYEES</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>	
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-primary"><i class="mdi mdi-account"></i></h1>
+                        <h2>{{ $operator_count }}</h2>
+                        <span class="badge badge-pill badge-primary px-15 mb-10">REGISTERED OPERATORS</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-success"><i class="mdi mdi-taxi"></i></h1>
+                        <h2>{{ $driver_count }}</h2>
+                        <span class="badge badge-pill badge-success px-15 mb-10">REGISTERED DRIVERS</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>	
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-info"><i class="mdi mdi-road"></i></h1>
+                        <h2>{{ $route_count }}</h2>
+                        <span class="badge badge-pill badge-info px-15 mb-10">OPERATING ROUTES</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>	
+        <div class="col-xl-2 col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="text-center">
+                        <a href="#">
+                        <h1 class="font-size-50 text-warning"><i class="mdi mdi-briefcase"></i></h1>
+                        <h2>{{ $association_count }}</h2>
+                        <span class="badge badge-pill badge-warning px-15 mb-10">NUMBER OF ASSOCIATIONS</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>	
+    </div>
+    <div class="row">
         <div class="col-12 col-xl-3">
             <div class="box">
                 <div class="box-header with-border">

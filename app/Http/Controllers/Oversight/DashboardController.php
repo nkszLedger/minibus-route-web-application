@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Oversight;
 use App\Route;
 use App\Association;
+use App\Employee;
 use App\MemberDriver;
 use App\MemberOperator;
 use App\Http\Controllers\Controller;
@@ -37,11 +38,15 @@ class DashboardController extends Controller
         $operator_count = count(MemberOperator::all());
         $association_count = count(Association::all());
         $route_count = count(Route::all());
+        $employee_count = count(Employee::all());
+        $employee_verified_count = 0;
 
         return view('oversight.dashboard.index', compact(['driver_count',
                                                 'operator_count',
                                                 'association_count', 
-                                                'route_count'
+                                                'route_count',
+                                                'employee_count',
+                                                'employee_verified_count',
                                             ]));
     }
 
