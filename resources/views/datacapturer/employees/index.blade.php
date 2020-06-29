@@ -24,12 +24,25 @@
 					<div class="box">
 						<div class="box-header">
 							<h3 class="box-title">Registered Employees Summary</h3>
-							<h6 class="box-subtitle">Export data to CSV, Excel, PDF & Print</h6>
+							@hasanyrole(['Systems Admin|Oversight'])
+								<h6 class="box-subtitle">
+									Export data to CSV, Excel, PDF & Print
+								</h6>
+							@else
+								<h6 class="box-subtitle">
+									View list of Registered Employees
+								</h6>
+							@endhasanyrole
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
+								@hasanyrole(['Systems Admin|Oversight'])
 								<table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
 									style="width:100%">
+								@else
+								<table id="example2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
+									style="width:100%">
+								@endhasanyrole
 									<thead>
 										<tr>
 											<th>#</th>
