@@ -78,29 +78,29 @@ class EmployeeController extends Controller
         }
         else
         {
-            // $validator = Validator::make(
-            //     [
+            $validator = Validator::make(
+                 [
             //         'name' => $request->get('name'),
             //         'surname' => $request->get('surname'),
             //         'email' => $request->get('email'),
-            //         'id_number' => $request->get('id_number'),
+                     'id_number' => $request->get('id_number'),
             //         'employee_number' => $request->get('employee_number')
-            //     ],
-            //     [
+                 ],
+                 [
             //         'name' => 'required|alpha|max:20',
             //         'surname' => 'required|alpha|max:20',
             //         'email' => 'required|unique:employees',
-            //         'id_number' => 'required|digits:13|unique:employees',
+                     'id_number' => 'required|digits:13|unique:employees',
             //         'employee_number' => 'nullable|digits',
-            //     ]
-            // );
+                 ]
+             );
     
-            // if ($validator->fails()) 
-            // {
-            //     $errors = $validator->errors()->first();
-            //     return back()->withErrors($errors)
-            //                 ->withInput();
-            // }
+             if ($validator->fails()) 
+             {
+                 $errors = $validator->errors()->first();
+                 return back()->withErrors($errors)
+                             ->withInput();
+             }
 
             $employee = new Employee();
 
