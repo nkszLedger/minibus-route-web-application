@@ -39,8 +39,8 @@
 							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
 							<h6>
 								<span class="text-danger" id="error">
-								@if($errors->has('errors')) 
-									{{ $errors->first('errors') }} 
+								@if( isset($errors ) ) 
+									{{ $errors }} 
 								@endif
 								<span>
 								@if( isset($message) )

@@ -40,11 +40,12 @@ class UserRegistered extends Mailable
         //Get the token just created above
         $token = DB::table('password_resets')
         ->where('email', $this->user->email)->first();
+        $subject = 'Minibus Sys User Registration';
         $userfullname = $this->user->name.' '. $this->user->surname;
         $link = config('app.url').'/password/reset/'.$token->token;
              
         return $this->from(env('MAIL_FROM_ADDRESS'))
-                    ->subject('Minibus Sys User Registration')
+                    ->subject($subject)
                     ->view('emails.email_welcome', 
                         compact(['link',
                                 'userfullname']) )

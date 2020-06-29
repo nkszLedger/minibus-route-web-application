@@ -45,7 +45,7 @@ class UserResetPassword extends Mailable
         $button_text = 'Login';
 
         return $this->from(env('MAIL_FROM_ADDRESS'))
-                    ->subject('Minibus Password Reset')
+                    ->subject($subject)
                     ->view('emails.email_notification', 
                         compact(['link', 'title', 
                                 'userfullname', 'button_text']) )

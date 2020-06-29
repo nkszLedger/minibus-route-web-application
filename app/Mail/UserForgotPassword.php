@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -36,9 +37,12 @@ class UserForgotPassword extends Mailable
      */
     public function build()
     {
+        $token = DB::table('password_resets')
+        ->where('email', $this->user->email)->first();
+
         $subject = 'Minibus Password Reset';
         $userfullname = $this->user->name.' '.$this->user->surname;
-        $link = config('app.url').'/password/reset/';
+        $link = config('app.url').'/password/reset/'.$token->token;
         $title = 'You have requested for a password reset. Please contact us 
         if you did not initiate this action. Please click below to set your password.';
         $button_text = 'Reset';
