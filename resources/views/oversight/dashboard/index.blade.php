@@ -8,7 +8,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="text-center">
-                        <a href="#">
+                        <a href="{{ route('employees.index') }}">
                         <h1 class="font-size-50 text-danger"><i class="mdi mdi-hand-pointing-right"></i></h1>
                         <h2>{{ $employee_count }}</h2>
                         <span class="badge badge-pill badge-danger px-15 mb-10">REGISTERED EMPLOYEES</span>
