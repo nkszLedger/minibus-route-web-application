@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../public/minibus/images/favicon.ico">
 
-    <title> MiniBus Route Registration App</title>
+    <title> MiniBus Taxi Registration Web</title>
 
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
@@ -1215,7 +1215,7 @@
 						swal("Cancelled", "Member Profile not submitted", "error");   
 					}
 				} 
-			});
+			);
 		}
 
 	}

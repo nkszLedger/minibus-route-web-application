@@ -23,11 +23,12 @@
 			  	<div class="col-12">
 					<div class="box">
 						<div class="box-header">
-							<h4 class="box-title">Registered Employees Summary</h4>
+							<h3 class="box-title">Registered Employees Summary</h3>
+							<h6 class="box-subtitle">Export data to CSV, Excel, PDF & Print</h6>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
-								<table id="complex_header" class="table table-striped table-bordered display" 
+								<table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
 									style="width:100%">
 									<thead>
 										<tr>
@@ -75,6 +76,21 @@
 						  			<?php $count++?>
 									@endforeach
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>#</th>
+											<th>Firstname</th>
+                                            <th>Surname</th>
+											<th>Employee Number</th>
+											<th>Phone Number</th>
+											<th>Address Line</th>
+                                            <th>City</th>
+											<th>Region</th>
+                                            <th>Province</th>
+											<th>Profile Status</th>
+											<th>Actions</th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
