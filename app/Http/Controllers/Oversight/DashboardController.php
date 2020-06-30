@@ -41,12 +41,23 @@ class DashboardController extends Controller
         $employee_count = count(Employee::all());
         $employee_verified_count = 0;
 
+        $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
+        $jhb_count = count(Employee::where('region_id', 1002)->get());
+        $sedibeng_count = count(Employee::where('region_id', 1003)->get());
+        $tshwane_count = count(Employee::where('region_id', 1004)->get());
+        $westrand_count = count(Employee::where('region_id', 1005)->get());
+        $unknown_count = count(Employee::where('region_id', 1099)->get());
+
         return view('oversight.dashboard.index', compact(['driver_count',
                                                 'operator_count',
                                                 'association_count', 
                                                 'route_count',
                                                 'employee_count',
                                                 'employee_verified_count',
+                                                'ekurhuleni_count',
+                                                'jhb_count', 'sedibeng_count',
+                                                'tshwane_count', 'westrand_count',
+                                                'unknown_count'
                                             ]));
     }
 

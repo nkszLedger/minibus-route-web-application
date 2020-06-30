@@ -88,50 +88,44 @@
         <div class="col-12 col-xl-3">
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Employee-Member Captured Per Region</h4>
+                    <h4 class="box-title">Employee Captured Per Region</h4>
                 </div>
                 <div class="box-body p-15">
                     <div class="media-list media-list-hover media-list-divided">
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">Tshwane </span>
-                        <span class="badge badge-pill badge-info">125</span>
-                        <span class="badge badge-pill badge-warning">181</span>
+                        <span class="badge badge-pill badge-info">{{ $tshwane_count }}</span>
                     </a>
 
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">Johannesburg</span>
-                        <span class="badge badge-pill badge-info">124</span>
-                        <span class="badge badge-pill badge-warning">181</span>
+                        <span class="badge badge-pill badge-info">{{ $jhb_count }}</span>
                     </a>
 
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">Sedibeng</span>
-                        <span class="badge badge-pill badge-info">425</span>
-                        <span class="badge badge-pill badge-warning">181</span>
+                        <span class="badge badge-pill badge-info">{{ $sedibeng_count }}</span>
                     </a>
 
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">Ekurhuleni</span>
-                        <span class="badge badge-pill badge-info">321</span>
-                        <span class="badge badge-pill badge-warning">181</span>
+                        <span class="badge badge-pill badge-info">{{ $ekurhuleni_count }}</span>
                     </a>
 
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">West Rand</span>
-                        <span class="badge badge-pill badge-info">321</span>
-                        <span class="badge badge-pill badge-warning">321</span>
+                        <span class="badge badge-pill badge-info">{{ $westrand_count }}</span>
                     </a>
 
                     <a class="media media-single" href="#">
                         <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
                         <span class="title">Unknown</span>
-                        <span class="badge badge-pill badge-info">321</span>
-                        <span class="badge badge-pill badge-warning">321</span>
+                        <span class="badge badge-pill badge-info">{{ $unknown_count }}</span>
                     </a>
 
                     </div>
@@ -142,7 +136,7 @@
         <div class="col-12 col-xl-5">
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Taxi Rank Employee Distribution</h4>
+                    <h4 class="box-title">Employee Position Distribution</h4>
                 </div>
 
                 <div class="box-body">

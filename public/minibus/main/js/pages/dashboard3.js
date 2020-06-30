@@ -443,7 +443,7 @@ $(function () {
    	var piedata = [
       { label: "Managers", data: [[1,cManager]], color: '#38649f'},
 	  { label: "Marshalls", data: [[1,cMarshall]], color: '#389f99'},
-	  { label: "Coordinators", data: [[1,cCoordinator]], color: '#ee1044'},
+	  { label: "Coordinators", data: [[1,cCoordinator]], color: '#689f38'},
 	];
 
     $.plot('#flotPie2', piedata, {
