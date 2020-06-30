@@ -417,11 +417,34 @@ $(function () {
    update_plot5();
 	
 	
-	/**************** PIE CHART *******************/
-   var piedata = [
-      { label: "Verified", data: [[1,55]], color: '#38649f'},
-      { label: "Unverified", data: [[1,45]], color: '#389f99'}
-	 ];
+	/**************** EMPLOYEE RANK DISTRIBUTION PIE CHART *******************/
+	var cManager = 0;
+	var cMarshall = 0;
+	var cCoordinator = 0;
+
+	function setRankData()
+	{
+		$.ajax({
+			url: 'getEmployeeRankDistribution/',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(response) {
+				cManager = response['manager'];
+				cMarshall = response['marshall'];
+				cCoordinator = response['coordinator'];
+			}
+		});
+	}
+
+	/* set pie data */
+	setRankData();
+
+   	var piedata = [
+      { label: "Managers", data: [[1,cManager]], color: '#38649f'},
+	  { label: "Marshalls", data: [[1,cMarshall]], color: '#389f99'},
+	  { label: "Coordinators", data: [[1,cCoordinator]], color: '#ee1044'},
+	];
 
     $.plot('#flotPie2', piedata, {
       series: {
@@ -447,6 +470,55 @@ $(function () {
 		  return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
 	  }
 	
+	/**************** EMPLOYEE RANK GENDER PIE CHART *******************/
+	var cMale = 0;
+	var cFemale = 0;
+
+	function setEmployeeGenderData()
+	{
+		$.ajax({
+			url: 'getEmployeeGenderDistribution/',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(response) {
+				cMale = response['male'];
+				cFemale = response['female'];
+			}
+		});
+	}
+
+	/* set pie data */
+	setEmployeeGenderData();
+
+   	var piedata = [
+      { label: "Male", data: [[1,cMale]], color: '#ee1044'},
+	  { label: "Female", data: [[1,cFemale]], color: '#ff8f00'},
+	];
+
+    $.plot('#flotPie22', piedata, {
+      series: {
+        pie: {
+          show: true,
+          radius: 1,
+          innerRadius: 0.5,
+          label: {
+            show: true,
+            radius: 2/3,
+            formatter: labelFormatter,
+            threshold: 0.1
+          }
+        }
+      },
+      grid: {
+        hoverable: true,
+        clickable: true
+      }
+    });
+
+    function labelFormatter(label, series) {
+		  return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+	  }
 	
 	
 	$.plot("#flotBar2", [{

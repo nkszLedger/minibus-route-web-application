@@ -19,8 +19,11 @@
 	<!-- Bootstrap tagsinput -->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
-      <!-- daterange picker -->
+    <!-- daterange picker -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
+
+	<!-- Morris charts -->
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/morris.js/morris.css">
 
 	<!-- weather weather -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/weather-icons/weather-icons.css">
@@ -57,7 +60,11 @@
   <header class="main-header">
 	  <div class="inside-header clearfix">
 		<nav class="main-nav" role="navigation">
-			<h2 class="nav-brand"><a href="{{ route('employees.index') }}"><img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app"></a></h2>
+			<h2 class="nav-brand">
+				<a href="{{ route('employees.index') }}">
+					<img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app">
+				</a>
+			</h2>
 			<!-- Mobile menu toggle button (hamburger/x icon) -->
 			<button class="topbar-toggler" id="mobile_topbar_toggler"><i class="mdi mdi-dots-horizontal"></i></button>
 			<input id="main-menu-state" type="checkbox" />
@@ -488,6 +495,10 @@
 	<!-- Slimscroll -->
 	<script src="/minibus/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+	<!-- Morris.js charts -->
+	<script src="/minibus/assets/vendor_components/raphael/raphael.min.js"></script>
+	<script src="/minibus/assets/vendor_components/morris.js/morris.min.js"></script>
+
 	<!-- FastClick -->
 	<script src="/minibus/assets/vendor_components/fastclick/lib/fastclick.js"></script>
 
@@ -535,8 +546,12 @@
 	<script src="/minibus/main/js/template.js"></script>
 
 	<!-- VoiceX Admin dashboard demo (This is only for demo purposes) -->
+	<script src="/minibus/main/js/pages/dashboard2.js"></script>
 	<script src="/minibus/main/js/pages/dashboard3.js"></script>
 	<script src="/minibus/main/js/pages/dashboard5.js"></script>
+
+	<!-- VoiceX Admin for Morris Chart purposes -->
+	<script src="/minibus/main/js/pages/widget-morris-charts.js"></script>
 
 	<!-- VoiceX Admin for demo purposes -->
 	<script src="/minibus/main/js/demo.js"></script>

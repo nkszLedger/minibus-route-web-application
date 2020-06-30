@@ -83,3 +83,9 @@ Route::get('members/operatingLicenseNumberExists/{licencenumber}',
 
 Route::get('members/idExists/{idnumber}', 
             'Controller@idExists');
+
+Route::get('getEmployeeRankDistribution', 
+            'Controller@getEmployeeRankDistribution');
+
+Route::get('getEmployeeGenderDistribution', 
+            'Controller@getEmployeeGenderDistribution');

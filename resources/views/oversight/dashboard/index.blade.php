@@ -84,27 +84,84 @@
         </div>	
     </div>
     <div class="row">
+        {{-- <div class="col-12 col-xl-3"> --}}
         <div class="col-12 col-xl-3">
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Members Registrations</h4>
+                    <h4 class="box-title">Employee-Member Captured Per Region</h4>
                 </div>
-                <div class="box-body">
-                    <div id="flotRealtime2" class="h-300"></div>
+                <div class="box-body p-15">
+                    <div class="media-list media-list-hover media-list-divided">
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">Tshwane </span>
+                        <span class="badge badge-pill badge-info">125</span>
+                        <span class="badge badge-pill badge-warning">181</span>
+                    </a>
+
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">Johannesburg</span>
+                        <span class="badge badge-pill badge-info">124</span>
+                        <span class="badge badge-pill badge-warning">181</span>
+                    </a>
+
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">Sedibeng</span>
+                        <span class="badge badge-pill badge-info">425</span>
+                        <span class="badge badge-pill badge-warning">181</span>
+                    </a>
+
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">Ekurhuleni</span>
+                        <span class="badge badge-pill badge-info">321</span>
+                        <span class="badge badge-pill badge-warning">181</span>
+                    </a>
+
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">West Rand</span>
+                        <span class="badge badge-pill badge-info">321</span>
+                        <span class="badge badge-pill badge-warning">321</span>
+                    </a>
+
+                    <a class="media media-single" href="#">
+                        <i class="font-size-18 mr-0 flag-icon flag-icon-za"></i>
+                        <span class="title">Unknown</span>
+                        <span class="badge badge-pill badge-info">321</span>
+                        <span class="badge badge-pill badge-warning">321</span>
+                    </a>
+
+                    </div>
                 </div>
-                <!-- /.box-body-->
             </div>
-            <!-- /.box -->
         </div>
 
         <div class="col-12 col-xl-5">
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Member Verification Proportion</h4>
+                    <h4 class="box-title">Taxi Rank Employee Distribution</h4>
                 </div>
 
                 <div class="box-body">
-                    <div id="flotPie2" class="h-300"></div>
+                    <div id="flotPie2" class="h-400"></div>
+                </div>
+                <!-- /.box-body-->
+
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="box-title">Employee Gender Distribution</h4>
+                </div>
+
+                <div class="box-body">
+                    <div id="flotPie22" class="h-400"></div>
                 </div>
                 <!-- /.box-body-->
 
@@ -112,16 +169,31 @@
             <!-- /.box -->
         </div>
         
-        <div class="col-12 col-xl-4">
+        {{-- <div class="col-12 col-xl-5">
             <div class="box">
                 <div class="box-header with-border">
                     <h4 class="box-title">Drivers vs Operators</h4>
                 </div>
                 <div class="box-body">
-                    <div id="bookingstatus"></div>
+                    <div id="#bookingstatus" class="h-400"></div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        {{-- <div class="col-lg-8 col-12">
+            <div class="box">
+                <div class="box-header">
+                    <h4 class="box-title">
+                        Sales Overview
+                    </h4>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <div id="sales-overview"></div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
         
         <div class="col-xl-8 col-12">
             <div class="box">
