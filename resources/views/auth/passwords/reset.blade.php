@@ -36,24 +36,24 @@
 								</a>
 							</div>
 							<h2 class="text-white">RESET PASSWORD</h2>
+                            <h6>
+								@if( isset($errors) )
+                                <span class="text-danger" id="reset_error">
+                                    {{ $errors }} 
+                                <span>
+                                @endif
+                                @if( isset($message) )
+                                <span class="text-danger" id="reset_message">
+                                    {{$message}} 
+                                <span>
+                                @endif
+							</h6>
 						</div>
                         
 						<div class="p-30">
 							<form action="{{ route('password.update') }}" method="POST">
 								@csrf
                                 <input type="hidden" class="form-control" name="token" value="{{$token ?? ''}}">
-                                <div class="form-group">
-                                    {{-- @if( isset($errors) )
-                                    <span class="text-danger" id="reset_error">
-                                        {{ $errors }} 
-                                    <span>
-                                    @endif --}}
-                                    @if( isset($message) )
-                                    <span class="text-danger" id="reset_message">
-                                        {{$message}} 
-                                    <span>
-                                    @endif
-                                </div>
                                 @if( isset($token) )
 								<div class="form-group">
 									<div class="input-group mb-3">
@@ -116,7 +116,7 @@
                                     <div class="col-12 text-center">
                                         <a class="btn btn-warning btn-outline mt-10" 
                                             href="{{ route('login')}}">
-                                                Cancel
+                                            Cancel
                                         </a>
                                     </div>
                                 </div>

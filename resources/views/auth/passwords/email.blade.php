@@ -37,7 +37,7 @@
 							</div>
 							<h2 class="text-white">RESET PASSWORD</h2>
 							<h6>
-								@if( isset($errors) )
+								@if( count($errors) != 0 )
 								<span class="text-danger" id="email_error">
 									{{ $errors }} 
 								<span>

@@ -92,10 +92,10 @@ class LoginController extends Controller
         }
         else
         {
-            $errors = 'Incorrect password or email address';
+            $message = 'Incorrect password or email address';
 
             return view('auth.login', 
-                    compact(['errors']));
+                    compact(['message']));
         }
     }
 

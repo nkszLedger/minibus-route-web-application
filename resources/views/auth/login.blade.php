@@ -38,11 +38,11 @@
 							</div>
 							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
 							<h6>
+								@if( count($errors) != 0 ) 
 								<span class="text-danger" id="error">
-								@if( isset($errors ) ) 
 									{{ $errors }} 
-								@endif
 								<span>
+								@endif
 								@if( isset($message) )
 								<span class="text-white" id="info">
 									{{ $message }} 
