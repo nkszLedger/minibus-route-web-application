@@ -20,6 +20,11 @@ $(function () {
 		'pattern': '{{999999}}{{9999}}{{99}}{{9}}',
 		'persistent': true
 	});
+	
+	$('#id_number').formatter({
+		'pattern': '{{999999}}{{9999}}{{99}}{{9}}',
+		'persistent': true
+	});
 
 	// SA Licence Code
 	// $('#licensenumber').formatter({

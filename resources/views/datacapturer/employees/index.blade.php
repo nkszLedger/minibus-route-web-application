@@ -48,7 +48,7 @@
 											<th>#</th>
 											<th>Firstname</th>
                                             <th>Surname</th>
-											<th>Employee Number</th>
+											<th>SA ID Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
                                             <th>City</th>
@@ -68,7 +68,7 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-                                            <td>{{ $employee->employee_number }}</td>
+                                            <td>{{ $employee->id_number }}</td>
                                             <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->address_line }}</td>
                                             <td>{{ $employee['city']['city'] }}</td>
@@ -94,7 +94,7 @@
 											<th>#</th>
 											<th>Firstname</th>
                                             <th>Surname</th>
-											<th>Employee Number</th>
+											<th>SA ID Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
                                             <th>City</th>
