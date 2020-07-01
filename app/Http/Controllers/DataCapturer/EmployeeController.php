@@ -80,18 +80,16 @@ class EmployeeController extends Controller
         {
             $validator = Validator::make(
                  [
-            //         'name' => $request->get('name'),
-            //         'surname' => $request->get('surname'),
-            //         'email' => $request->get('email'),
+                     'name' => $request->get('name'),
+                     'surname' => $request->get('surname'),
+                     'email' => $request->get('email'),
                      'id_number' => $request->get('id_number'),
-            //         'employee_number' => $request->get('employee_number')
                  ],
                  [
-            //         'name' => 'required|alpha|max:20',
-            //         'surname' => 'required|alpha|max:20',
-            //         'email' => 'required|unique:employees',
+                     'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                     'surname' => 'required|alpha|max:40|regex:/^[\pL\s\-]+$/u',
+                     'email' => 'required|unique:employees',
                      'id_number' => 'required|digits:13|unique:employees',
-            //         'employee_number' => 'nullable|digits',
                  ]
              );
     
