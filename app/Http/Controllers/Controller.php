@@ -23,13 +23,29 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('welcome');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Retrieves list of Minibus associations by Region.
      *
      * @param  int  $region_id
      * @return \Illuminate\Http\Response
      */
-    public function getAssociationsByRegionID($region_id=1001) {
-
+    public function getAssociationsByRegionID($region_id=1001) 
+    {
         $associations_per_region = Association::where('region_id',$region_id)->get();
         return response()->json(['data' =>$associations_per_region]);
 
