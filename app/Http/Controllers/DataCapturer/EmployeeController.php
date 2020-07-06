@@ -87,7 +87,7 @@ class EmployeeController extends Controller
                  ],
                  [
                      'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-                     'surname' => 'required|alpha|max:40|regex:/^[\pL\s\-]+$/u',
+                     'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
                      'email' => 'required|unique:employees',
                      'id_number' => 'required|digits:13|unique:employees',
                  ]
