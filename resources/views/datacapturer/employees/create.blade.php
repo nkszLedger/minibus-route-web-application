@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <h5>Firstname :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="name" 
+                                        <input type="text" class="form-control" name="name" maxlength=40 
                                             required data-validation-required-message="This field is required" 
                                             value="{{ old('name') ?? $employee->name ?? '' }}">
                                     </div>
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <h5>Surname :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="surname" 
+                                        <input type="text" class="form-control" name="surname" maxlength=40 
                                             required data-validation-required-message="This field is required" 
                                                 value="{{ old('surname') ?? $employee->surname ?? '' }}">
                                     </div>
@@ -88,6 +88,7 @@
                                     <h5>National ID Number :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="id_number" 
+                                            maxlength=13 min=13 id="id_number" 
                                             required data-validation-required-message="This field is required" 
                                             value="{{ old('id_number') ?? $employee->id_number ?? '' }}">
                                     </div>
@@ -124,7 +125,7 @@
                                     <div class="controls">
                                         <input type="text" class="form-control" name="employee_number"  
                                                 value="{{ old('employee_number') ?? 
-                                                $employee->employee_number ?? '' }}">
+                                                $employee->employee_number ?? '' }}" maxlength=20>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +183,7 @@
                                 <div class="form-group">
                                     <h5>Email Address :<span class="text-danger"> *</span></h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="email" 
+                                        <input type="text" class="form-control" name="email" maxlength=40
                                             required data-validation-required-message="This field is required" 
                                             value="{{ old('email') ?? $employee->email ?? '' }}">
                                     </div>

@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserRegistered;
 use App\Providers\RouteServiceProvider;
 use App\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\Passport;
+use Illuminate\Support\Str;
+use Laravel\Passport\Client;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
@@ -71,6 +75,20 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
+        $validator = Validator::make([ 
+            'name' => 'required', 
+            'surname' => 'required',
+            'role' => 'required',
+            'email' => 'required|email|unique:users', 
+            'password' => 'required', 
+            'confirmed' => 'required|same:password', 
+        ]);
+        if ($validator->fails()) 
+        { 
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
         $user = new User();
         $all_roles = Role::all();
 
@@ -82,21 +100,35 @@ class RegisterController extends Controller
         
         if( $user->save() )
         {
-            $message = 'User Registered successfully. Please sign in';
+            $oauth_client = new Client();
+            $oauth_client->user_id = $user->id;
+            $oauth_client->name = 'Minibus Password Grant Client';
+            $oauth_client->secret = base64_encode(hash_hmac('sha256',
+                                    $user->password, 'secret', true));
 
-            // $oauth_client=new AppoAuthClient();
-            // $oauth_client->user_id=$user->id;
-            // $oauth_client->id=$user->email;
-            // $oauth_client->name=$user->name;
-            // $oauth_client->secret=base64_encode(hash_hmac('sha256',$user->password, 'secret', true));
-            // $oauth_client->password_client=1;
-            // $oauth_client->personal_access_client=0;
-            // $oauth_client->redirect='';
-            // $oauth_client->revoked=0;
-            // $oauth_client->save();
+            $oauth_client->redirect = 'http://ptrms-test.csir.co.za';
+            $oauth_client->personal_access_client = false;
+            $oauth_client->password_client = true;
+            $oauth_client->revoked = false;
 
-            return view('auth.register', 
+            if( $oauth_client->save() )
+            {
+                $message = 'User Registration successful. 
+                            Please check your email to verify.';
+
+                Mail::to($request->user())
+                        ->send(new UserRegistered($user));
+
+                return view('auth.login', compact(['message'])); 
+            }
+            else
+            {
+                $message = 'User Registration successful, 
+                            however, access will be limited';
+
+                return view('auth.register', 
                         compact(['message', 'all_roles']));
+            }
         }
         else
         {

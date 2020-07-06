@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../public/minibus/images/favicon.ico">
 
-    <title> MiniBus Route Registration App</title>
+    <title> MiniBus Taxi Registration Web</title>
 
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
@@ -19,8 +19,11 @@
 	<!-- Bootstrap tagsinput -->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
-      <!-- daterange picker -->
+    <!-- daterange picker -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
+
+	<!-- Morris charts -->
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/morris.js/morris.css">
 
 	<!-- weather weather -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/weather-icons/weather-icons.css">
@@ -57,7 +60,11 @@
   <header class="main-header">
 	  <div class="inside-header clearfix">
 		<nav class="main-nav" role="navigation">
-			<h2 class="nav-brand"><a href="{{ route('employees.index') }}"><img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app"></a></h2>
+			<h2 class="nav-brand">
+				<a href="{{ route('employees.index') }}">
+					<img src="/minibus/images/taxi.png" class="max-w-50" alt="minibus-app">
+				</a>
+			</h2>
 			<!-- Mobile menu toggle button (hamburger/x icon) -->
 			<button class="topbar-toggler" id="mobile_topbar_toggler"><i class="mdi mdi-dots-horizontal"></i></button>
 			<input id="main-menu-state" type="checkbox" />
@@ -67,17 +74,39 @@
 
 			<!-- Sample menu definition -->
 			<ul id="main-menu" class="sm sm-blue">
-				{{-- <li><a href="{{ route('dashboard.index') }}" class="current"><i class="ti-dashboard mx-5"></i>DASHBOARD</a></li> --}}
-                <li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+				@can(['view-dashboard'])
+				<li><a href="{{ route('dashboard.index') }}">
+					<i class="ti-dashboard mx-5"></i>DASHBOARD</a>
+				</li>
+				@endcan
+                @can(['user-create', 'user-list', 'user-edit', 'user-delete'])
+				<li><a href="{{ route('users.index') }}">
+						<i class="ti-files mx-5"></i>MANAGE USERS
+					</a>
 					<ul>
+						<li><a href="{{ route('users.create') }}">Add New Users</a></li>
+						<li><a href="{{ route('users.index') }}">View Users</a></li>
+					</ul>
+				</li>
+				@endcan
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+					<ul>
+						@can(['employee-create'])
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
+						@endcan
+						@can(['employee-list'])
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
+						@endcan
 					</ul>
 				</li>
 				<li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
 					<ul>
+						@can(['member-create'])
 						<li><a href="{{ route('members.create') }}">Register Member</a></li>
+						@endcan
+						@can(['member-list'])
 						<li><a href="{{ route('members.index') }}">View Members</a></li>
+						@endcan
 					</ul>
 				</li>
 			</ul>
@@ -95,7 +124,8 @@
 				</a>
 				<ul class="dropdown-menu animated flipInX">
 				  <!-- User image -->
-				  <li class="user-header bg-img" style="background-image: url(/minibus/images/user-info.jpg)" data-overlay="3">
+				  <li class="user-header bg-img" style="background-image: url(/minibus/images/user-info.jpg)" 
+				  		data-overlay="3">
 					  <div class="flexbox align-self-center">
 						<img src="/minibus/images/avatar/7.jpg" class="float-left rounded-circle" alt="User Image">
 						<h4 class="user-name align-self-center">
@@ -136,10 +166,42 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 	  <div class="container-full">
+	  	
+		<!-- Content Header (Page header) -->	  
+		<div class="content-header">
+			<div class="d-flex align-items-center justify-content-between">
+				<div class="d-md-block d-none">
+					@role('Systems Admin')
+					<h3 class="page-title br-0">Minibus Transport Registration System Administration</h3>
+					@endrole
+					@role('Data Capturer')
+					<h3 class="page-title br-0">Minibus Transport Registration Data Capturing</h3>
+					@endrole
+					@role('Oversight')
+					<h3 class="page-title br-0">Minibus Transport Registration Overview</h3>
+					@endrole
+				</div>
+				<div class="right-title w-170">
+					<span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
+						<span class="subheader_daterange-label">
+							<span class="subheader_daterange-title">
+								<span class="text-primary"> 
+									<b> Today </b>: {{ date("M d") }}
+								</span>
+							</span>
+						</span>
+						<a href="#" class="btn btn-rounded btn-sm btn-primary">
+							<i class="fa fa-book"></i>
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
 
 		<!-- Main content -->
 		@yield('content')
 		<!-- /.content -->
+		
 	  </div>
   </div>
   <!-- /.content-wrapper -->
@@ -434,6 +496,10 @@
 	<!-- Slimscroll -->
 	<script src="/minibus/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+	<!-- Morris.js charts -->
+	<script src="/minibus/assets/vendor_components/raphael/raphael.min.js"></script>
+	<script src="/minibus/assets/vendor_components/morris.js/morris.min.js"></script>
+
 	<!-- FastClick -->
 	<script src="/minibus/assets/vendor_components/fastclick/lib/fastclick.js"></script>
 
@@ -481,8 +547,12 @@
 	<script src="/minibus/main/js/template.js"></script>
 
 	<!-- VoiceX Admin dashboard demo (This is only for demo purposes) -->
+	<script src="/minibus/main/js/pages/dashboard2.js"></script>
 	<script src="/minibus/main/js/pages/dashboard3.js"></script>
 	<script src="/minibus/main/js/pages/dashboard5.js"></script>
+
+	<!-- VoiceX Admin for Morris Chart purposes -->
+	<script src="/minibus/main/js/pages/widget-morris-charts.js"></script>
 
 	<!-- VoiceX Admin for demo purposes -->
 	<script src="/minibus/main/js/demo.js"></script>
@@ -1161,12 +1231,20 @@
 						swal("Cancelled", "Member Profile not submitted", "error");   
 					}
 				} 
-			});
+			);
 		}
 
 	}
 </script>
 
+<script>
+	function delete()
+	{
+		swal('Deleted!', 
+			'The user has been deactivated.', 
+				'success');  
+	}
+</script>
 
 </body>
 </html>

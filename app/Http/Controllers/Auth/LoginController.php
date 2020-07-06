@@ -6,6 +6,7 @@ use App\Role;
 use App\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -50,27 +51,51 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $validator = Validator::make(
+            [
+                'email' => $request->get('email'),
+                'password' => $request->get('password')
+            ],
+            [
+                'email' => 'required',
+                'password' => 'required'
+            ]
+        );  
+
+        if ( $validator->fails() ) 
+        {
+            $errors = $validator->errors()->first();
+
+            return view('auth.login', 
+                compact(['errors']));    
+        }
+
         $credentials = $request->only('email', 'password');
 
         if(Auth::attempt($credentials)) 
         {
             $user = Auth::user();
-            if($user->roles->pluck( 'name' )->contains('Data Capturer') )
+            if($user->roles->pluck( 'name' )
+                    ->contains('Data Capturer') )
             {
                 return redirect()->intended('employees');
             }
-            else
+            else if($user->roles->pluck( 'name' )
+                        ->contains('Systems Admin') )
             {
                 return redirect()->intended('users');
+            }
+            else
+            {
+                return redirect()->intended('dashboard');
             }
         }
         else
         {
-            dd('FAILED ATTEMPT');
-            
-            return redirect($this->loginPath)
-                ->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'Incorrect email address or password']);
+            $message = 'Incorrect password or email address';
+
+            return view('auth.login', 
+                    compact(['message']));
         }
     }
 

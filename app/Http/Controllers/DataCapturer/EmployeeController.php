@@ -18,16 +18,22 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    private function randomPassword() {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array(); //remember to declare $pass as an array
-        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-        for ($i = 0; $i < 8; $i++) {
-            $n = rand(0, $alphaLength);
-            $pass[] = $alphabet[$n];
-        }
-        return implode($pass); //turn the array into a string
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
+
+    /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('auth.login');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +43,7 @@ class EmployeeController extends Controller
     {
         $all_employees = Employee::with(['city', 
                                     'province',
-                                    'region'])
+                                    'region', 'position'])
                             ->orderBy('id','desc')->get();
 
         return view('datacapturer.employees.index', compact(['all_employees']));
@@ -92,13 +98,14 @@ class EmployeeController extends Controller
                      'id_number' => 'required|digits:13|unique:employees',
                  ]
              );
-    
+
              if ($validator->fails()) 
              {
                  $errors = $validator->errors()->first();
                  return back()->withErrors($errors)
                              ->withInput();
              }
+
 
             $employee = new Employee();
 

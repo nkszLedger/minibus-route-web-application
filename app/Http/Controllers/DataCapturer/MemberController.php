@@ -32,6 +32,22 @@ use Illuminate\Validation\Rules\Exists;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('auth.login');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -152,7 +168,7 @@ class MemberController extends Controller
                             $name = 'MNDOTOPF' . $member->id . 
                                     $request->file('operatinglicensefile')
                                             ->getClientOriginalName();
-                            $path = Storage::disk('public')->putFileAs('driverlicensefile', 
+                            $path = Storage::disk('sftp')->putFileAs('members/driverlicensefile', 
                                                             $file, $name);
                         }
                         
@@ -173,7 +189,7 @@ class MemberController extends Controller
                         {
                             $file = $request->file('operatinglicensefile');
                             $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
+                            $path = Storage::disk('sftp')->putFileAs('members/operatinglicensefile', 
                                                             $file, $name);
                         }
 
@@ -193,7 +209,7 @@ class MemberController extends Controller
                             
                             $file = $request->file('operatinglicensefile');
                             $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                            $path = Storage::disk('public')->putFileAs('driverlicensefile', 
+                            $path = Storage::disk('sftp')->putFileAs('members/driverlicensefile', 
                                                             $file, $name);
                         }
                         
@@ -211,7 +227,7 @@ class MemberController extends Controller
                         {
                             $file = $request->file('operatinglicensefile');
                             $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                            $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
+                            $path = Storage::disk('sftp')->putFileAs('members/operatinglicensefile', 
                                                             $file, $name);
                         }
 
@@ -256,17 +272,50 @@ class MemberController extends Controller
         $member_record = Member::with(['membership_type',
                                         'city', 'gender'])->findOrFail($id);
         
-        $portrait = MemberPortrait::where('member_id', $id)->get();
-        $fingerprint = MemberFingerprint::where('member_id', $id)->get();
+        $member_vehicles = new MemberVehicle();
+        $portrait = new MemberPortrait();
+        $fingerprint = new MemberFingerprint();
+        $member_driver = new MemberDriver();
+        $member_operator = new MemberOperator();
 
-        $member_driver = MemberDriver::with(['codes'])
-                                          ->findOrFail($id);
+        if( count(MemberPortrait::where('member_id', $id)->get()) > 0)
+        {
+            $portrait = MemberPortrait::where('member_id', $id)->get();
+        }
 
-        $member_operator = MemberOperator::where('member_id', $id)->get();
+        if( count(MemberFingerprint::where('member_id', $id)->get()) > 0)
+        {
+            $fingerprint = MemberFingerprint::where('member_id', $id)->get();
+        }
 
-        $member_vehicles = MemberVehicle::where('member_id', $id)
-                                        ->with(['vehicles.vehicleclass.type'])
+        if( count( MemberVehicle::where('member_id', $id)
+                                ->with(['vehicles.vehicleclass.type'])
+                                ->get()) > 0 )
+        {
+            $member_vehicles = MemberVehicle::where('member_id', $id)
+            ->with(['vehicles.vehicleclass.type'])
+            ->get();
+        }
+
+        if( $member_record->membership_type_id == 1 )
+        {
+            $member_driver = MemberDriver::with(['codes'])
+                                        ->where('member_id', $id);
+            
+        }
+        else if( $member_record->membership_type_id == 2 )
+        {
+            $member_operator = MemberOperator::where('member_id', $id)
                                         ->get();
+        }
+        else 
+        {
+            $member_driver = MemberDriver::with(['codes'])
+                                        ->where('member_id', $id)
+                                        ->get();
+            $member_operator = MemberOperator::where('member_id', $id)
+                                        ->get();
+        }
 
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
@@ -274,7 +323,7 @@ class MemberController extends Controller
         $all_cities = City::all();
         $all_gender = Gender::all();
         $all_driving_licence_codes = DrivingLicenceCode::all();
-
+        
         return view('datacapturer.members.show', 
         compact(['member_record', 
                     'portrait',
@@ -341,16 +390,31 @@ class MemberController extends Controller
         $member_record = Member::with(['membership_type', 'gender',
                                         'city'])->findOrFail($id);
 
-        $member_driver = MemberDriver::with(['codes'])
-                                        ->findOrFail($id);
-                                        
-        $member_operator = MemberOperator::where('member_id', $id)
-                                        ->get();
-                                        
-        $member_vehicles = MemberVehicle::where('member_id', $id)
-                                        ->with(['vehicles.vehicleclass.type'])
-                                        ->get();
+        $member_driver = new MemberDriver();
+        $member_operator = new MemberOperator();
 
+        if( $member_record->membership_type_id == 1 )
+        {
+            $member_driver = MemberDriver::with(['codes'])
+                                        ->findOrFail($id);
+        }
+        else if( $member_record->membership_type_id == 2 )
+        {
+            $member_operator = MemberOperator::where('member_id', $id)
+                                        ->get();
+        }
+        else 
+        {
+            $member_driver = MemberDriver::with(['codes'])
+                                        ->findOrFail($id);
+            $member_operator = MemberOperator::where('member_id', $id)
+                                        ->get();
+        }
+        
+        $member_vehicles = MemberVehicle::where('member_id', $id)
+                                        ->with(['vehicles.vehicleclass.type']);
+
+        
         $all_membership_types = MembershipType::all();
         $all_associations = Association::all();
         $all_regions = Region::all();
@@ -383,10 +447,42 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         /* Init instances */
         $member = Member::find($id);
-        $member_driver = MemberDriver::where('member_id', $id);
-        $member_operator = MemberOperator::where('member_id', $id);
+        $member_driver = MemberDriver::where('member_id', $id)->get();
+        $member_operator = MemberOperator::where('member_id', $id)->get();
+
+        $validator = Validator::make(
+            [
+                'id_number' => $request->get('idnumber'),
+                'file' => $request->file('operatinglicensefile'),
+                'email' => $request->get('emailAddress'),
+                'membership_number' => $request->get('associationmembershipnumber'),
+                'license_number' => $request->get('licensenumber'),
+                'license_number' => $request->get('operatinglicensenumber')
+            ],
+            [
+                'id_number' => 'required|digits:13|unique:members,id_number'.$id,
+                'file' => 'nullable|mimes:pdf|max:5000',
+                'email' => 'required|unique:members,email'.$id,
+                'membership_number' => 
+                    'nullable|unique:member_driver,membership_number'.$member_driver->id,
+                'membership_number' => 
+                    'nullable|unique:member_operator,membership_number'.$member_operator->id,
+                'license_number' => 
+                    'required|unique:member_driver,license_number'.$member_driver->id, 
+                'license_number' => 
+                    'required|unique:member_operator,license_number'.$member_operator->id,
+            ]
+        );
+
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
 
         /* capture MEMBER details */
         $member->name = $request->get('firstName');
@@ -405,7 +501,7 @@ class MemberController extends Controller
         $member->is_member_associated =  $request->has('ismemberassociated');
         $member->membership_type_id = $request->get('membership-type'); 
 
-        if( $member->save() )
+        if( $member->update() )
         {
             /* capture MEMBER DRIVER & OPERATOR details */
             $path = '';
@@ -418,7 +514,7 @@ class MemberController extends Controller
                         Storage::disk('public')->delete('storage/'.$member_driver->license_path);
                         $file = $request->file('operatinglicensefile');
                         $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                        $path = Storage::disk('public')->putFileAs('driverslicensefile', 
+                        $path = Storage::disk('sftp')->putFileAs('members/driverslicensefile', 
                                                         $file, $name);
                         $member_driver->license_path = $path;
                     }
@@ -443,7 +539,7 @@ class MemberController extends Controller
                         Storage::disk('public')->delete('storage/'.$member_operator->license_path);
                         $file = $request->file('operatinglicensefile');
                         $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                        $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
+                        $path = Storage::disk('sftp')->putFileAs('members/operatinglicensefile', 
                                                         $file, $name);
                         $member_operator->license_path = $path;
                     }
@@ -466,7 +562,7 @@ class MemberController extends Controller
                         Storage::disk('public')->delete('storage/'.$member_driver->license_path);
                         $file = $request->file('operatinglicensefile');
                         $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                        $path = Storage::disk('public')->putFileAs('driverslicensefile', 
+                        $path = Storage::disk('sftp')->putFileAs('members/driverslicensefile', 
                                                         $file, $name);
                         $member_driver->license_path = $path;
                     }
@@ -488,7 +584,7 @@ class MemberController extends Controller
                         Storage::disk('public')->delete('storage/'.$member_operator->license_path);
                         $file = $request->file('operatinglicensefile');
                         $name = 'MNDOTOPF' . $member->id . $file->getClientOriginalName();
-                        $path = Storage::disk('public')->putFileAs('operatinglicensefile', 
+                        $path = Storage::disk('sftp')->putFileAs('members/operatinglicensefile', 
                                                         $file, $name);
                         $member_operator->license_path = $path;
                     }

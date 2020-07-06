@@ -6,8 +6,6 @@
 $(function () {
     "use strict";
 
-    console.log("hye");
-
     $('#example1').DataTable();
     $('#example2').DataTable({
         'paging'      : true,
@@ -21,7 +19,34 @@ $(function () {
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
+            { 
+                extend: 'csv', 
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                },
+            },
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                },
+            },
+            {
+                extend: 'pdf', 
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                },
+
+            },
+            {
+                extend: 'print',
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                },
+            }
+            //'copy', 'csv', 'excel', 'pdf', 'print'
 		]
 	} );
 	
@@ -74,16 +99,9 @@ $(function () {
 	//---------------Form inputs
 	var table = $('#example6').DataTable();
  
-    $('button').click( function() {
-        var data = table.$('input, select').serialize();
-        alert(
-            "The following data would have been submitted to the server: \n\n"+
-            data.substr( 0, 120 )+'...'
-        );
-        return false;
-    } );
-	
-	
-	
+    $('button').click( function() 
+    {
+        //var data = table.$('input, select').serialize(); 
+    });
 	
   }); // End of use strict

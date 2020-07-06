@@ -58,7 +58,7 @@
 										</label>
                                         <input type="text" class="form-control required"  
 											id="licensenumber" 
-											value="{{$member_driver->license_number ?? ''}}" 
+											value="{{$member_driver->first()->license_number ?? ''}}" 
 											name="licensenumber" maxlength="12" readonly > 
 									</div>
 								</div>

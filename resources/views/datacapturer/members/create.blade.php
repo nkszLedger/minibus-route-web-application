@@ -15,12 +15,10 @@
 				<div class="box-body wizard-content">
 					@if( isset($member_record) )
 					<form action="{{ route('members.edit', $member_record->id) }}" method="GET" 
-						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+						id="member-form" enctype='multipart/form-data'>
 					@else
 					<form action="{{ route('members.store') }}" method="POST" 
-						id="member-form" class="validation-wizard wizard-circle" 
-							enctype='multipart/form-data'>
+						id="member-form" enctype='multipart/form-data'>
 					@endif
 						{{ csrf_field() }}
 						

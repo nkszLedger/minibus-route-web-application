@@ -64,6 +64,20 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => 'ptrms-file-test.csir.co.za',
+            'username' => 'zsingano',
+            'password' => 'eMeritusGate@miller93',
+
+            // Optional FTP Settings...
+            // 'port' => 22,
+            // 'root' => 'files',
+            // 'passive' => false,
+            // 'ssl' => false,
+            // 'timeout' => 30,
+        ],
+
     ],
 
     /*

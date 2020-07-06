@@ -179,9 +179,6 @@ $(function () {
 
 	chart.render();
 	
-	
-	
-	
 	var options = {
 		chart: {
 			height: 405,

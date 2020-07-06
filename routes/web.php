@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -83,3 +83,9 @@ Route::get('members/operatingLicenseNumberExists/{licencenumber}',
 
 Route::get('members/idExists/{idnumber}', 
             'Controller@idExists');
+
+Route::get('getEmployeeRankDistribution', 
+            'Controller@getEmployeeRankDistribution');
+
+Route::get('getEmployeeGenderDistribution', 
+            'Controller@getEmployeeGenderDistribution');

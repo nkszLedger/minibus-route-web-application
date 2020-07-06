@@ -81,13 +81,21 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
+            @if(Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <form action="{{ route('logout') }}" method="post">
+                        <form class="links" action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <a href="{{ url('/home') }}">Home</a>
-                            <input type="submit" value="Logout"/>
+                            @role('Systems Admin')
+                                <a href="{{ route('users.index') }}">Home</a>
+                            @endrole
+                            @role('Data Capturer')
+                                <a href="{{ route('employees.index') }}">Home</a>
+                            @endrole
+                            @role('Oversight')
+                                <a href="{{ route('dashboard.index') }}">Home</a>
+                            @endrole
+                            <input type="submit" value="LOGOUT" />
                         </form>
                     @else
                         <a href="{{ route('login') }}">Minibus Taxi Login </a>

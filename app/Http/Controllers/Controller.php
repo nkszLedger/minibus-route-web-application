@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Vehicle;
 use App\Route;
 use App\Association;
+use App\Employee;
 use App\Member;
 use App\MemberDriver;
 use App\MemberOperator;
@@ -22,13 +23,29 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * Get the path the user should be redirected to.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        return route('welcome');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Retrieves list of Minibus associations by Region.
      *
      * @param  int  $region_id
      * @return \Illuminate\Http\Response
      */
-    public function getAssociationsByRegionID($region_id=1001) {
-
+    public function getAssociationsByRegionID($region_id=1001) 
+    {
         $associations_per_region = Association::where('region_id',$region_id)->get();
         return response()->json(['data' =>$associations_per_region]);
 
@@ -45,6 +62,34 @@ class Controller extends BaseController
         $routes_per_association = Route::where('association_id',$association_id)->get();
 
         return response()->json(['data' =>$routes_per_association]);
+
+    }
+
+    public function getEmployeeRankDistribution()
+    {
+        $manager_count = count(Employee::where('position_id', 1)->get());
+        $cordinator_count = count(Employee::where('position_id', 2)->get());
+        $marshall_count = count(Employee::where('position_id', 3)->get());
+
+        return response()->json(
+            [
+                'manager' => $manager_count, 
+                'marshall' => $marshall_count,
+                'coordinator' => $cordinator_count
+            ]);
+
+    }
+
+    public function getEmployeeGenderDistribution()
+    {
+        $male_count = count(Employee::where('gender_id', 1)->get());
+        $female_count = count(Employee::where('gender_id', 2)->get());
+
+        return response()->json(
+            [
+                'male' => $male_count, 
+                'female' => $female_count
+            ]);
 
     }
 

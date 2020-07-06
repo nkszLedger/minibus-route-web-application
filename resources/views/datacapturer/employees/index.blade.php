@@ -23,24 +23,37 @@
 			  	<div class="col-12">
 					<div class="box">
 						<div class="box-header">
-							<h4 class="box-title">Registered Employees Summary</h4>
+							<h3 class="box-title">Registered Employees Summary</h3>
+							@hasanyrole(['Systems Admin|Oversight'])
+								<h6 class="box-subtitle">
+									Export data to CSV, Excel, PDF & Print
+								</h6>
+							@else
+								<h6 class="box-subtitle">
+									View list of Registered Employees
+								</h6>
+							@endhasanyrole
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
-								<table id="complex_header" class="table table-striped table-bordered display" 
+								@hasanyrole(['Systems Admin|Oversight'])
+								<table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
 									style="width:100%">
+								@else
+								<table id="example2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
+									style="width:100%">
+								@endhasanyrole
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Firstname</th>
+											<th>First Name</th>
                                             <th>Surname</th>
-											<th>Employee Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
-                                            <th>City</th>
 											<th>Region</th>
+											<th>Taxi Rank</th>
+											<th>Rank Position</th>
                                             <th>Province</th>
-											<th>Profile Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -54,15 +67,12 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-                                            <td>{{ $employee->employee_number }}</td>
                                             <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->address_line }}</td>
-                                            <td>{{ $employee['city']['city'] }}</td>
 											<td>{{ $employee['region']['region_name'] }}</td>
+											<td>{{ $employee->rank }}</td>
+                                            <td>{{ $employee['position']['position'] }}</td>
 											<td>{{ $employee['province']['name'] }}</td>
-											<td>
-												<span class="badge badge-pill badge-danger">Coming Soon</span>
-											</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
@@ -75,6 +85,20 @@
 						  			<?php $count++?>
 									@endforeach
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>#</th>
+											<th>First Name</th>
+                                            <th>Surname</th>
+											<th>Phone Number</th>
+											<th>Address Line</th>
+											<th>Region</th>
+											<th>Taxi Rank</th>
+											<th>Rank Position</th>
+                                            <th>Province</th>
+											<th>Actions</th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>

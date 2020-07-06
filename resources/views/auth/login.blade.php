@@ -23,8 +23,8 @@
 	<link rel="stylesheet" href="/minibus/main/css/skin_color.css">
 
 </head>
-<body class="hold-transition theme-fruit bg-img" style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
-{{--<body class="hold-transition theme-fruit bg-img" style="background-image: url(/minibus/images/auth-bg/bg-2.jpg);">--}}
+<body class="hold-transition theme-fruit bg-img" 
+	style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
 	<div class="h-p100">
 		<div class="row align-items-center justify-content-md-center h-p100">
 			<div class="col-lg-8 col-12">
@@ -37,6 +37,18 @@
 								</a>
 							</div>
 							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
+							<h6>
+								@if( count($errors) != 0 ) 
+								<span class="text-danger" id="error">
+									{{ $errors }} 
+								<span>
+								@endif
+								@if( isset($message) )
+								<span class="text-white" id="info">
+									{{ $message }} 
+								<span>
+								@endif
+							</h6>
 						</div>
 						<div class="p-30">
 							<form action="{{ route('login') }}" method="POST">
@@ -44,40 +56,40 @@
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text text-white bg-transparent"><i class="ti-user"></i></span>
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-user"></i>
+											</span>
 										</div>
-										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" name="email" placeholder="Username">
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
+										<input type="text" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="email" placeholder="Username" value="{{ old('email') }}">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text text-white bg-transparent"><i class="ti-lock"></i></span>
+											<span class="input-group-text text-white bg-transparent">
+												<i class="ti-lock"></i>
+											</span>
 										</div>
-										<input type="password" class="form-control pl-15 bg-transparent text-white plc-white" name="password" placeholder="Password">
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
+										<input type="password" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+											name="password" placeholder="Password">
 									</div>
 								</div>
 								  <div class="row">
 									<div class="col-6">
 									  <div class="checkbox text-white">
-										<input type="checkbox" id="basic_checkbox_1" class="filled-in chk-col-danger" name="remember" checked="">
+										<input type="checkbox" id="basic_checkbox_1" 
+											class="filled-in chk-col-danger" 
+											name="remember" checked="">
 										<label for="basic_checkbox_1">Remember Me</label>
 									  </div>
 									</div>
 									<!-- /.col -->
 									<div class="col-6">
 									 <div class="fog-pwd text-right">
-										<a href="#myModal-forgot-psswd" data-toggle="modal" 
+										<a href="{{ route('password.request') }}" 
 											class="hover-info text-white">
 												<i class="ion ion-locked"></i> Forgot password?
 										</a><br>
@@ -90,65 +102,19 @@
 									<!-- /.col -->
 								  </div>
 							</form>
-							<div class="text-center text-white">
+							{{-- <div class="text-center text-white">
 								<p class="mt-15 mb-0">Don't have an account? 
 									<a href="{{ route('register') }}" 
 										class="text-white ml-5">Sign Up
 									</a>
 								</p>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-    <!-- Trigger the modal with a button -->
-{{--    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--}}
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade modal-warning" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <p>This feature is not yet implemented. If you want to create an 
-					account please consult the administrator at admin@dot.gov.za!
-					</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="myModal-forgot-psswd" class="modal fade modal-warning" >
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <p>This feature is not yet implemented. If you want to reset your password please consult the administrator at admin@dot.gov.za!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 
     <!-- jQuery 3 -->
     <script src="/minibus/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
@@ -158,7 +124,11 @@
 	<!-- popper -->
 	<script src="/minibus/assets/vendor_components/popper/dist/popper.min.js"></script>
 
-	<!-- Bootstrap 4.0-->
+	<!-- Bootstrap 4.0 -->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Login -->
+	<script src="/minibus/main/js/pages/login.js"></script>
+
 </body>
 </html>

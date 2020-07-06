@@ -1,4 +1,5 @@
-@extends('admin/home')
+@extends('datacapturer.home')
+
 
 @section('content')
 		<!-- Content Header (Page header) -->
@@ -52,21 +53,27 @@
 											<td>{{ $user['name'] }}</td>
 											<td>{{ $user['surname']  }}</td>
 											<td>{{ $user['email'] }}</td>
-											<td>{{ $user->roles[0]['name'] }}</td>
+											<td>{{ $user->getRoleNames()->first() }}</td>
 											<td>
 												<span class="text-muted">{{ $user->created_at }}</span>
 											</td>
 											<td>
-												{{-- {% if user.is_active %} --}}
-												<span class="badge badge-pill badge-success">Active</span>
-												{{-- {% else %}
-													<span class="badge badge-pill badge-danger">Inactive</span>
-												{% endif %} --}}
+												@if( $user->email_verified_at !== null )
+												<span class="badge badge-pill badge-success">Verified</span>
+												@else
+													<span class="badge badge-pill badge-danger">Not Verified</span>
+												@endif
 									     	</td>
 											 <td>
-												<a href="#"><b>Edit</b></a> 
+												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
+												@if( $user->trashed() )
+													<a href="#"><b>Activate</b></a> 
+												@else
+													<a href="{{ route('users.destroy', $user->id) }}">
+														<b>Deactivate</b>
+													</a>
+												@endif
 											</td>
-											{{-- <td><a href="{% url 'portfolio:editUser' profile.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td> --}}
 										</tr>
 						  			<?php $count++?>
 									@endforeach

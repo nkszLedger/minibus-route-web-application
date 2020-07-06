@@ -36,10 +36,21 @@
 									<img src="/minibus/images/taxi.png"  alt="">
 								</a>
 							</div>
-							<h2 class="text-white">New User Registration</h2>						
+							<h2 class="text-white">New User Registration</h2>					
+						</div>
+						<div class="form-group">
+							@if (count($errors) > 0)
+								<div class="text-danger">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<li>{{ $error }}</li>
+										@endforeach
+									</ul>
+								</div>
+							@endif
 						</div>
 						<div class="p-30">
-							<form action="{{ route('register') }}" method="POST">
+							<form action="{{ route('register') }}" onsubmit="myFunction()" method="POST">
                                 @csrf
 								<div class="form-group">
 									<div class="input-group mb-3">
@@ -49,7 +60,7 @@
                                             </span>
 										</div>
 										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Name" name="name">
+                                            placeholder="Name" name="name" value="{{ old('name') }}">
 									</div>
 								</div>
 
@@ -60,14 +71,16 @@
                                                 <i class="ti-user"></i>
                                             </span>
 										</div>
-										<input type="text" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Surname" name="surname">
+										<input type="text" 
+											class="form-control pl-15 bg-transparent text-white plc-white" 
+                                            placeholder="Surname" name="surname" value="{{ old('surname') }}">
 									</div>
 								</div>
 
                                 <div class="form-group">
 									<div class="input-group mb-3">
-										<select class="custom-select form-control required" id="role" name="role">
+										<select class="custom-select form-control required" 
+											id="role" name="role">
                                         @if( isset($user))
                                             <option value="{{$user->role}}">
                                                 Role - {{$employee['role']['name']}}
@@ -94,7 +107,7 @@
 											<span class="input-group-text text-white bg-transparent"><i class="ti-email"></i></span>
 										</div>
 										<input type="email" class="form-control pl-15 bg-transparent text-white plc-white" 
-                                            placeholder="Email" name="email">
+                                            placeholder="Email" name="email" value="{{ old('email') }}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -179,6 +192,9 @@
 	
 	<!-- Bootstrap 4.0-->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Sweet-Alert  -->
+	<script src="/minibus/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 
 </body>
 </html>
