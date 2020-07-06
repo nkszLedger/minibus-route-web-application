@@ -65,7 +65,14 @@
 												@endif
 									     	</td>
 											 <td>
-												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> 
+												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
+												@if( $user->trashed() )
+													<a href="#"><b>Activate</b></a> 
+												@else
+													<a href="{{ route('users.destroy', $user->id) }}">
+														<b>Deactivate</b>
+													</a>
+												@endif
 											</td>
 										</tr>
 						  			<?php $count++?>

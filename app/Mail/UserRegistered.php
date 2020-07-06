@@ -37,7 +37,7 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        //Get the token just created above
+        /* Get the token just created above */
         $token = DB::table('password_resets')
         ->where('email', $this->user->email)->first();
         $subject = 'Minibus Sys User Registration';

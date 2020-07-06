@@ -168,7 +168,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('roles')
+                    ->findOrFail($id);
 
         return view('admin.users.show',compact('user'));
     }
@@ -256,11 +257,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        Client::where('user_id', $user->id)->delete();
+        /* find user */
+        // $user = User::find($id);
 
-        return redirect()->route('admin.users.index')
-                        ->with('success','User deleted successfully');
+        // /* revoke user from oauth */
+        // $client = Client::where('user_id', $user->id);
+        // $client->revoked = true;
+        // $client->update();
+
+        // /* trash user */
+        // $user->delete();
+
+        // return $this->index();
+
+        dd('hey');
 
     }
 

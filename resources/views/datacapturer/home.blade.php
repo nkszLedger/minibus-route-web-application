@@ -201,6 +201,7 @@
 		<!-- Main content -->
 		@yield('content')
 		<!-- /.content -->
+		
 	  </div>
   </div>
   <!-- /.content-wrapper -->
@@ -1236,6 +1237,14 @@
 	}
 </script>
 
+<script>
+	function delete()
+	{
+		swal('Deleted!', 
+			'The user has been deactivated.', 
+				'success');  
+	}
+</script>
 
 </body>
 </html>

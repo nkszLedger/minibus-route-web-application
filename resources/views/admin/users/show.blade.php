@@ -70,8 +70,8 @@
                                         </h5>
                                         <select class="custom-select form-control required" 
                                             id="role" name="role" disabled>
-                                            <option value="{{$user->role}}">
-                                                Role - {{$user['role']['name']}}
+                                            <option value="{{ $user['roles'][0]['pivot']['role_id'] }}">
+                                                Role - {{ $user->getRoleNames()->first() }}
                                             </option>
                                         </select>
                                     </div>
