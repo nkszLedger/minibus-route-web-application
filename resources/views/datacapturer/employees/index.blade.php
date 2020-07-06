@@ -48,13 +48,12 @@
 											<th>#</th>
 											<th>Firstname</th>
                                             <th>Surname</th>
-											<th>Employee Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
-                                            <th>City</th>
 											<th>Region</th>
+											<th>Taxi Rank</th>
+											<th>Rank Position</th>
                                             <th>Province</th>
-											<th>Profile Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -68,15 +67,12 @@
 											<td>{{$count}}</td>
 											<td>{{ $employee->name }}</td>
                                             <td>{{ $employee->surname }}</td>
-                                            <td>{{ $employee->employee_number }}</td>
                                             <td>{{ $employee->phone_number }}</td>
                                             <td>{{ $employee->address_line }}</td>
-                                            <td>{{ $employee['city']['city'] }}</td>
 											<td>{{ $employee['region']['region_name'] }}</td>
+											<td>{{ $employee->rank }}</td>
+                                            <td>{{ $employee['position']['position'] }}</td>
 											<td>{{ $employee['province']['name'] }}</td>
-											<td>
-												<span class="badge badge-pill badge-danger">Coming Soon</span>
-											</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
@@ -94,13 +90,12 @@
 											<th>#</th>
 											<th>Firstname</th>
                                             <th>Surname</th>
-											<th>Employee Number</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
-                                            <th>City</th>
 											<th>Region</th>
+											<th>Taxi Rank</th>
+											<th>Rank Position</th>
                                             <th>Province</th>
-											<th>Profile Status</th>
 											<th>Actions</th>
 										</tr>
 									</tfoot>
