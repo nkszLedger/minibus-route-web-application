@@ -46,7 +46,7 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Firstname</th>
+											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
@@ -88,7 +88,7 @@
 									<tfoot>
 										<tr>
 											<th>#</th>
-											<th>Firstname</th>
+											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Phone Number</th>
 											<th>Address Line</th>
