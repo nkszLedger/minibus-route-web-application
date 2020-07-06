@@ -92,8 +92,8 @@ class EmployeeController extends Controller
                     'id_number' => $request->get('id_number')
                 ],
                 [
-                    'name' => 'required|alpha|max:40',
-                    'surname' => 'required|alpha|max:40',
+                    'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                    'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
                     'email' => 'required|unique:employees',
                     'id_number' => 'required|digits:13|unique:employees'
                 ]
