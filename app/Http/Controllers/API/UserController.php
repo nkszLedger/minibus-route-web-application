@@ -13,7 +13,8 @@ use Validator;
 
     public function minibushello(Request $request)
     {
-        return response()->json(['success' => 'Hello. This is minibus api'], 
+        $message = '***** Welcome to Minibus Registration API *****';
+        return response()->json(['success' => $message], 
                 $this-> successStatus);
     }
 	/** 
