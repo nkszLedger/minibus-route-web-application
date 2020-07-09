@@ -17,6 +17,7 @@ use Validator;
         return response()->json(['success' => $message], 
                 $this-> successStatus);
     }
+    
 	/** 
      * login api 
      * 
