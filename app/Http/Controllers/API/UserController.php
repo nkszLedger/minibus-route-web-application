@@ -10,8 +10,8 @@ use Validator;
 	class UserController extends Controller 
 {
     public $successStatus = 200;
-    
-    public function minibushello()
+
+    public function minibushello(Request $request)
     {
         return response()->json(['success' => 'Hello. This is minibus api'], 
                 $this-> successStatus);
@@ -21,12 +21,13 @@ use Validator;
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function login()
+    public function login(Request $request)
     { 
-        if(Auth::attempt(['email' => $request('email'), 
-                          'password' => $request('password')]))
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials))
         { 
-            $user = Auth::user();
+            $user = Auth::user();   
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             return response()->json(['success' => $success], $this-> successStatus); 
         } 

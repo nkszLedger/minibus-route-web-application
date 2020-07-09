@@ -23,22 +23,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Get the path the user should be redirected to.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
-    {
-        return route('welcome');
-    }
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Retrieves list of Minibus associations by Region.
      *
      * @param  int  $region_id
