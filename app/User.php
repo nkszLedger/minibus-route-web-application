@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
     use HasRoles;
     use SoftDeletes;
+
+    protected $guard_name = 'web'; 
 
     /**
      * The attributes that are mass assignable.
