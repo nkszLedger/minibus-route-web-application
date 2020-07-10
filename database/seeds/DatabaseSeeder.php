@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeePositionTableSeeder::class);*/
         $this->call(PermissionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        /* $this->call(EmployeeTableSeeder::class); */
+        /*$this->call(EmployeeTableSeeder::class); */
         
 
 

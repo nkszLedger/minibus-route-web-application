@@ -105,12 +105,14 @@
 									<div class="form-group">
 										@if( !empty($member_operator['license_path']) )
 										<a id="editattachment" 
-											href="{{ asset('storage/'.$member_operator->license_path) }}">
+											href="#" 
+											onClick="window.location = '{{ $member_operator->license_path }}';">
 											Current Uploaded file.pdf
 										</a>
                                         @elseif( !empty($member_driver['license_path']) )
                                         <a id="editattachment" 
-											href="{{ asset('storage/'.$member_driver->license_path) }}">
+											href="#" 
+											onClick="window.location = '{{ $member_driver->license_path }}';">
 											Current Uploaded file.pdf
 										</a>
 										@else
