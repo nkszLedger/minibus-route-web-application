@@ -6,12 +6,15 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Employee Registration</h3>
+					<h3 class="page-title">Cadets Management</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item active" aria-current="page">System Access & Profile</li>
+								<li class="breadcrumb-item active" aria-current="page">
+                                    Registration of cadets assisting with COVID-19 disinfection and PPE 
+                                    distribution at Gauteng Taxi Ranks
+                                </li>
 							</ol>
 						</nav>
 					</div>
@@ -57,7 +60,168 @@
 								</div>
 							@endif
 						</div>
-                        <h4 class="box-title text-info"><i class="ti-user mr-15"></i> About Employee</h4>
+                        <h4 class="box-title text-info">
+                            <i class="ti-user mr-15"></i> Organizational Demography
+                        </h4>
+						<hr class="mb-15 mt-0">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Region: <span class="text-danger">*</span> </h5>
+                                    <select class="custom-select form-control required" 
+                                        id="eregion" name="eregion" required>
+                                        @if( isset($employee))
+                                            <option value="{{$employee['region']['region_id']}}">
+                                                {{$employee['region']['region_name']}}
+                                            </option>
+                                            @foreach ($all_regions as $region)
+                                                @if( $region->region_id != $employee['region']['region_id'] )
+                                                    <option value="{{$region->region_id}}">
+                                                        {{$region->region_name}}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <option value="">Please select Region</option>
+                                            @foreach ($all_regions as $region)
+                                                <option value="{{$region->region_id}}">{{$region->region_name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5> Association :
+                                        <span class="text-danger">*</span>  
+                                    </h5>
+                                    <select class="custom-select form-control " 
+                                        id="eassociation" name="eassociation">
+                                        <option selected value="">Please select Association</option>
+                                        {{-- @foreach ($all_associations as $association)
+                                            <option value="{{$association->association_id}}">
+                                                {{$association->name}}
+                                            </option>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Regional Coordinator Name & Surname :
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="rcfullname" maxlength=40 
+                                            required data-validation-required-message="This field is required">
+                                            {{-- value="{{ old('name') ?? $employee->name ?? '' }}"> --}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Regional Coordinator's Contact Details :
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="tel" class="form-control required" id="wphonenumber" 
+                                        name="rcphone_number" maxlength="10" >
+                                        {{-- value="{{ old('phone_number') ?? $employee->phone_number ?? '' }}"> --}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5> Cadet Taxi Rank :
+                                        <span class="text-danger">*</span>  
+                                    </h5>
+                                    <select class="custom-select form-control " 
+                                        id="etaxirank" name="etaxirank">
+                                        <option selected value="">Please select Taxi Rank</option>
+                                        {{-- @foreach ($all_associations as $association)
+                                            <option value="{{$association->association_id}}">
+                                                {{$association->name}}
+                                            </option>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" id="rank" >
+                                    <h5>Taxi Rank Description (If applicable):</h5>
+                                    <textarea class="form-control" 
+                                        placeholder="Taxi Rank A, Taxi Rank B, etc" 
+                                            name="rank"> {{old('rank') ?? $employee->rank ?? ''}}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Taxi Rank Manager Name & Surname :
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="rmfullname" maxlength=40 
+                                            required data-validation-required-message="This field is required">
+                                            {{-- value="{{ old('name') ?? $employee->name ?? '' }}"> --}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Taxi Rank Manager's Contact Details :
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="tel" class="form-control required" id="wphonenumber" 
+                                        name="rmphone_number" maxlength="10" >
+                                        {{-- value="{{ old('phone_number') ?? $employee->phone_number ?? '' }}"> --}}
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="position">Cadet Rank Position : 
+                                        <span class="text-danger">*</span> 
+                                    </h5>
+                                    <select class="custom-select form-control" 
+                                        id="position" name="position" required>
+                                        @if( isset($employee) )
+                                            <option value="{{$employee['position']['id']}}">
+                                                {{$employee['position']['position']}}
+                                            </option>
+                                            @foreach ($all_positions as $position)
+                                                @if( $position->id != $employee['position']['id'] )
+                                                    <option value="{{$position->id}}">
+                                                        {{$position->position}}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <option value="">Please Select Position</option>
+                                            @foreach ($all_positions as $position)
+                                                <option value="{{$position->id}}">
+                                                    {{$position->position}}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="mb-15 mt-15">
+                        <h4 class="box-title text-info">
+                            <i class="ti-user mr-15"></i> 
+                                Personal Demography
+                        </h4>
 						<hr class="mb-15 mt-0">
                         <div class="row">
 
@@ -132,44 +296,6 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="position">Rank Position : <span class="text-danger">*</span> </h5>
-                                    <select class="custom-select form-control" 
-                                        id="position" name="position" required>
-                                        @if( isset($employee) )
-                                            <option value="{{$employee['position']['id']}}">
-                                                {{$employee['position']['position']}}
-                                            </option>
-                                            @foreach ($all_positions as $position)
-                                                @if( $position->id != $employee['position']['id'] )
-                                                    <option value="{{$position->id}}">
-                                                        {{$position->position}}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <option value="">Please Select Position</option>
-                                            @foreach ($all_positions as $position)
-                                                <option value="{{$position->id}}">
-                                                    {{$position->position}}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group" id="rank" >
-                                    <label for="rank">Taxi Rank :</label>
-                                    <textarea class="form-control" 
-                                        placeholder="Taxi Rank A, Taxi Rank B, etc" 
-                                            name="rank"> {{old('rank') ?? $employee->rank ?? ''}}
-                                    </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <h5 for="wphoneNumber2">Phone Number : 
                                         <span class="text-danger"> *</span>  
                                         </h5>
@@ -215,7 +341,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="emergencycontactrelationship">
-                                        Emergency Contact Relationship :
+                                        Relationship to Cadet:
                                     </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_relationship" 
@@ -284,32 +410,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="eregion">Region: <span class="text-danger">*</span> </label>
-                                    <select class="custom-select form-control required" 
-                                        id="eregion" name="eregion" required>
-                                        @if( isset($employee))
-                                            <option value="{{$employee['region']['region_id']}}">
-                                                {{$employee['region']['region_name']}}
-                                            </option>
-                                            @foreach ($all_regions as $region)
-                                                @if( $region->region_id != $employee['region']['region_id'] )
-                                                    <option value="{{$region->region_id}}">
-                                                        {{$region->region_name}}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <option value="">Please select Region</option>
-                                            @foreach ($all_regions as $region)
-                                                <option value="{{$region->region_id}}">{{$region->region_name}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-							</div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
