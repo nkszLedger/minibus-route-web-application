@@ -557,6 +557,9 @@
 	<!-- VoiceX Admin for demo purposes -->
 	<script src="/minibus/main/js/demo.js"></script>
 
+	<!-- Employees -->
+	<script src="/minibus/main/js/pages/employees.js"></script>
+
 	<script type="text/javascript">
 	// Start jQuery function after page is loaded
 	$(document).ready(function() {

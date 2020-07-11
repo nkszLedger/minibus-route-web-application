@@ -48,6 +48,9 @@ Route::get('vehicles/remove/{id}',
             'DataCapturer\VehicleController@destroy')
                 ->name('vehicles.destroy');
 
+Route::get('employees/getAssociations/{region_id}', 
+            'Controller@getAssociationsByRegionID');
+
 Route::get('vehicles/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID')->name('associations');
 Route::get('vehicles/{member_id}/getAssociations/{region_id}', 

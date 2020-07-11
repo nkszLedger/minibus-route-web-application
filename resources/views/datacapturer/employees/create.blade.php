@@ -141,11 +141,11 @@
                                     <select class="custom-select form-control " 
                                         id="etaxirank" name="etaxirank">
                                         <option selected value="">Please select Taxi Rank</option>
-                                        {{-- @foreach ($all_associations as $association)
-                                            <option value="{{$association->association_id}}">
-                                                {{$association->name}}
+                                        @foreach ($all_facilities as $facility)
+                                            <option value="{{ $facility->id }}">
+                                                {{ $facility->name }}
                                             </option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

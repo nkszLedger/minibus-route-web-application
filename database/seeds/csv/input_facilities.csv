@@ -1,6 +1,6 @@
-Facility Name,Facility Type,Facility Longitude,Facility Latitude,Facility Municipality
+name,type_id,longitude,latitude,municipality_id
 13th London Road,3,28.103732,-26.114235,23
-6 / 9,3,28.04998,-26.170946,23
+06 Sep,3,28.04998,-26.170946,23
 Aeroton Temporary Allocated Taxi Rank,1,27.98157,-26.25676,23
 Alberton,1,28.124051,-26.322132,12
 Alberton Pick ''N Pay Shopping Centre,1,28.12247,-26.26163,23
@@ -374,7 +374,7 @@ Namakgale Taxi Rank,1,31.035066,-23.944947,52
 Namakgale Taxi Rank Phalaborwa,1,31.035066,-23.944947,52
 Nancefield Klipspruit Extension 2 Informal Taxi Rank,3,27.91572,-26.25904,23
 Nancefield Station Taxi Rank,3,27.8807,-26.25205,23
-Natalspruit Hospital Taxi Rank,Semi formal,28.147342,-26.32472,23
+Natalspruit Hospital Taxi Rank,2,28.147342,-26.32472,23
 Naturena Ext 26 (Naturena Ext 26),3,27.957809,-26.295025,23
 Naturena Taxi Rank,3,27.954111,-26.290588,23
 Ndingilizi B (Matlala Drive),3,28.034158,-26.202523,23

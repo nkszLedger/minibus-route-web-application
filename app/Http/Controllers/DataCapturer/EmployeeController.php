@@ -10,6 +10,7 @@ use App\EmployeePortrait;
 use App\EmployeePosition;
 use App\Province;
 use App\Region;
+use App\Facility;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -45,12 +46,14 @@ class EmployeeController extends Controller
         $all_gender = Gender::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
+        $all_facilities =  Facility::all();
 
         return view('datacapturer.employees.create', compact(['all_cities', 
                                                                 'all_positions',
                                                                 'all_gender',
                                                                 'all_provinces', 
-                                                                'all_regions'
+                                                                'all_regions',
+                                                                'all_facilities'
                                                             ]));
     }
 
