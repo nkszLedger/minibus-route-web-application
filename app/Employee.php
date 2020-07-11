@@ -75,4 +75,9 @@ class Employee extends Model
     {
         return $this->belongsTo(EmployeePosition::class,'position_id');
     }
+
+    public function organization()
+    {
+        return $this->hasOne(EmployeeOrganization::class);
+    }
 }
