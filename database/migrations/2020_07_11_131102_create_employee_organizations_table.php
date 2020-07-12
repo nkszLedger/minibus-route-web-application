@@ -18,6 +18,7 @@ class CreateEmployeeOrganizationsTable extends Migration
             $table->integer('employee_id');
             $table->string('regional_coordinator_full_name')->nullable();
             $table->string('regional_coordinator_contact_details')->nullable();
+            $table->integer('association_id');
             $table->integer('facility_taxi_rank_id');
             $table->string('facility_manager_full_name')->nullable();
             $table->string('facility_manager_contact_details')->nullable();
@@ -25,6 +26,7 @@ class CreateEmployeeOrganizationsTable extends Migration
 
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('facility_taxi_rank_id')->references('id')->on('facility');
+            $table->foreign('association_id')->references('association_id')->on('association');
         });
     }
 

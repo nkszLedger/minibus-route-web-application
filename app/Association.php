@@ -14,5 +14,10 @@ class Association extends Model
         return $this->hasMany(Member::class);
     }
 
+    public function organization()
+    {
+        return $this->hasMany(EmployeeOrganization::class);
+    }
+
 
 }

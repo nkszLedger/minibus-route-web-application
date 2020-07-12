@@ -85,7 +85,9 @@
                                         @else
                                             <option value="">Please select Region</option>
                                             @foreach ($all_regions as $region)
-                                                <option value="{{$region->region_id}}">{{$region->region_name}}</option>
+                                                <option value="{{$region->region_id}}">
+                                                    {{$region->region_name}}
+                                                </option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -99,12 +101,13 @@
                                     </h5>
                                     <select class="custom-select form-control " 
                                         id="eassociation" name="eassociation">
-                                        <option selected value="">Please select Association</option>
-                                        {{-- @foreach ($all_associations as $association)
-                                            <option value="{{$association->association_id}}">
-                                                {{$association->name}}
+                                        @if( isset($organization))
+                                            <option value="{{ $organization->association_id }}">
+                                                {{ $organization['association']['name'] }}
                                             </option>
-                                        @endforeach --}}
+                                        @else
+                                            <option selected value="">Please select Association</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -115,9 +118,9 @@
                                         <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="rcfullname" maxlength=40 
-                                            required data-validation-required-message="This field is required">
-                                            {{-- value="{{ old('name') ?? $employee->name ?? '' }}"> --}}
+                                        <input type="text" class="form-control" name="rcfullname" maxlength=40  
+                                            value="{{ old('rcfullname') ?? 
+                                                $organization->regional_coordinator_full_name ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -128,8 +131,9 @@
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
-                                        name="rcphone_number" maxlength="10" >
-                                        {{-- value="{{ old('phone_number') ?? $employee->phone_number ?? '' }}"> --}}
+                                        name="rcphone_number" maxlength="10"  
+                                        value="{{ old('rcphone_number') ?? 
+                                        $organization->regional_coordinator_contact_details ?? '' }}">
                                 </div>
                             </div>
 
@@ -166,9 +170,9 @@
                                         <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="rmfullname" maxlength=40 
-                                            required data-validation-required-message="This field is required">
-                                            {{-- value="{{ old('name') ?? $employee->name ?? '' }}"> --}}
+                                        <input type="text" class="form-control" name="rmfullname" maxlength=40
+                                                value="{{ old('rmfullname') ?? 
+                                                $organization->facility_manager_full_name ?? '' }}" >
                                     </div>
                                 </div>
                             </div>
@@ -179,8 +183,9 @@
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
-                                        name="rmphone_number" maxlength="10" >
-                                        {{-- value="{{ old('phone_number') ?? $employee->phone_number ?? '' }}"> --}}
+                                        name="rmphone_number" maxlength="10" 
+                                        value="{{ old('rmphone_number') ?? 
+                                                $organization->facility_manager_contact_details ?? '' }}" >
                                 </div>
                             </div>
 

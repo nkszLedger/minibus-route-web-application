@@ -78,6 +78,6 @@ class Employee extends Model
 
     public function organization()
     {
-        return $this->hasOne(EmployeeOrganization::class);
+        return $this->hasMany(EmployeeOrganization::class);
     }
 }

@@ -5,6 +5,7 @@ use App\User;
 use App\City;
 use App\Gender;
 use App\Employee;
+use App\EmployeeOrganization;
 use App\EmployeeFingerprint;
 use App\EmployeePortrait;
 use App\EmployeePosition;
@@ -94,6 +95,7 @@ class EmployeeController extends Controller
             }
 
             $employee = new Employee();
+            $organization = new EmployeeOrganization(); 
 
             /* Finally Capture */
             $employee->name = $request->get('name');
@@ -117,7 +119,18 @@ class EmployeeController extends Controller
             $employee->rank = $request->get('rank');
 
             /* store employee entry */
-            $employee->save();
+            if( $employee->save() )
+            {
+                $organization->employee_id = $request->get('employee_id');
+                $organization->regional_coordinator_full_name = $request->get('rcfullname');
+                $organization->association_id = $request->get('eassociation');
+                $organization->regional_coordinator_contact_details = $request->get('rcphone_number');
+                $organization->facility_taxi_rank_id = $request->get('etaxirank');
+                $organization->facility_manager_full_name = $request->get('rmfullname');
+                $organization->facility_manager_contact_details = $request->get('rmphone_number');
+
+                $organization->save();
+            }
 
             return redirect()->intended('employees');
         }
@@ -136,12 +149,18 @@ class EmployeeController extends Controller
                                     'region', 'position',
                                     'gender'])
                              ->findOrFail($id);
+        $organization = EmployeeOrganization::with(['employee',
+                                'association', 'facility'])
+                             ->where('employee_id', $id)->first(); 
 
-        $portrait = EmployeePortrait::where('employee_id', $id)->get();
-        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->get();
+                            //dd($organization);
+
+        $portrait = EmployeePortrait::where('employee_id', $id)->first();
+        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->first();
 
         return view('datacapturer.employees.show', 
-                        compact(['employee', 'portrait', 'fingerprint']));
+                        compact(['employee', 'portrait', 
+                                'fingerprint', 'organization']));
         
     }
 
@@ -162,13 +181,17 @@ class EmployeeController extends Controller
                                     'region', 'position',
                                     'gender'])
                                 ->findOrFail($id);
+        $organization = EmployeeOrganization::with(['employee',
+                                    'association', 'facility'])
+                                ->where('employee_id', $id)->get(); 
 
         return view('datacapturer.employees.create', compact(['all_cities',
                                                         'all_provinces', 
                                                         'all_regions',
                                                         'all_positions',
                                                         'all_gender',
-                                                        'employee']));
+                                                        'employee',
+                                                        'organization']));
     }
 
     /**
@@ -206,8 +229,11 @@ class EmployeeController extends Controller
                                     'region', 'position',
                                     'gender'])
                                 ->findOrFail($request->get('id'));
-        
-        $update = array(
+        $organization = EmployeeOrganization::with(['employee',
+                                'association', 'facility'])
+                                ->where('employee_id', $id)->get(); 
+
+        $employee_update = array(
             'name' => $request->get('name'),
             'surname' => $request->get('surname'),
             'phone_number' => $request->get('phone_number'),
@@ -226,7 +252,21 @@ class EmployeeController extends Controller
         );
         
         /* update employee entry */
-        $employee->update($update);
+        if( $employee->update($employee_update) )
+        {
+            $organization_update = array(
+                'employee_id' => $request->get('employee_id'),
+                'regional_coordinator_full_name' => $request->get('rcfullname'),
+                'association_id' => $request->get('eassociation'),
+                'regional_coordinator_contact_details' => $request->get('rcphone_number'),
+                'facility_taxi_rank_id' => $request->get('etaxirank'),
+                'facility_manager_full_name' => $request->get('rmfullname'),
+                'facility_manager_contact_details' => $request->get('rmphone_number'),
+            );
+
+            /* update employee organization entry */
+            $organization->update($organization_update);
+        }
 
         return $this->index();
     }

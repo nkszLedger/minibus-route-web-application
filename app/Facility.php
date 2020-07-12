@@ -17,4 +17,9 @@ class Facility extends Model
     {
         return $this->belongsTo(FacilityMunicipality::class,'municipality_id');
     }
+
+    public function organization()
+    {
+        return $this->hasMany(EmployeeOrganization::class);
+    }
 }
