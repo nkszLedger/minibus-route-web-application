@@ -3,8 +3,9 @@ $('#eregion').change(function(){
 
     $('#eassociation').find('option').not(':first').remove();
 
+    var url_path = window.location.origin + "/employees/getAssociations/"+ id.toString();
     $.ajax({
-        url: 'getAssociations/'+ id.toString(),
+        url: url_path,
         type: 'GET',
         dataType: 'json',
         success: function(response){

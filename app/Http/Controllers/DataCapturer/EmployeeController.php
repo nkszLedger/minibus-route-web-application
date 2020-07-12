@@ -121,7 +121,7 @@ class EmployeeController extends Controller
             /* store employee entry */
             if( $employee->save() )
             {
-                $organization->employee_id = $request->get('employee_id');
+                $organization->employee_id = $employee->id;
                 $organization->regional_coordinator_full_name = $request->get('rcfullname');
                 $organization->association_id = $request->get('eassociation');
                 $organization->regional_coordinator_contact_details = $request->get('rcphone_number');
@@ -153,7 +153,7 @@ class EmployeeController extends Controller
                                 'association', 'facility'])
                              ->where('employee_id', $id)->first(); 
 
-                            //dd($organization);
+                            //dd($organization['association']['association_id']);
 
         $portrait = EmployeePortrait::where('employee_id', $id)->first();
         $fingerprint = EmployeeFingerprint::where('employee_id', $id)->first();
@@ -177,13 +177,15 @@ class EmployeeController extends Controller
         $all_regions = Region::all();
         $all_positions = EmployeePosition::all();
         $all_gender = Gender::all();
+        $all_facilities =  Facility::all();
+
         $employee = Employee::with(['city', 'province',
                                     'region', 'position',
                                     'gender'])
                                 ->findOrFail($id);
         $organization = EmployeeOrganization::with(['employee',
                                     'association', 'facility'])
-                                ->where('employee_id', $id)->get(); 
+                                ->where('employee_id', $id)->first(); 
 
         return view('datacapturer.employees.create', compact(['all_cities',
                                                         'all_provinces', 
@@ -191,7 +193,8 @@ class EmployeeController extends Controller
                                                         'all_positions',
                                                         'all_gender',
                                                         'employee',
-                                                        'organization']));
+                                                        'organization',
+                                                        'all_facilities']));
     }
 
     /**
@@ -213,8 +216,8 @@ class EmployeeController extends Controller
             [
                 'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
                 'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-                'email' => 'required|email|unique:employees,email,'.$id,
-                'id_number' => 'required|id_number|digits:13|unique:employees,id_number'.$id
+                'email' => 'required|email|unique:employees,email,' . $id,
+                'id_number' => 'required|digits:13|unique:employees,id_number,' . $id
             ]
         );
 
@@ -231,7 +234,7 @@ class EmployeeController extends Controller
                                 ->findOrFail($request->get('id'));
         $organization = EmployeeOrganization::with(['employee',
                                 'association', 'facility'])
-                                ->where('employee_id', $id)->get(); 
+                                ->where('employee_id', $id)->first(); 
 
         $employee_update = array(
             'name' => $request->get('name'),

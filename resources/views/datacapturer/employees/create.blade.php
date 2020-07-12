@@ -68,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Region: <span class="text-danger">*</span> </h5>
+                                    <h5><b>Region: </b><span class="text-danger">*</span> </h5>
                                     <select class="custom-select form-control required" 
                                         id="eregion" name="eregion" required>
                                         @if( isset($employee))
@@ -96,17 +96,17 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5> Association :
+                                    <h5> <b>Association :</b>
                                         <span class="text-danger">*</span>  
                                     </h5>
                                     <select class="custom-select form-control " 
                                         id="eassociation" name="eassociation">
-                                        @if( isset($organization))
-                                            <option value="{{ $organization->association_id }}">
+                                        @if( isset($organization) )
+                                            <option value="{{ $organization['association']['association_id'] }}">
                                                 {{ $organization['association']['name'] }}
                                             </option>
                                         @else
-                                            <option selected value="">Please select Association</option>
+                                            <option value="">Please select Association</option>
                                         @endif
                                     </select>
                                 </div>
@@ -114,7 +114,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Regional Coordinator Name & Surname :
+                                    <h5><b>Regional Coordinator Name & Surname :</b>
                                         <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
@@ -127,7 +127,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Regional Coordinator's Contact Details :
+                                    <h5><b>Regional Coordinator's Contact Details :</b>
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
@@ -139,24 +139,37 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5> Cadet Taxi Rank :
+                                    <h5><b> Cadet Taxi Rank : </b>
                                         <span class="text-danger">*</span>  
                                     </h5>
                                     <select class="custom-select form-control " 
                                         id="etaxirank" name="etaxirank">
+                                        @if( isset($organization) )
+                                        <option value="{{ $organization['facility']['id'] }}">
+                                            {{ $organization['facility']['name'] }}
+                                        </option>
+                                        @foreach ($all_facilities as $facility)
+                                            @if( $facility->id != $organization['facility']['id'] )
+                                            <option value="{{ $facility->id }}">
+                                                {{ $facility->name }}
+                                            </option>
+                                            @endif
+                                        @endforeach
+                                        @else
                                         <option selected value="">Please select Taxi Rank</option>
                                         @foreach ($all_facilities as $facility)
                                             <option value="{{ $facility->id }}">
                                                 {{ $facility->name }}
                                             </option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group" id="rank" >
-                                    <h5>Taxi Rank Description (If applicable):</h5>
+                                    <h5><b>Taxi Rank Description (If applicable): </b></h5>
                                     <textarea class="form-control" 
                                         placeholder="Taxi Rank A, Taxi Rank B, etc" 
                                             name="rank"> {{old('rank') ?? $employee->rank ?? ''}}
@@ -166,7 +179,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Taxi Rank Manager Name & Surname :
+                                    <h5><b>Taxi Rank Manager Name & Surname : </b>
                                         <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
@@ -179,7 +192,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Taxi Rank Manager's Contact Details :
+                                    <h5><b>Taxi Rank Manager's Contact Details : </b>
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
@@ -192,7 +205,7 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="position">Cadet Rank Position : 
+                                    <h5 for="position"><b>Cadet Rank Position : </b>
                                         <span class="text-danger">*</span> 
                                     </h5>
                                     <select class="custom-select form-control" 
@@ -232,7 +245,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Firstname :<span class="text-danger"> *</span></h5>
+                                    <h5><b>Firstname :</b><span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="name" maxlength=40 
                                             required data-validation-required-message="This field is required" 
@@ -243,7 +256,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Surname :<span class="text-danger"> *</span></h5>
+                                    <h5><b>Surname :</b><span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="surname" maxlength=40 
                                             required data-validation-required-message="This field is required" 
@@ -254,7 +267,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>National ID Number :<span class="text-danger"> *</span></h5>
+                                    <h5><b>National ID Number :</b><span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="id_number" 
                                             maxlength=13 min=13 id="id_number" 
@@ -266,7 +279,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="gender">Gender : <span class="text-danger">*</span> </h5>
+                                    <h5 for="gender"><b>Gender : </b><span class="text-danger">*</span> </h5>
                                     <select class="custom-select form-control" 
                                         id="gender" name="gender" required>
                                         @if( isset($employee) )
@@ -290,7 +303,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Employee Number :</h5>
+                                    <h5><b>Employee Number :</b></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="employee_number"  
                                                 value="{{ old('employee_number') ?? 
@@ -301,7 +314,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="wphoneNumber2">Phone Number : 
+                                    <h5 for="wphoneNumber2"><b>Phone Number : </b>
                                         <span class="text-danger"> *</span>  
                                         </h5>
                                     <input type="tel" class="form-control required" id="wphoneNumber2" 
@@ -312,7 +325,7 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Email Address :<span class="text-danger"> *</span></h5>
+                                    <h5><b>Email Address :</b><span class="text-danger"> *</span></h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="email" maxlength=40
                                             required data-validation-required-message="This field is required" 
@@ -323,7 +336,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergency_contact_name">Emergency Contact Name : </h5>
+                                    <h5 for="emergency_contact_name"><b>Emergency Contact Name : </b></h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_name" name="emergency_contact_name" 
                                         maxlength="25" 
@@ -334,7 +347,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergency_contact_number">Emergency Contact Number : </h5>
+                                    <h5 for="emergency_contact_number"><b>Emergency Contact Number : </b> </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_number" name="emergency_contact_number" 
                                         maxlength="10" 
@@ -346,7 +359,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5 for="emergencycontactrelationship">
-                                        Relationship to Cadet:
+                                        <b>Relationship to Cadet: </b>
                                     </h5>
                                     <input type="text" class="form-control required" 
                                         id="emergency_contact_relationship" 
@@ -359,7 +372,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="addressline1">Address Line : 
+                                    <h5 for="addressline1"><b>Address Line : </b>
                                         <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="text" class="form-control required" id="address_line" 
@@ -370,7 +383,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for=surburb">Surburb<span class="text-danger"> *</span>  </h5>
+                                    <h5 for=surburb"><b>Surburb</b>
+                                        <span class="text-danger"> *</span>  </h5>
                                     <input type="text" class="form-control required" id="surburb" 
                                         name="surburb" maxlength="25" required 
                                         value="{{ old('surburb') ?? $employee->surburb ?? '' }}">
@@ -379,7 +393,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="postal-code">Postal Code : 
+                                    <h5 for="postal-code"><b>Postal Code : </b>
                                         <span class="text-danger"> *</span> 
                                     </h5>
                                     <input type="text" class="form-control" 
@@ -391,7 +405,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="city">City/Town : <span class="text-danger"> *</span> </h5>
+                                    <h5 for="city"><b>City/Town : </b>
+                                        <span class="text-danger"> *</span> 
+                                    </h5>
                                     <select class="custom-select form-control required"
                                          id="city" name="city" required>
                                     @if( isset($employee))
@@ -418,7 +434,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="province">Province : <span class="text-danger"> *</span> </h5>
+                                    <h5 for="province"><b>Province : </b>
+                                        <span class="text-danger"> *</span> 
+                                    </h5>
                                     <select class="custom-select form-control required" 
                                         id="province" name="province" required>
                                     @if( isset($employee))

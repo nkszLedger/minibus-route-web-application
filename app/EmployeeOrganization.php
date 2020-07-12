@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeOrganization extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'employee_id',  
+        'association_id',  
+        'facility_taxi_rank_id',
+    ];
+
     protected $table = 'employee_organizations';
 
     public function employee()
