@@ -10,36 +10,36 @@ use DB;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
-    /**
-     * Get the path the user should be redirected to.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
-    {
-        return route('auth.login');
-    }
+    // /**
+    //  * Get the path the user should be redirected to.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return string
+    //  */
+    // protected function redirectTo($request)
+    // {
+    //     return route('auth.login');
+    // }
     
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', 
-                                ['only' => ['index','store']]);
-         $this->middleware('permission:role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    // function __construct()
+    // {
+    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', 
+    //                             ['only' => ['index','store']]);
+    //      $this->middleware('permission:role-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
 
-    }
+    // }
 
     /**
      * Display a listing of the resource.

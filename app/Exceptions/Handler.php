@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
@@ -60,5 +61,14 @@ class Handler extends ExceptionHandler
             return Route::respondWithRoute('api.fallback');
         }
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception) 
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        return redirect()->guest('login');
     }
 }

@@ -31,23 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Exists;
 
 class MemberController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Get the path the user should be redirected to.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
-    {
-        return route('auth.login');
-    }
-    
+{   
     /**
      * Display a listing of the resource.
      *
@@ -269,6 +253,15 @@ class MemberController extends Controller
      */
     public function show($id)
     {
+        /* Lookups */
+        $all_membership_types = MembershipType::all();
+        $all_associations = Association::all();
+        $all_regions = Region::all();
+        $all_cities = City::all();
+        $all_gender = Gender::all();
+        $all_driving_licence_codes = DrivingLicenceCode::all();
+        
+        /* Related to Member */
         $member_record = Member::with(['membership_type',
                                         'city', 'gender'])->findOrFail($id);
         
@@ -300,45 +293,23 @@ class MemberController extends Controller
         if( $member_record->membership_type_id == 1 )
         {
             $member_driver = MemberDriver::with(['codes'])
-                                        ->where('member_id', $id);
+                                        ->where('member_id', $id)->first();
             
         }
         else if( $member_record->membership_type_id == 2 )
         {
             $member_operator = MemberOperator::where('member_id', $id)
-                                        ->get();
+                                        ->first();
         }
         else 
         {
             $member_driver = MemberDriver::with(['codes'])
                                         ->where('member_id', $id)
-                                        ->get();
+                                        ->first();
             $member_operator = MemberOperator::where('member_id', $id)
-                                        ->get();
+                                        ->first();
         }
 
-        $all_membership_types = MembershipType::all();
-        $all_associations = Association::all();
-        $all_regions = Region::all();
-        $all_cities = City::all();
-        $all_gender = Gender::all();
-        $all_driving_licence_codes = DrivingLicenceCode::all();
-        
-        return view('datacapturer.members.show', 
-        compact(['member_record', 
-                    'portrait',
-                    'fingerprint',
-                    'member_driver', 
-                    'member_operator',
-                    'member_vehicles',
-                    'all_membership_types',
-                    'all_associations',
-                    'all_regions',
-                    'all_cities',
-                    'all_gender',
-                    'all_driving_licence_codes'
-                ]));
-        
         if( $member_record->is_member_associated & 
             count(MemberVehicle::where('member_id', $id)->get()) > 0 )
         {
@@ -358,22 +329,26 @@ class MemberController extends Controller
                                 
             return view('datacapturer.members.show', 
                                     compact(['member_record', 
-                                                'vehicle', 'driver',
+                                                'member_operator', 
+                                                'member_driver',
+                                                'member_vehicles',
                                                 'region', 'association',
-                                                'operator','all_routes', 
-                                                'all_associations',
-                                                'all_membership_types',
-                                                'all_regions', 'all_cities'
+                                                'all_routes', 'all_associations',
+                                                'all_membership_types', 'all_gender',
+                                                'all_regions', 'all_cities',
+                                                'all_driving_licence_codes'
                                                 ]));
         }
         else
         {
             return view('datacapturer.members.show', 
                                 compact(['member_record', 
-                                            'vehicle', 'driver',
-                                            'operator',
-                                            'all_membership_types',
-                                            'all_cities', 'all_gender'
+                                            'member_operator', 
+                                            'member_driver',
+                                            'member_vehicles',
+                                            'all_membership_types', 'all_gender',
+                                            'all_regions', 'all_cities',
+                                            'all_driving_licence_codes'
                                             ]));
         }
 

@@ -67,13 +67,13 @@ return [
         'sftp' => [
             'driver' => 'sftp',
             'host' => 'ptrms-file-test.csir.co.za',
-            'username' => 'zsingano',
-            'password' => 'eMeritusGate@miller93',
+            'username' => 'ptrmsftpuser',
+            'password' => 'ptrmsMinibus20',
 
             // Optional FTP Settings...
             // 'port' => 22,
             // 'root' => 'files',
-            // 'passive' => false,
+            // 'passive' => false,  
             // 'ssl' => false,
             // 'timeout' => 30,
         ],

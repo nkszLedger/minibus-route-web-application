@@ -14,7 +14,9 @@ class EmployeePositionTableSeeder extends Seeder
         DB::table('employee_positions')->insert([
             ['position' => 'Rank Manager'],
             ['position' => 'Rank Coordinator'],
-            ['position' => 'Rank Marshall']
+            ['position' => 'Rank Marshall'],
+            ['position' => 'Squad Patrol'],
+            ['position' => 'Other'],
         ]);
     }
 }

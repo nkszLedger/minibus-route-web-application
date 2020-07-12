@@ -13,7 +13,7 @@ class EmployeeTableSeeder extends Seeder
     {
         DB::table('employees')->insert([
             [
-                'name' => 'Samuel',
+                'name' => 'Khulekani',
                 'surname' => 'Ngema',
                 'id_number' => '0301030206081',
                 'employee_number' => '678900',
@@ -36,8 +36,8 @@ class EmployeeTableSeeder extends Seeder
                 
             ],
             [
-                'name' => 'Lindi',
-                'surname' => 'Makhi',
+                'name' => 'Nomkhosi',
+                'surname' => 'Mnguni',
                 'id_number' => '0201050204081',
                 'employee_id' => '415623',
                 'phone_number' => '0124567788',
@@ -58,8 +58,8 @@ class EmployeeTableSeeder extends Seeder
                 'updated_at' => \Carbon\Carbon::now(),
             ],
             [
-                'name' => 'Sizwe',
-                'surname' => 'Kunene',
+                'name' => 'Mvelinqange',
+                'surname' => 'Mzimela',
                 'id_number' => '0708120915081',
                 'employee_id' => '502344',
                 'phone_number' => '0127004520',

@@ -6,12 +6,15 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Employee Registration</h3>
+					<h3 class="page-title">Cadets Management</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item active" aria-current="page">System Access & Profile</li>
+								<li class="breadcrumb-item active" aria-current="page">
+                                    Registration of cadets assisting with COVID-19 disinfection and PPE 
+                                    distribution at Gauteng Taxi Ranks
+                                </li>
 							</ol>
 						</nav>
 					</div>
@@ -36,7 +39,123 @@
                     <div class="col-12">
                       <form method="GET" action= "{{ route('employees.edit', $employee->id) }}">
                         <input type="hidden" class="form-control" name="id" value="{{$employee->id }}">
-                        <h4 class="box-title text-info"><i class="ti-user mr-15"></i> About Employee</h4>
+                        <h4 class="box-title text-info">
+                            <i class="ti-user mr-15"></i> Organizational Demography
+                        </h4>
+						<hr class="mb-15 mt-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5> Region: 
+                                        <span class="text-danger">*</span> 
+                                    </h5>
+                                    <select class="custom-select form-control required" disabled>
+                                        <option value="{{$employee['region']['region_id']}}">
+                                            {{$employee['region']['region_name']}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5> Association :
+                                        <span class="text-danger">*</span>  
+                                    </h5>
+                                    <select class="custom-select form-control" disabled>
+                                        <option value="{{ $organization['association']['association_id'] }}">
+                                            {{ $organization['association']['name'] }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Regional Coordinator Name & Surname :
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" readonly 
+                                            value="{{ $organization->regional_coordinator_full_name ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Regional Coordinator's Contact Details :
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="tel" class="form-control required"  
+                                        name="rcphone_number" readonly   
+                                        value="{{  $organization->regional_coordinator_contact_details ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5> Cadet Taxi Rank :
+                                        <span class="text-danger">*</span>  
+                                    </h5>
+                                    <select class="custom-select form-control" disabled>
+                                        <option value="{{ $organization['facility']['id'] }}">
+                                            {{ $organization['facility']['name'] }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Taxi Rank Description (If applicable):</h5>
+                                    <textarea class="form-control" readonly>
+                                        {{ $employee->rank ?? ''}}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Taxi Rank Manager Name & Surname :
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" readonly  
+                                            value="{{ $organization->facility_manager_full_name ?? '' }}" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5>Taxi Rank Manager's Contact Details :
+                                        <span class="text-danger"> *</span>  
+                                    </h5>
+                                    <input type="tel" class="form-control required" readonly   
+                                        value="{{ $organization->facility_manager_contact_details ?? '' }}" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="gender">Rank Position : 
+                                        <span class="text-danger">*</span> 
+                                    </h5>
+                                    <select class="custom-select form-control" disabled>
+                                        <option value="{{$employee['position']['id']}}">
+                                            {{$employee['position']['position']}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr class="mb-15 mt-15">
+                        <h4 class="box-title text-info">
+                            <i class="ti-user mr-15"></i> 
+                                Personal Demography
+                        </h4>
 						<hr class="mb-15 mt-0">
                         <div class="row">
 
@@ -93,30 +212,6 @@
                                              required data-validation-required-message="This field is required" 
                                                 value="{{$employee->employee_number }}" readonly>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="gender">Rank Position : <span class="text-danger">*</span> </h5>
-                                    <select class="custom-select form-control" 
-                                        id="gender" name="gender" disabled>
-                                            <option value="{{$employee['position']['id']}}">
-                                                {{$employee['position']['position']}}
-                                            </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group" id="rank" >
-                                    <label for="rank">Taxi Rank : 
-                                        <span class="text-danger">*</span> 
-                                    </label>
-                                    <textarea class="form-control" 
-                                        placeholder="Taxi Rank A, Taxi Rank B, etc" 
-                                            name="rank" readonly> {{ $employee->rank ?? ''}}
-                                    </textarea>
                                 </div>
                             </div>
 
@@ -207,17 +302,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="eregion">Region: <span class="text-danger">*</span> </h5>
-                                    <select class="custom-select form-control required" id="eregion" name="eregion" disabled>
-                                        <option value="{{$employee['region']['region_id']}}">
-                                            {{$employee['region']['region_name']}}
-                                        </option>
-                                    </select>
-                                </div>
-							</div>
 
                             <div class="col-md-6">
                                 <div class="form-group">

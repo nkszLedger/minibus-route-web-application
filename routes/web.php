@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes(); //['verify' => true]
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -47,6 +47,9 @@ Route::get('vehicles/{id}',
 Route::get('vehicles/remove/{id}', 
             'DataCapturer\VehicleController@destroy')
                 ->name('vehicles.destroy');
+
+Route::get('employees/getAssociations/{region_id}', 
+            'Controller@getAssociationsByRegionID');
 
 Route::get('vehicles/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID')->name('associations');

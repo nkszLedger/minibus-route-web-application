@@ -2,16 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
-class RoutesTableSeeder extends Seeder
+class FacilityMunicipalityTableSeeder extends Seeder
 {
-        public function __construct(){
-
-
-        $this->filename = getcwd() . '/database/seeds/csv/input_routes.csv';
-
+    public function __construct()
+    {
+        $this->filename = getcwd() . '/database/seeds/csv/input_facility_municipalities.csv';
     }
-
-
+    
     private function seedFromCSV($filename, $delimitor = ",")
     {
         if(!file_exists($filename) )
@@ -58,10 +55,9 @@ class RoutesTableSeeder extends Seeder
 
         foreach ($seedData as $unit_array)
         {
-            DB::table('routes')->insert([$unit_array]);
+            DB::table('facility_municipality')->insert([$unit_array]);
 
         }
 
     }
-
 }

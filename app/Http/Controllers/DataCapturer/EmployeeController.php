@@ -5,11 +5,13 @@ use App\User;
 use App\City;
 use App\Gender;
 use App\Employee;
+use App\EmployeeOrganization;
 use App\EmployeeFingerprint;
 use App\EmployeePortrait;
 use App\EmployeePosition;
 use App\Province;
 use App\Region;
+use App\Facility;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -18,22 +20,6 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Get the path the user should be redirected to.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
-    {
-        return route('auth.login');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -61,12 +47,14 @@ class EmployeeController extends Controller
         $all_gender = Gender::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
+        $all_facilities =  Facility::all();
 
         return view('datacapturer.employees.create', compact(['all_cities', 
                                                                 'all_positions',
                                                                 'all_gender',
                                                                 'all_provinces', 
-                                                                'all_regions'
+                                                                'all_regions',
+                                                                'all_facilities'
                                                             ]));
     }
 
@@ -108,6 +96,7 @@ class EmployeeController extends Controller
 
 
             $employee = new Employee();
+            $organization = new EmployeeOrganization(); 
 
             /* Finally Capture */
             $employee->name = $request->get('name');
@@ -131,7 +120,18 @@ class EmployeeController extends Controller
             $employee->rank = $request->get('rank');
 
             /* store employee entry */
-            $employee->save();
+            if( $employee->save() )
+            {
+                $organization->employee_id = $employee->id;
+                $organization->regional_coordinator_full_name = $request->get('rcfullname');
+                $organization->association_id = $request->get('eassociation');
+                $organization->regional_coordinator_contact_details = $request->get('rcphone_number');
+                $organization->facility_taxi_rank_id = $request->get('etaxirank');
+                $organization->facility_manager_full_name = $request->get('rmfullname');
+                $organization->facility_manager_contact_details = $request->get('rmphone_number');
+
+                $organization->save();
+            }
 
             return redirect()->intended('employees');
         }
@@ -150,12 +150,18 @@ class EmployeeController extends Controller
                                     'region', 'position',
                                     'gender'])
                              ->findOrFail($id);
+        $organization = EmployeeOrganization::with(['employee',
+                                'association', 'facility'])
+                             ->where('employee_id', $id)->first(); 
 
-        $portrait = EmployeePortrait::where('employee_id', $id)->get();
-        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->get();
+                            //dd($organization['association']['association_id']);
+
+        $portrait = EmployeePortrait::where('employee_id', $id)->first();
+        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->first();
 
         return view('datacapturer.employees.show', 
-                        compact(['employee', 'portrait', 'fingerprint']));
+                        compact(['employee', 'portrait', 
+                                'fingerprint', 'organization']));
         
     }
 
@@ -172,17 +178,24 @@ class EmployeeController extends Controller
         $all_regions = Region::all();
         $all_positions = EmployeePosition::all();
         $all_gender = Gender::all();
+        $all_facilities =  Facility::all();
+
         $employee = Employee::with(['city', 'province',
                                     'region', 'position',
                                     'gender'])
                                 ->findOrFail($id);
+        $organization = EmployeeOrganization::with(['employee',
+                                    'association', 'facility'])
+                                ->where('employee_id', $id)->first(); 
 
         return view('datacapturer.employees.create', compact(['all_cities',
                                                         'all_provinces', 
                                                         'all_regions',
                                                         'all_positions',
                                                         'all_gender',
-                                                        'employee']));
+                                                        'employee',
+                                                        'organization',
+                                                        'all_facilities']));
     }
 
     /**
@@ -194,36 +207,37 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $validator = Validator::make(
-        //     [
-        //         'name' => $request->get('name'),
-        //         'surname' => $request->get('surname'),
-        //         'email' => $request->get('email'),
-        //         'id_number' => $request->get('id_number'),
-        //         'employee_number' => $request->get('employee_number')
-        //     ],
-        //     [
-        //         'name' => 'required|alpha|max:20',
-        //         'surname' => 'required|alpha|max:20',
-        //         'email' => 'required|unique:employees,email,'.$id,
-        //         'id_number' => 'required|digits:13|unique:employees,id_number,'.$id,
-        //         'employee_number' => 'nullable|digits',
-        //     ]
-        // );  
+        $validator = Validator::make(
+            [
+                'name' => $request->get('name'),
+                'surname' => $request->get('surname'),
+                'email' => $request->get('email'),
+                'id_number' => $request->get('id_number')
+            ],
+            [
+                'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                'email' => 'required|email|unique:employees,email,' . $id,
+                'id_number' => 'required|digits:13|unique:employees,id_number,' . $id
+            ]
+        );
 
-        // if ($validator->fails()) 
-        // {
-        //     $errors = $validator->errors()->first();
-        //     return back()->withErrors($errors)
-        //                 ->withInput();
-        // }
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->first();
+            return back()->withErrors($errors)
+                        ->withInput();
+        }
 
         $employee = Employee::with(['city', 'province',
                                     'region', 'position',
                                     'gender'])
                                 ->findOrFail($request->get('id'));
-        
-        $update = array(
+        $organization = EmployeeOrganization::with(['employee',
+                                'association', 'facility'])
+                                ->where('employee_id', $id)->first(); 
+
+        $employee_update = array(
             'name' => $request->get('name'),
             'surname' => $request->get('surname'),
             'phone_number' => $request->get('phone_number'),
@@ -242,7 +256,21 @@ class EmployeeController extends Controller
         );
         
         /* update employee entry */
-        $employee->update($update);
+        if( $employee->update($employee_update) )
+        {
+            $organization_update = array(
+                'employee_id' => $request->get('employee_id'),
+                'regional_coordinator_full_name' => $request->get('rcfullname'),
+                'association_id' => $request->get('eassociation'),
+                'regional_coordinator_contact_details' => $request->get('rcphone_number'),
+                'facility_taxi_rank_id' => $request->get('etaxirank'),
+                'facility_manager_full_name' => $request->get('rmfullname'),
+                'facility_manager_contact_details' => $request->get('rmphone_number'),
+            );
+
+            /* update employee organization entry */
+            $organization->update($organization_update);
+        }
 
         return $this->index();
     }

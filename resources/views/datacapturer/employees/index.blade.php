@@ -37,10 +37,10 @@
 						<div class="box-body">
 							<div class="table-responsive">
 								@hasanyrole(['Systems Admin|Oversight'])
-								<table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
+								<table id="example" class="table table-bordered table-hover" 
 									style="width:100%">
 								@else
-								<table id="example2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100" 
+								<table id="example2" class="table table-bordered table-hover" 
 									style="width:100%">
 								@endhasanyrole
 									<thead>
@@ -65,14 +65,30 @@
 									@foreach($all_employees as $employee )
 										<tr>
 											<td>{{$count}}</td>
-											<td>{{ $employee->name }}</td>
-                                            <td>{{ $employee->surname }}</td>
-                                            <td>{{ $employee->phone_number }}</td>
-                                            <td>{{ $employee->address_line }}</td>
-											<td>{{ $employee['region']['region_name'] }}</td>
-											<td>{{ $employee->rank }}</td>
-                                            <td>{{ $employee['position']['position'] }}</td>
-											<td>{{ $employee['province']['name'] }}</td>
+											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->name }}
+											</td>
+                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->surname }}
+											</td>
+                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->phone_number }}
+											</td>
+                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->address_line }}
+											</td>
+											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee['region']['region_name'] }}
+											</td>
+											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->rank }}
+											</td>
+                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee['position']['position'] }}
+											</td>
+											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee['province']['name'] }}
+											</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
