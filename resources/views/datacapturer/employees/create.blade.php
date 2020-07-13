@@ -114,8 +114,19 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5><b>Association Name: </b>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="association_name" 
+                                            maxlength=40 value="{{ old('association_name') ?? 
+                                                $organization->association_name ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5><b>Regional Coordinator Name & Surname :</b>
-                                        <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="rcfullname" maxlength=40  
@@ -128,7 +139,6 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5><b>Regional Coordinator's Contact Details :</b>
-                                        <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
                                         name="rcphone_number" maxlength="10"  
@@ -139,8 +149,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5><b> Cadet Taxi Rank : </b>
-                                        <span class="text-danger">*</span>  
+                                    <h5><b> Cadet Taxi Rank : </b>  
                                     </h5>
                                     <select class="custom-select form-control " 
                                         id="etaxirank" name="etaxirank">
@@ -169,8 +178,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group" id="rank" >
-                                    <h5><b>Taxi Rank Description (If applicable): </b></h5>
-                                    <textarea class="form-control" 
+                                    <h5><b>Taxi Rank Description: </b></h5>
+                                    <textarea rows="10" class="form-control" 
                                         placeholder="Taxi Rank A, Taxi Rank B, etc" 
                                             name="rank"> {{old('rank') ?? $employee->rank ?? ''}}
                                     </textarea>
@@ -178,9 +187,20 @@
                             </div>
 
                             <div class="col-md-6">
+                                <div class="form-group" id="sub_taxi_ranks" >
+                                    <h5><b>Subordinate Taxi Ranks: </b></h5>
+                                    <textarea rows="10" class="form-control" 
+                                        placeholder="Taxi Rank A, Taxi Rank B, etc" 
+                                            name="sub_taxi_ranks"> 
+                                            {{old('sub_taxi_ranks') ?? 
+                                                $organization->subordinate_taxi_ranks ?? ''}}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <h5><b>Taxi Rank Manager Name & Surname : </b>
-                                        <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="rmfullname" maxlength=40
@@ -193,7 +213,6 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h5><b>Taxi Rank Manager's Contact Details : </b>
-                                        <span class="text-danger"> *</span>  
                                     </h5>
                                     <input type="tel" class="form-control required" id="wphonenumber" 
                                         name="rmphone_number" maxlength="10" 

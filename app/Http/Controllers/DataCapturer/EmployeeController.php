@@ -122,6 +122,8 @@ class EmployeeController extends Controller
             if( $employee->save() )
             {
                 $organization->employee_id = $employee->id;
+                $organization->association_name = $request->get('association_name');
+                $organization->subordinate_taxi_ranks = $request->get('sub_taxi_ranks');
                 $organization->regional_coordinator_full_name = $request->get('rcfullname');
                 $organization->association_id = $request->get('eassociation');
                 $organization->regional_coordinator_contact_details = $request->get('rcphone_number');
