@@ -22,7 +22,8 @@ class Employee extends Model
         'emergency_contact_number',
         'address_line', 'surburb',
         'postal_code', 'city_id',
-        'province_id', 'region_id'
+        'province_id', 'region_id',
+        'rank', 'position_id', 'gender_id'
     ];
 
     /**

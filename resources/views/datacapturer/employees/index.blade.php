@@ -49,6 +49,7 @@
 											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Phone Number</th>
+											<th>Email</th>
 											<th>Address Line</th>
 											<th>Region</th>
 											<th>Taxi Rank</th>
@@ -73,6 +74,9 @@
 											</td>
                                             <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee->phone_number }}
+											</td>
+											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+												{{ $employee->email }}
 											</td>
                                             <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee->address_line }}
@@ -107,6 +111,7 @@
 											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Phone Number</th>
+											<th>Email</th>
 											<th>Address Line</th>
 											<th>Region</th>
 											<th>Taxi Rank</th>

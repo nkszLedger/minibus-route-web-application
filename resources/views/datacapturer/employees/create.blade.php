@@ -291,7 +291,8 @@
                                         <input type="text" class="form-control" name="id_number" 
                                             maxlength=13 min=13 id="id_number" 
                                             required data-validation-required-message="This field is required" 
-                                            value="{{ old('id_number') ?? $employee->id_number ?? '' }}">
+                                            value="{{ old('id_number') ?? $employee->id_number ?? '' }}" 
+                                            {{ isset($employee) ? 'readonly' : '' }} >
                                     </div>
                                 </div>
                             </div>

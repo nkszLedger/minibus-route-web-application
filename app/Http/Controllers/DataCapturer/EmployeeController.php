@@ -212,14 +212,12 @@ class EmployeeController extends Controller
             [
                 'name' => $request->get('name'),
                 'surname' => $request->get('surname'),
-                'email' => $request->get('email'),
-                'id_number' => $request->get('id_number')
+                'email' => $request->get('email')
             ],
             [
                 'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
                 'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-                'email' => 'required|email|unique:employees,email,' . $id,
-                'id_number' => 'required|digits:13|unique:employees,id_number,' . $id
+                'email' => 'required|email|unique:employees,email,'.$id,
             ]
         );
 
@@ -241,6 +239,7 @@ class EmployeeController extends Controller
         $employee_update = array(
             'name' => $request->get('name'),
             'surname' => $request->get('surname'),
+            'employee_number' => $request->get('employee_number'),
             'phone_number' => $request->get('phone_number'),
             'emergency_contact_name' => 
                     $request->get('emergency_contact_name'),
@@ -254,14 +253,21 @@ class EmployeeController extends Controller
             'city_id' => $request->get('city'),
             'province_id' => $request->get('province'),
             'region_id' => $request->get('eregion'),
+
+            'gender_id' => $request->get('gender'),
+            'position_id' => $request->get('position'),
+            'rank' => $request->get('rank')
+            
         );
         
         /* update employee entry */
         if( $employee->update($employee_update) )
         {
             $organization_update = array(
-                'employee_id' => $request->get('employee_id'),
+                'employee_id' => $request->get('id'),
                 'regional_coordinator_full_name' => $request->get('rcfullname'),
+                'association_name' => $request->get('association_name'),
+                'subordinate_taxi_ranks' => $request->get('sub_taxi_ranks'),
                 'association_id' => $request->get('eassociation'),
                 'regional_coordinator_contact_details' => $request->get('rcphone_number'),
                 'facility_taxi_rank_id' => $request->get('etaxirank'),
