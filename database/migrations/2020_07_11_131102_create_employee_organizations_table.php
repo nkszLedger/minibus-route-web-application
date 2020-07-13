@@ -18,7 +18,9 @@ class CreateEmployeeOrganizationsTable extends Migration
             $table->integer('employee_id');
             $table->string('regional_coordinator_full_name')->nullable();
             $table->string('regional_coordinator_contact_details')->nullable();
+            $table->string('association_name')->nullable();
             $table->integer('association_id');
+            $table->longText('subordinate_taxi_ranks')->nullable();
             $table->integer('facility_taxi_rank_id');
             $table->string('facility_manager_full_name')->nullable();
             $table->string('facility_manager_contact_details')->nullable();

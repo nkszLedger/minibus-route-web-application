@@ -72,8 +72,18 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5><b>Association Name: </b>
+                                    </h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" readonly  
+                                            value="{{ $organization->association_name ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5>Regional Coordinator Name & Surname :
-                                        <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" readonly 
@@ -84,8 +94,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Regional Coordinator's Contact Details :
-                                        <span class="text-danger"> *</span>  
+                                    <h5>Regional Coordinator's Contact Details : 
                                     </h5>
                                     <input type="tel" class="form-control required"  
                                         name="rcphone_number" readonly   
@@ -95,8 +104,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5> Cadet Taxi Rank :
-                                        <span class="text-danger">*</span>  
+                                    <h5> Cadet Taxi Rank : 
                                     </h5>
                                     <select class="custom-select form-control" disabled>
                                         <option value="{{ $organization['facility']['id'] }}">
@@ -108,8 +116,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Taxi Rank Description (If applicable):</h5>
-                                    <textarea class="form-control" readonly>
+                                    <h5>Taxi Rank Description: </h5>
+                                    <textarea rows="10" class="form-control" readonly>
                                         {{ $employee->rank ?? ''}}
                                     </textarea>
                                 </div>
@@ -117,8 +125,16 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5><b>Subordinate Taxi Ranks: </b></h5>
+                                    <textarea rows="10" class="form-control" readonly> 
+                                            {{ $organization->subordinate_taxi_ranks ?? ''}}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5>Taxi Rank Manager Name & Surname :
-                                        <span class="text-danger"> *</span>
                                     </h5>
                                     <div class="controls">
                                         <input type="text" class="form-control" readonly  
@@ -129,8 +145,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5>Taxi Rank Manager's Contact Details :
-                                        <span class="text-danger"> *</span>  
+                                    <h5>Taxi Rank Manager's Contact Details :  
                                     </h5>
                                     <input type="tel" class="form-control required" readonly   
                                         value="{{ $organization->facility_manager_contact_details ?? '' }}" >
