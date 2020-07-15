@@ -184,24 +184,7 @@
 					@endrole
 				</div>
 
-				<div class="right-title w-350">
-					<div class="form-group">
-						<h5 class="text-white"> 
-							<b>Region Overview : </b>
-						</h5>
-						<select id=region_selector class="custom-select form-control">
-							<option value="0"> <b> All </b> </option>
-							@foreach ($all_regions as $region)
-								<option value="{{$region->region_id}}">
-									<b> {{$region->region_name}} </b>
-								</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-
-
-				{{-- <div class="right-title w-170">
+				<div class="right-title w-170">
 					<span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
 						<span class="subheader_daterange-label">
 							<span class="subheader_daterange-title">
@@ -214,7 +197,7 @@
 							<i class="fa fa-book"></i>
 						</a>
 					</span>
-				</div> --}}
+				</div>
 			</div>
 		</div>
 
@@ -573,6 +556,10 @@
 
 	<!-- VoiceX Admin for Morris Chart purposes -->
 	<script src="/minibus/main/js/pages/widget-morris-charts.js"></script>
+
+	<!-- eChart Plugins -->
+    <script src="minibus/assets/vendor_components/echarts/dist/echarts-en.min.js"></script>
+	<script src="/minibus/main/js/pages/echart-pie-doghnut.js"></script>
 
 	<!-- VoiceX Admin for demo purposes -->
 	<script src="/minibus/main/js/demo.js"></script>

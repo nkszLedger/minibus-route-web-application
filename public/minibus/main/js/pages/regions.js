@@ -1,13 +1,14 @@
+
 $('#region_selector').change(function(){
     var id = $(this).val();
 
-    var url_path = window.location.origin + "/dashboard/filterByRegionID/"+ id.toString();
-    //alert("hey");
+    var url_path = window.location.origin + "/filterByRegionID/"+ id.toString();
+
     $.ajax({
         url: url_path,
         type: 'GET',
         dataType: 'json',
-        success: function(response){
+        success: function(response){ 
 
             $('#employee_count').html(response['employee_count'].toString());
             $('#route_count').html(response['route_count'].toString());
@@ -26,11 +27,11 @@ $('#region_selector').change(function(){
             cOther = response['other'];
 
             var piedata = [
-                { label: "Managers", data: [[1,cManager]], color: '#38649f'},
-                { label: "Marshalls", data: [[1,cMarshall]], color: '#389f99'},
-                { label: "Coordinators", data: [[1,cCoordinator]], color: '#689f38'},
-                { label: "Squad Patrol", data: [[1,cSquad]], color: '#d5d5d5'},
-                { label: "Other", data: [[1,cCoordinator]], color: '#ee1044'},
+                { label: "Managers", data: [['S1', cManager]], color: '#38649f'},
+                { label: "Marshalls", data: [['S2', cMarshall]], color: '#389f99'},
+                { label: "Coordinators", data: [['S3', cCoordinator]], color: '#689f38'},
+                { label: "Squad Patrol", data: [['S4', cSquad]], color: '#d5d5d5'},
+                { label: "Other", data: [['S5', cCoordinator]], color: '#ee1044'},
                 ];
             
                 $.plot('#flotPie2', piedata, {

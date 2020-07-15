@@ -30,6 +30,13 @@ class Controller extends BaseController
      */
     public function filterByRegionID($region_id) 
     {
+        $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
+        $jhb_count = count(Employee::where('region_id', 1002)->get());
+        $sedibeng_count = count(Employee::where('region_id', 1003)->get());
+        $tshwane_count = count(Employee::where('region_id', 1004)->get());
+        $westrand_count = count(Employee::where('region_id', 1005)->get());
+        $unknown_count = count(Employee::where('region_id', 1099)->get());
+
         if( $region_id != '0')
         {
             /* filter Positions */
@@ -71,20 +78,13 @@ class Controller extends BaseController
             $squad_count = count(Employee::where('position_id', 4)->get());
             $other_count = count(Employee::where('position_id', 5)->get());
 
-            $all_positions = EmployeePosition::all();
+            $all_positions = count(EmployeePosition::all());
             $driver_count = count(MemberDriver::all());
             $operator_count = count(MemberOperator::all());
             $association_count = count(Association::all());
             $route_count = count(Route::all());
             $employee_count = count(Employee::all());
             $employee_verified_count = 0;
-
-            $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
-            $jhb_count = count(Employee::where('region_id', 1002)->get());
-            $sedibeng_count = count(Employee::where('region_id', 1003)->get());
-            $tshwane_count = count(Employee::where('region_id', 1004)->get());
-            $westrand_count = count(Employee::where('region_id', 1005)->get());
-            $unknown_count = count(Employee::where('region_id', 1099)->get());
 
             return response()->json(['driver_count' => $driver_count,
                                         'operator_count' => $operator_count,
@@ -151,6 +151,27 @@ class Controller extends BaseController
                 'coordinator' => $cordinator_count,
                 'squad' => $squad_count,
                 'other' => $other_count
+            ]);
+
+    }
+
+    public function getEmployeeRegionDistribution()
+    {
+        $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
+        $jhb_count = count(Employee::where('region_id', 1002)->get());
+        $sedibeng_count = count(Employee::where('region_id', 1003)->get());
+        $tshwane_count = count(Employee::where('region_id', 1004)->get());
+        $westrand_count = count(Employee::where('region_id', 1005)->get());
+        $unknown_count = count(Employee::where('region_id', 1099)->get());
+
+        return response()->json(
+            [
+                'ekurhuleni_count' => $ekurhuleni_count,
+                'jhb_count' => $jhb_count, 
+                'sedibeng_count' => $sedibeng_count,
+                'tshwane_count' => $tshwane_count, 
+                'westrand_count' => $westrand_count,
+                'unknown_count' => $unknown_count, 
             ]);
 
     }

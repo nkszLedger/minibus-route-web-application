@@ -51,9 +51,6 @@ Route::get('vehicles/remove/{id}',
 Route::get('employees/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID');
 
-Route::get('/dashboard/filterByRegionID/{region_id}', 
-            'Controller@filterByRegionID');
-
 Route::get('vehicles/getAssociations/{region_id}', 
             'Controller@getAssociationsByRegionID')->name('associations');
 Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
@@ -89,6 +86,13 @@ Route::get('members/operatingLicenseNumberExists/{licencenumber}',
 
 Route::get('members/idExists/{idnumber}', 
             'Controller@idExists');
+
+
+Route::get('filterByRegionID/{region_id}', 
+            'Controller@filterByRegionID');
+
+Route::get('getEmployeeRegionDistribution', 
+            'Controller@getEmployeeRegionDistribution');
 
 Route::get('getEmployeeRankDistribution', 
             'Controller@getEmployeeRankDistribution');
