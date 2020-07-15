@@ -421,6 +421,8 @@ $(function () {
 	var cManager = 0;
 	var cMarshall = 0;
 	var cCoordinator = 0;
+	var cSquad = 0;
+	var cother = 0;
 
 	function setRankData()
 	{
@@ -433,6 +435,8 @@ $(function () {
 				cManager = response['manager'];
 				cMarshall = response['marshall'];
 				cCoordinator = response['coordinator'];
+				cSquad = response['squad'];
+				cOther = response['other'];
 			}
 		});
 	}
@@ -444,6 +448,8 @@ $(function () {
       { label: "Managers", data: [[1,cManager]], color: '#38649f'},
 	  { label: "Marshalls", data: [[1,cMarshall]], color: '#389f99'},
 	  { label: "Coordinators", data: [[1,cCoordinator]], color: '#689f38'},
+	  { label: "Squad Patrol", data: [[1,cSquad]], color: '#d5d5d5'},
+	  { label: "Other", data: [[1,cCoordinator]], color: '#ee1044'},
 	];
 
     $.plot('#flotPie2', piedata, {

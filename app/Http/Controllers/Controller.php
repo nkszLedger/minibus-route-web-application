@@ -54,12 +54,16 @@ class Controller extends BaseController
         $manager_count = count(Employee::where('position_id', 1)->get());
         $cordinator_count = count(Employee::where('position_id', 2)->get());
         $marshall_count = count(Employee::where('position_id', 3)->get());
+        $squad_count = count(Employee::where('position_id', 4)->get());
+        $other_count = count(Employee::where('position_id', 5)->get());
 
         return response()->json(
             [
                 'manager' => $manager_count, 
                 'marshall' => $marshall_count,
-                'coordinator' => $cordinator_count
+                'coordinator' => $cordinator_count,
+                'squad' => $squad_count,
+                'other' => $other_count
             ]);
 
     }
