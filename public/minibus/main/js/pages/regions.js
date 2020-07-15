@@ -1,7 +1,7 @@
 
 $('#region_selector').change(function(){
     var id = $(this).val();
-
+    
     var url_path = window.location.origin + "/filterByRegionID/"+ id.toString();
 
     $.ajax({

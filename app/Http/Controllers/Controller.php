@@ -10,6 +10,7 @@ use App\EmployeePosition;
 use App\Member;
 use App\MemberDriver;
 use App\MemberOperator;
+use App\MemberRegionAssociation;
 use App\MemberVehicle;
 use App\Region;
 use App\RouteVehicle;
