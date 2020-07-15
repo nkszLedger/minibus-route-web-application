@@ -34,6 +34,7 @@
 								</h6>
 							@endhasanyrole
 						</div>
+						
 						<div class="box-body">
 							<div class="table-responsive">
 								@hasanyrole(['Systems Admin|Oversight'])
@@ -50,11 +51,9 @@
                                             <th>Surname</th>
 											<th>Phone Number</th>
 											<th>Email</th>
-											<th>Address Line</th>
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
-                                            <th>Province</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -78,9 +77,6 @@
 											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee->email }}
 											</td>
-                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
-												{{ $employee->address_line }}
-											</td>
 											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee['region']['region_name'] }}
 											</td>
@@ -89,9 +85,6 @@
 											</td>
                                             <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee['position']['position'] }}
-											</td>
-											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
-												{{ $employee['province']['name'] }}
 											</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
@@ -112,11 +105,9 @@
                                             <th>Surname</th>
 											<th>Phone Number</th>
 											<th>Email</th>
-											<th>Address Line</th>
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
-                                            <th>Province</th>
 											<th>Actions</th>
 										</tr>
 									</tfoot>

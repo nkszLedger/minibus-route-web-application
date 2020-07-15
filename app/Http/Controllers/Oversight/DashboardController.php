@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Oversight;
 use App\Route;
 use App\Association;
 use App\Employee;
+use App\EmployeePosition;
 use App\MemberDriver;
 use App\MemberOperator;
 use App\Http\Controllers\Controller;
+use App\Region;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $all_regions = Region::all();
         $driver_count = count(MemberDriver::all());
         $operator_count = count(MemberOperator::all());
         $association_count = count(Association::all());
@@ -41,7 +44,7 @@ class DashboardController extends Controller
                                                 'ekurhuleni_count',
                                                 'jhb_count', 'sedibeng_count',
                                                 'tshwane_count', 'westrand_count',
-                                                'unknown_count'
+                                                'unknown_count', 'all_regions'
                                             ]));
     }
 

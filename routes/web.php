@@ -87,6 +87,13 @@ Route::get('members/operatingLicenseNumberExists/{licencenumber}',
 Route::get('members/idExists/{idnumber}', 
             'Controller@idExists');
 
+
+Route::get('filterByRegionID/{region_id}', 
+            'Controller@filterByRegionID');
+
+Route::get('getEmployeeRegionDistribution', 
+            'Controller@getEmployeeRegionDistribution');
+
 Route::get('getEmployeeRankDistribution', 
             'Controller@getEmployeeRankDistribution');
 
