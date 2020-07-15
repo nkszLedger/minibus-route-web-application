@@ -6,10 +6,10 @@ use App\Vehicle;
 use App\Route;
 use App\Association;
 use App\Employee;
+use App\EmployeePosition;
 use App\Member;
 use App\MemberDriver;
 use App\MemberOperator;
-use App\MemberRegionAssociation;
 use App\MemberVehicle;
 use App\Region;
 use App\RouteVehicle;
@@ -21,6 +21,93 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+     /**
+     * Retrieves list of counts by Region.
+     *
+     * @param  int  $region_id
+     * @return \Illuminate\Http\Response
+     */
+    public function filterByRegionID($region_id) 
+    {
+        if( $region_id != '0')
+        {
+            /* filter Positions */
+            $manager_count = count(Employee::where('position_id', 1)->where('region_id', $region_id)->get());
+            $cordinator_count = count(Employee::where('position_id', 2)->where('region_id', $region_id)->get());
+            $marshall_count = count(Employee::where('position_id', 3)->where('region_id', $region_id)->get());
+            $squad_count = count(Employee::where('position_id', 4)->where('region_id', $region_id)->get());
+            $other_count = count(Employee::where('position_id', 5)->where('region_id', $region_id)->get());
+
+            /*$driver_count = count(MemberDriver::all());
+            $operator_count = count(MemberOperator::all());*/
+
+            $association_count = count(Association::where('region_id', $region_id)->get());
+            $route_count = count(Route::where('region_id', $region_id)->get());
+            $employee_count = count(Employee::where('region_id', $region_id)->get());
+            $employee_verified_count = 0;
+
+            $registered_employees_count = count(Employee::where('region_id', $region_id)->get());
+
+            return response()->json(
+                [
+                    'manager' => $manager_count, 
+                    'marshall' => $marshall_count,
+                    'coordinator' => $cordinator_count,
+                    'squad' => $squad_count,
+                    'other' => $other_count,
+                    'registered_employees' => $registered_employees_count,
+                    'association_count' => $association_count,
+                    'route_count' => $route_count,
+                    'employee_count' => $employee_count,
+                ]);
+        }
+        else
+        {
+            /* filter Positions */
+            $manager_count = count(Employee::where('position_id', 1)->get());
+            $cordinator_count = count(Employee::where('position_id', 2)->get());
+            $marshall_count = count(Employee::where('position_id', 3)->get());
+            $squad_count = count(Employee::where('position_id', 4)->get());
+            $other_count = count(Employee::where('position_id', 5)->get());
+
+            $all_positions = EmployeePosition::all();
+            $driver_count = count(MemberDriver::all());
+            $operator_count = count(MemberOperator::all());
+            $association_count = count(Association::all());
+            $route_count = count(Route::all());
+            $employee_count = count(Employee::all());
+            $employee_verified_count = 0;
+
+            $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
+            $jhb_count = count(Employee::where('region_id', 1002)->get());
+            $sedibeng_count = count(Employee::where('region_id', 1003)->get());
+            $tshwane_count = count(Employee::where('region_id', 1004)->get());
+            $westrand_count = count(Employee::where('region_id', 1005)->get());
+            $unknown_count = count(Employee::where('region_id', 1099)->get());
+
+            return response()->json(['driver_count' => $driver_count,
+                                        'operator_count' => $operator_count,
+                                        'association_count' => $association_count, 
+                                        'route_count' => $route_count,
+                                        'employee_count' => $employee_count,
+                                        'employee_verified_count' => $employee_verified_count,
+                                        'ekurhuleni_count' => $ekurhuleni_count,
+                                        'jhb_count' => $jhb_count, 
+                                        'sedibeng_count' => $sedibeng_count,
+                                        'tshwane_count' => $tshwane_count, 
+                                        'westrand_count' => $westrand_count,
+                                        'unknown_count' => $unknown_count, 
+                                        'all_positions' => $all_positions,
+                                        'manager' => $manager_count,
+                                        'cordinator' => $cordinator_count,
+                                        'marshall' => $marshall_count, 
+                                        'squad'=> $squad_count, 
+                                        'other' => $other_count
+                                    ]);
+        }
+
+    }
 
     /**
      * Retrieves list of Minibus associations by Region.

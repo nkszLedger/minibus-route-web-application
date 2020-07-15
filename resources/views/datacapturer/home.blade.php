@@ -66,7 +66,9 @@
 				</a>
 			</h2>
 			<!-- Mobile menu toggle button (hamburger/x icon) -->
-			<button class="topbar-toggler" id="mobile_topbar_toggler"><i class="mdi mdi-dots-horizontal"></i></button>
+			<button class="topbar-toggler" id="mobile_topbar_toggler">
+				<i class="mdi mdi-dots-horizontal"></i>
+			</button>
 			<input id="main-menu-state" type="checkbox" />
 			<label class="main-menu-btn" for="main-menu-state">
 				<span class="main-menu-btn-icon"></span> Toggle main menu visibility
@@ -181,7 +183,25 @@
 					<h3 class="page-title br-0">Minibus Transport Registration Overview</h3>
 					@endrole
 				</div>
-				<div class="right-title w-170">
+
+				<div class="right-title w-350">
+					<div class="form-group">
+						<h5 class="text-white"> 
+							<b>Region Overview : </b>
+						</h5>
+						<select id=region_selector class="custom-select form-control">
+							<option value="0"> <b> All </b> </option>
+							@foreach ($all_regions as $region)
+								<option value="{{$region->region_id}}">
+									<b> {{$region->region_name}} </b>
+								</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+
+
+				{{-- <div class="right-title w-170">
 					<span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
 						<span class="subheader_daterange-label">
 							<span class="subheader_daterange-title">
@@ -194,7 +214,7 @@
 							<i class="fa fa-book"></i>
 						</a>
 					</span>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 
@@ -559,6 +579,9 @@
 
 	<!-- Employees -->
 	<script src="/minibus/main/js/pages/employees.js"></script>
+	
+	<!-- Regions -->
+	<script src="/minibus/main/js/pages/regions.js"></script>
 
 	<script type="text/javascript">
 	// Start jQuery function after page is loaded
