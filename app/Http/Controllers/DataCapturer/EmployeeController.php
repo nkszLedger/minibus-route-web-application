@@ -135,7 +135,7 @@ class EmployeeController extends Controller
                 $organization->save();
             }
 
-            return redirect()->intended('employees');
+            return $this->index();
         }
         
     }
@@ -152,14 +152,13 @@ class EmployeeController extends Controller
                                     'region', 'position',
                                     'gender'])
                              ->findOrFail($id);
+
         $organization = EmployeeOrganization::with(['employee',
                                 'association', 'facility'])
                              ->where('employee_id', $id)->first(); 
 
-                            //dd($organization['association']['association_id']);
-
-        $portrait = EmployeePortrait::where('employee_id', $id)->first();
-        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->first();
+        $portrait = EmployeePortrait::where('employee_id', $id)->get();
+        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->get();
 
         return view('datacapturer.employees.show', 
                         compact(['employee', 'portrait', 

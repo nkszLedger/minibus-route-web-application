@@ -27,11 +27,11 @@ $('#region_selector').change(function(){
             cOther = response['other'];
 
             var piedata = [
-                { label: "Managers", data: [['S1', cManager]], color: '#38649f'},
-                { label: "Marshalls", data: [['S2', cMarshall]], color: '#389f99'},
-                { label: "Coordinators", data: [['S3', cCoordinator]], color: '#689f38'},
-                { label: "Squad Patrol", data: [['S4', cSquad]], color: '#d5d5d5'},
-                { label: "Other", data: [['S5', cCoordinator]], color: '#ee1044'},
+                { label: "Managers", data: [[1,cManager]], color: '#38649f'},
+                { label: "Marshalls", data: [[1,cMarshall]], color: '#389f99'},
+                { label: "Coordinators", data: [[1,cCoordinator]], color: '#689f38'},
+                { label: "Squad Patrol", data: [[1,cSquad]], color: '#d5d5d5'},
+                { label: "Other", data: [[1,cOther]], color: '#ee1044'},
                 ];
             
                 $.plot('#flotPie2', piedata, {

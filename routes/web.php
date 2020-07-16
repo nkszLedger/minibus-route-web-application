@@ -14,88 +14,93 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(); //['verify' => true]
 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resources([
-    'roles' => 'Admin\RoleController',
-    'users' => 'Admin\UserController',
-    'employees' => 'DataCapturer\EmployeeController',
-    'members' => 'DataCapturer\MemberController',
-    'dashboard' => 'Oversight\DashboardController'
-]);
+Route::group(['middleware' => 'auth:web'], function() {
 
-Route::get('vehicles/{member_id}', 
-            'DataCapturer\VehicleController@create')
-                ->name('vehicles.create');
+    Route::resources([
+        'roles' => 'Admin\RoleController',
+        'users' => 'Admin\UserController',
+        'employees' => 'DataCapturer\EmployeeController',
+        'members' => 'DataCapturer\MemberController',
+        'dashboard' => 'Oversight\DashboardController'
+    ]);
 
-Route::get('vehicles/details/{id}', 
-            'DataCapturer\VehicleController@show')
-                ->name('vehicles.show');
+    Route::get('vehicles/{member_id}', 
+                'DataCapturer\VehicleController@create')
+                    ->name('vehicles.create');
 
-Route::post('vehicles', 
-            'DataCapturer\VehicleController@store')
-                ->name('vehicles.store');
+    Route::get('vehicles/details/{id}', 
+                'DataCapturer\VehicleController@show')
+                    ->name('vehicles.show');
 
-Route::get('vehicles/{id}', 
-            'DataCapturer\VehicleController@update')
-                ->name('vehicles.update');
+    Route::post('vehicles', 
+                'DataCapturer\VehicleController@store')
+                    ->name('vehicles.store');
 
-Route::get('vehicles/remove/{id}', 
-            'DataCapturer\VehicleController@destroy')
-                ->name('vehicles.destroy');
+    Route::get('vehicles/{id}', 
+                'DataCapturer\VehicleController@update')
+                    ->name('vehicles.update');
 
-Route::get('employees/getAssociations/{region_id}', 
-            'Controller@getAssociationsByRegionID');
+    Route::get('vehicles/remove/{id}', 
+                'DataCapturer\VehicleController@destroy')
+                    ->name('vehicles.destroy');
 
-Route::get('vehicles/getAssociations/{region_id}', 
-            'Controller@getAssociationsByRegionID')->name('associations');
-Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
-            function($member_id, $region_id) {
-                return App::make('App\http\Controllers\Controller')
-                ->getAssociationsByRegionID($region_id);
-});        
+    Route::get('employees/getAssociations/{region_id}', 
+                'Controller@getAssociationsByRegionID');
 
-Route::get('vehicles/getRoutesPerAssociation/{association_id}', 
-            'Controller@getRoutesByAssociationID')->name('regions');
-Route::get('vehicles/{member_id}/getRoutesPerAssociation/{association_id}', 
-            function($member_id, $association_id) {
-                return App::make('App\http\Controllers\Controller')
-                ->getRoutesByAssociationID($association_id);
-});   
+    Route::get('vehicles/getAssociations/{region_id}', 
+                'Controller@getAssociationsByRegionID')->name('associations');
+    Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
+                function($member_id, $region_id) {
+                    return App::make('App\http\Controllers\Controller')
+                    ->getAssociationsByRegionID($region_id);
+    });        
 
-Route::get('vehicles/getCarRegNumberCount/{carregnumber}', 
-            'Controller@getCarRegNumberCount');
-Route::get('vehicles/{member_id}/getCarRegNumberCount/{carregnumber}', 
-            function($member_id, $carregnumber) {
-                return App::make('App\http\Controllers\Controller')
-                ->getCarRegNumberCount($carregnumber);
-});  
+    Route::get('vehicles/getRoutesPerAssociation/{association_id}', 
+                'Controller@getRoutesByAssociationID')->name('regions');
+    Route::get('vehicles/{member_id}/getRoutesPerAssociation/{association_id}', 
+                function($member_id, $association_id) {
+                    return App::make('App\http\Controllers\Controller')
+                    ->getRoutesByAssociationID($association_id);
+    });   
 
-Route::get('members/membershipNumberExists/{membershipnumber}', 
-            'Controller@membershipNumberExists');
+    Route::get('vehicles/getCarRegNumberCount/{carregnumber}', 
+                'Controller@getCarRegNumberCount');
+    Route::get('vehicles/{member_id}/getCarRegNumberCount/{carregnumber}', 
+                function($member_id, $carregnumber) {
+                    return App::make('App\http\Controllers\Controller')
+                    ->getCarRegNumberCount($carregnumber);
+    });  
 
-Route::get('members/driversLicenseNumberExists/{licencenumber}', 
-            'Controller@driversLicenseNumberExists');
+    Route::get('members/membershipNumberExists/{membershipnumber}', 
+                'Controller@membershipNumberExists');
 
-Route::get('members/operatingLicenseNumberExists/{licencenumber}', 
-            'Controller@operatingLicenseNumberExists');
+    Route::get('members/driversLicenseNumberExists/{licencenumber}', 
+                'Controller@driversLicenseNumberExists');
 
-Route::get('members/idExists/{idnumber}', 
-            'Controller@idExists');
+    Route::get('members/operatingLicenseNumberExists/{licencenumber}', 
+                'Controller@operatingLicenseNumberExists');
+
+    Route::get('members/idExists/{idnumber}', 
+                'Controller@idExists');
 
 
-Route::get('filterByRegionID/{region_id}', 
-            'Controller@filterByRegionID');
+    Route::get('filterByRegionID/{region_id}', 
+                'Controller@filterByRegionID');
 
-Route::get('getEmployeeRegionDistribution', 
-            'Controller@getEmployeeRegionDistribution');
+    Route::get('getEmployeeRegionDistribution/', 
+                'Controller@getEmployeeRegionDistribution');
 
-Route::get('getEmployeeRankDistribution', 
-            'Controller@getEmployeeRankDistribution');
+    Route::get('getEmployeeRankDistribution/', 
+                'Controller@getEmployeeRankDistribution');
 
-Route::get('getEmployeeGenderDistribution', 
-            'Controller@getEmployeeGenderDistribution');
+    Route::get('getEmployeeGenderDistribution/', 
+                'Controller@getEmployeeGenderDistribution');
+
+});

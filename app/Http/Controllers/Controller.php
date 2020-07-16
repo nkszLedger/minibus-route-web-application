@@ -101,7 +101,7 @@ class Controller extends BaseController
                                         'unknown_count' => $unknown_count, 
                                         'all_positions' => $all_positions,
                                         'manager' => $manager_count,
-                                        'cordinator' => $cordinator_count,
+                                        'coordinator' => $cordinator_count,
                                         'marshall' => $marshall_count, 
                                         'squad'=> $squad_count, 
                                         'other' => $other_count
