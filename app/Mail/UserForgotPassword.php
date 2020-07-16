@@ -47,7 +47,10 @@ class UserForgotPassword extends Mailable
         if you did not initiate this action. Please click below to set your password.';
         $button_text = 'Reset';
 
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        //env('MAIL_FROM_ADDRESS') hardcode until .env starts working!!!!
+        $mail_from_address = "ptrms@csir.co.za"; 
+
+        return $this->from($mail_from_address)
                     ->subject($subject)
                     ->view('emails.email_notification',
                         compact(['link', 'title', 
