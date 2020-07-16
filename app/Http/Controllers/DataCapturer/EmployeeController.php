@@ -155,10 +155,8 @@ class EmployeeController extends Controller
                                 'association', 'facility'])
                              ->where('employee_id', $id)->first(); 
 
-                            //dd($organization['association']['association_id']);
-
-        $portrait = EmployeePortrait::where('employee_id', $id)->first();
-        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->first();
+        $portrait = EmployeePortrait::where('employee_id', $id)->get();
+        $fingerprint = EmployeeFingerprint::where('employee_id', $id)->get();
 
         return view('datacapturer.employees.show', 
                         compact(['employee', 'portrait', 
