@@ -54,6 +54,7 @@
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
+											<th>Date Captured</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -86,6 +87,7 @@
                                             <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
 												{{ $employee['position']['position'] }}
 											</td>
+											<td>{{ $employee->created_at }}</td>
 											<td>
 												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
@@ -108,6 +110,7 @@
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
+											<th>Date Captured</th>
 											<th>Actions</th>
 										</tr>
 									</tfoot>
