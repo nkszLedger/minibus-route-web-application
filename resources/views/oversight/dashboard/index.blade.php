@@ -3,6 +3,17 @@
 @section('content')
 
 <section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-body analytics-info">
+                    <h4 class="box-title">Facility Overview: Taxi Rank Sites Discovered</h4>
+                    <div id="map" style="height:800px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="right-title w-350">
         <div class="form-group">
             <h5 class="text-white"> 
@@ -18,6 +29,7 @@
             </select>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-xl-2 col-12">
             <div class="box">
@@ -98,6 +110,7 @@
             </div>
         </div>	
     </div>
+
     <div class="row">
     
         <div class="col-12 col-xl-6">
@@ -171,9 +184,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
 </section>
 
 @endsection

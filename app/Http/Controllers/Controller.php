@@ -7,6 +7,7 @@ use App\Route;
 use App\Association;
 use App\Employee;
 use App\EmployeePosition;
+use App\Facility;
 use App\Member;
 use App\MemberDriver;
 use App\MemberOperator;
@@ -109,6 +110,19 @@ class Controller extends BaseController
         }
 
     }
+
+    /**
+     * Retrieves list of facilities.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function getAllFacilities()
+    {
+        $all_facilities =  Facility::all();
+        return response()->json(['data' =>$all_facilities]);
+    }
+
 
     /**
      * Retrieves list of Minibus associations by Region.

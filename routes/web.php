@@ -21,6 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('getAllFacilities/', 
+                'Controller@getAllFacilities');
+
 Route::group(['middleware' => 'auth:web'], function() {
 
     Route::resources([

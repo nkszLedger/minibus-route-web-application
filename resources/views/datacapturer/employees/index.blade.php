@@ -81,7 +81,7 @@
 											<td >
 												{{ $employee['region']['region_name'] }}
 											</td>
-											<td >
+											<td style="white-space:normal; width: 200px;">
 												{{-- @if( $employee->organization->facility->name != null )
 													{{ $employee->organization->facility->name }}
 												@endif --}}

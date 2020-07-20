@@ -41,15 +41,6 @@ $(function () {
                         page: 'current'
                     }
                 },
-                // customize: function(doc) {
-                //     doc.styles['td:nth-child(6)'] = { 
-                //         'white-space': 'wrap',
-                //         'text-overflow':'ellipsis',
-                //         'overflow': 'hidden',
-                //         'max-width': '2px',
-                //     }
-                // },
-
             },
             {
                 extend: 'print',
