@@ -36,14 +36,9 @@ $(function () {
                 alignment: "center",
                 orientation: 'landscape',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                },
-                customize: function(doc) {
-                    doc.styles['td:nth-child(6)'] = { 
-                        'white-space': 'wrap',
-                        'text-overflow':'ellipsis',
-                        'overflow': 'hidden',
-                        'max-width': '2px',
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+		    modifier: {
+                        page: 'current'
                     }
                 },
 
@@ -57,7 +52,7 @@ $(function () {
                 },
             }
             //'copy', 'csv', 'excel', 'pdf', 'print'
-		]
+	  ]
 	} );
 	
 	$('#tickets').DataTable({

@@ -27,8 +27,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $all_employees = Employee::with(['city', 
-                                    'province',
+        $all_employees = Employee::with(['city', 'province',
+					'organization.facility',
                                     'region', 'position'])
                             ->orderBy('id','desc')->get();
 
