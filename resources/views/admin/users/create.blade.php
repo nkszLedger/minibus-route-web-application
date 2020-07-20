@@ -37,7 +37,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control" 
-										id="wfirstName2" name="name" maxlength="25" 
+										id="wfirstName2" name="name" maxlength="30" 
 										value="{{ old('firstName') ?? $user->name ?? ''}}" 
 										{{ isset($user) ? 'readonly' : '' }}
 										required data-validation-required-message="This field is required">  
@@ -49,7 +49,7 @@
 											<span class="text-danger">*</span> 
 										</label>
 										<input type="text" class="form-control" id="wlastName2" 
-										name="surname" maxlength="25" 
+										name="surname" maxlength="30" 
 										value="{{ old('lastName') ?? $user->surname ?? ''}}"
 										{{ isset($user) ? 'readonly' : '' }} 
 										required data-validation-required-message="This field is required">  
@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label for="wemailAddress2"> Email Address :</label>
                                         <input type="email" class="form-control" id="wemailAddress2" 
-                                            name="email" maxlength="25" 
+                                            name="email" maxlength="50" 
                                             value="{{ old('emailAddress') ?? $user->email ?? ''}}"
                                             {{ isset($user) ? 'readonly' : '' }} 
                                             required data-validation-required-message="This field is required"> 
