@@ -66,31 +66,30 @@
 									@foreach($all_employees as $employee )
 										<tr>
 											<td>{{$count}}</td>
-											<td >
+
+											<td>
 												{{ $employee->name }}
 											</td>
-                                            <td >
+                                            <td>
 												{{ $employee->surname }}
 											</td>
                                             <td>
 												{{ $employee->phone_number }}
 											</td>
-											<td >
+											<td>
 												{{ $employee->email }}
 											</td>
-											<td >
+											<td>
 												{{ $employee['region']['region_name'] }}
 											</td>
 											<td style="white-space:normal; width: 200px;">
-												{{-- @if( $employee->organization->facility->name != null )
-													{{ $employee->organization->facility->name }}
-												@endif --}}
 												{{ $employee->organization->facility->name ?? ''}}
 											</td>
-                                            <td >
+                                            <td>
 												{{ $employee['position']['position'] }}
 											</td>
-											<td>{{ $employee->created_at->format("d/m/Y") }} </td>
+											<td>{{ $employee->created_at->format("d/m/Y") }}</td>
+
 											<td>
 												@if(Auth::user()->roles->pluck( 'name' )->contains('Oversight') )
 												<a href="{{ route('employees.show', $employee->id)}}"> 

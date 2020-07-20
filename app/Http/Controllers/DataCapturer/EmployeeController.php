@@ -27,8 +27,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $all_employees = Employee::with(['city', 'province', 
-                                    'organization.facility',
+        $all_employees = Employee::with(['city', 'province',
+					            'organization.facility',
                                     'region', 'position'])
                             ->orderBy('id','desc')->get();
 
@@ -75,26 +75,27 @@ class EmployeeController extends Controller
         else
         {
             $validator = Validator::make(
-                [
-                    'name' => $request->get('name'),
-                    'surname' => $request->get('surname'),
-                    'email' => $request->get('email'),
-                    'id_number' => $request->get('id_number')
-                ],
-                [
-                    'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-                    'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-                    'email' => 'required|unique:employees',
-                    'id_number' => 'required|digits:13|unique:employees'
-                ]
-            );
-    
-            if ($validator->fails()) 
-            {
-                $errors = $validator->errors()->first();
-                return back()->withErrors($errors)
-                            ->withInput();
-            }
+                 [
+                     'name' => $request->get('name'),
+                     'surname' => $request->get('surname'),
+                     'email' => $request->get('email'),
+                     'id_number' => $request->get('id_number'),
+                 ],
+                 [
+                     'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                     'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
+                     'email' => 'required|unique:employees',
+                     'id_number' => 'required|digits:13|unique:employees',
+                 ]
+             );
+
+             if ($validator->fails()) 
+             {
+                 $errors = $validator->errors()->first();
+                 return back()->withErrors($errors)
+                             ->withInput();
+             }
+
 
             $employee = new Employee();
             $organization = new EmployeeOrganization(); 
