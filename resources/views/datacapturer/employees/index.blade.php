@@ -54,6 +54,7 @@
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
+											<th>Date Captured</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -65,34 +66,44 @@
 									@foreach($all_employees as $employee )
 										<tr>
 											<td>{{$count}}</td>
-											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+											<td >
 												{{ $employee->name }}
 											</td>
-                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+                                            <td >
 												{{ $employee->surname }}
 											</td>
-                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+                                            <td>
 												{{ $employee->phone_number }}
 											</td>
-											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+											<td >
 												{{ $employee->email }}
 											</td>
-											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+											<td >
 												{{ $employee['region']['region_name'] }}
 											</td>
-											<td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
-												{{ $employee->rank }}
+											<td >
+												{{-- @if( $employee->organization->facility->name != null )
+													{{ $employee->organization->facility->name }}
+												@endif --}}
+												{{ $employee->organization->facility->name ?? ''}}
 											</td>
-                                            <td style="white-space: wrap; text-overflow:ellipsis; overflow: hidden; max-width:2px;">
+                                            <td >
 												{{ $employee['position']['position'] }}
 											</td>
+											<td>{{ $employee->created_at->format("d/m/Y") }} </td>
 											<td>
+												@if(Auth::user()->roles->pluck( 'name' )->contains('Oversight') )
+												<a href="{{ route('employees.show', $employee->id)}}"> 
+													<b>View Profile</b>
+												</a>
+												@else
 												<a href="{{ route('employees.edit', $employee->id) }}">
 													<b>Edit</b>
 												</a> || 
 												<a href="{{ route('employees.show', $employee->id)}}"> 
 													<b>View Profile</b>
 												</a>
+												@endif
 											</td>
 										</tr>
 						  			<?php $count++?>
@@ -108,6 +119,7 @@
 											<th>Region</th>
 											<th>Taxi Rank</th>
 											<th>Rank Position</th>
+											<th>Date Captured</th>
 											<th>Actions</th>
 										</tr>
 									</tfoot>
