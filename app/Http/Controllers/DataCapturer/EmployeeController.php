@@ -32,8 +32,6 @@ class EmployeeController extends Controller
                                     'region', 'position'])
                             ->orderBy('id','desc')->get();
 
-        //dd($all_employees->first()->organization->facility->name);
-
         return view('datacapturer.employees.index', compact(['all_employees']));
     }
 
