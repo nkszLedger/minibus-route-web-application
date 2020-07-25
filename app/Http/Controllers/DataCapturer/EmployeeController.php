@@ -28,9 +28,19 @@ class EmployeeController extends Controller
     public function index()
     {
         $all_employees = Employee::with(['city', 'province',
-					            'organization.facility',
-                                    'region', 'position'])
+                                        'organization.facility', 
+                                        'organization.association',
+                                        //'fingerprint', 'portrait',
+                                        'region', 'position'])
                             ->orderBy('id','desc')->get();
+                            // ->except(['fingerprint', 
+                            //           'fingerprint_wsq', 
+                            //             'portrait']);
+
+                            // 'fingerprint', 'portrait', 
+                            // ->exclude(['fingerprint.fingerprint', 
+                            //             'fingerprint.fingerprint_wsq',
+                            //             'portrait.portrait']);
 
         return view('datacapturer.employees.index', compact(['all_employees']));
     }
