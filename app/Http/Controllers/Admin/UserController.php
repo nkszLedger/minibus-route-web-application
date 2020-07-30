@@ -273,6 +273,16 @@ class UserController extends Controller
         dd('hey');
 
     }
+    /**
+     * Restores the specified deleted resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        dd('restored');
+    }
 
 }
 

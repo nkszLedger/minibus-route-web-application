@@ -19,12 +19,26 @@ $.ajax({
 
         if(len > 0)
         {
-            //alert(response['data'][0]['latitude']);
             for(var i=0; i<len; i++)
             {
-                L.marker([response['data'][i]['latitude'], 
-                          response['data'][i]['longitude']]).addTo(map)
-                .bindPopup('Facility: ' + response['data'][i]['name']);
+                var text = 'Facility: ' + response['data'][i]['facility']['name']
+                            + '\n' + 
+                            'Managers: ' + response['data'][i]['c_managers']
+                            + '\n' +
+                            'Coordinators: ' + response['data'][i]['c_coordinators']
+                            + '\n' +
+                            'Marshalls: ' + response['data'][i]['c_marshalls']
+                            + '\n' +
+                            'Squad Patrol: ' + response['data'][i]['c_squad']
+                            + '\n' +
+                            'Other: ' + response['data'][i]['c_other'];
+
+                
+                L.marker([response['data'][i]['facility']['latitude'], 
+                                response['data'][i]['facility']['longitude']]).addTo(map)
+                                .bindPopup(text);
+                // if( response['data'][i]['c_managers'] > 0 )
+                //     marker._icon.classList.add("filter: hue-rotate(120deg);");
             }
         }
     }

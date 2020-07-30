@@ -65,14 +65,15 @@
 												@endif
 									     	</td>
 											 <td>
-												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
+											 	<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
 												@if( $user->trashed() )
-													<a href="#"><b>Activate</b></a> 
+												<form action="{{ route('users.edit', $user->id) }}" >
+													<input type="submit" value="Activate"> 
 												@else
-													<a href="{{ route('users.destroy', $user->id) }}">
-														<b>Deactivate</b>
-													</a>
+												<form action=href="{{ route('users.destroy', $user->id) }}">
+													<input type="submit" value="Deactivate">
 												@endif
+												</form>
 											</td>
 										</tr>
 						  			<?php $count++?>

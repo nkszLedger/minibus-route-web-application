@@ -5,6 +5,7 @@ use App\Route;
 use App\Association;
 use App\Employee;
 use App\EmployeePosition;
+use App\Facility;
 use App\MemberDriver;
 use App\MemberOperator;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class DashboardController extends Controller
         $association_count = count(Association::all());
         $route_count = count(Route::all());
         $employee_count = count(Employee::all());
-        $employee_verified_count = 0;
+        $facility_count = count(Facility::all());
 
         $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
         $jhb_count = count(Employee::where('region_id', 1002)->get());
@@ -40,7 +41,7 @@ class DashboardController extends Controller
                                                 'association_count', 
                                                 'route_count',
                                                 'employee_count',
-                                                'employee_verified_count',
+                                                'facility_count',
                                                 'ekurhuleni_count',
                                                 'jhb_count', 'sedibeng_count',
                                                 'tshwane_count', 'westrand_count',
