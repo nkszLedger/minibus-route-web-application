@@ -250,12 +250,12 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deactivate the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deactivate($id)
     {
         /* find user */
         // $user = User::find($id);
@@ -274,12 +274,12 @@ class UserController extends Controller
 
     }
     /**
-     * Restores the specified deleted resource from storage.
+     * Activates the specified deleted resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function activate($id)
     {
         dd('restored');
     }

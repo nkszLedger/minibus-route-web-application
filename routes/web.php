@@ -30,9 +30,13 @@ Route::group(['middleware' => 'auth:web'], function() {
         'dashboard' => 'Oversight\DashboardController'
     ]);
 
-    Route::get('users/{user}', 
-                'Admin\UserController@restore')
-                ->name('users.restore');
+    Route::get('users/deactivate/{user}', 
+                'Admin\UserController@deactivate')
+                ->name('users.deactivate');
+
+    Route::get('users/activate/{user}', 
+                'Admin\UserController@activate')
+                ->name('users.activate');
 
     Route::get('getAllFacilities/', 
                 'Controller@getAllFacilities');

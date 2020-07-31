@@ -59,21 +59,35 @@
 											</td>
 											<td>
 												@if( $user->email_verified_at !== null )
-												<span class="badge badge-pill badge-success">Verified</span>
+												<span class="badge badge-pill badge-success">Active</span>
 												@else
-													<span class="badge badge-pill badge-danger">Not Verified</span>
+													<span class="badge badge-pill badge-danger">Inactive</span>
 												@endif
 									     	</td>
 											 <td>
-											 	<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
-												@if( $user->trashed() )
-												<form action="{{ route('users.edit', $user->id) }}" >
-													<input type="submit" value="Activate"> 
-												@else
-												<form action=href="{{ route('users.destroy', $user->id) }}">
-													<input type="submit" value="Deactivate">
-												@endif
-												</form>
+											 	<div class="row">
+												 	<div class="col-xl-2">
+														{{-- <form action="{{ route('users.edit', $user->id) }}"> --}}
+															<button type="submit" class="btn btn-sm btn-rounded btn-secondary" 
+																value="EDIT">EDIT</button>
+														{{-- </form> --}}
+													</div>
+													<div class="col-xl-2">
+														@if( $user->trashed() )
+														{{-- <form action="{{ route('users.restore', $user->id) }}" >
+															<input type="submit" class="btn btn-sm btn-rounded btn-primary" 
+																value="ACTIVATE">  --}}
+														@else
+														{{-- <form action="{{ route('users.destroy', ) }}" 
+															onsubmit="verify()"> --}}
+															
+															<button type="submit" class="btn btn-sm btn-rounded btn-warning" 
+																value="{{ $user->id }}" id="deactivate" 
+																onclick="verify()">DEACTIVATE</button>
+														@endif
+														{{-- </form> --}}
+													</div>
+												</div> 	
 											</td>
 										</tr>
 						  			<?php $count++?>
