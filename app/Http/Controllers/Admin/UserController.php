@@ -57,7 +57,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $all_users = User::orderBy('id','desc')->get();
+        $all_users = User::withTrashed()
+                    ->orderBy('id','desc')->get();
 
         return view('admin.users.index',
                         compact(['all_users']));
@@ -258,21 +259,20 @@ class UserController extends Controller
     public function deactivate($id)
     {
         /* find user */
-        // $user = User::find($id);
+        $user = User::find($id);
 
-        // /* revoke user from oauth */
-        // $client = Client::where('user_id', $user->id);
-        // $client->revoked = true;
-        // $client->update();
+        /* revoke user from oauth */
+        $client = Client::where('user_id', $user->id);
+        $client_update = array('revoked' => true);
+        $client->update($client_update);
 
-        // /* trash user */
-        // $user->delete();
+        /* trash user */
+        $user->delete();
 
-        // return $this->index();
-
-        dd('hey');
+        return response()->json(['success' => 'OK']);
 
     }
+
     /**
      * Activates the specified deleted resource from storage.
      *
@@ -281,7 +281,12 @@ class UserController extends Controller
      */
     public function activate($id)
     {
-        dd('restored');
+        User::withTrashed()->find($id)->restore();
+
+        /* revoke user from oauth */
+        $client = Client::where('user_id', $id);
+        $client_update = array('revoked' => false);
+        $client->update($client_update);
     }
 
 }

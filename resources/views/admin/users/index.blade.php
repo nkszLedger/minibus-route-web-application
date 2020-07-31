@@ -73,19 +73,18 @@
 														{{-- </form> --}}
 													</div>
 													<div class="col-xl-2">
+													@if( $user->email_verified_at !== null )
 														@if( $user->trashed() )
-														{{-- <form action="{{ route('users.restore', $user->id) }}" >
-															<input type="submit" class="btn btn-sm btn-rounded btn-primary" 
-																value="ACTIVATE">  --}}
+															<button type="submit" class="btn btn-sm btn-rounded btn-primary" 
+																	value="{{ $user->id }}" id="activate" 
+																	onclick="verify('1')">ACTIVATE</button>
+
 														@else
-														{{-- <form action="{{ route('users.destroy', ) }}" 
-															onsubmit="verify()"> --}}
-															
 															<button type="submit" class="btn btn-sm btn-rounded btn-warning" 
 																value="{{ $user->id }}" id="deactivate" 
-																onclick="verify()">DEACTIVATE</button>
+																onclick="verify('0')">DEACTIVATE</button>
 														@endif
-														{{-- </form> --}}
+													@endif
 													</div>
 												</div> 	
 											</td>
