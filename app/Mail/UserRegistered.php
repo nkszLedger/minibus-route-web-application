@@ -41,7 +41,7 @@ class UserRegistered extends Mailable
         $token = DB::table('password_resets')
         ->where('email', $this->user->email)->first();
 
-        $subject = 'Minibus Sys User Registration';
+        $subject = 'Minibus Taxi Reg System: User Registration';
         $userfullname = $this->user->name.' '. $this->user->surname;
         $link = config('app.url').'/password/reset/'.$token->token;
         

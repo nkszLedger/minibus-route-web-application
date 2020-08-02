@@ -67,22 +67,21 @@
 											 <td>
 											 	<div class="row">
 												 	<div class="col-xl-2">
-														{{-- <form action="{{ route('users.edit', $user->id) }}"> --}}
-															<button type="submit" class="btn btn-sm btn-rounded btn-secondary" 
-																value="EDIT">EDIT</button>
-														{{-- </form> --}}
+														<button type="submit" class="btn btn-sm btn-rounded btn-secondary" 
+															value="EDIT">EDIT</button>
 													</div>
 													<div class="col-xl-2">
 													@if( $user->email_verified_at !== null )
 														@if( $user->trashed() )
 															<button type="submit" class="btn btn-sm btn-rounded btn-primary" 
-																	value="{{ $user->id }}" id="activate" 
-																	onclick="verify('1')">ACTIVATE</button>
-
+																id="activate" onclick="activate('{{ $user->id }}')">
+																	ACTIVATE
+															</button>
 														@else
 															<button type="submit" class="btn btn-sm btn-rounded btn-warning" 
-																value="{{ $user->id }}" id="deactivate" 
-																onclick="verify('0')">DEACTIVATE</button>
+																id="deactivate" onclick="deactivate('{{ $user->id }}')">
+																	DEACTIVATE
+															</button>
 														@endif
 													@endif
 													</div>

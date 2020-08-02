@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Mail\UserActivated;
+use App\Mail\UserDeactivated;
 use App\Mail\UserRegistered;
 use Spatie\Permission\Models\Role;
 use Laravel\Passport\Client;
@@ -266,6 +268,9 @@ class UserController extends Controller
         $client_update = array('revoked' => true);
         $client->update($client_update);
 
+        Mail::to($user->email)
+                ->send(new UserDeactivated($user));
+
         /* trash user */
         $user->delete();
 
@@ -282,11 +287,17 @@ class UserController extends Controller
     public function activate($id)
     {
         User::withTrashed()->find($id)->restore();
+        $user = User::find($id);
 
         /* revoke user from oauth */
         $client = Client::where('user_id', $id);
         $client_update = array('revoked' => false);
         $client->update($client_update);
+        
+        Mail::to($user->email)
+                ->send(new UserActivated($user));
+
+        return response()->json(['success' => 'OK']);
     }
 
 }
