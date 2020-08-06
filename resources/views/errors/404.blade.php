@@ -29,7 +29,8 @@
 	
 	<div class="h-p100">
 		<div class="row align-items-center justify-content-md-center h-p100">
-			<div class="col-lg-4 col-12 h-lg-p100 h-auto bg-img" style="background-image: url(minibus/images/auth-bg/bg-1.jpg);">
+			<div class="col-lg-4 col-12 h-lg-p100 h-auto bg-img" 
+				style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
 				<div class="row l-block p-xl-100 p-lg-50 p-30 h-lg-p100 h-auto">
 					<div class="col-12 logo align-self-start">
 						<a href="#" class="aut-logo">
