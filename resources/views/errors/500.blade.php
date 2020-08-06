@@ -23,7 +23,8 @@
 	<link rel="stylesheet" href="minibus/main/css/skin_color.css">		
 
 </head>
-<body class="hold-transition theme-fruit bg-img" style="background-image: url(minibus/images/auth-bg/bg-6.jpg);">
+<body class="hold-transition theme-fruit bg-img" 
+	style=" background-image: linear-gradient(to right top, #050e5e, #321783, #5d1da7, #8a1dca, #bc12eb);">
 	
 	<div class="h-p100">
 		<div class="row align-items-center justify-content-md-center h-p100">
