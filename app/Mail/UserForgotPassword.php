@@ -40,7 +40,7 @@ class UserForgotPassword extends Mailable
         $token = DB::table('password_resets')
         ->where('email', $this->user->email)->first();
 
-        $subject = 'Minibus Password Reset';
+        $subject = 'Minibus Taxi Reg System: Password Reset';
         $userfullname = $this->user->name.' '.$this->user->surname;
         $link = config('app.url').'/password/reset/'.$token->token;
         $title = 'You have requested for a password reset. Please contact us 

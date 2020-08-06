@@ -38,7 +38,7 @@
 							</div>
 							<h2 class="text-white">MINIBUS TAXI REGISTRATION</h2>
 							<h6>
-								@if( count($errors) != 0 ) 
+								@if( isset($errors) ) 
 								<span class="text-danger" id="error">
 									{{ $errors }} 
 								<span>

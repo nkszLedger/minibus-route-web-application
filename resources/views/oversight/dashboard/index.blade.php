@@ -3,16 +3,6 @@
 @section('content')
 
 <section class="content">
-    <div class="row">
-        <div class="col-12">
-            <div class="box">
-                <div class="box-body analytics-info">
-                    <h4 class="box-title">Facility Overview: Taxi Rank Sites Discovered</h4>
-                    <div id="map" style="height:800px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="right-title w-350">
         <div class="form-group">
@@ -50,8 +40,8 @@
                     <div class="text-center">
                         <a href="#">
                         <h1 class="font-size-50 text-secondary"><i class="mdi mdi-verified"></i></h1>
-                        <h2 id="verified_count">0</h2>
-                        <span class="badge badge-pill badge-secondary px-15 mb-10">VERIFIED EMPLOYEES</span>
+                        <h2 id="facility_count">{{ $facility_count }}</h2>
+                        <span class="badge badge-pill badge-secondary px-15 mb-10">REGISTERED TAXI RANKS</span>
                         </a>
                     </div>
                 </div>
@@ -181,6 +171,16 @@
                 <div class="box-body analytics-info">
                     <h4 class="box-title">Taxi Employee Registrations</h4>
                     <div id="basic-pie" style="height:600px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-body analytics-info">
+                    <h4 class="box-title">Facility Overview: Taxi Rank Sites Discovered</h4>
+                    <div id="map" style="height:800px;"></div>
                 </div>
             </div>
         </div>

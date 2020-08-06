@@ -37,7 +37,7 @@ class UserResetPassword extends Mailable
      */
     public function build()
     {
-        $subject = 'Password Reset Successful';
+        $subject = 'Minibus Taxi Reg System: Password Reset Successful';
         $userfullname = $this->user->name.' '. $this->user->surname;
         $link = config('app.url');
         $title = 'Thank you for signing up with Minibus Web Admin! 

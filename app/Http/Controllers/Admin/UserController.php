@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Mail\UserActivated;
+use App\Mail\UserDeactivated;
 use App\Mail\UserRegistered;
 use Spatie\Permission\Models\Role;
 use Laravel\Passport\Client;
@@ -57,7 +59,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $all_users = User::orderBy('id','desc')->get();
+        $all_users = User::withTrashed()
+                    ->orderBy('id','desc')->get();
 
         return view('admin.users.index',
                         compact(['all_users']));
@@ -250,28 +253,51 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deactivate the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deactivate($id)
     {
         /* find user */
-        // $user = User::find($id);
+        $user = User::find($id);
 
-        // /* revoke user from oauth */
-        // $client = Client::where('user_id', $user->id);
-        // $client->revoked = true;
-        // $client->update();
+        /* revoke user from oauth */
+        $client = Client::where('user_id', $user->id);
+        $client_update = array('revoked' => true);
+        $client->update($client_update);
 
-        // /* trash user */
-        // $user->delete();
+        Mail::to($user->email)
+                ->send(new UserDeactivated($user));
 
-        // return $this->index();
+        /* trash user */
+        $user->delete();
 
-        dd('hey');
+        return response()->json(['success' => 'OK']);
 
+    }
+
+    /**
+     * Activates the specified deleted resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id)
+    {
+        User::withTrashed()->find($id)->restore();
+        $user = User::find($id);
+
+        /* revoke user from oauth */
+        $client = Client::where('user_id', $id);
+        $client_update = array('revoked' => false);
+        $client->update($client_update);
+        
+        Mail::to($user->email)
+                ->send(new UserActivated($user));
+
+        return response()->json(['success' => 'OK']);
     }
 
 }

@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../public/minibus/images/favicon.ico">
+    <link rel="icon" href="/minibus/images/favicon.ico">
 
     <title> MiniBus Taxi Registration Web</title>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-		crossorigin=""/>
+		crossorigin="">
 
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
@@ -573,6 +573,9 @@
 	
 	<!-- Regions -->
 	<script src="/minibus/main/js/pages/regions.js"></script>
+
+	<!-- Users -->
+	<script src="/minibus/main/js/pages/users.js"></script>
 
 	<!-- Make sure you put this AFTER Leaflet's CSS -->
 	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"

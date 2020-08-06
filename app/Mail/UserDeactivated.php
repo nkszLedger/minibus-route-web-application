@@ -5,11 +5,10 @@ namespace App\Mail;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UserRegistered extends Mailable
+class UserDeactivated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,6 +18,7 @@ class UserRegistered extends Mailable
      * @var user
      */
     protected $user;
+
 
     /**
      * Create a new message instance.
@@ -37,22 +37,21 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        /* Get the token just created above */
-        $token = DB::table('password_resets')
-        ->where('email', $this->user->email)->first();
-
-        $subject = 'Minibus Taxi Reg System: User Registration';
+        $subject = 'Minibus Taxi Reg System: User Account Deactivated';
         $userfullname = $this->user->name.' '. $this->user->surname;
-        $link = config('app.url').'/password/reset/'.$token->token;
-        
+        $link = config('app.url');
+        $title = 'Your user account has been deactivated. Please contact the Systems Administrator 
+        to activate or if you did not initiate this action';
+        $button_text = '';
+
         //env('MAIL_FROM_ADDRESS') hardcode until .env starts working!!!!
         $mail_from_address = "ptrms@csir.co.za"; 
 
         return $this->from($mail_from_address)
                     ->subject($subject)
-                    ->view('emails.email_welcome', 
-                        compact(['link',
-                                'userfullname']) )
+                    ->view('emails.email_notification', 
+                        compact(['link', 'title', 
+                                'userfullname', 'button_text']) )
                     ->with('user', $this->user);
     }
 }

@@ -14,15 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(); //['verify' => true]
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('getAllFacilities/', 
-                'Controller@getAllFacilities');
 
 Route::group(['middleware' => 'auth:web'], function() {
 
@@ -33,6 +29,17 @@ Route::group(['middleware' => 'auth:web'], function() {
         'members' => 'DataCapturer\MemberController',
         'dashboard' => 'Oversight\DashboardController'
     ]);
+
+    Route::get('users/deactivate/{user}', 
+                'Admin\UserController@deactivate')
+                ->name('users.deactivate');
+
+    Route::get('users/activate/{user}', 
+                'Admin\UserController@activate')
+                ->name('users.activate');
+
+    Route::get('getAllFacilities/', 
+                'Controller@getAllFacilities');
 
     Route::get('vehicles/{member_id}', 
                 'DataCapturer\VehicleController@create')

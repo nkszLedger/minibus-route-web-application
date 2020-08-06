@@ -83,7 +83,7 @@ class LoginController extends Controller
             else if($user->roles->pluck( 'name' )
                         ->contains('Systems Admin') )
             {
-                return redirect()->intended('users');
+                return redirect()->intended('dashboard');
             }
             else
             {
@@ -92,10 +92,10 @@ class LoginController extends Controller
         }
         else
         {
-            $message = 'Incorrect password or email address';
+            $errors = 'Incorrect password or email address';
 
             return view('auth.login', 
-                    compact(['message']));
+                    compact(['errors']));
         }
     }
 

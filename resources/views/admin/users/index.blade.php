@@ -59,20 +59,33 @@
 											</td>
 											<td>
 												@if( $user->email_verified_at !== null )
-												<span class="badge badge-pill badge-success">Verified</span>
+												<span class="badge badge-pill badge-success">Active</span>
 												@else
-													<span class="badge badge-pill badge-danger">Not Verified</span>
+													<span class="badge badge-pill badge-danger">Inactive</span>
 												@endif
 									     	</td>
 											 <td>
-												<a href="{{ route('users.edit', $user->id) }}"><b>Edit</b></a> | 
-												@if( $user->trashed() )
-													<a href="#"><b>Activate</b></a> 
-												@else
-													<a href="{{ route('users.destroy', $user->id) }}">
-														<b>Deactivate</b>
-													</a>
-												@endif
+											 	<div class="row">
+												 	<div class="col-xl-2">
+														<button type="submit" class="btn btn-sm btn-rounded btn-secondary" 
+															value="EDIT">EDIT</button>
+													</div>
+													<div class="col-xl-2">
+													@if( $user->email_verified_at !== null )
+														@if( $user->trashed() )
+															<button type="submit" class="btn btn-sm btn-rounded btn-primary" 
+																id="activate" onclick="activate('{{ $user->id }}')">
+																	ACTIVATE
+															</button>
+														@else
+															<button type="submit" class="btn btn-sm btn-rounded btn-warning" 
+																id="deactivate" onclick="deactivate('{{ $user->id }}')">
+																	DEACTIVATE
+															</button>
+														@endif
+													@endif
+													</div>
+												</div> 	
 											</td>
 										</tr>
 						  			<?php $count++?>

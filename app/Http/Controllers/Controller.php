@@ -6,6 +6,7 @@ use App\Vehicle;
 use App\Route;
 use App\Association;
 use App\Employee;
+use App\EmployeeOrganization;
 use App\EmployeePosition;
 use App\Facility;
 use App\Member;
@@ -120,7 +121,64 @@ class Controller extends BaseController
     public function getAllFacilities()
     {
         $all_facilities =  Facility::all();
-        return response()->json(['data' =>$all_facilities]);
+        $facility_data = [];
+        $count = 0;
+
+        foreach($all_facilities as $facility)
+        {
+            $c_managers = EmployeeOrganization::with(['employees'])
+                                ->where('facility_taxi_rank_id', $facility->id)
+                                ->whereHas('employee', function($q) {
+                                    $q->where('position_id', 1);
+                                })
+                                ->count();
+
+            $c_coordinators = EmployeeOrganization::with(['employees'])
+                                ->where('facility_taxi_rank_id', $facility->id)
+                                ->whereHas('employee', function($q) {
+                                    $q->where('position_id', 2);
+                                })
+                                ->count();
+
+            $c_marshalls = EmployeeOrganization::with(['employees'])
+                                ->where('facility_taxi_rank_id', $facility->id)
+                                ->whereHas('employee', function($q) {
+                                    $q->where('position_id', 3);
+                                })
+                                ->count();
+
+            $c_squad = EmployeeOrganization::with(['employees'])
+                                ->where('facility_taxi_rank_id', $facility->id)
+                                ->whereHas('employee', function($q) {
+                                    $q->where('position_id', 4);
+                                })
+                                ->count();
+            
+            $c_other = EmployeeOrganization::with(['employees'])
+                                ->where('facility_taxi_rank_id', $facility->id)
+                                ->whereHas('employee', function($q) {
+                                    $q->where('position_id', 5);
+                                })
+                                ->count();
+
+            $facility_data[$count]['facility'] = $facility;
+            $facility_data[$count]['c_managers'] = $c_managers;
+            $facility_data[$count]['c_coordinators'] = $c_coordinators;
+            $facility_data[$count]['c_marshalls'] = $c_marshalls;
+            $facility_data[$count]['c_squad'] = $c_squad;
+            $facility_data[$count]['c_other'] = $c_other;
+
+            // dump($c_managers);
+            // dump($c_coordinators);
+            // dump($c_marshalls);
+            // dump($c_squad);
+            // dump($c_other);
+
+            // dd($facility_data[$count]['c_managers']);
+            $count++;
+        }
+        
+        return response()->json(['data' =>$facility_data]);
     }
 
 

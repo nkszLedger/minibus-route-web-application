@@ -44,9 +44,10 @@
 <body style="background-color: #f3f5f7; margin: 0 !important; padding: 0 !important;">
 
 <!-- HIDDEN PREHEADER TEXT -->
-<div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Poppins', sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+{{-- <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; 
+    font-family: 'Poppins', sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
     We're thrilled to have you here! Get ready to dive into your new account.
-</div>
+</div> --}}
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <!-- LOGO -->
@@ -124,6 +125,7 @@
                       <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 30px 30px;">
                         <table border="0" cellspacing="0" cellpadding="0">
                           <tr>
+                            @if( $button_text !== '')
                               <td align="center" style="border-radius: 3px;" 
                                 bgcolor="#0bb2d4"><a href="{{ $link ?? '' }}" target="_blank" 
                                 style="font-size: 18px; font-family: Helvetica, 
@@ -132,6 +134,7 @@
                                 border-radius: 2px; border: 1px solid #0bb2d4; 
                                 display: inline-block;">{{ $button_text }}</a>
                               </td>
+                            @endif
                           </tr>
                         </table>
                       </td>
@@ -145,7 +148,7 @@
                   color: #666666; font-family: 'Poppins', sans-serif; font-size: 16px; 
                   font-weight: 400; line-height: 25px;">
                   <p style="margin: 0;">If you have any questions, 
-                    just reply to this email—we're always happy to help out.</p>
+                    just reply to this email. We're always happy to help out.</p>
                 </td>
               </tr>
               <!-- COPY -->

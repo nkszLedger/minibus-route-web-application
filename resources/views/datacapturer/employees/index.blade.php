@@ -56,6 +56,32 @@
 											<th>Rank Position</th>
 											<th>Date Captured</th>
 											<th>Actions</th>
+
+											{{-- Hidden Columns --}}
+											<th style="display:none;">Biometrics Captured</th>
+											<th style="display:none;">SAID Number</th>
+											<th style="display:none;">Gender</th>
+											<th style="display:none;">Employee Number</th>
+											<th style="display:none;">Emergency Contact Name</th>
+											<th style="display:none;">Emergency Contact Number</th>
+											<th style="display:none;">Emergency Contact Relationship</th>
+
+											<th style="display:none;">Residential Address</th>
+											<th style="display:none;">Suburb</th>
+											<th style="display:none;">Postal Code</th>
+											<th style="display:none;">City/Town</th>
+											<th style="display:none;">Province</th>
+											<th style="display:none;">Association</th>
+											<th style="display:none;">Association Provided</th>
+
+											<th style="display:none;">Regional Coordinator Name</th>
+											<th style="display:none;">Regional Coordinator's Contact Details</th>
+											<th style="display:none;">Cadet Taxi Rank</th>
+											<th style="display:none;">Taxi Rank Provided</th>
+											<th style="display:none;">Subordinate Taxi Ranks</th>
+											<th style="display:none;">Taxi Rank Manager Name</th>
+											<th style="display:none;">Taxi Rank Manager's Contact Details</th>
+
 										</tr>
 									</thead>
 
@@ -104,6 +130,66 @@
 												</a>
 												@endif
 											</td>
+											<td style="display:none;">
+												{{-- @if( $employee['portrait']['id'] == ''
+													&  $employee['fingerprint']['id'] == '')
+													no
+												@else
+													yes
+												@endif --}}
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->id_number }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee['gender']['type'] }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->employee_number }} 
+											</td> 
+											<td style="display:none;"> 
+												{{ $employee->emergency_contact_name }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->emergency_contact_number }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->emergency_contact_relationship }} 
+											</td>
+
+											<td style="display:none;"> {{ $employee->address_line }} </td>
+											<td style="display:none;"> {{ $employee->surburb }} </td>
+											<td style="display:none;"> {{ $employee->postal_code }} </td>
+											<td style="display:none;"> {{ $employee['city']['city']}} </td>
+											<td style="display:none;"> {{ $employee['province']['name']}} </td>
+
+											<td style="display:none;"> 
+												{{ $employee->organization->association->name ?? '' }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->association_name ?? '' }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->regional_coordinator_full_name ?? ''  }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->regional_coordinator_contact_details ?? '' }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->facility->name ?? ''  }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->rank }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->subordinate_taxi_ranks ?? '' }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->facility_manager_full_name ?? '' }} 
+											</td>
+											<td style="display:none;"> 
+												{{ $employee->organization->facility_manager_contact_details ?? '' }} 
+											</td>
 										</tr>
 						  			<?php $count++?>
 									@endforeach
@@ -120,6 +206,31 @@
 											<th>Rank Position</th>
 											<th>Date Captured</th>
 											<th>Actions</th>
+
+											{{-- Hidden Columns --}}
+											<th style="display:none;">Biometrics Captured</th>
+											<th style="display:none;">SAID Number</th>
+											<th style="display:none;">Gender</th>
+											<th style="display:none;">Employee Number</th>
+											<th style="display:none;">Emergency Contact Name</th>
+											<th style="display:none;">Emergency Contact Number</th>
+											<th style="display:none;">Emergency Contact Relationship</th>
+
+											<th style="display:none;">Residential Address</th>
+											<th style="display:none;">Suburb</th>
+											<th style="display:none;">Postal Code</th>
+											<th style="display:none;">City/Town</th>
+											<th style="display:none;">Province</th>
+											<th style="display:none;">Association</th>
+											<th style="display:none;">Association Provided</th>
+
+											<th style="display:none;">Regional Coordinator Name</th>
+											<th style="display:none;">Regional Coordinator's Contact Details</th>
+											<th style="display:none;">Cadet Taxi Rank</th>
+											<th style="display:none;">Taxi Rank Provided</th>
+											<th style="display:none;">Subordinate Taxi Ranks</th>
+											<th style="display:none;">Taxi Rank Manager Name</th>
+											<th style="display:none;">Taxi Rank Manager's Contact Details</th>
 										</tr>
 									</tfoot>
 								</table>
