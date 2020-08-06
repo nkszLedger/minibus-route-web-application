@@ -36,7 +36,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.csir.co.za'),
+            'host' => env('MAIL_HOST', 'smtpin.csir.co.za'),
             'port' => env('MAIL_PORT', 25),
             'encryption' => env('MAIL_ENCRYPTION', ''),
             'username' => env('MAIL_USERNAME'),
