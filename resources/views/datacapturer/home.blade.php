@@ -55,10 +55,10 @@
 <div class="wrapper">
 
   <div class="art-bg">
-	  <img src="../images/art1.svg" alt="" class="art-img light-img">
-	  <img src="../images/art2.svg" alt="" class="art-img dark-img">
-	  <img src="../images/art-bg.svg" alt="" class="wave-img light-img">
-	  <img src="../images/art-bg2.svg" alt="" class="wave-img dark-img">
+	  <img src="minibus/images/art1.svg" alt="" class="art-img light-img">
+	  <img src="minibus/images/art2.svg" alt="" class="art-img dark-img">
+	  <img src="minibus/images/art-bg.svg" alt="" class="wave-img light-img">
+	  <img src="minibus4/images/art-bg2.svg" alt="" class="wave-img dark-img">
   </div>
 
   <header class="main-header">
