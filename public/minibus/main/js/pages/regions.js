@@ -8,13 +8,12 @@ $('#region_selector').change(function(){
         url: url_path,
         type: 'GET',
         dataType: 'json',
-        success: function(response){ 
-
+        success: function(response)
+        { 
             $('#employee_count').html(response['employee_count'].toString());
             $('#route_count').html(response['route_count'].toString());
             $('#association_count').html(response['association_count'].toString());
 
-            document.getElementById('verified_count').value =  0;
             document.getElementById('operator_count').value = 0;
             document.getElementById('driver_count').value =  0;
 
