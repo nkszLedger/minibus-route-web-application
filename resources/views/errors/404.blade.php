@@ -52,18 +52,9 @@
 				<div class="row justify-content-center no-gutters">
 					<div class="col-xl-6 col-lg-7 col-md-6 col-12">
 						<div class="rounded10 b-2 b-dashed border-info text-center">
-						  	<h1 class="text-danger font-size-180 font-weight-bold"> 404</h1>
-						  	<h1>Page Not Found !</h1>
-						  	<h3>looks like, page doesn't exist</h3>
-						  	<form class="search-form mx-auto my-30 w-p75">
-							<div class="input-group">
-							  <input type="text" name="search" class="form-control" placeholder="Search">
-							  <div class="input-group-append">
-								  <button type="submit" name="submit" class="btn btn-danger btn-sm"><i class="fa fa-search"></i></button>
-								</div>
-							</div>
-							<!-- /.input-group -->
-						  </form>
+						  	<h1 class="text-white font-size-180 font-weight-bold"> 404</h1>
+						  	<h1 class="text-white">Page Not Found !</h1>
+						  	<h3 class="text-white">looks like, page doesn't exist</h3>
 					    </div>
 					</div>
 				</div>
