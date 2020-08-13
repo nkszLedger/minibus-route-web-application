@@ -4,19 +4,31 @@
 
 <section class="content">
 
-    <div class="right-title w-350">
-        <div class="form-group">
-            <h5 class="text-white"> 
-                <b>Region Overview : </b>
-            </h5>
-            <select id=region_selector class="custom-select form-control">
-                <option value="0"> <b> All </b> </option>
-                @foreach ($all_regions as $region)
-                    <option value="{{$region->region_id}}">
-                        <b> {{$region->region_name}} </b>
-                    </option>
-                @endforeach
-            </select>
+    <div class="row">
+        <div class="col-xl-2 w-150">
+            <div class="form-group">
+                <h5 class="text-white"> 
+                    <b>Choose Region: </b>
+                </h5>
+                <select id=region_selector class="custom-select form-control">
+                    <option value="0"> <b> All </b> </option>
+                    @foreach ($all_regions as $region)
+                        <option value="{{$region->region_id}}">
+                            <b> {{$region->region_name}} </b>
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-xl-2 w-150">
+            <div class="form-group">
+                <h5 class="text-white"> 
+                    <b>By Taxi Rank: </b>
+                </h5>
+                <select id=taxi_rank_selector class="custom-select form-control">
+                    <option value="0"> <b> All </b> </option>  
+                </select>
+            </div>
         </div>
     </div>
     
