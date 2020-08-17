@@ -22,6 +22,7 @@ class DashboardController extends Controller
     public function index()
     {
         $all_regions = Region::all();
+        $all_facilities = Facility::all();
         $driver_count = count(MemberDriver::all());
         $operator_count = count(MemberOperator::all());
         $association_count = count(Association::all());
@@ -43,6 +44,7 @@ class DashboardController extends Controller
                                                 'employee_count',
                                                 'facility_count',
                                                 'ekurhuleni_count',
+                                                'all_facilities',
                                                 'jhb_count', 'sedibeng_count',
                                                 'tshwane_count', 'westrand_count',
                                                 'unknown_count', 'all_regions'

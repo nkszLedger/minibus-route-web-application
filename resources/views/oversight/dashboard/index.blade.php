@@ -27,6 +27,11 @@
                 </h5>
                 <select id=taxi_rank_selector class="custom-select form-control">
                     <option value="0"> <b> All </b> </option>  
+                    @foreach ($all_facilities as $facility)
+                        <option value="{{$facility->id}}">
+                            <b> {{$facility->name}} </b>
+                        </option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -52,8 +57,10 @@
                     <div class="text-center">
                         <a href="#">
                         <h1 class="font-size-50 text-secondary"><i class="mdi mdi-verified"></i></h1>
-                        <h2 id="facility_count">{{ $facility_count }}</h2>
-                        <span class="badge badge-pill badge-secondary px-15 mb-10">REGISTERED TAXI RANKS</span>
+                        {{-- <h2 id="facility_count">{{ $facility_count }}</h2>
+                        <span class="badge badge-pill badge-secondary px-15 mb-10">REGISTERED TAXI RANKS</span> --}}
+                        <h2 id="verified_count">0</h2>
+                        <span class="badge badge-pill badge-secondary px-15 mb-10">VERIFIED EMPLOYEES</span>
                         </a>
                     </div>
                 </div>
