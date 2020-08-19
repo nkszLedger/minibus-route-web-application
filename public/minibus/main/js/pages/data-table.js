@@ -14,7 +14,7 @@ $(function () {
         'ordering'    : true,
         'info'        : true,
         'autoWidth'   : false
-        });	
+    });	
 	
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
@@ -109,5 +109,6 @@ $(function () {
     {
         //var data = table.$('input, select').serialize(); 
     });
-	
+
+
   }); // End of use strict
