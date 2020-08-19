@@ -33,12 +33,28 @@ class Controller extends BaseController
      */
     public function filterByRegionID($region_id) 
     {
-        $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
-        $jhb_count = count(Employee::where('region_id', 1002)->get());
-        $sedibeng_count = count(Employee::where('region_id', 1003)->get());
-        $tshwane_count = count(Employee::where('region_id', 1004)->get());
-        $westrand_count = count(Employee::where('region_id', 1005)->get());
-        $unknown_count = count(Employee::where('region_id', 1099)->get());
+        $ekurhuleni = Employee::where('region_id', 1001)->get();
+        $jhb = Employee::where('region_id', 1002)->get(); 
+        $sedibeng = Employee::where('region_id', 1003)->get();
+        $tshwane = Employee::where('region_id', 1004)->get();
+        $westrand = Employee::where('region_id', 1005)->get();
+        $unknown = Employee::where('region_id', 1099)->get();
+
+        $ekurhuleni_count = count($ekurhuleni);
+        $jhb_count = count($jhb);
+        $sedibeng_count = count($sedibeng);
+        $tshwane_count = count($tshwane);
+        $westrand_count = count($westrand);
+        $unknown_count = count($unknown);
+
+        /* region_id and municipality_id are not the same!! */
+        /* municipality IDs for regions */
+        $m_ekurhuleni = Facility::where('municipality_id', 12)->get();
+        $m_jhb = Facility::where('municipality_id', 23)->get();
+        $m_sedibeng = Facility::where('municipality_id', 62)->get();
+        $m_tshwane = Facility::where('municipality_id', 68)->get();
+        $m_westrand = Facility::where('municipality_id', 78)->get();
+        $m_unknown = Facility::where('municipality_id', 2111)->get();
 
         if( $region_id != '0')
         {
@@ -51,6 +67,39 @@ class Controller extends BaseController
 
             /*$driver_count = count(MemberDriver::all());
             $operator_count = count(MemberOperator::all());*/
+
+            $taxi_ranks_count = 0;
+
+            if( $region_id == 1001 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    12)->get());
+            }
+            else if( $region_id == 1002 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    23)->get());
+            }
+            else if( $region_id == 1003 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    62)->get());
+            }
+            else if( $region_id == 1004 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    68)->get());
+            }
+            else if( $region_id == 1005 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    78)->get());
+            }
+            else if( $region_id == 1099 )
+            {
+                $taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                    2111)->get());
+            }
 
             $association_count = count(Association::where('region_id', $region_id)->get());
             $route_count = count(Route::where('region_id', $region_id)->get());
@@ -70,6 +119,7 @@ class Controller extends BaseController
                     'association_count' => $association_count,
                     'route_count' => $route_count,
                     'employee_count' => $employee_count,
+                    'taxi_ranks_count' => $taxi_ranks_count
                 ]);
         }
         else
@@ -88,8 +138,10 @@ class Controller extends BaseController
             $route_count = count(Route::all());
             $employee_count = count(Employee::all());
             $employee_verified_count = 0;
+            $taxi_ranks_count = count(Facility::all());
 
             return response()->json(['driver_count' => $driver_count,
+                                        'taxi_ranks_count' => $taxi_ranks_count,
                                         'operator_count' => $operator_count,
                                         'association_count' => $association_count, 
                                         'route_count' => $route_count,

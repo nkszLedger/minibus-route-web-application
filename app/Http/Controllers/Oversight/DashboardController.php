@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $association_count = count(Association::all());
         $route_count = count(Route::all());
         $employee_count = count(Employee::all());
-        $facility_count = count(Facility::all());
+        $taxi_ranks_count = count($all_facilities);
 
         $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
         $jhb_count = count(Employee::where('region_id', 1002)->get());
@@ -42,7 +42,7 @@ class DashboardController extends Controller
                                                 'association_count', 
                                                 'route_count',
                                                 'employee_count',
-                                                'facility_count',
+                                                'taxi_ranks_count',
                                                 'ekurhuleni_count',
                                                 'all_facilities',
                                                 'jhb_count', 'sedibeng_count',
