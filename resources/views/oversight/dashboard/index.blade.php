@@ -20,7 +20,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-xl-2 w-150">
+        <div class="col-xl-4">
             <div class="form-group">
                 <h5 class="text-white"> 
                     <b>By Taxi Rank: </b>
@@ -71,9 +71,11 @@
                 <div class="box-body">
                     <div class="text-center">
                         <a href="#">
-                        <h1 class="font-size-50 text-primary"><i class="mdi mdi-account"></i></h1>
-                        <h2 id="operator_count">{{ $operator_count }}</h2>
-                        <span class="badge badge-pill badge-primary px-15 mb-10">REGISTERED OPERATORS</span>
+                        <h1 class="font-size-50 text-primary"><i class="mdi mdi-map-marker-radius"></i></h1>
+                        {{-- <h2 id="operator_count">{{ $operator_count }}</h2>
+                        <span class="badge badge-pill badge-primary px-15 mb-10">REGISTERED OPERATORS</span> --}}
+                        <h2 id="taxi_ranks_count">{{ $taxi_ranks_count }}</h2>
+                        <span class="badge badge-pill badge-primary px-15 mb-10">TAXI RANKS</span>
                         </a>
                     </div>
                 </div>
@@ -121,8 +123,43 @@
     </div>
 
     <div class="row">
-    
         <div class="col-12 col-xl-6">
+			<div class="box">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Data Table With Full Features</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					    <table id="employee_captured_per_region" 
+                            class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div class="col-12 col-xl-6">
             <div class="box">
                 <div class="box-header with-border">
                     <h4 class="box-title">Employee Captured Per Region</h4>
@@ -168,7 +205,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  --}}
 
         <div class="col-12 col-xl-6">
             <div class="box">
