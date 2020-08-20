@@ -33,6 +33,10 @@ class Controller extends BaseController
      */
     public function filterByRegionID($region_id) 
     {
+        /* Retrieve list of employees by region */
+        $employees = Employee::where('region_id', $region_id)->get();
+
+        /* Retrieve all employees per region */
         $ekurhuleni = Employee::where('region_id', 1001)->get();
         $jhb = Employee::where('region_id', 1002)->get(); 
         $sedibeng = Employee::where('region_id', 1003)->get();
@@ -40,6 +44,7 @@ class Controller extends BaseController
         $westrand = Employee::where('region_id', 1005)->get();
         $unknown = Employee::where('region_id', 1099)->get();
 
+        /* Count all employees per regions */
         $ekurhuleni_count = count($ekurhuleni);
         $jhb_count = count($jhb);
         $sedibeng_count = count($sedibeng);
@@ -119,7 +124,8 @@ class Controller extends BaseController
                     'association_count' => $association_count,
                     'route_count' => $route_count,
                     'employee_count' => $employee_count,
-                    'taxi_ranks_count' => $taxi_ranks_count
+                    'taxi_ranks_count' => $taxi_ranks_count,
+                    'employees' => $employees
                 ]);
         }
         else
@@ -158,7 +164,8 @@ class Controller extends BaseController
                                         'coordinator' => $cordinator_count,
                                         'marshall' => $marshall_count, 
                                         'squad'=> $squad_count, 
-                                        'other' => $other_count
+                                        'other' => $other_count,
+                                        'employees' => $employees
                                     ]);
         }
 

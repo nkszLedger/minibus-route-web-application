@@ -2,9 +2,9 @@ $(function () {
     "use strict";
 
     $('#region_selector').change(function(){
-        var id = $(this).val();
+        var region_id = $(this).val();
         
-        var url_path = window.location.origin + "/filterByRegionID/"+ id.toString();
+        var url_path = window.location.origin + "/filterByRegionID/"+ region_id.toString();
 
         $.ajax({
             url: url_path,
@@ -20,21 +20,23 @@ $(function () {
                 //document.getElementById('operator_count').value = 0;
                 document.getElementById('driver_count').value =  0;
 
-                var dataset = [
-                    ["Tiger Nixon", "System Architect", "Edinburgh", "35", "2011/04/25", "$320,800" ],
-                    ["Garrett Winters", "Accountant", "Tokyo", "29", "2011/07/25", "$170,750" ],
-                ];
+                var dataset = [];
+                var len = response['employees'].length;
+
+                console.log(response['employees'][0]['id']);
+
+                for(var i=0; i<len; i++){
+                    var record = [ response['employees'][i]['name'], response['employees'][i]['surname'] ];
+                    dataset.push(record);
+                }
                 
                 $('#employee_captured_per_region').DataTable({
                     data: dataset,
+                    pageLength: 5,
                     destroy: true,
                     columns: [
                         { title: "Name" },
-                        { title: "Position" },
-                        { title: "Office" },
-                        { title: "Age" },
-                        { title: "Start date" },
-                        { title: "Salary" }
+                        { title: "Surname" }
                     ]
                 });
 
