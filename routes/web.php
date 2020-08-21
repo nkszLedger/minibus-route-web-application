@@ -100,8 +100,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('members/idExists/{idnumber}', 
                 'Controller@idExists');
 
-
-    Route::get('filterByRegionID/{region_id}', 
+    Route::get('filterByRegionID/{region_id}/{facility_id}', 
                 'Controller@filterByRegionID');
 
     Route::get('getEmployeeRegionDistribution/', 

@@ -20,6 +20,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -31,11 +32,8 @@ class Controller extends BaseController
      * @param  int  $region_id
      * @return \Illuminate\Http\Response
      */
-    public function filterByRegionID($region_id) 
+    public function filterByRegionID($region_id, $facility_id) 
     {
-        /* Retrieve list of employees by region */
-        $employees = Employee::where('region_id', $region_id)->get();
-
         /* Retrieve all employees per region */
         $ekurhuleni = Employee::where('region_id', 1001)->get();
         $jhb = Employee::where('region_id', 1002)->get(); 
@@ -61,14 +59,70 @@ class Controller extends BaseController
         $m_westrand = Facility::where('municipality_id', 78)->get();
         $m_unknown = Facility::where('municipality_id', 2111)->get();
 
-        if( $region_id != '0')
+        if( $region_id != '0' & $facility_id != '0')
         {
-            /* filter Positions */
-            $manager_count = count(Employee::where('position_id', 1)->where('region_id', $region_id)->get());
-            $cordinator_count = count(Employee::where('position_id', 2)->where('region_id', $region_id)->get());
-            $marshall_count = count(Employee::where('position_id', 3)->where('region_id', $region_id)->get());
-            $squad_count = count(Employee::where('position_id', 4)->where('region_id', $region_id)->get());
-            $other_count = count(Employee::where('position_id', 5)->where('region_id', $region_id)->get());
+            /* Retrieve list of employees by region */
+            $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            dd(count($employees));
+
+            /* filter positions by region and taxi rank */
+            $manager = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', 1)
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            $cordinator = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', 2)
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            $marshall = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', 3)
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            $squad = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', 4)
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            $other = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', 5)
+            ->where('region_id', $region_id)
+            ->where('facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+            $manager_count = count( $manager );
+            $cordinator_count = count( $cordinator );
+            $marshall_count = count( $marshall );
+            $squad_count = count( $squad );
+            $other_count = count( $other );
 
             /*$driver_count = count(MemberDriver::all());
             $operator_count = count(MemberOperator::all());*/

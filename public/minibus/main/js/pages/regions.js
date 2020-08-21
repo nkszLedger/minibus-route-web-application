@@ -3,6 +3,7 @@ $(function () {
 
     $('#region_selector').change(function(){
         var region_id = $(this).val();
+        var taxi_rank_id = document.getElementById('taxi_rank_selector');
         
         var url_path = window.location.origin + "/filterByRegionID/"+ region_id.toString();
 
