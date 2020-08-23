@@ -571,8 +571,9 @@
 	<!-- Employees -->
 	<script src="/minibus/main/js/pages/employees.js"></script>
 	
-	<!-- Regions -->
-	<script src="/minibus/main/js/pages/regions.js"></script>
+	<!-- Dashboard Selectors -->
+	<script src="/minibus/main/js/pages/regions-selector.js"></script>
+	<script src="/minibus/main/js/pages/taxi-rank-selector.js"></script>
 
 	<!-- Users -->
 	<script src="/minibus/main/js/pages/users.js"></script>

@@ -1,11 +1,13 @@
 $(function () {
     "use strict";
 
-    $('#region_selector').change(function(){
-        var region_id = $(this).val();
-        var taxi_rank_id = document.getElementById('taxi_rank_selector');
+    $('#taxi_rank_selector').change(function(){
+        var taxi_rank_id = $(this).val();
+        var region_id = document.getElementById('region_selector').value;
         
-        var url_path = window.location.origin + "/filterByRegionID/"+ region_id.toString();
+        var url_path = window.location.origin 
+        + "/filterByRegionID/"+ region_id.toString() 
+        + "/" + taxi_rank_id.toString();
 
         $.ajax({
             url: url_path,

@@ -75,7 +75,7 @@
                         {{-- <h2 id="operator_count">{{ $operator_count }}</h2>
                         <span class="badge badge-pill badge-primary px-15 mb-10">REGISTERED OPERATORS</span> --}}
                         <h2 id="taxi_ranks_count">{{ $taxi_ranks_count }}</h2>
-                        <span class="badge badge-pill badge-primary px-15 mb-10">TAXI RANKS</span>
+                        <span class="badge badge-pill badge-primary px-15 mb-10">TAXI RANKS BY REGION</span>
                         </a>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         <a href="#">
                         <h1 class="font-size-50 text-info"><i class="mdi mdi-road"></i></h1>
                         <h2 id="route_count">{{ $route_count }}</h2>
-                        <span class="badge badge-pill badge-info px-15 mb-10">OPERATING ROUTES</span>
+                        <span class="badge badge-pill badge-info px-15 mb-10">ROUTES BY REGION</span>
                         </a>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                         <a href="#">
                         <h1 class="font-size-50 text-warning"><i class="mdi mdi-briefcase"></i></h1>
                         <h2 id="association_count">{{ $association_count }}</h2>
-                        <span class="badge badge-pill badge-warning px-15 mb-10">NUMBER OF ASSOCIATIONS</span>
+                        <span class="badge badge-pill badge-warning px-15 mb-10">ASSOCIATIONS BY REGION</span>
                         </a>
                     </div>
                 </div>
