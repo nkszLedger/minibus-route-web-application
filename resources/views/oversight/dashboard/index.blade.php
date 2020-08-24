@@ -131,8 +131,9 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-					    <table id="employee_captured_per_region" 
-                            class="table table-bordered table-striped">
+					    <table id="employee_captured_per_region"
+                            class="table table-bordered table-hover" 
+							style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -145,15 +146,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($all_employees as $employee )
                                 <tr>
-                                    <td>Tiger</td>
-                                    <td>Nixon</td>
+                                    <td>{{ $employee->name }}</td>
+                                    <td>{{ $employee->surname }}</td>
                                     {{-- <td>System Architect</td>
                                     <td>Edinburgh</td>
                                     <td>61</td>
                                     <td>2011/04/25</td>
                                     <td>$320,800</td> --}}
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
