@@ -571,6 +571,9 @@
 
 	<!-- Employees -->
 	<script src="/minibus/main/js/pages/employees.js"></script>
+
+	<!-- Employee Verifications -->
+	<script src="/minibus/main/js/pages/employee-verification.js"></script>
 	
 	<!-- Dashboard Selectors -->
 	<script src="/minibus/main/js/pages/regions-selector.js"></script>

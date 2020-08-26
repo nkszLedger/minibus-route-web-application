@@ -30,10 +30,9 @@
 					<div class="box">
 						<div class="box-header">
 							<h3 class="box-title">Employee Verification Status Summary</h3>
-							<button type="submit" data-toggle="modal" 
-								data-target="#employee-verify" class="btn btn-success pull-right">
-								Verify Employee
-							</button>
+							<h6 class="box-subtitle">
+								Check below to change verification state of employee. Save Changes to submit.
+							</h6>
 						</div>
 						
 						<div class="box-body">
@@ -51,11 +50,13 @@
 											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Rank Position</th>
+											<th>SA ID Number</th>
 											<th>Date Captured</th>
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
 											<th>Verification Status</th>
+											<th>Actions</th>
 										</tr>
 									</thead>
 
@@ -74,6 +75,9 @@
 											</td>
                                             <td>
 												{{ $status['employee']['position']['position'] ?? '' }}
+											</td>
+											<td>
+												{{ $status['employee']['id_number'] ?? '' }}
 											</td>
                                             <td>
 												{{ $status['employee']['created_at'] ?? ''}}
@@ -138,7 +142,7 @@
 													</div>
 												</div>
 											</td>
-											<th>
+											<td>
 												@if( $status->association_approved &
 														$status->letter_issued & 
 														$status->letter_signed)
@@ -146,7 +150,15 @@
 												@else
 													<span class="badge badge-pill badge-danger">Not Verified</span>
 												@endif
-											</th>
+											</td>
+											<td>
+												{{-- <button type="submit" data-toggle="modal" data-target="#employee-verify" 
+													class="btn btn-success" > --}}
+												<button type="submit" class="btn btn-success"
+													onclick="verify('{{ $status['employee']['id'] }}')">
+													Save Changes
+												</button>
+											</td>
 										</tr>
 						  			<?php $count++?>
 									@endforeach
@@ -157,11 +169,13 @@
 											<th>First Name</th>
                                             <th>Surname</th>
 											<th>Rank Position</th>
+											<th>SA ID Number</th>
 											<th>Date Captured</th>
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
 											<th>Verification Status</th>
+											<th>Actions</th>
 										</tr>
 									</tfoot>
 								</table>
@@ -184,7 +198,23 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Your content comes here</p>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>South African ID Number</label>
+								<input type="text" class="form-control" name="verify-id-number" 
+                                    maxlength=13 min=13 id="verify-id-number" 
+                                    required data-validation-required-message="This field is required" 
+									placeholder="XXXXXXXXXXXXX">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Last Name</label>
+								<input type="text" class="form-control" placeholder="Last Name">
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer modal-footer-uniform">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
