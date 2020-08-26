@@ -30,6 +30,10 @@
 					<div class="box">
 						<div class="box-header">
 							<h3 class="box-title">Employee Verification Status Summary</h3>
+							<button type="submit" data-toggle="modal" 
+								data-target="#employee-verify" class="btn btn-success pull-right">
+								Verify Employee
+							</button>
 						</div>
 						
 						<div class="box-body">
@@ -157,5 +161,28 @@
 		 	</div>
 			<!-- /.row -->
 		</section>
+
+		<!-- Modal -->
+		<div class="modal center-modal fade" id="employee-verify" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Your content comes here</p>
+				</div>
+				<div class="modal-footer modal-footer-uniform">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary float-right">Save changes</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.modal -->
+
 	<!-- /.content -->
 @endsection
