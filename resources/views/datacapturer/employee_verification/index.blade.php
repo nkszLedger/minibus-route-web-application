@@ -35,7 +35,7 @@
 						<div class="box-body">
 							<div class="table-responsive">
 								{{-- @hasanyrole(['Systems Admin|Oversight']) --}}
-								<table id="example" class="table table-bordered table-hover" 
+								<table id="example2" class="table table-bordered table-hover" 
 									style="width:100%">
 								{{-- @else
 								<table id="example2" class="table table-bordered table-hover" 
@@ -61,35 +61,77 @@
 									@foreach($all_employees as $status )
 										<tr>
 											<td>{{$count}}</td>
-                                            <td>
-												{{ $status['employee']['name'] }}
+                                            <td> 
+												{{ $status['employee']['name'] ?? '' }}
 											</td>
                                             <td>
-												{{ $status['employee']['surname'] }}
+												{{ $status['employee']['surname'] ?? ''}}
 											</td>
                                             <td>
-												{{ $status['employee']['position']['position'] }}
+												{{ $status['employee']['position']['position'] ?? '' }}
 											</td>
                                             <td>
-												{{ $status['employee']['date_created'] }}
+												{{ $status['employee']['created_at'] ?? ''}}
 											</td>
                                             <td>
-												<input type="checkbox" 
-                                                    name="ismemberassociationapprovedcheckbox_{{ $status['employee']['id'] }}"
-                                                    id="ismemberassociationapprovedcheckbox_{{ $status['employee']['id'] }}" 
-                                                    value="{{ $status['employee']['id'] }}">
+												<div class="form-group row">
+													<div class="ml-auto col-sm-10">
+														<div class="checkbox">
+															@if( $status->association_approved )
+																<input type="checkbox" 
+																	name="associationapprovedcheckbox_{{ $status->id }}"
+																	id="associationapprovedcheckbox_{{ $status->id }}"
+																	checked>
+																<label for="associationapprovedcheckbox_{{ $status->id }}"></label>
+															@else
+																<input type="checkbox" 
+																	name="associationapprovedcheckbox_{{ $status->id }}"
+																	id="associationapprovedcheckbox_{{ $status->id }}">
+																<label for="associationapprovedcheckbox_{{ $status->id }}"></label>
+															@endif	
+														</div>
+													</div>
+												</div>
 											</td>
                                             <td>
-												<input type="checkbox" 
-                                                    name="isletterissuedcheckbox_{{ $status['employee']['id'] }}"
-                                                    id="isletterissuedcheckbox_{{ $status['employee']['id'] }}" 
-                                                    value="{{ $status['employee']['id'] }}">
+												<div class="form-group row">
+													<div class="ml-auto col-sm-10">
+														<div class="checkbox">
+															@if( $status->letter_issued )
+																<input type="checkbox" 
+																	name="isletterissuedcheckbox_{{ $status->id }}"
+																	id="isletterissuedcheckbox_{{ $status->id }}"
+																	checked>
+																<label for="isletterissuedcheckbox_{{ $status->id }}"></label>
+															@else
+																<input type="checkbox" 
+																	name="isletterissuedcheckbox_{{ $status->id }}"
+																	id="isletterissuedcheckbox_{{ $status->id }}">
+																<label for="isletterissuedcheckbox_{{ $status->id }}"></label>
+															@endif	
+														</div>
+													</div>
+												</div>
 											</td>
                                             <td>
-												<input type="checkbox" 
-                                                    name="islettersignedcheckbox_{{ $status['employee']['id'] }}"
-                                                    id="islettersignedcheckbox_{{ $status['employee']['id'] }}" 
-                                                    value="{{ $status['employee']['id'] }}">
+												<div class="form-group row">
+													<div class="ml-auto col-sm-10">
+														<div class="checkbox">
+															@if( $status->letter_issued )
+																<input type="checkbox" 
+																	name="islettersignedcheckbox_{{ $status->id }}"
+																	id="islettersignedcheckbox_{{ $status->id }}"
+																	checked>
+																<label for="islettersignedcheckbox_{{ $status->id }}"></label>
+															@else
+																<input type="checkbox" 
+																	name="islettersignedcheckbox_{{ $status->id }}"
+																	id="islettersignedcheckbox_{{ $status->id }}">
+																<label for="islettersignedcheckbox_{{ $status->id }}"></label>
+															@endif	
+														</div>
+													</div>
+												</div>
 											</td>
 										</tr>
 						  			<?php $count++?>

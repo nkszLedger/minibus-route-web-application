@@ -99,7 +99,7 @@
 					<ul>
 						@can(['employee-create'])
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
-						<li><a href="{{ route('members.create') }}">Verify Employees</a></li>
+						<li><a href="{{ route('employees_verification') }}">Verify Employees</a></li>
 						@endcan
 						@can(['employee-list'])
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>

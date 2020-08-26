@@ -64,8 +64,13 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('employees/getAssociations/{region_id}', 
                 'Controller@getAssociationsByRegionID');
 
+    Route::get('employees_verification', 
+    'DataCapturer\EmployeeVerificationController@index')
+    ->name('employees_verification');
+
     Route::get('vehicles/getAssociations/{region_id}', 
-                'Controller@getAssociationsByRegionID')->name('associations');
+    'Controller@getAssociationsByRegionID')->name('associations');
+
     Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
                 function($member_id, $region_id) {
                     return App::make('App\http\Controllers\Controller')

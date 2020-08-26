@@ -13,13 +13,17 @@ class CreateEmployeeVerificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_verifications', function (Blueprint $table) {
+        Schema::create('employee_verifications', function (Blueprint $table) 
+        {
             $table->id();
             $table->integer('employee_id');
-            $table->boolean('association_approved');
-            $table->boolean('letter_issued');
-            $table->boolean('letter_signed');
+
+            $table->boolean('association_approved')->default(0);
+            $table->boolean('letter_issued')->default(0);
+            $table->boolean('letter_signed')->default(0);
+
             $table->nullableTimestamps();
+            $table->softDeletes()->nullable();
 
             $table->foreign('employee_id')->references('id')->on('employees');
         });
