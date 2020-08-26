@@ -55,6 +55,7 @@
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
+											<th>Verification Status</th>
 										</tr>
 									</thead>
 
@@ -121,7 +122,7 @@
 												<div class="form-group row">
 													<div class="ml-auto col-sm-10">
 														<div class="checkbox">
-															@if( $status->letter_issued )
+															@if( $status->letter_signed )
 																<input type="checkbox" 
 																	name="islettersignedcheckbox_{{ $status->id }}"
 																	id="islettersignedcheckbox_{{ $status->id }}"
@@ -137,6 +138,15 @@
 													</div>
 												</div>
 											</td>
+											<th>
+												@if( $status->association_approved &
+														$status->letter_issued & 
+														$status->letter_signed)
+												<span class="badge badge-pill badge-success">Verified</span>
+												@else
+													<span class="badge badge-pill badge-danger">Not Verified</span>
+												@endif
+											</th>
 										</tr>
 						  			<?php $count++?>
 									@endforeach
@@ -151,6 +161,7 @@
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
+											<th>Verification Status</th>
 										</tr>
 									</tfoot>
 								</table>
