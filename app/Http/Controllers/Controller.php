@@ -352,6 +352,8 @@ class Controller extends BaseController
     public function verifyEmployee($employee_id, $is_association_approved,
                             $is_letter_issued, $is_letter_signed )
     {
+        dd("employee verification");
+        
         $employee = EmployeeVerification::where('employee_id', $employee_id);
         $employee_update = array(
             'association_approved' => $is_association_approved,

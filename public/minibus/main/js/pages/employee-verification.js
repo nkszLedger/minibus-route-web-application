@@ -33,20 +33,18 @@ function verify(employee_id)
             var url_path = window.location.origin + "/employees_verify/"
                 + employee_id.toString() + val1.toString()
                 + val2.toString() + val3.toString();
-            
-            alert(val1);
 
-            // $.ajax({
-            //     url: url_path,
-            //     type: 'GET',
-            //     async: false, 
-            //     success: function(response) 
-            //     { 
-            //         swal("Updated!", "Employee Verification state has been updated", "success");  
-            //         window.location.reload(); 
-            //     },
-            //     error: swal("Failed to Update","Employee Verification State could not be updated", "error"),
-            // });
+            $.ajax({
+                url: url_path,
+                type: 'GET',
+                async: false, 
+                success: function(response) 
+                { 
+                    swal("Updated!", "Employee Verification state has been updated", "success");  
+                    window.location.reload(); 
+                },
+                error: swal("Failed to Update","Employee Verification State could not be updated", "error"),
+            });
                   
         } 
         else {     
