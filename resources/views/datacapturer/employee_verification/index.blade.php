@@ -88,15 +88,15 @@
 														<div class="checkbox">
 															@if( $status->association_approved )
 																<input type="checkbox" 
-																	name="associationapprovedcheckbox_{{ $status->id }}"
-																	id="associationapprovedcheckbox_{{ $status->id }}"
-																	checked>
-																<label for="associationapprovedcheckbox_{{ $status->id }}"></label>
+																	name="associationapprovedcheckbox_{{ $status->employee_id }}"
+																	id="associationapprovedcheckbox_{{ $status->employee_id }}">
+																	{{-- checked> --}}
+																<label for="associationapprovedcheckbox_{{ $status->employee_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="associationapprovedcheckbox_{{ $status->id }}"
-																	id="associationapprovedcheckbox_{{ $status->id }}">
-																<label for="associationapprovedcheckbox_{{ $status->id }}"></label>
+																	name="associationapprovedcheckbox_{{ $status->employee_id }}"
+																	id="associationapprovedcheckbox_{{ $status->employee_id }}">
+																<label for="associationapprovedcheckbox_{{ $status->employee_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -108,15 +108,15 @@
 														<div class="checkbox">
 															@if( $status->letter_issued )
 																<input type="checkbox" 
-																	name="isletterissuedcheckbox_{{ $status->id }}"
-																	id="isletterissuedcheckbox_{{ $status->id }}"
+																	name="isletterissuedcheckbox_{{ $status->employee_id }}"
+																	id="isletterissuedcheckbox_{{ $status->employee_id }}"
 																	checked>
-																<label for="isletterissuedcheckbox_{{ $status->id }}"></label>
+																<label for="isletterissuedcheckbox_{{ $status->employee_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="isletterissuedcheckbox_{{ $status->id }}"
-																	id="isletterissuedcheckbox_{{ $status->id }}">
-																<label for="isletterissuedcheckbox_{{ $status->id }}"></label>
+																	name="isletterissuedcheckbox_{{ $status->employee_id }}"
+																	id="isletterissuedcheckbox_{{ $status->employee_id }}">
+																<label for="isletterissuedcheckbox_{{ $status->employee_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -128,15 +128,15 @@
 														<div class="checkbox">
 															@if( $status->letter_signed )
 																<input type="checkbox" 
-																	name="islettersignedcheckbox_{{ $status->id }}"
-																	id="islettersignedcheckbox_{{ $status->id }}"
+																	name="islettersignedcheckbox_{{ $status->employee_id }}"
+																	id="islettersignedcheckbox_{{ $status->employee_id }}"
 																	checked>
-																<label for="islettersignedcheckbox_{{ $status->id }}"></label>
+																<label for="islettersignedcheckbox_{{ $status->employee_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="islettersignedcheckbox_{{ $status->id }}"
-																	id="islettersignedcheckbox_{{ $status->id }}">
-																<label for="islettersignedcheckbox_{{ $status->id }}"></label>
+																	name="islettersignedcheckbox_{{ $status->employee_id }}"
+																	id="islettersignedcheckbox_{{ $status->employee_id }}">
+																<label for="islettersignedcheckbox_{{ $status->employee_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -155,7 +155,7 @@
 												{{-- <button type="submit" data-toggle="modal" data-target="#employee-verify" 
 													class="btn btn-success" > --}}
 												<button type="submit" class="btn btn-success"
-													onclick="verify('{{ $status['employee']['id'] }}')">
+													onclick="verify('{{ $status->employee_id }}')">
 													Save Changes
 												</button>
 											</td>

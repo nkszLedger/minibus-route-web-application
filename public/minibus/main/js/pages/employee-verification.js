@@ -15,23 +15,38 @@ function verify(employee_id)
     {   
         if (isConfirm) 
         {
-            var association_approved = 0;
-            var letter_issued = 0;
-            var letter_signed = 0;
+            var strcheckbox1 = 'associationapprovedcheckbox_' + employee_id.toString();
+            var strcheckbox2 = 'isletterissuedcheckbox_' + employee_id.toString();
+            var strcheckbox3 = 'islettersignedcheckbox_' + employee_id.toString();
 
-            var url_path = "";//window.location.origin + "/employees/verify/"+ employee_id.toString();
+            var val1 = 0;
+            var val2 = 0;
+            var val3 = 0;
 
-            $.ajax({
-                url: url_path,
-                type: 'GET',
-                async: false, 
-                success: function(response) 
-                { 
-                    swal("Updated!", "Employee Verification state has been updated", "success");  
-                    window.location.reload(); 
-                },
-                error: swal("Failed to Update","Employee Verification State could not be updated", "error"),
-            });
+            if( document.getElementById(strcheckbox1).checked )
+            { val1 = 1; }
+            if( document.getElementById(strcheckbox2).checked )
+            { val2 = 1; }
+            if( document.getElementById(strcheckbox3).checked )
+            { val3 = 1; }
+
+            var url_path = window.location.origin + "/employees_verify/"
+                + employee_id.toString() + val1.toString()
+                + val2.toString() + val3.toString();
+            
+            alert(val1);
+
+            // $.ajax({
+            //     url: url_path,
+            //     type: 'GET',
+            //     async: false, 
+            //     success: function(response) 
+            //     { 
+            //         swal("Updated!", "Employee Verification state has been updated", "success");  
+            //         window.location.reload(); 
+            //     },
+            //     error: swal("Failed to Update","Employee Verification State could not be updated", "error"),
+            // });
                   
         } 
         else {     

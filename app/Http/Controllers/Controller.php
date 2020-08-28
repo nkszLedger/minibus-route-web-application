@@ -8,6 +8,7 @@ use App\Association;
 use App\Employee;
 use App\EmployeeOrganization;
 use App\EmployeePosition;
+use App\EmployeeVerification;
 use App\Facility;
 use App\Member;
 use App\MemberDriver;
@@ -340,6 +341,36 @@ class Controller extends BaseController
         
         return response()->json(['data' =>$facility_data]);
     }
+
+    /**
+     * Updates Employee Verification Status.
+     *
+     * @param  int  $employee_id, $is_association_approved, 
+     *       is_letter_issued, is_letter_signed
+     * @return \Illuminate\Http\Response
+     */
+    public function verifyEmployee($employee_id, $is_association_approved,
+                            $is_letter_issued, $is_letter_signed )
+    {
+        $employee = EmployeeVerification::where('employee_id', $employee_id);
+        $employee_update = array(
+            'association_approved' => $is_association_approved,
+            'letter_issued' => $is_letter_issued,
+            'letter_signed' => $is_letter_signed,
+        );
+
+        if( $employee->update($employee_update) )
+        { 
+            return response('Employee verification status updated!', 200)
+            ->header('Content-Type', 'text/plain');
+        }
+        else
+        {
+            return response('Employee verification status update failed!', 400)
+            ->header('Content-Type', 'text/plain');
+        }
+    }
+    
 
 
     /**
