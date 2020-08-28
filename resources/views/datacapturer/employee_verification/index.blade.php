@@ -89,8 +89,8 @@
 															@if( $status->association_approved )
 																<input type="checkbox" 
 																	name="associationapprovedcheckbox_{{ $status->employee_id }}"
-																	id="associationapprovedcheckbox_{{ $status->employee_id }}">
-																	{{-- checked> --}}
+																	id="associationapprovedcheckbox_{{ $status->employee_id }}" 
+																	checked>
 																<label for="associationapprovedcheckbox_{{ $status->employee_id }}"></label>
 															@else
 																<input type="checkbox" 

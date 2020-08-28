@@ -15,7 +15,8 @@ class EmployeeVerificationController extends Controller
      */
     public function index()
     {
-        $all_employees = EmployeeVerification::with(['employee'])->get();
+        $all_employees = EmployeeVerification::with(['employee'])
+        ->orderBy('employee_id','desc')->get();
 
         return view('datacapturer.employee_verification.index', 
         compact(['all_employees']));

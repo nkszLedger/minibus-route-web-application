@@ -30,9 +30,11 @@ function verify(employee_id)
             if( document.getElementById(strcheckbox3).checked )
             { val3 = 1; }
 
-            var url_path = window.location.origin + "/employees_verify/"
-                + employee_id.toString() + val1.toString()
-                + val2.toString() + val3.toString();
+            var url_path = window.location.origin 
+                + "/employees_verification/" + employee_id.toString() 
+                + "/association/" + val1.toString()
+                + "/issued/" + val2.toString() 
+                + "/signed/" + val3.toString();
 
             $.ajax({
                 url: url_path,
