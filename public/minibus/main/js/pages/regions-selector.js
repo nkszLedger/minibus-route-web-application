@@ -19,6 +19,7 @@ $(function () {
                 $('#route_count').html(response['route_count'].toString());
                 $('#association_count').html(response['association_count'].toString());
                 $('#taxi_ranks_count').html(response['taxi_ranks_count'].toString());
+                $('#verified_count').html(response['verified_employees_count'].toString());
 
                 //document.getElementById('operator_count').value = 0;
                 document.getElementById('driver_count').value =  0;

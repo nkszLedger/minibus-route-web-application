@@ -81,7 +81,7 @@ Route::group(['middleware' => 'auth:web'], function() {
         return App::make('App\http\Controllers\Controller')
             ->verifyEmployee($employee_id, $association_approved,
                 $letter_issued, $letter_signed);
-    });//->name('verify');
+    });
 
     Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
                 function($member_id, $region_id) {
