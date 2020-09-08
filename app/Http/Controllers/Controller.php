@@ -8,6 +8,7 @@ use App\Association;
 use App\Employee;
 use App\EmployeeOrganization;
 use App\EmployeePosition;
+use App\EmployeeVerification;
 use App\Facility;
 use App\Member;
 use App\MemberDriver;
@@ -20,10 +21,109 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /* Helper functions */
+    private function getEmployeesPositionByFacilityOnly($position_id, $facility_id)
+    {
+        $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('position_id', $position_id)
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+        return $employees;
+    }
+    private function getEmployeesPositionByRegionOnly($position_id, $region_id)
+    {
+        $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', $position_id)
+            ->where('region_id', $region_id)
+            ->get();
+
+        return $employees;
+    }
+
+    private function getEmployeesBy($position_id, $region_id, $facility_id)
+    {
+        $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname') 
+            ->where('position_id', $position_id)
+            ->where('region_id', $region_id)
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
+            ->get();
+
+        return $employees;
+    }
+
+    private function getTaxiRanksBy($region_id, $facility_id)
+    {
+        // $employees = DB::table('employees')
+            // ->select('employees.name', 'employees.surname')
+            // ->where('region_id', $region_id)
+            // ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            // ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', $facility_id)
+            // ->get();
+            
+        if( $region_id == 1001 )
+        {
+            $taxi_ranks = Facility::where('id', 12)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+        }
+        else if( $region_id == 1002 )
+        {
+            $taxi_ranks = Facility::where('id', 23)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+
+            /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                23)->get()); */
+        }
+        else if( $region_id == 1003 )
+        {
+            $taxi_ranks = Facility::where('id', 62)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+            /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                62)->get()); */
+        }
+        else if( $region_id == 1004 )
+        {
+            $taxi_ranks = Facility::where('id', 68)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+            /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                68)->get());*/
+        }
+        else if( $region_id == 1005 )
+        {
+            $taxi_ranks = Facility::where('id', 78)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+
+            /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                78)->get());*/
+        }
+        else if( $region_id == 1099 )
+        {
+            $taxi_ranks = Facility::where('id', 2111)->get();
+            $taxi_ranks_count = count($taxi_ranks);
+            /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
+                                2111)->get());*/
+        }
+        else
+        {
+            $taxi_ranks = Facility::all();
+            $taxi_ranks_count = count($taxi_ranks);
+        }
+
+        return $taxi_ranks_count;
+    }
 
      /**
      * Retrieves list of counts by Region.
@@ -31,84 +131,192 @@ class Controller extends BaseController
      * @param  int  $region_id
      * @return \Illuminate\Http\Response
      */
-    public function filterByRegionID($region_id) 
+    public function filterByRegionID($region_id, $facility_id) 
     {
-        $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
-        $jhb_count = count(Employee::where('region_id', 1002)->get());
-        $sedibeng_count = count(Employee::where('region_id', 1003)->get());
-        $tshwane_count = count(Employee::where('region_id', 1004)->get());
-        $westrand_count = count(Employee::where('region_id', 1005)->get());
-        $unknown_count = count(Employee::where('region_id', 1099)->get());
+        /* Retrieve all employees per region */
+        $ekurhuleni = Employee::where('region_id', 1001)->get();
+        $jhb = Employee::where('region_id', 1002)->get(); 
+        $sedibeng = Employee::where('region_id', 1003)->get();
+        $tshwane = Employee::where('region_id', 1004)->get();
+        $westrand = Employee::where('region_id', 1005)->get();
+        $unknown = Employee::where('region_id', 1099)->get();
 
-        if( $region_id != '0')
+        /* Count all employees per regions */
+        $ekurhuleni_count = count($ekurhuleni);
+        $jhb_count = count($jhb);
+        $sedibeng_count = count($sedibeng);
+        $tshwane_count = count($tshwane);
+        $westrand_count = count($westrand);
+        $unknown_count = count($unknown);
+
+        /* region_id and municipality_id are not the same!! */
+        /* municipality IDs for regions */
+        $m_ekurhuleni = Facility::where('municipality_id', 12)->get();
+        $m_jhb = Facility::where('municipality_id', 23)->get();
+        $m_sedibeng = Facility::where('municipality_id', 62)->get();
+        $m_tshwane = Facility::where('municipality_id', 68)->get();
+        $m_westrand = Facility::where('municipality_id', 78)->get();
+        $m_unknown = Facility::where('municipality_id', 2111)->get();
+
+        $employees = Employee::all();
+        $verified_employees_count = 0;
+        $taxi_ranks_count = 0;
+        $manager_count = 0;
+        $cordinator_count = 0;
+        $marshall_count = 0;
+        $squad_count = 0;
+        $other_count = 0;
+
+        $association_count = 0; 
+        $route_count = 0; 
+
+        if( $region_id != '0' & $facility_id != '0')
         {
-            /* filter Positions */
-            $manager_count = count(Employee::where('position_id', 1)->where('region_id', $region_id)->get());
-            $cordinator_count = count(Employee::where('position_id', 2)->where('region_id', $region_id)->get());
-            $marshall_count = count(Employee::where('position_id', 3)->where('region_id', $region_id)->get());
-            $squad_count = count(Employee::where('position_id', 4)->where('region_id', $region_id)->get());
-            $other_count = count(Employee::where('position_id', 5)->where('region_id', $region_id)->get());
+            /* Retrieve list of employees by region */
+            $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('region_id', $region_id)
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->get();
 
-            /*$driver_count = count(MemberDriver::all());
-            $operator_count = count(MemberOperator::all());*/
+            $verified_employees_count = count(DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('region_id', $region_id)
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->where('association_approved', true)
+            ->where('letter_issued', true)
+            ->where('letter_signed', true)
+            ->join('employee_verifications', 'employees.id', '=', 'employee_verifications.employee_id')
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->get());
+
+            /* filter positions by region and taxi rank */
+            $manager = $this->getEmployeesBy(1, $region_id, $facility_id);
+            $cordinator = $this->getEmployeesBy(2, $region_id, $facility_id);
+            $marshall = $this->getEmployeesBy(3, $region_id, $facility_id);
+            $squad = $this->getEmployeesBy(4, $region_id, $facility_id);
+            $other = $this->getEmployeesBy(5, $region_id, $facility_id);
+
+            $manager_count = count( $manager );
+            $cordinator_count = count( $cordinator );
+            $marshall_count = count( $marshall );
+            $squad_count = count( $squad );
+            $other_count = count( $other );
+        }
+        else if( $region_id == '0' & $facility_id != '0')
+        {
+            /* Retrieve list of employees by region */
+            $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->get();
+
+            $verified_employees_count = count($employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
+            ->where('association_approved', true)
+            ->where('letter_issued', true)
+            ->where('letter_signed', true)
+            ->join('employee_verifications', 'employees.id', '=', 'employee_verifications.employee_id')
+            ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
+            ->get());
+
+            $manager = $this->getEmployeesPositionByFacilityOnly(1, $facility_id);
+            $cordinator = $this->getEmployeesPositionByFacilityOnly(2, $facility_id);
+            $marshall = $this->getEmployeesPositionByFacilityOnly(3, $facility_id);
+            $squad = $this->getEmployeesPositionByFacilityOnly(4, $facility_id);
+            $other = $this->getEmployeesPositionByFacilityOnly(5, $facility_id);
+
+            $manager_count = count( $manager );
+            $cordinator_count = count( $cordinator );
+            $marshall_count = count( $marshall );
+            $squad_count = count( $squad );
+            $other_count = count( $other );
+
+            $association_count = count(Association::all());
+            $route_count = count(Route::all());
+        }
+        else if( $region_id != '0' & $facility_id == '0')
+        {
+            /* Retrieve list of employees by region */  
+            $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('region_id', $region_id)
+            ->get();
+
+            $verified_employees_count = count(DB::table('employees')
+            ->select('employees.name', 'employees.surname')
+            ->where('region_id', $region_id)
+            ->where('association_approved', true)
+            ->where('letter_issued', true)
+            ->where('letter_signed', true)
+            ->join('employee_verifications', 'employees.id', '=', 'employee_verifications.employee_id')
+            ->get());
+
+            $manager = $this->getEmployeesPositionByRegionOnly(1, $region_id);
+            $cordinator = $this->getEmployeesPositionByRegionOnly(2, $region_id);
+            $marshall = $this->getEmployeesPositionByRegionOnly(3, $region_id);
+            $squad = $this->getEmployeesPositionByRegionOnly(4, $region_id);
+            $other = $this->getEmployeesPositionByRegionOnly(5, $region_id);
+
+            $manager_count = count( $manager );
+            $cordinator_count = count( $cordinator );
+            $marshall_count = count( $marshall );
+            $squad_count = count( $squad );
+            $other_count = count( $other );
 
             $association_count = count(Association::where('region_id', $region_id)->get());
             $route_count = count(Route::where('region_id', $region_id)->get());
-            $employee_count = count(Employee::where('region_id', $region_id)->get());
-            $employee_verified_count = 0;
 
-            $registered_employees_count = count(Employee::where('region_id', $region_id)->get());
-
-            return response()->json(
-                [
-                    'manager' => $manager_count, 
-                    'marshall' => $marshall_count,
-                    'coordinator' => $cordinator_count,
-                    'squad' => $squad_count,
-                    'other' => $other_count,
-                    'registered_employees' => $registered_employees_count,
-                    'association_count' => $association_count,
-                    'route_count' => $route_count,
-                    'employee_count' => $employee_count,
-                ]);
         }
         else
         {
-            /* filter Positions */
-            $manager_count = count(Employee::where('position_id', 1)->get());
-            $cordinator_count = count(Employee::where('position_id', 2)->get());
-            $marshall_count = count(Employee::where('position_id', 3)->get());
-            $squad_count = count(Employee::where('position_id', 4)->get());
-            $other_count = count(Employee::where('position_id', 5)->get());
+            $employees = Employee::all();
+            $verified_employees_count = count(EmployeeVerification::where('association_approved', true)
+            ->where('letter_issued', true)
+            ->where('letter_signed', true)
+            ->get());
 
-            $all_positions = count(EmployeePosition::all());
-            $driver_count = count(MemberDriver::all());
-            $operator_count = count(MemberOperator::all());
+            $manager = Employee::where('position_id', 1)->get();
+            $cordinator =Employee::where('position_id', 2)->get();
+            $marshall = Employee::where('position_id', 3)->get();
+            $squad = Employee::where('position_id', 4)->get();
+            $other = Employee::where('position_id', 5)->get();
+
+            $manager_count = count( $manager );
+            $cordinator_count = count( $cordinator );
+            $marshall_count = count( $marshall );
+            $squad_count = count( $squad );
+            $other_count = count( $other );
+
             $association_count = count(Association::all());
             $route_count = count(Route::all());
-            $employee_count = count(Employee::all());
-            $employee_verified_count = 0;
-
-            return response()->json(['driver_count' => $driver_count,
-                                        'operator_count' => $operator_count,
-                                        'association_count' => $association_count, 
-                                        'route_count' => $route_count,
-                                        'employee_count' => $employee_count,
-                                        'employee_verified_count' => $employee_verified_count,
-                                        'ekurhuleni_count' => $ekurhuleni_count,
-                                        'jhb_count' => $jhb_count, 
-                                        'sedibeng_count' => $sedibeng_count,
-                                        'tshwane_count' => $tshwane_count, 
-                                        'westrand_count' => $westrand_count,
-                                        'unknown_count' => $unknown_count, 
-                                        'all_positions' => $all_positions,
-                                        'manager' => $manager_count,
-                                        'coordinator' => $cordinator_count,
-                                        'marshall' => $marshall_count, 
-                                        'squad'=> $squad_count, 
-                                        'other' => $other_count
-                                    ]);
         }
+
+        
+        /*$driver_count = count(MemberDriver::all());
+        $operator_count = count(MemberOperator::all());*/
+
+        /* Count all taxi ranks */
+        $taxi_ranks_count = $this->getTaxiRanksBy($region_id, $facility_id); 
+        $employee_count = count($employees);
+
+        return response()->json(
+            [
+                'manager' => $manager_count, 
+                'marshall' => $marshall_count,
+                'coordinator' => $cordinator_count,
+                'squad' => $squad_count,
+                'other' => $other_count,
+                'association_count' => $association_count,
+                'route_count' => $route_count,
+                'employee_count' => $employee_count,
+                'taxi_ranks_count' => $taxi_ranks_count,
+                'employees' => $employees,
+                'verified_employees_count' => $verified_employees_count
+            ]);
 
     }
 
@@ -180,6 +388,37 @@ class Controller extends BaseController
         
         return response()->json(['data' =>$facility_data]);
     }
+
+    /**
+     * Updates Employee Verification Status.
+     *
+     * @param  int  $employee_id, $is_association_approved, 
+     *       is_letter_issued, is_letter_signed
+     * @return \Illuminate\Http\Response
+     */
+    public function verifyEmployee($employee_id, $is_association_approved,
+                            $is_letter_issued, $is_letter_signed )
+    {
+        $employee = EmployeeVerification::where('employee_id', $employee_id);
+
+        $employee_update = array(
+            'association_approved' => $is_association_approved,
+            'letter_issued' => $is_letter_issued,
+            'letter_signed' => $is_letter_signed,
+        );
+
+        if( $employee->update($employee_update) )
+        { 
+            return response('Employee verification status updated!', 200)
+            ->header('Content-Type', 'text/plain');
+        }
+        else
+        {
+            return response('Employee verification status update failed!', 400)
+            ->header('Content-Type', 'text/plain');
+        }
+    }
+    
 
 
     /**

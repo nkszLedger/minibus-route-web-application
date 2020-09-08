@@ -81,4 +81,9 @@ class Employee extends Model
     {
         return $this->hasOne(EmployeeOrganization::class);
     }
+    
+    public function verification()
+    {
+        return $this->hasOne(EmployeeVerification::class);
+    }
 }

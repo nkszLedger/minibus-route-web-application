@@ -7,14 +7,18 @@ $(function () {
     "use strict";
 
     $('#example1').DataTable();
+    $('#employee_captured_per_region').DataTable({
+        pageLength: 5,
+        'lengthChange': false,
+        'searching'   : true,
+    });
     $('#example2').DataTable({
         'paging'      : true,
         'lengthChange': true,
-        'searching'   : true,
         'ordering'    : true,
         'info'        : true,
         'autoWidth'   : false
-        });	
+    });	
 	
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
@@ -109,5 +113,6 @@ $(function () {
     {
         //var data = table.$('input, select').serialize(); 
     });
-	
+
+
   }); // End of use strict

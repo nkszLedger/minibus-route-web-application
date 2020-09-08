@@ -58,7 +58,7 @@
 	  <img src="minibus/images/art1.svg" alt="" class="art-img light-img">
 	  <img src="minibus/images/art2.svg" alt="" class="art-img dark-img">
 	  <img src="minibus/images/art-bg.svg" alt="" class="wave-img light-img">
-	  <img src="minibus4/images/art-bg2.svg" alt="" class="wave-img dark-img">
+	  <img src="minibus/images/art-bg2.svg" alt="" class="wave-img dark-img">
   </div>
 
   <header class="main-header">
@@ -99,6 +99,7 @@
 					<ul>
 						@can(['employee-create'])
 						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
+						<li><a href="{{ route('employees_verification') }}">Verify Employees</a></li>
 						@endcan
 						@can(['employee-list'])
 						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
@@ -570,9 +571,13 @@
 
 	<!-- Employees -->
 	<script src="/minibus/main/js/pages/employees.js"></script>
+
+	<!-- Employee Verifications -->
+	<script src="/minibus/main/js/pages/employee-verification.js"></script>
 	
-	<!-- Regions -->
-	<script src="/minibus/main/js/pages/regions.js"></script>
+	<!-- Dashboard Selectors -->
+	<script src="/minibus/main/js/pages/regions-selector.js"></script>
+	<script src="/minibus/main/js/pages/taxi-rank-selector.js"></script>
 
 	<!-- Users -->
 	<script src="/minibus/main/js/pages/users.js"></script>

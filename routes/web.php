@@ -64,8 +64,25 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('employees/getAssociations/{region_id}', 
                 'Controller@getAssociationsByRegionID');
 
+    Route::get('employees_verification', 
+    'DataCapturer\EmployeeVerificationController@index')
+    ->name('employees_verification');
+
     Route::get('vehicles/getAssociations/{region_id}', 
-                'Controller@getAssociationsByRegionID')->name('associations');
+    'Controller@getAssociationsByRegionID')->name('associations');
+
+    Route::get('employees_verification/{employee_id}/'.
+    'association/{association_approved}'.
+    '/issued/{letter_issued}/'.
+    'signed/{letter_signed}', 
+    function($employee_id, $association_approved, 
+            $letter_issued, $letter_signed)
+    {
+        return App::make('App\http\Controllers\Controller')
+            ->verifyEmployee($employee_id, $association_approved,
+                $letter_issued, $letter_signed);
+    });
+
     Route::get('vehicles/{member_id}/getAssociations/{region_id}', 
                 function($member_id, $region_id) {
                     return App::make('App\http\Controllers\Controller')
@@ -100,8 +117,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('members/idExists/{idnumber}', 
                 'Controller@idExists');
 
-
-    Route::get('filterByRegionID/{region_id}', 
+    Route::get('filterByRegionID/{region_id}/{facility_id}', 
                 'Controller@filterByRegionID');
 
     Route::get('getEmployeeRegionDistribution/', 

@@ -5,6 +5,7 @@ use App\Route;
 use App\Association;
 use App\Employee;
 use App\EmployeePosition;
+use App\EmployeeVerification;
 use App\Facility;
 use App\MemberDriver;
 use App\MemberOperator;
@@ -22,12 +23,18 @@ class DashboardController extends Controller
     public function index()
     {
         $all_regions = Region::all();
+        $all_facilities = Facility::all();
         $driver_count = count(MemberDriver::all());
         $operator_count = count(MemberOperator::all());
         $association_count = count(Association::all());
         $route_count = count(Route::all());
-        $employee_count = count(Employee::all());
-        $facility_count = count(Facility::all());
+        $all_employees = Employee::all();
+        $employee_count = count($all_employees);
+        $taxi_ranks_count = count($all_facilities);
+        $verified_employees = EmployeeVerification::where('association_approved', true)
+        ->where('letter_issued', true)->where('letter_signed', true)->get();
+
+        $verified_employees_count = count($verified_employees);
 
         $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
         $jhb_count = count(Employee::where('region_id', 1002)->get());
@@ -40,9 +47,12 @@ class DashboardController extends Controller
                                                 'operator_count',
                                                 'association_count', 
                                                 'route_count',
+                                                'all_employees',
                                                 'employee_count',
-                                                'facility_count',
+                                                'taxi_ranks_count',
                                                 'ekurhuleni_count',
+                                                'all_facilities',
+                                                'verified_employees_count',
                                                 'jhb_count', 'sedibeng_count',
                                                 'tshwane_count', 'westrand_count',
                                                 'unknown_count', 'all_regions'
