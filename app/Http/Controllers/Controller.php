@@ -116,7 +116,11 @@ class Controller extends BaseController
             /*$taxi_ranks_count = count(EmployeeOrganization::where('facility_taxi_rank_id', 
                                 2111)->get());*/
         }
-
+        else
+        {
+            $taxi_ranks = Facility::all();
+            $taxi_ranks_count = count($taxi_ranks);
+        }
 
         return $taxi_ranks_count;
     }
@@ -163,6 +167,9 @@ class Controller extends BaseController
         $squad_count = 0;
         $other_count = 0;
 
+        $association_count = 0; 
+        $route_count = 0; 
+
         if( $region_id != '0' & $facility_id != '0')
         {
             /* Retrieve list of employees by region */
@@ -171,7 +178,6 @@ class Controller extends BaseController
             ->where('region_id', $region_id)
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
-            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
             ->get();
 
             $verified_employees_count = count(DB::table('employees')
@@ -183,7 +189,6 @@ class Controller extends BaseController
             ->where('letter_signed', true)
             ->join('employee_verifications', 'employees.id', '=', 'employee_verifications.employee_id')
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
-            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
             ->get());
 
             /* filter positions by region and taxi rank */
@@ -206,7 +211,6 @@ class Controller extends BaseController
             ->select('employees.name', 'employees.surname')
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
-            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
             ->get();
 
             $verified_employees_count = count($employees = DB::table('employees')
@@ -217,7 +221,6 @@ class Controller extends BaseController
             ->where('letter_signed', true)
             ->join('employee_verifications', 'employees.id', '=', 'employee_verifications.employee_id')
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
-            ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', 'facility.id')
             ->get());
 
             $manager = $this->getEmployeesPositionByFacilityOnly(1, $facility_id);
@@ -231,6 +234,9 @@ class Controller extends BaseController
             $marshall_count = count( $marshall );
             $squad_count = count( $squad );
             $other_count = count( $other );
+
+            $association_count = count(Association::all());
+            $route_count = count(Route::all());
         }
         else if( $region_id != '0' & $facility_id == '0')
         {
@@ -260,9 +266,14 @@ class Controller extends BaseController
             $marshall_count = count( $marshall );
             $squad_count = count( $squad );
             $other_count = count( $other );
+
+            $association_count = count(Association::where('region_id', $region_id)->get());
+            $route_count = count(Route::where('region_id', $region_id)->get());
+
         }
         else
         {
+            $employees = Employee::all();
             $verified_employees_count = count(EmployeeVerification::where('association_approved', true)
             ->where('letter_issued', true)
             ->where('letter_signed', true)
@@ -279,6 +290,9 @@ class Controller extends BaseController
             $marshall_count = count( $marshall );
             $squad_count = count( $squad );
             $other_count = count( $other );
+
+            $association_count = count(Association::all());
+            $route_count = count(Route::all());
         }
 
         
@@ -287,11 +301,8 @@ class Controller extends BaseController
 
         /* Count all taxi ranks */
         $taxi_ranks_count = $this->getTaxiRanksBy($region_id, $facility_id); 
+        $employee_count = count($employees);
 
-
-        $association_count = count(Association::where('region_id', $region_id)->get());
-        $route_count = count(Route::where('region_id', $region_id)->get());
-        $employee_count = count(Employee::where('region_id', $region_id)->get());
         return response()->json(
             [
                 'manager' => $manager_count, 

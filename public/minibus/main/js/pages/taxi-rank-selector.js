@@ -4,7 +4,7 @@ $(function () {
     $('#taxi_rank_selector').change(function(){
         var taxi_rank_id = $(this).val();
         var region_id = document.getElementById('region_selector').value;
-        
+
         var url_path = window.location.origin 
         + "/filterByRegionID/"+ region_id.toString() 
         + "/" + taxi_rank_id.toString();
