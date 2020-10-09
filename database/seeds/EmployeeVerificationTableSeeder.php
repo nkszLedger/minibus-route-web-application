@@ -8,7 +8,7 @@ class EmployeeVerificationTableSeeder extends Seeder
     public function __construct(){
 
         $this->table = 'unit';
-        $this->filename = getcwd() . '/database/seeds/csv/input_verification.csv';
+        $this->filename = getcwd() . '/database/seeds/csv/input_verification_prod.csv';
 
     }
     private function seedFromCSV($filename, $delimitor = ",")
