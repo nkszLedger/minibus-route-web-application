@@ -27,7 +27,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /* Helper functions */
+    /**
+     * Retrives all employees by facility
+     *  
+     * @see getEmployeesPositionByFacilityOnly()
+     * @param[in] position_id
+     * @param[in] facility_id
+     * @return Employees
+     */
     private function getEmployeesPositionByFacilityOnly($position_id, $facility_id)
     {
         $employees = DB::table('employees')
@@ -40,6 +47,15 @@ class Controller extends BaseController
 
         return $employees;
     }
+
+    /**
+     * Retrieves all employees by position and region
+     *  
+     * @see getEmployeesPositionByRegionOnly()
+     * @param[in] position_id
+     * @param[in] region_id
+     * @return Employees
+     */
     private function getEmployeesPositionByRegionOnly($position_id, $region_id)
     {
         $employees = DB::table('employees')
@@ -51,6 +67,15 @@ class Controller extends BaseController
         return $employees;
     }
 
+    /**
+     * Retrieves all employees by position, region and facility
+     *  
+     * @see getEmployeesBy()
+     * @param[in] position_id
+     * @param[in] region_id
+     * @param[in] facility_id
+     * @return Employees
+     */
     private function getEmployeesBy($position_id, $region_id, $facility_id)
     {
         $employees = DB::table('employees')
@@ -65,15 +90,15 @@ class Controller extends BaseController
         return $employees;
     }
 
-    private function getTaxiRanksBy($region_id, $facility_id)
+    /**
+     * Retrieves all facilities or taxi ranks
+     *  
+     * @see getTaxiRanksBy()
+     * @param[in] region_id
+     * @return count of taxi ranks.
+     */
+    private function getTaxiRanksBy($region_id)
     {
-        // $employees = DB::table('employees')
-            // ->select('employees.name', 'employees.surname')
-            // ->where('region_id', $region_id)
-            // ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
-            // ->join('facility', 'employee_organizations.facility_taxi_rank_id', '=', $facility_id)
-            // ->get();
-            
         if( $region_id == 1001 )
         {
             $taxi_ranks = Facility::where('id', 12)->get();
@@ -125,12 +150,14 @@ class Controller extends BaseController
         return $taxi_ranks_count;
     }
 
-     /**
-     * Retrieves list of counts by Region.
+    /**
+     * Filters by regions
      *
-     * @param  int  $region_id
+     * @see filterByRegionID()
+     * @param[in] region_id
+     * @param[in] facility_id
      * @return \Illuminate\Http\Response
-     */
+    */
     public function filterByRegionID($region_id, $facility_id) 
     {
         /* Retrieve all employees per region */
@@ -295,10 +322,6 @@ class Controller extends BaseController
             $route_count = count(Route::all());
         }
 
-        
-        /*$driver_count = count(MemberDriver::all());
-        $operator_count = count(MemberOperator::all());*/
-
         /* Count all taxi ranks */
         $taxi_ranks_count = $this->getTaxiRanksBy($region_id, $facility_id); 
         $employee_count = count($employees);
@@ -321,11 +344,11 @@ class Controller extends BaseController
     }
 
     /**
-     * Retrieves list of facilities.
+     * Retrieves list of facilities
      *
+     * @see filterByRegionID()
      * @return \Illuminate\Http\Response
      */
-
     public function getAllFacilities()
     {
         $all_facilities =  Facility::all();
@@ -376,13 +399,6 @@ class Controller extends BaseController
             $facility_data[$count]['c_squad'] = $c_squad;
             $facility_data[$count]['c_other'] = $c_other;
 
-            // dump($c_managers);
-            // dump($c_coordinators);
-            // dump($c_marshalls);
-            // dump($c_squad);
-            // dump($c_other);
-
-            // dd($facility_data[$count]['c_managers']);
             $count++;
         }
         
@@ -418,8 +434,6 @@ class Controller extends BaseController
             ->header('Content-Type', 'text/plain');
         }
     }
-    
-
 
     /**
      * Retrieves list of Minibus associations by Region.
@@ -448,6 +462,12 @@ class Controller extends BaseController
 
     }
 
+    /**
+     * Retrieves total count of employee managers, 
+     * marshall, coordinator, squad & others
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getEmployeeRankDistribution()
     {
         $manager_count = count(Employee::where('position_id', 1)->get());
@@ -467,6 +487,12 @@ class Controller extends BaseController
 
     }
 
+    /**
+     * Retrieves total count of employees per region i.e ekurhuleni,
+     * jhb, sedibeng, tshwane, westrand & unknown regions
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getEmployeeRegionDistribution()
     {
         $ekurhuleni_count = count(Employee::where('region_id', 1001)->get());
@@ -488,6 +514,11 @@ class Controller extends BaseController
 
     }
 
+    /**
+     * Retrieves count of each employee male and female
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getEmployeeGenderDistribution()
     {
         $male_count = count(Employee::where('gender_id', 1)->get());
