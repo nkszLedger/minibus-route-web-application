@@ -73,14 +73,16 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     Route::get('employees_verification/{employee_id}/'.
     'association/{association_approved}'.
-    '/issued/{letter_issued}/'.
-    'signed/{letter_signed}', 
+    '/issued/{letter_issued}'.
+    '/signed/{letter_signed}'.
+    '/confirmed/{banking_details_confirmed}', 
     function($employee_id, $association_approved, 
-            $letter_issued, $letter_signed)
+            $letter_issued, $letter_signed, 
+            $banking_details_confirmed)
     {
         return App::make('App\http\Controllers\Controller')
             ->verifyEmployee($employee_id, $association_approved,
-                $letter_issued, $letter_signed);
+        $letter_issued, $letter_signed, $banking_details_confirmed);
     });
 
     Route::get('vehicles/{member_id}/getAssociations/{region_id}', 

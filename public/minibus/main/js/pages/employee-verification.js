@@ -18,10 +18,12 @@ function verify(employee_id)
             var strcheckbox1 = 'associationapprovedcheckbox_' + employee_id.toString();
             var strcheckbox2 = 'isletterissuedcheckbox_' + employee_id.toString();
             var strcheckbox3 = 'islettersignedcheckbox_' + employee_id.toString();
+            var strcheckbox4 = 'isbankingdetailsconfirmedcheckbox_' + employee_id.toString();
 
             var val1 = 0;
             var val2 = 0;
             var val3 = 0;
+            var val4 = 0;
 
             if( document.getElementById(strcheckbox1).checked )
             { val1 = 1; }
@@ -29,12 +31,15 @@ function verify(employee_id)
             { val2 = 1; }
             if( document.getElementById(strcheckbox3).checked )
             { val3 = 1; }
+            if( document.getElementById(strcheckbox4).checked )
+            { val4 = 1; }
 
             var url_path = window.location.origin 
                 + "/employees_verification/" + employee_id.toString() 
                 + "/association/" + val1.toString()
                 + "/issued/" + val2.toString() 
-                + "/signed/" + val3.toString();
+                + "/signed/" + val3.toString()
+                + "/confirmed/" + val4.toString();
 
             $.ajax({
                 url: url_path,

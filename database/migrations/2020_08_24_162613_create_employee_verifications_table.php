@@ -21,6 +21,7 @@ class CreateEmployeeVerificationsTable extends Migration
             $table->boolean('association_approved')->default(0);
             $table->boolean('letter_issued')->default(0);
             $table->boolean('letter_signed')->default(0);
+            $table->boolean('banking_details_confirmed')->default(0);
 
             $table->nullableTimestamps();
             $table->softDeletes()->nullable();

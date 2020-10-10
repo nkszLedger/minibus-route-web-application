@@ -55,6 +55,7 @@
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
+											<th>Banking Details Confirmed</th>
 											<th>Verification Status</th>
 											<th>Actions</th>
 										</tr>
@@ -143,9 +144,31 @@
 												</div>
 											</td>
 											<td>
+												<div class="form-group row">
+													<div class="ml-auto col-sm-10">
+														<div class="checkbox">
+															@if( $status->banking_details_confirmed )
+																<input type="checkbox" 
+																	name="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
+																	id="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
+																	checked>
+																<label for="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"></label>
+															@else
+																<input type="checkbox" 
+																	name="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
+																	id="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}">
+																<label for="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"></label>
+															@endif	
+														</div>
+													</div>
+												</div>
+											</td>
+
+											<td>
 												@if( $status->association_approved &
 														$status->letter_issued & 
-														$status->letter_signed)
+														$status->letter_signed & 
+														$status->banking_details_confirmed )
 												<span class="badge badge-pill badge-success">Verified</span>
 												@else
 													<span class="badge badge-pill badge-danger">Not Verified</span>
@@ -174,6 +197,7 @@
 											<th>Association Approved</th>
                                             <th>Letter Issued</th>
                                             <th>Letter Signed</th>
+											<th>Banking Details Confirmed</th>
 											<th>Verification Status</th>
 											<th>Actions</th>
 										</tr>

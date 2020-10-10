@@ -413,7 +413,7 @@ class Controller extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function verifyEmployee($employee_id, $is_association_approved,
-                            $is_letter_issued, $is_letter_signed )
+                            $is_letter_issued, $is_letter_signed, $is_banking_details_confirmed )
     {
         $employee = EmployeeVerification::where('employee_id', $employee_id);
 
@@ -421,6 +421,7 @@ class Controller extends BaseController
             'association_approved' => $is_association_approved,
             'letter_issued' => $is_letter_issued,
             'letter_signed' => $is_letter_signed,
+            'banking_details_confirmed' => $is_banking_details_confirmed,
         );
 
         if( $employee->update($employee_update) )
