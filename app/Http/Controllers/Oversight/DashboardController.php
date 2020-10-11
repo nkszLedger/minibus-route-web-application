@@ -32,7 +32,8 @@ class DashboardController extends Controller
         $employee_count = count($all_employees);
         $taxi_ranks_count = count($all_facilities);
         $verified_employees = EmployeeVerification::where('association_approved', true)
-        ->where('letter_issued', true)->where('letter_signed', true)->get();
+        ->where('letter_issued', true)->where('letter_signed', true)
+        ->where('banking_details_confirmed', true)->get();
 
         $verified_employees_count = count($verified_employees);
 
