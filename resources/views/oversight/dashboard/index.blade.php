@@ -55,7 +55,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="text-center">
-                        <a href="#">
+                        <a href="{{ route('employees_verification') }}">
                         <h1 class="font-size-50 text-secondary"><i class="mdi mdi-verified"></i></h1>
                         {{-- <h2 id="facility_count">{{ $facility_count }}</h2>
                         <span class="badge badge-pill badge-secondary px-15 mb-10">REGISTERED TAXI RANKS</span> --}}
