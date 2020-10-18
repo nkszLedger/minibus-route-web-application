@@ -9,6 +9,7 @@ use App\EmployeeOrganization;
 use App\EmployeeFingerprint;
 use App\EmployeePortrait;
 use App\EmployeePosition;
+use App\EmployeeVerification;
 use App\Province;
 use App\Region;
 use App\Facility;
@@ -134,6 +135,15 @@ class EmployeeController extends Controller
                 $organization->facility_manager_contact_details = $request->get('rmphone_number');
 
                 $organization->save();
+
+                $verification = new EmployeeVerification();
+                $verification->employee_id = $employee->id;
+                $verification->association_approved = false;
+                $verification->letter_issued = false;
+                $verification->letter_signed = false;
+                $verification->banking_details_confirmed = false;
+
+                $verification->save();
             }
 
             return $this->index();
