@@ -19,6 +19,14 @@
 		</div>
 		<!-- Main content -->
 		<section class="content">
+
+			<div class="callout bg-warning">
+				<h4>New Feature!</h4>
+				<span class="badge badge-lg badge-danger">
+					A Column for Verification Status has been added. Check excel Document Exports!
+				</span>
+		  	</div>
+
 		  	<div class="row">
 			  	<div class="col-12">
 					<div class="box">
@@ -58,6 +66,7 @@
 											<th>Actions</th>
 
 											{{-- Hidden Columns --}}
+											<th style="display:none;">Verification Status</th>
 											<th style="display:none;">Biometrics Captured</th>
 											<th style="display:none;">SAID Number</th>
 											<th style="display:none;">Gender</th>
@@ -128,6 +137,17 @@
 												<a href="{{ route('employees.show', $employee->id)}}"> 
 													<b>View Profile</b>
 												</a>
+												@endif
+											</td>
+											<td style="display:none;">
+												@if( $employee['verification']['association_approved'] & 
+													$employee['verification']['letter_issued'] & 
+													$employee['verification']['letter_signed'] & 
+													$employee['verification']['banking_details_confirmed'] )
+													Yes
+
+												@else
+													No
 												@endif
 											</td>
 											<td style="display:none;">
@@ -208,6 +228,7 @@
 											<th>Actions</th>
 
 											{{-- Hidden Columns --}}
+											<th style="display:none;">Verification Status</th>
 											<th style="display:none;">Biometrics Captured</th>
 											<th style="display:none;">SAID Number</th>
 											<th style="display:none;">Gender</th>

@@ -31,7 +31,7 @@ class EmployeeController extends Controller
         $all_employees = Employee::with(['city', 'province',
                                         'organization.facility', 
                                         'organization.association',
-                                        'region', 'position'])
+                                        'region', 'position', 'verification'])
                             ->orderBy('id','desc')->get();
 
         return view('datacapturer.employees.index', compact(['all_employees']));

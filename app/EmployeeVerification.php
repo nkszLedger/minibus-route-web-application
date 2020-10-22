@@ -19,6 +19,7 @@ class EmployeeVerification extends Model
         'association_approved',
         'letter_issued',
         'letter_signed', 
+        'banking_details_confirmed',
     ];
     
     protected $table = 'employee_verifications';
