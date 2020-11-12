@@ -312,7 +312,11 @@ class Controller extends BaseController
         }
         else
         {
-            $employees = Employee::with(['position'])->get();
+            $employees = DB::table('employees')
+            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->join('employee_positions', 'employee_positions.id', '=', 'employees.position_id')
+            ->get();
+
             $verified_employees_count = count(EmployeeVerification::where('association_approved', true)
             ->where('letter_issued', true)
             ->where('letter_signed', true)

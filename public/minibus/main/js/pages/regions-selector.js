@@ -33,8 +33,8 @@ $(function () {
                     $("#taxi_rank_selector").append(option);
                     
                     // Read data and create <option>
-					for(var i=0; i<len; i++){
-
+                    for(var i=0; i<len; i++)
+                    {
 						var id = response['taxi_ranks'][i].organization.facility.id;
                         var name = response['taxi_ranks'][i].organization.facility.name;
                         
@@ -51,22 +51,10 @@ $(function () {
 
                 for(var i=0; i<len; i++)
                 {
-                    var record = [];
-
-                    if(region_id == 0)
-                    {
-                        record = [  response['employees'][i]['name'], 
-                                    response['employees'][i]['surname'],
-                                    response['employees'][i]['position']['position']
-                                ];
-                    }
-                    else
-                    {
-                        record = [  response['employees'][i]['name'], 
+                    var record = [  response['employees'][i]['name'], 
                                     response['employees'][i]['surname'],
                                     response['employees'][i]['position']
                                 ];
-                    }
                     
                     dataset.push(record);
                 }
