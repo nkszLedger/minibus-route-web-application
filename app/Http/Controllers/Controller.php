@@ -160,6 +160,12 @@ class Controller extends BaseController
     */
     public function filterByRegionID($region_id, $facility_id) 
     {
+        /* Retrieve taxi ranks */
+        $taxi_ranks = Employee::with(['organization.facility'])
+                        ->distinct()
+                        ->where('region_id', $region_id)
+                        ->get();
+
         /* Retrieve all employees per region */
         $ekurhuleni = Employee::where('region_id', 1001)->get();
         $jhb = Employee::where('region_id', 1002)->get(); 
@@ -328,6 +334,7 @@ class Controller extends BaseController
 
         return response()->json(
             [
+                'taxi_ranks' => $taxi_ranks,
                 'manager' => $manager_count, 
                 'marshall' => $marshall_count,
                 'coordinator' => $cordinator_count,
@@ -340,6 +347,8 @@ class Controller extends BaseController
                 'employees' => $employees,
                 'verified_employees_count' => $verified_employees_count
             ]);
+
+        //return response()->json( $taxi_ranks->first()->organization->facility->id);
 
     }
 

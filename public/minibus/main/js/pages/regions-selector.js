@@ -21,7 +21,29 @@ $(function () {
                 $('#taxi_ranks_count').html(response['taxi_ranks_count'].toString());
                 $('#verified_count').html(response['verified_employees_count'].toString());
 
-                //document.getElementById('operator_count').value = 0;
+                var len = 0;
+				if(response['taxi_ranks'] != null){
+					len = response['taxi_ranks'].length;
+                }
+                
+                if(len > 0)
+                {
+                    $("#taxi_rank_selector").html('');
+                    var option = "<option value=0> All </option>";
+                    $("#taxi_rank_selector").append(option);
+                    
+                    // Read data and create <option>
+					for(var i=0; i<len; i++){
+
+						var id = response['taxi_ranks'][i].organization.facility.id;
+                        var name = response['taxi_ranks'][i].organization.facility.name;
+                        
+						var option = "<option value='"+id+"'>"+name+"</option>";
+						$("#taxi_rank_selector").append(option);
+					}
+				}
+
+
                 document.getElementById('driver_count').value =  0;
 
                 var dataset = [];
