@@ -29,11 +29,26 @@ $(function () {
 
                 console.log(response['employees'][0]['id']);
 
-                for(var i=0; i<len; i++){
-                    var record = [  response['employees'][i]['name'], 
+                for(var i=0; i<len; i++)
+                {
+                    
+                    var record = [];
+
+                    if(region_id == 0)
+                    {
+                        record = [  response['employees'][i]['name'], 
                                     response['employees'][i]['surname'],
-                                    response['employees'][i]['position'],
+                                    response['employees'][i]['position']['position']
                                 ];
+                    }
+                    else
+                    {
+                        record = [  response['employees'][i]['name'], 
+                                    response['employees'][i]['surname'],
+                                    response['employees'][i]['position']
+                                ];
+                    }
+
                     dataset.push(record);
                 }
                 
