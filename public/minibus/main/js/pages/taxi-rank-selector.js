@@ -30,7 +30,10 @@ $(function () {
                 console.log(response['employees'][0]['id']);
 
                 for(var i=0; i<len; i++){
-                    var record = [ response['employees'][i]['name'], response['employees'][i]['surname'] ];
+                    var record = [  response['employees'][i]['name'], 
+                                    response['employees'][i]['surname'],
+                                    response['employees'][i]['position'],
+                                ];
                     dataset.push(record);
                 }
                 
@@ -40,7 +43,8 @@ $(function () {
                     destroy: true,
                     columns: [
                         { title: "Name" },
-                        { title: "Surname" }
+                        { title: "Surname" },
+                        { title: "Position" },
                     ]
                 });
 

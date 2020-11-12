@@ -28,7 +28,8 @@ class DashboardController extends Controller
         $operator_count = count(MemberOperator::all());
         $association_count = count(Association::all());
         $route_count = count(Route::all());
-        $all_employees = Employee::all();
+        $all_employees = Employee::with(['position'])
+                                ->get();
         $employee_count = count($all_employees);
         $taxi_ranks_count = count($all_facilities);
         $verified_employees = EmployeeVerification::where('association_approved', true)

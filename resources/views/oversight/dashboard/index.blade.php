@@ -138,6 +138,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Surname</th>
+                                    <th>Position</th>
                                     {{-- <th>Position</th>
                                     <th>Office</th>
                                     <th>Age</th>
@@ -148,8 +149,9 @@
                             <tbody>
                                 @foreach($all_employees as $employee )
                                 <tr>
-                                    <td>{{ $employee->name }}</td>
-                                    <td>{{ $employee->surname }}</td>
+                                    <td>{{ $employee['name'] }}</td>
+                                    <td>{{ $employee['surname'] }}</td>
+                                    <td>{{ $employee['position']['position'] }}</td>
                                     {{-- <td>System Architect</td>
                                     <td>Edinburgh</td>
                                     <td>61</td>
