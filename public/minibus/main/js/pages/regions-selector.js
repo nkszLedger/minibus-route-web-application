@@ -22,10 +22,11 @@ $(function () {
                 $('#verified_count').html(response['verified_employees_count'].toString());
 
                 var len = 0;
-				if(response['taxi_ranks'] != null){
+                if(response['taxi_ranks'] != null)
+                {
 					len = response['taxi_ranks'].length;
                 }
-                
+
                 if(len > 0)
                 {
                     $("#taxi_rank_selector").html('');
@@ -42,13 +43,12 @@ $(function () {
 						$("#taxi_rank_selector").append(option);
 					}
 				}
-
-
+                alert(response['employees'].length);
                 document.getElementById('driver_count').value =  0;
 
                 var dataset = [];
-                var len = response['employees'].length;
-
+                len = response['employees'].length;
+                
                 for(var i=0; i<len; i++)
                 {
                     var record = [  response['employees'][i]['name'], 
