@@ -27,6 +27,8 @@ $(function () {
 					len = response['taxi_ranks'].length;
                 }
 
+                alert(response['taxi_ranks'].length);
+                
                 if(len > 0)
                 {
                     $("#taxi_rank_selector").html('');
@@ -36,14 +38,15 @@ $(function () {
                     // Read data and create <option>
                     for(var i=0; i<len; i++)
                     {
-						var id = response['taxi_ranks'][i].organization.facility.id;
-                        var name = response['taxi_ranks'][i].organization.facility.name;
+						var id = response['taxi_ranks'][i].facility.id;
+                        var name = response['taxi_ranks'][i].facility.name;
                         
 						var option = "<option value='"+id+"'>"+name+"</option>";
-						$("#taxi_rank_selector").append(option);
-					}
-				}
-                alert(response['employees'].length);
+                        $("#taxi_rank_selector").append(option);
+                    }
+                }
+                
+                
                 document.getElementById('driver_count').value =  0;
 
                 var dataset = [];
