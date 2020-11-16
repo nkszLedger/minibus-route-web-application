@@ -26,8 +26,6 @@ $(function () {
                 {
 					len = response['taxi_ranks'].length;
                 }
-
-                alert(response['taxi_ranks'].length);
                 
                 if(len > 0)
                 {
