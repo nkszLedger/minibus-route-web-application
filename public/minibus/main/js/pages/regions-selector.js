@@ -54,7 +54,9 @@ $(function () {
                 {
                     var record = [  response['employees'][i]['name'], 
                                     response['employees'][i]['surname'],
-                                    response['employees'][i]['position']
+                                    response['employees'][i]['phone_number'],
+                                    response['employees'][i]['email'],
+                                    response['employees'][i]['position'], 
                                 ];
                     
                     dataset.push(record);
@@ -67,6 +69,8 @@ $(function () {
                     columns: [
                         { title: "Name" },
                         { title: "Surname" },
+                        { title: "Phone Number" },
+                        { title: "Email" },
                         { title: "Position" },
                     ]
                 });

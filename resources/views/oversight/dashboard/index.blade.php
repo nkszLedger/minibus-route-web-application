@@ -138,6 +138,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Surname</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
                                     <th>Position</th>
                                     {{-- <th>Position</th>
                                     <th>Office</th>
@@ -151,6 +153,8 @@
                                 <tr>
                                     <td>{{ $employee['name'] }}</td>
                                     <td>{{ $employee['surname'] }}</td>
+                                    <td>{{ $employee['phone_number'] }}</td>
+                                    <td>{{ $employee['email'] }}</td>
                                     <td>{{ $employee['position']['position'] }}</td>
                                     {{-- <td>System Architect</td>
                                     <td>Edinburgh</td>

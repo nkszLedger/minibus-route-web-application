@@ -169,7 +169,9 @@ class Controller extends BaseController
         {
             /* Retrieve list of employees by region */
             $employees = DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                    'employees.phone_number', 'employees.email',
+                    'employee_positions.position')
             ->where('region_id', $region_id)
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
@@ -177,7 +179,9 @@ class Controller extends BaseController
             ->get();
 
             $verified_employees_count = count(DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                    'employees.phone_number', 'employees.email',
+                    'employee_positions.position')
             ->where('region_id', $region_id)
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->where('association_approved', true)
@@ -206,14 +210,18 @@ class Controller extends BaseController
         {
             /* Retrieve list of employees by region */
             $employees = DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                    'employees.phone_number', 'employees.email',
+                    'employee_positions.position')
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->join('employee_organizations', 'employees.id', '=', 'employee_organizations.employee_id')
             ->join('employee_positions', 'employee_positions.id', '=', 'employees.position_id')
             ->get();
 
             $verified_employees_count = count($employees = DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                    'employees.phone_number', 'employees.email',
+                    'employee_positions.position')
             ->where('employee_organizations.facility_taxi_rank_id', $facility_id)
             ->where('association_approved', true)
             ->where('letter_issued', true)
@@ -243,13 +251,17 @@ class Controller extends BaseController
         {
             /* Retrieve list of employees by region */  
             $employees = DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                        'employees.phone_number', 'employees.email',
+                        'employee_positions.position')
             ->where('region_id', $region_id)
             ->join('employee_positions', 'employee_positions.id', '=', 'employees.position_id')
             ->get();
 
             $verified_employees_count = count(DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                        'employees.phone_number', 'employees.email',
+                        'employee_positions.position')
             ->where('region_id', $region_id)
             ->where('association_approved', true)
             ->where('letter_issued', true)
@@ -278,7 +290,9 @@ class Controller extends BaseController
         else
         {
             $employees = DB::table('employees')
-            ->select('employees.name', 'employees.surname', 'employee_positions.position')
+            ->select('employees.name', 'employees.surname', 
+                    'employees.phone_number', 'employees.email',
+                    'employee_positions.position')
             ->join('employee_positions', 'employee_positions.id', '=', 'employees.position_id')
             ->get();
 
