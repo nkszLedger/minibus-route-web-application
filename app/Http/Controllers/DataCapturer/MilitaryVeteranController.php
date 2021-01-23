@@ -57,16 +57,43 @@ class MilitaryVeteranController extends Controller
     public function store(MilitaryVeteranPostRequest $request)
     {
         // The incoming request is valid...
-        dd("hey");
-        
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
         if( $validated )
         {
-            dd( $validated );
-            //return redirect('military-veterans.create')->withErrors($validated, 'military_veteran');
+
+            $military_veteran = new MilitaryVeteran();
+
+            $military_veteran->name =  $request->get('name');
+            $military_veteran->surname =  $request->get('surname');
+            $military_veteran->id_number =  $request->get('id_number');
+
+            $military_veteran->phone_number =  $request->get('phone_number');
+            $military_veteran->email =  $request->get('email');
+            $military_veteran->address_line =  $request->get('address_line');
+
+            $military_veteran->surburb =  $request->get('surburb');
+            $military_veteran->postal_code =  $request->get('postal_code');
+            $military_veteran->city_id =  $request->get('city');
+
+            $military_veteran->province_id =  $request->get('province');
+            $military_veteran->gender_id =  $request->get('gender');
+            $military_veteran->region_id =  $request->get('mvregion');
+
+            $military_veteran->emergency_contact_name =  $request->get('emergency_contact_name');
+            $military_veteran->emergency_contact_relationship =  $request->get('emergency_contact_relationship');
+            $military_veteran->emergency_contact_number =  $request->get('emergency_contact_number');
+
+            $military_veteran->region_leader_name =  $request->get('region_leader_name');
+            $military_veteran->region_leader_contact_number =  $request->get('region_leader_contact_number');
+            $military_veteran->number_of_delegated_schools =  $request->get('number_of_delegated_schools');
+            $military_veteran->list_of_delegated_schools =  $request->get('list_of_delegated_schools'); 
+
+            $military_veteran->save();
         }
+
+
+        
     }
 
 }
