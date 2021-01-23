@@ -96,7 +96,6 @@ class EmployeeController extends Controller
                              ->withInput();
              }
 
-
             $employee = new Employee();
             $organization = new EmployeeOrganization(); 
 
