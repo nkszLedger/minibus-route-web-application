@@ -87,14 +87,14 @@ class EmployeeController extends Controller
                      'email' => 'required|unique:employees',
                      'id_number' => 'required|digits:13|unique:employees',
                  ]
-             );
+            );
 
-             if ($validator->fails()) 
-             {
-                 $errors = $validator->errors()->first();
-                 return back()->withErrors($errors)
-                             ->withInput();
-             }
+            if ($validator->fails()) 
+            {
+                $errors = $validator->errors()->first();
+                return back()->withErrors($errors)
+                            ->withInput();
+            }
 
             $employee = new Employee();
             $organization = new EmployeeOrganization(); 

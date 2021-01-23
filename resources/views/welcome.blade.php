@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="title m-b-md">
-                    Minibus Taxi Registration
+                    GPDRT Monitoring & Regulation System
                 </div>
 
                 <div class="links">

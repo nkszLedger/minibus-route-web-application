@@ -106,12 +106,12 @@
 						@endcan
 					</ul>
 				</li>
-				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE MILITARY</a>
+				<li><a href="{{ route('military-veterans.index') }}"><i class="ti-files mx-5"></i>MANAGE MILITARY</a>
 					<ul>
 						<!-- 'military-veteran-create'-->
-						<li><a href="#">Register Veterans</a></li> 
+						<li><a href="{{ route('military-veterans.create') }}">Register Veterans</a></li> 
 						<!-- 'military-veteran-list'-->
-						<li><a href="#">View Veterans</a></li>
+						<li><a href="{{ route('military-veterans.index') }}">View Veterans</a></li>
 					</ul>
 				</li>
 
@@ -188,13 +188,13 @@
 			<div class="d-flex align-items-center justify-content-between">
 				<div class="d-md-block d-none">
 					@role('Systems Admin')
-					<h3 class="page-title br-0">Minibus Transport Registration System Administration</h3>
+					<h3 class="page-title br-0">GPDRT Monitoring & Regulation System Administration</h3>
 					@endrole
 					@role('Data Capturer')
-					<h3 class="page-title br-0">Minibus Transport Registration Data Capturing</h3>
+					<h3 class="page-title br-0">GPDRT Monitoring & Regulation Data Capturing</h3>
 					@endrole
 					@role('Oversight')
-					<h3 class="page-title br-0">Minibus Transport Registration Overview</h3>
+					<h3 class="page-title br-0">GPDRT Monitoring & Regulation Overview</h3>
 					@endrole
 				</div>
 

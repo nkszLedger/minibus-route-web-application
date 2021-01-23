@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:web'], function() {
         'roles' => 'Admin\RoleController',
         'users' => 'Admin\UserController',
         'employees' => 'DataCapturer\EmployeeController',
+        'military-veterans' => 'DataCapturer\MilitaryVeteranController',
         'members' => 'DataCapturer\MemberController',
         'dashboard' => 'Oversight\DashboardController'
     ]);
