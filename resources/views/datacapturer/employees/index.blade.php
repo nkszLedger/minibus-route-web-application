@@ -140,6 +140,7 @@
 												@endif
 											</td>
 											<td style="display:none;">
+											 @if( isset($employee['verification']) )
 												@if( $employee['verification']['association_approved'] & 
 													$employee['verification']['letter_issued'] & 
 													$employee['verification']['letter_signed'] & 
@@ -149,6 +150,7 @@
 												@else
 													No
 												@endif
+											@endif
 											</td>
 											<td style="display:none;">
 												{{-- @if( $employee['portrait']['id'] == ''

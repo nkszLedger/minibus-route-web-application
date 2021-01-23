@@ -106,6 +106,15 @@
 						@endcan
 					</ul>
 				</li>
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE MILITARY</a>
+					<ul>
+						<!-- 'military-veteran-create'-->
+						<li><a href="#">Register Veterans</a></li> 
+						<!-- 'military-veteran-list'-->
+						<li><a href="#">View Veterans</a></li>
+					</ul>
+				</li>
+
 				<li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
 					<ul>
 						@can(['member-create'])
