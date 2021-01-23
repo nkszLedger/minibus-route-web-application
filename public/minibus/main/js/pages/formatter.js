@@ -20,6 +20,24 @@ $(function () {
 		'pattern': '{{999999}}{{9999}}{{99}}{{9}}',
 		'persistent': true
 	});
+
+	//  Region Leader Contact Number
+	$('#region_leader_contact_number').formatter({
+		'pattern': '{{999}}{{999}}{{9999}}',
+		'persistent': true
+	});
+
+	// Phone Number
+	$('#phone_number').formatter({
+		'pattern': '{{999}}{{999}}{{9999}}',
+		'persistent': true
+	});emergency_contact_number
+
+	// Emergency Contact Number
+	$('#emergency_contact_number').formatter({
+		'pattern': '{{999}}{{999}}{{9999}}',
+		'persistent': true
+	});
 	
 	$('#id_number').formatter({
 		'pattern': '{{999999}}{{9999}}{{99}}{{9}}',

@@ -4,8 +4,24 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MilitaryVeteranPostRequest extends FormRequest
+class MilitaryVeteranUpdateRequest extends FormRequest
 {
+    /**
+     * Military Veteran record ID to update
+     * 
+     */
+    protected int $military_veteran_id;
+
+    /** 
+     * Set Military Veteran record ID prior validation
+     * 
+     * @return void
+    */
+    public function setID($id)
+    {
+        $this->military_veteran_id = $id;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,8 +42,8 @@ class MilitaryVeteranPostRequest extends FormRequest
         return [
             'name' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
             'surname' => 'required|max:40|regex:/^[\pL\s\-]+$/u',
-            'email' => 'required|email|unique:military_veterans',
-            'id_number' => 'required|digits:13|unique:military_veterans',
+            'email' => 'required|email|unique:military_veterans, email, '.$this->military_veteran_id,
+            'id_number' => 'required|digits:13|unique:military_veterans, id_number, '.$this->military_veteran_id,
             'phone_number' => 'required|digits:10',
             'address_line' => 'required|regex:/([- ,\/0-9a-zA-Z]+)/',
             'surburb' => 'required|max:40|regex:/^[\pL\s\-]+$/u',

@@ -6,6 +6,7 @@ use App\City;
 use App\Gender;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MilitaryVeteranPostRequest;
+use App\Http\Requests\MilitaryVeteranUpdateRequest;
 use App\MilitaryVeteran;
 use App\Province;
 use App\Region;
@@ -91,9 +92,23 @@ class MilitaryVeteranController extends Controller
 
             $military_veteran->save();
         }
-
-
         
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\MilitaryVeteranUpdateRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(MilitaryVeteranUpdateRequest $request, $id)
+    {
+        // Inform Rules of the record to validate
+        $request->setID($id);
+        
+        // The incoming request is valid...
+        $validated = $request->validated();
     }
 
 }

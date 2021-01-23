@@ -47,7 +47,6 @@
 	<!-- VoiceX Admin skins -->
 	<link rel="stylesheet" href="/minibus/main/css/skin_color.css">
 
-
   </head>
 
 <body class="layout-top-nav light-skin theme-purple">
