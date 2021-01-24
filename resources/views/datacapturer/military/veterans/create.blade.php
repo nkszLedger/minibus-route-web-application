@@ -129,7 +129,10 @@
 									<h5><b>Number of Delegated Schools : <span class="text-danger">*</span></b></h5>
 									<input type="number" name="number_of_delegated_schools" class="form-control" 
                                      style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
-                                        required data-validation-required-message="This field is required" max="25" min="0">
+                                        required data-validation-required-message="This field is required" max="25" min="0"
+                                        value="{{ old('number_of_delegated_schools') ?? 
+                                        $military_veteran->number_of_delegated_schools ?? '' }}">
+                                        
 									<div class="form-control-feedback"> 
 										<small>
 											<i>Must be lower than including 25 & more than including 0</i>
@@ -183,8 +186,7 @@
                                             style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
                                             maxlength=13 min=13 id="id_number" 
                                             required data-validation-required-message="This field is required" 
-                                            value="{{ old('id_number') ?? $military_veteran->id_number ?? '' }}" 
-                                            {{ isset($military_veteran) ? 'readonly' : '' }} >
+                                            value="{{ old('id_number') ?? $military_veteran->id_number ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +377,7 @@
                         </div>
                     
                         <div class="box-footer text-right">
-                            <a class="btn btn-warning mb-5" href="#">
+                            <a class="btn btn-warning mb-5" href="{{ route('military-veterans.index') }}">
                                 Cancel
                             </a>
                             @if( isset($military_veteran) )

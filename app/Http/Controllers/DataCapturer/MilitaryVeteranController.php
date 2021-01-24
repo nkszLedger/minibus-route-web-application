@@ -22,14 +22,14 @@ class MilitaryVeteranController extends Controller
     public function index()
     {
         $all_military_veterans = MilitaryVeteran::with(['city', 'province',
-                                        'region', 'position'])
+                                        'region', 'gender'])
                             ->orderBy('id','desc')->get();
 
         return view('datacapturer.military.veterans.index', 
                     compact(['all_military_veterans']));
     }
 
-        /**
+     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -96,6 +96,57 @@ class MilitaryVeteranController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $all_cities = City::all();
+        $all_gender = Gender::all();
+        $all_provinces = Province::all();
+        $all_regions = Region::all();
+
+        $military_veteran = MilitaryVeteran::with(['region', 'province',
+                        'city', 'gender'])->where('id', $id)->first();
+
+        return view('datacapturer.military.veterans.show', 
+        compact(['all_cities', 
+                            'all_gender',
+                            'all_provinces', 
+                            'all_regions',
+                            'military_veteran'
+                        ]));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $all_cities = City::all();
+        $all_gender = Gender::all();
+        $all_provinces = Province::all();
+        $all_regions = Region::all();
+
+        $military_veteran = MilitaryVeteran::with(['region', 'province',
+                        'city', 'gender'])->where('id', $id)->first();
+
+        return view('datacapturer.military.veterans.create', 
+                compact(['all_cities', 
+                            'all_gender',
+                            'all_provinces', 
+                            'all_regions',
+                            'military_veteran'
+                        ]));
+
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\MilitaryVeteranUpdateRequest  $request
@@ -104,11 +155,60 @@ class MilitaryVeteranController extends Controller
      */
     public function update(MilitaryVeteranUpdateRequest $request, $id)
     {
-        // Inform Rules of the record to validate
-        $request->setID($id);
-        
         // The incoming request is valid...
         $validated = $request->validated();
+
+        $military_veteran = MilitaryVeteran::with(['region', 'province',
+                        'city', 'gender'])->where('id', $id)->first(); 
+
+        if( $validated )
+        {
+            $military_veteran_update = array(
+                'name' => $request->get('name'),
+                'surname' => $request->get('surname'),
+                'id_number' => $request->get('id_number'),
+                'phone_number' => $request->get('phone_number'),
+                'email' => $request->get('email'),
+                'address_line' => $request->get('address_line'),
+                'surburb' => $request->get('surburb'),
+                'postal_code' => $request->get('postal_code'),
+                'city_id' => $request->get('city'),
+                'province_id' => $request->get('province'),
+                'gender_id' => $request->get('gender'),
+                'region_id' => $request->get('mvregion'),
+
+                'emergency_contact_name' => 
+                    $request->get('emergency_contact_name'),
+                'emergency_contact_relationship' => 
+                    $request->get('emergency_contact_relationship'),
+                'emergency_contact_number' => 
+                    $request->get('emergency_contact_number'),
+                'region_leader_name' => 
+                    $request->get('region_leader_name'),
+                'region_leader_contact_number' => 
+                    $request->get('region_leader_contact_number'),
+                'number_of_delegated_schools' => 
+                    $request->get('number_of_delegated_schools'),
+                //list_of_delegated_schools
+            );
+
+            $military_veteran->update($military_veteran_update);
+        }
+        else
+        {
+
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+
     }
 
 }

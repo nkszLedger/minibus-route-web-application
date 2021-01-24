@@ -20,12 +20,12 @@
 		<!-- Main content -->
 		<section class="content">
 
-			<div class="callout bg-warning">
+			<!-- <div class="callout bg-warning">
 				<h4>New Feature!</h4>
 				<span class="badge badge-lg badge-danger">
 					A Column for Verification Status has been added. Check excel Document Exports!
 				</span>
-		  	</div>
+		  	</div> -->
 
 		  	<div class="row">
 			  	<div class="col-12">
