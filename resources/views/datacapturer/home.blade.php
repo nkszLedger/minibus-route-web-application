@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/minibus/images/favicon.ico">
 
-    <title> MiniBus Taxi Registration Web</title>
+    <title> GPDRT Web</title>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -86,7 +86,7 @@
 				@endcan
                 @can(['user-create', 'user-list', 'user-edit', 'user-delete'])
 				<li><a href="{{ route('users.index') }}">
-						<i class="ti-files mx-5"></i>MANAGE USERS
+						<i class="ti-files mx-5"></i>MANAGE SYSTEM
 					</a>
 					<ul>
 						<li><a href="{{ route('users.create') }}">Add New Users</a></li>
@@ -94,14 +94,20 @@
 					</ul>
 				</li>
 				@endcan
-				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE EMPLOYEES</a>
+				<li><a href="{{ route('employees.index') }}"><i class="ti-files mx-5"></i>MANAGE TRANSPORT</a>
 					<ul>
 						@can(['employee-create'])
-						<li><a href="{{ route('employees.create') }}">Register Employee</a></li>
-						<li><a href="{{ route('employees_verification') }}">Verify Employees</a></li>
+						<li><a href="{{ route('employees.create') }}">Register Minibus Employee</a></li>
+						<li><a href="{{ route('employees_verification') }}">Verify Minibus Employees</a></li>
 						@endcan
 						@can(['employee-list'])
-						<li><a href="{{ route('employees.index') }}">View Employees</a></li>
+						<li><a href="{{ route('employees.index') }}">View Minibus Employees</a></li>
+						@endcan
+						@can(['member-create'])
+						<li><a href="{{ route('members.create') }}">Register Minibus Member</a></li>
+						@endcan
+						@can(['member-list'])
+						<li><a href="{{ route('members.index') }}">View Minibus Members</a></li>
 						@endcan
 					</ul>
 				</li>
@@ -114,7 +120,7 @@
 					</ul>
 				</li>
 
-				<li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
+				{{-- <li><a href="{{ route('members.index') }}"><i class="ti-files mx-5"></i>MANAGE MEMBERS</a>
 					<ul>
 						@can(['member-create'])
 						<li><a href="{{ route('members.create') }}">Register Member</a></li>
@@ -123,7 +129,7 @@
 						<li><a href="{{ route('members.index') }}">View Members</a></li>
 						@endcan
 					</ul>
-				</li>
+				</li> --}}
 			</ul>
 		</nav>
 		<!-- Header Navbar -->

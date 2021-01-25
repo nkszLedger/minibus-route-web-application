@@ -39,7 +39,7 @@
 						<div class="box-body">
 							<div class="table-responsive">
 								@hasanyrole(['Systems Admin|Oversight'])
-								<table id="example" class="table table-bordered table-hover" 
+								<table id="mvdatatable" class="table table-bordered table-hover" 
 									style="width:100%">
 								@else
 								<table id="example2" class="table table-bordered table-hover" 

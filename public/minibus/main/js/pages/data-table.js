@@ -58,6 +58,48 @@ $(function () {
             }
             //'copy', 'csv', 'excel', 'pdf', 'print'
 	  ]
+    } );
+    
+    $('#mvdatatable').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+            { 
+                extend: 'csv', 
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 9,
+                                10, 11, 12, 13, 14, 15,
+                                16, 17, 18, 19, 20, 21],
+                },
+            },
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 
+                                10, 11, 12, 13, 14, 15,
+                                16, 17, 18, 19, 20, 21],
+                },
+            },
+            {
+                extend: 'pdf',
+                alignment: "center",
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7],
+                    modifier: {
+                        page: 'current'
+                    }
+                },
+            },
+            {
+                extend: 'print',
+                alignment: "center",
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                },
+            }
+            //'copy', 'csv', 'excel', 'pdf', 'print'
+	  ]
 	} );
 	
 	$('#tickets').DataTable({

@@ -192,11 +192,18 @@ class MilitaryVeteranController extends Controller
                 //list_of_delegated_schools
             );
 
-            $military_veteran->update($military_veteran_update);
+            if( $military_veteran->update($military_veteran_update) )
+            {
+                return $this->index();
+            }
+            else
+            {
+                return redirect()->intended('military-veterans');
+            }
         }
         else
         {
-
+            return redirect()->intended('military-veterans');
         }
     }
 
