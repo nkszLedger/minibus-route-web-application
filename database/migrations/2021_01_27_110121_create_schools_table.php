@@ -14,7 +14,7 @@ class CreateSchoolsTable extends Migration
     public function up()
     {
         Schema::create('schools', function (Blueprint $table) {
-            $table->id();
+
             $table->integer( 'district_id' );
             $table->integer( 'region_id' );	
             $table->string( 'district_code' );	
@@ -40,50 +40,62 @@ class CreateSchoolsTable extends Migration
             $table->string( 'email' )->nullable();
             $table->string( 'sub_place_name' )->nullable();	
             $table->string( 'main_place_name' )->nullable();
+
             $table->integer( 'metropolitan_municipality_id' );
             $table->integer( 'local_municipality_id' );
             $table->integer( 'ward_number' );
+
             $table->string( 'latitude' )->nullable();
             $table->string( 'longitude' )->nullable();
-            $table->integer( 'grade_r' )->default('0');
-            $table->integer( 'grade_classes' )->default('0');	
-            $table->integer( 'grade_r' )->default('0');	
-            $table->integer( 'grade_r_classes' )->default('0');	
-            $table->integer( 'grade_1' )->default('0');
-            $table->integer( 'grade_1_classes' )->default('0');	
-            $table->integer( 'grade_2' )->default('0');	
-            $table->integer( 'grade_2_classes' )->default('0');	
-            $table->integer( 'grade_3' )->default('0');
-            $table->integer( 'grade_3_classes' )->default('0');	
-            $table->integer( 'grade_4' )->default('0');	
-            $table->integer( 'grade_4_classes' )->default('0');	
-            $table->integer( 'grade_5' )->default('0');	
-            $table->integer( 'grade_5_classes' )->default('0');	
-            $table->integer( 'grade_6' )->default('0');	
-            $table->integer( 'grade_6_classes' )->default('0');	
-            $table->integer( 'grade_7' )->default('0');
-            $table->integer( 'grade_7_classes' )->default('0');	
-            $table->integer( 'grade_8' )->default('0');
-            $table->integer( 'grade_8_classes' )->default('0');	
-            $table->integer( 'grade_9' )->default('0');	
-            $table->integer( 'grade_9_classes' )->default('0');	
-            $table->integer( 'grade_10' )->default('0');
-            $table->integer( 'grade_10_classes' )->default('0');
-            $table->integer( 'grade_11' )->default('0');	
-            $table->integer( 'grade_11_classes' )->default('0');	
-            $table->integer( 'grade_12' )->default('0');	
-            $table->integer( 'grade12_classes' )->default('0');	
-            $table->integer( 'special' )->default('0');	
-            $table->integer( 'special_classes' )->default('0');	
-            $table->integer( 'other' )->default('0');	
-            $table->integer( 'other_classes' )->default('0');	
-            $table->integer( 'total_learners' )->default('0');	
-            $table->integer( 'total_classes' )->default('0');	
-            $table->integer( 'paid_by_sgb_educators' )->default('0');
-            $table->integer( 'paid_by _state_educators' )->default('0');
-            $table->integer( 'total_educators' )->default('0');	
-            $table->integer( 'admin_staff' )->default('0');	
-            $table->integer( 'support_staff' )->default('0');	
+
+            /* school-grade counts */
+            $table->integer( 'grade_r' )->default(0);	
+            $table->integer( 'grade_r_classes' )->default(0);	
+            $table->integer( 'grade_1' )->default(0);
+            $table->integer( 'grade_1_classes' )->default(0);	
+            $table->integer( 'grade_2' )->default(0);	
+            $table->integer( 'grade_2_classes' )->default(0);	
+            $table->integer( 'grade_3' )->default(0);
+            $table->integer( 'grade_3_classes' )->default(0);	
+            $table->integer( 'grade_4' )->default(0);	
+            $table->integer( 'grade_4_classes' )->default(0);	
+            $table->integer( 'grade_5' )->default(0);	
+            $table->integer( 'grade_5_classes' )->default(0);	
+            $table->integer( 'grade_6' )->default(0);	
+            $table->integer( 'grade_6_classes' )->default(0);	
+            $table->integer( 'grade_7' )->default(0);
+            $table->integer( 'grade_7_classes' )->default(0);	
+            $table->integer( 'grade_8' )->default(0);
+            $table->integer( 'grade_8_classes' )->default(0);	
+            $table->integer( 'grade_9' )->default(0);	
+            $table->integer( 'grade_9_classes' )->default(0);	
+            $table->integer( 'grade_10' )->default(0);
+            $table->integer( 'grade_10_classes' )->default(0);
+            $table->integer( 'grade_11' )->default(0);	
+            $table->integer( 'grade_11_classes' )->default(0);	
+            $table->integer( 'grade_12' )->default(0);	
+            $table->integer( 'grade12_classes' )->default(0);	
+            $table->integer( 'special' )->default(0);	
+            $table->integer( 'special_classes' )->default(0);	
+            $table->integer( 'other' )->default(0);	
+            $table->integer( 'other_classes' )->default(0);	
+            $table->integer( 'total_learners' )->default(0);	
+            $table->integer( 'total_classes' )->default(0);	
+            $table->integer( 'paid_by_sgb_educators' )->default(0);
+            $table->integer( 'paid_by _state_educators' )->default(0);
+            $table->integer( 'total_educators' )->default(0);	
+            $table->integer( 'admin_staff' )->default(0);	
+            $table->integer( 'support_staff' )->default(0);
+            $table->softDeletes()->nullable();	
+
+            $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('region_id')->references('region_id')->on('regions');
+            $table->foreign('level_id')->references('id')->on('school_levels');
+            $table->foreign('type_of_institution_id')->references('id')->on('school_types');
+            $table->foreign('town_city_id')->references('city_id')->on('city');
+            $table->foreign('metropolitan_municipality_id')->references('id')->on('metropolitan_municipalities');
+            $table->foreign('local_municipality_id')->references('municipality_id')->on('local_municipalities');
+
 
             $table->timestamps();
         });

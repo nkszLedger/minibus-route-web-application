@@ -16,9 +16,9 @@ class CreateDistrictsTable extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('region_id');
-            $table->string('province_id');
-            $table->string('country_id');
+            $table->integer('region_id');
+            $table->integer('province_id');
+            $table->integer('country_id');
             $table->timestamps();
             $table->softDeletes()->nullable();
 

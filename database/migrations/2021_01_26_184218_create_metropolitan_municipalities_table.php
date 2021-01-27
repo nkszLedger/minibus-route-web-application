@@ -19,6 +19,9 @@ class CreateMetropolitanMunicipalitiesTable extends Migration
             $table->integer('province_id');
             $table->longText('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('region_id')->references('region_id')->on('regions');
         });
     }
 

@@ -15,8 +15,8 @@ class CreateSchoolLevelsTable extends Migration
     {
         Schema::create('school_levels', function (Blueprint $table) {
             $table->id();
-            $table->level();
-            $table->description()->nullable();
+            $table->string('level');
+            $table->longText('description')->nullable();
             $table->timestamps();
 
         });

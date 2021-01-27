@@ -14,12 +14,14 @@ class CreateLocalMunicipalitiesTable extends Migration
     public function up()
     {
         Schema::create('local_municipalities', function (Blueprint $table) {
-            $table->id();
+            
             $table->integer('municipality_id')->primary();
             $table->string('name');
             $table->integer('metropolitan_municipality_id');
             $table->longText('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('metropolitan_municipality_id')->references('id')->on('metropolitan_municipalities');
         });
     }
 

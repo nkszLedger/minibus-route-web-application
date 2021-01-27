@@ -15,8 +15,8 @@ class CreateSchoolSectorsTable extends Migration
     {
         Schema::create('school_sectors', function (Blueprint $table) {
             $table->id();
-            $table->sector();
-            $table->description()->nullable();
+            $table->string('sector');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
