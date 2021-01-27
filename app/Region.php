@@ -14,4 +14,9 @@ class Region extends Model
     {
         return $this->hasMany(Member::class);
     }
+
+    public function metropolitan_municipality()
+    {
+        return $this->hasOne(MetropolitanMunicipality::class);
+    }
 }

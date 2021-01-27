@@ -12,4 +12,10 @@ class Province extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
+    public function metropolitan_municipality()
+    {
+        return $this->hasMany(MetropolitanMunicipality::class);
+    }
+    
 }

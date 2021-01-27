@@ -62,7 +62,7 @@ class CreateSchoolsTable extends Migration
             $table->integer( 'grade_6' )->default('0');	
             $table->integer( 'grade_6_classes' )->default('0');	
             $table->integer( 'grade_7' )->default('0');
-            $table->integer( 'grade_7_lasses' )->default('0');	
+            $table->integer( 'grade_7_classes' )->default('0');	
             $table->integer( 'grade_8' )->default('0');
             $table->integer( 'grade_8_classes' )->default('0');	
             $table->integer( 'grade_9' )->default('0');	
