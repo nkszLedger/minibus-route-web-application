@@ -21,7 +21,7 @@ class CreateMilitaryVeteransDelegatedSchoolsTable extends Migration
             $table->softDeletes()->nullable();
 
             $table->foreign('military_veteran_id')->references('id')->on('military_veterans');
-            $table->foreign('school_id')->references('emis_number')->on('schools');
+            $table->foreign('school_id')->references('id')->on('schools');
         });
     }
 

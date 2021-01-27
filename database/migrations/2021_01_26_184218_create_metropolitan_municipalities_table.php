@@ -15,6 +15,7 @@ class CreateMetropolitanMunicipalitiesTable extends Migration
     {
         Schema::create('metropolitan_municipalities', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->integer('region_id');
             $table->integer('province_id');
             $table->longText('description')->nullable();

@@ -14,41 +14,43 @@ class CreateSchoolsTable extends Migration
     public function up()
     {
         Schema::create('schools', function (Blueprint $table) {
-
+            $table->id();
             $table->integer( 'district_id' );
             $table->integer( 'region_id' );	
             $table->string( 'district_code' );	
             $table->integer( 'gauteng_reference_number' );	
-            $table->integer( 'emis_number' )->primary();
+            $table->integer( 'emis_number' );
             $table->string( 'institution_name' );	
             $table->string( 'inst_level_budgetary_requirements' );
             $table->integer( 'level_id' );
-            $table->integer( 'data_year' );
+            $table->string( 'data_year' );
             $table->integer( 'type_of_institution_id' );
-            $table->string( 'relation with_state' )->nullable();
-            $table->integer( 'sector_id' );
-            $table->integer( 'circuit_no' )->nullable();	
-            $table->integer( 'cluster_no' )->nullable();
-            $table->integer( 'quintile' )->nullable();	
+            $table->string( 'relation_with_state' )->nullable();
+            $table->integer( 'sector_id' )->nullable();
+            $table->string( 'circuit_no' )->nullable();	
+            $table->string( 'cluster_no' )->nullable();
+            $table->string( 'quintile' )->nullable();	
             $table->string( 'no_fee' )->nullable();
-            $table->string( 'street_number' );
+            $table->string( 'street_number' )->nullable();
             $table->string( 'street_name' )->nullable();
             $table->string( 'township_village' )->nullable();
             $table->string( 'suburb' )->nullable();
             $table->integer( 'town_city_id' );
             $table->string( 'telephone' )->nullable();
-            $table->string( 'email' )->nullable();
+            $table->string('email')->nullable();
             $table->string( 'sub_place_name' )->nullable();	
             $table->string( 'main_place_name' )->nullable();
 
             $table->integer( 'metropolitan_municipality_id' );
             $table->integer( 'local_municipality_id' );
-            $table->integer( 'ward_number' );
+            $table->string( 'ward_number' );
 
             $table->string( 'latitude' )->nullable();
             $table->string( 'longitude' )->nullable();
 
             /* school-grade counts */
+            $table->integer( 'pre_grade_r' )->default(0);	
+            $table->integer( 'pre_grade_r_classes' )->default(0);	
             $table->integer( 'grade_r' )->default(0);	
             $table->integer( 'grade_r_classes' )->default(0);	
             $table->integer( 'grade_1' )->default(0);
@@ -86,6 +88,7 @@ class CreateSchoolsTable extends Migration
             $table->integer( 'total_educators' )->default(0);	
             $table->integer( 'admin_staff' )->default(0);	
             $table->integer( 'support_staff' )->default(0);
+            $table->integer( 'professional_non_teaching_staff' )->default(0);
             $table->softDeletes()->nullable();	
 
             $table->foreign('district_id')->references('id')->on('districts');
