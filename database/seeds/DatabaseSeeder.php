@@ -39,6 +39,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(SchoolSectorSeeder::class);
         // $this->call(MetropolitanMunicipalitySeeder::class);
         // $this->call(LocalMunicipalitySeeder::class);
-        $this->call(SchoolSeeder::class);
+        //$this->call(SchoolSeeder::class);
     }
 }

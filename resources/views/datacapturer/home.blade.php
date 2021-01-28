@@ -17,11 +17,17 @@
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
 
-    <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
-
+	<!-- Bootstrap select -->
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-select/dist/css/bootstrap-select.css">
+	
 	<!-- Bootstrap tagsinput -->
-    <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+	
+	<!-- Bootstrap touchspin -->
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css">
+	
+	<!-- Select2 -->
+	<link rel="stylesheet" href="/minibus/assets/vendor_components/select2/dist/css/select2.min.css">
 
     <!-- daterange picker -->
 	<link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
@@ -511,6 +517,15 @@
 	<!-- Bootstrap 4.0-->
 	<script src="/minibus/assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script>
 
+	<!-- Bootstrap Select -->
+	<script src="/minibus/assets/vendor_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+	
+	<!-- Bootstrap tagsinput -->
+	<script src="/minibus/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
+
+	<!-- Select2 -->
+	<script src="/minibus/assets/vendor_components/select2/dist/js/select2.full.js"></script>
+
 	<!-- date-range-picker -->
 	<script src="/minibus/assets/vendor_components/moment/min/moment.min.js"></script>
 	<script src="/minibus/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -567,6 +582,9 @@
 	<script src="/minibus/main/js/jquery.smartmenus.js"></script>
 	<script src="/minibus/main/js/menus.js"></script>
 	<script src="/minibus/main/js/template.js"></script>
+
+	<!-- VoiceX Admin for advanced form element -->
+	<script src="/minibus/main/js/pages/advanced-form-element.js"></script>
 
 	<!-- VoiceX Admin dashboard demo (This is only for demo purposes) -->
 	<script src="/minibus/main/js/pages/dashboard2.js"></script>

@@ -144,6 +144,23 @@
 								</div>
 							</div>
 
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <h5><b>List Deligated schools: <span class="text-danger">*</span></b></h5>
+                                    <select class="form-control select2" multiple="multiple" 
+                                        data-placeholder=" Select a School" style="width: 100%;">
+                                    <option>Alabama</option>
+                                    <option>Alaska</option>
+                                    <option>California</option>
+                                    <option>Delaware</option>
+                                    <option>Tennessee</option>
+                                    <option>Texas</option>
+                                    <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+
                         </div>
 
                         <hr class="mb-15 mt-15">
