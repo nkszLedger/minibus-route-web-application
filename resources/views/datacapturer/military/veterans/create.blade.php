@@ -150,22 +150,34 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <h5><b>List of Delegated Schools: <span class="text-danger">*</span></b></h5>
-                                    <select class="form-control select2" multiple="multiple" 
-                                        data-placeholder=" Select a School" style="width: 100%;"
-                                        name="list_of_delegated_schools[]" id="list_of_delegated_schools">
-                                        @if( isset($all_schools) )
-                                            @if( isset($delegated_schools) )
-                                                @foreach($all_schools as $school)
-                                                    @foreach($delegated_schools as $delegated_school)
-                                                        @if( $school->id == $delegated_school['school']['id']  )
-                                                        <option value="{{ $school->id }}" selected > 
-                                                            ( {{ $school['region']['region_name'] }} ) 
-                                                            ( {{ $school['metropolitan_municipality']['name'] }} ) 
-                                                            ( {{ $school['local_municipality']['name'] }} ) 
-                                                            ( LEVEL : {{ $school['level']['level'] }} ) 
-                                                            ( EMIS NUMBER : {{ $school->emis_number }} ) 
-                                                            <b>{{ $school->institution_name }}</b>
-                                                        </option>
+                                    @if( isset($all_schools) )
+                                        @if( isset($delegated_schools) )
+                                            <select class="form-control select2" multiple="multiple" 
+                                                style="width: 100%;" id="list_of_delegated_schools"
+                                                name="list_of_delegated_schools[]" data-placeholder=" Select or Remove a School">
+                                                    @foreach($all_schools as $school)
+                                                        @if( !empty($delegated_schools->first()) )
+                                                            @foreach( $delegated_schools as $delegated_school )
+                                                                @if( $delegated_school['school']['id'] == $school->id )
+                                                                <option selected="selected" value="{{ $delegated_school['school']['id'] }}"> 
+                                                                    ( {{ $delegated_school['school']['region']['region_name'] }} ) 
+                                                                    ( {{ $delegated_school['school']['metropolitan_municipality']['name'] }} ) 
+                                                                    ( {{ $delegated_school['school']['local_municipality']['name'] }} ) 
+                                                                    ( LEVEL : {{ $delegated_school['school']['level']['level'] }} ) 
+                                                                    ( EMIS NUMBER : {{ $delegated_school['school']['emis_number'] }} ) 
+                                                                    {{ $delegated_school['school']['institution_name'] }}
+                                                                </option> 
+                                                                @else
+                                                                <option value="{{ $school->id }}"> 
+                                                                    ( {{ $school['region']['region_name'] }} ) 
+                                                                    ( {{ $school['metropolitan_municipality']['name'] }} ) 
+                                                                    ( {{ $school['local_municipality']['name'] }} ) 
+                                                                    ( LEVEL : {{ $school['level']['level'] }} ) 
+                                                                    ( EMIS NUMBER : {{ $school->emis_number }} ) 
+                                                                    {{ $school->institution_name }}
+                                                                </option>
+                                                                @endif
+                                                            @endforeach
                                                         @else
                                                         <option value="{{ $school->id }}"> 
                                                             ( {{ $school['region']['region_name'] }} ) 
@@ -173,12 +185,15 @@
                                                             ( {{ $school['local_municipality']['name'] }} ) 
                                                             ( LEVEL : {{ $school['level']['level'] }} ) 
                                                             ( EMIS NUMBER : {{ $school->emis_number }} ) 
-                                                            <b>{{ $school->institution_name }}</b>
+                                                            {{ $school->institution_name }}
                                                         </option>
                                                         @endif
                                                     @endforeach
-                                                @endforeach
-                                            @else
+                                            </select>
+                                        @else
+                                            <select class="form-control select2" multiple="multiple" 
+                                                data-placeholder=" Select a School" style="width: 100%;"
+                                                name="list_of_delegated_schools[]" id="list_of_delegated_schools">
                                                 @foreach($all_schools as $school)
                                                     <option value="{{ $school->id }}"> 
                                                         ( {{ $school['region']['region_name'] }} ) 
@@ -186,12 +201,12 @@
                                                         ( {{ $school['local_municipality']['name'] }} ) 
                                                         ( LEVEL : {{ $school['level']['level'] }} ) 
                                                         ( EMIS NUMBER : {{ $school->emis_number }} ) 
-                                                        <b>{{ $school->institution_name }}</b>
+                                                        {{ $school->institution_name }}
                                                     </option>
                                                 @endforeach
-                                            @endif
+                                            </select>
                                         @endif
-                                    </select>
+                                    @endif
                                     <div class="form-control-feedback"> 
 										<small>
 											<i>Number of Delegated Schools selected must be 

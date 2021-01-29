@@ -42,7 +42,18 @@ class MilitaryVeteranUpdateRequest extends FormRequest
             'region_leader_name' => 'sometimes|max:40',
             'region_leader_contact_number' => 'sometimes|max:10',
             'number_of_delegated_schools' => 'required|min:0|max:25',
-            'list_of_delegated_schools' => 'sometimes',
+            'list_of_delegated_schools' => 
+                [ 
+                    'exclude_if:number_of_delegated_schools,0',
+                    'required_if:number_of_delegated_schools,gt,1',
+                    function ($attribute, $value, $fail) 
+                    {
+                        if ( count($this->list_of_delegated_schools) != $this->number_of_delegated_schools )
+                        {
+                            $fail('The '.$attribute.' has incorrect number of schools');
+                        }
+                    },
+                ],
         ];
     }
 }

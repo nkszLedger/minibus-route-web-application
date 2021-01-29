@@ -157,12 +157,18 @@ class MilitaryVeteranController extends Controller
         $all_gender = Gender::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
+        $all_schools = School::with(['region',
+                            'level', 'sector', 'type',
+                            'metropolitan_municipality',
+                            'local_municipality',
+                            ])->get();
 
         $military_veteran = MilitaryVeteran::with(['region', 'province',
                         'city', 'gender'])->where('id', $id)->first();
         
         $delegated_schools = MilitaryVeteransDelegatedSchools::with([
-            'school', 'military_veteran'])->where('military_veteran_id', $id);
+            'school', 'military_veteran'])->where('military_veteran_id', $id)
+            ->where('deleted_at', NULL)->get();
 
         return view('datacapturer.military.veterans.create', 
                 compact(['all_cities', 
@@ -170,6 +176,7 @@ class MilitaryVeteranController extends Controller
                             'all_provinces', 
                             'all_regions',
                             'military_veteran',
+                            'all_schools',
                             'delegated_schools',
                         ]));
 
@@ -218,22 +225,34 @@ class MilitaryVeteranController extends Controller
                     $request->get('region_leader_contact_number'),
                 'number_of_delegated_schools' => 
                     $request->get('number_of_delegated_schools'),
-                //list_of_delegated_schools
             );
 
             if( $military_veteran->update($military_veteran_update) )
             {
-                return $this->index();
-            }
-            else
-            {
-                return redirect()->intended('military-veterans');
+                /* find and delete delegated schools for military-veteran */
+                $all_delegated_schools = MilitaryVeteransDelegatedSchools::with([
+                    'school', 'military_veteran'])->where('military_veteran_id', $id)
+                    ->where('deleted_at', NULL);
+                
+                if ( !empty( $all_delegated_schools ) )     
+                {
+                    $all_delegated_schools->forceDelete();
+                }
+
+                if( !empty($request->get('list_of_delegated_schools')) ) 
+                {
+                    foreach((array)$request->get('list_of_delegated_schools') as $school_id) 
+                    {
+                        /* write new record */
+                        $delegated_school = new MilitaryVeteransDelegatedSchools();
+                        $delegated_school->military_veteran_id = $military_veteran->id;
+                        $delegated_school->school_id = $school_id;
+                        $delegated_school->save();
+                    }
+                }
             }
         }
-        else
-        {
-            return redirect()->intended('military-veterans');
-        }
+        return $this->show($id);
     }
 
     /**
