@@ -10,9 +10,9 @@
 
     <title> GPDRT Web</title>
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-		crossorigin="">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	crossorigin=""/>
 
 	<!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="/minibus/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
@@ -60,10 +60,10 @@
 <div class="wrapper">
 
   <div class="art-bg">
-	  <img src="minibus/images/art1.svg" alt="" class="art-img light-img">
-	  <img src="minibus/images/art2.svg" alt="" class="art-img dark-img">
-	  <img src="minibus/images/art-bg.svg" alt="" class="wave-img light-img">
-	  <img src="minibus/images/art-bg2.svg" alt="" class="wave-img dark-img">
+	  <img src="/minibus/images/art1.svg" alt="" class="art-img light-img">
+	  <img src="/minibus/images/art2.svg" alt="" class="art-img dark-img">
+	  <img src="/minibus/images/art-bg.svg" alt="" class="wave-img light-img">
+	  <img src="/minibus/images/art-bg2.svg" alt="" class="wave-img dark-img">
   </div>
 
   <header class="main-header">
@@ -615,13 +615,32 @@
 	<script src="/minibus/main/js/pages/users.js"></script>
 
 	<!-- Make sure you put this AFTER Leaflet's CSS -->
-	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 		crossorigin="">
 	</script>
 
 	<!-- Geographical Facility Overview -->
 	<script src="/minibus/main/js/pages/geo-regions.js"></script>
+
+	<!-- Monitoring & Regulation System General -->
+	<!--<script src="/minibus/main/js/pages/main-home.js"></script> -->
+
+	<script>
+
+		/* Monitoring & Regulation System General - MANAGE MILITARY VETERANS */
+
+		/*$("#list_of_delegated_schools").change(function () 
+		{
+			var count = $('#list_of_delegated_schools :selected').length;
+
+			if(  count > 1 )
+			{
+				swal("Exceeded!", "Number of selected schools are more than the number specified", "error"); 
+			}
+		});*/
+
+	</script>
 
 	<script type="text/javascript">
 	// Start jQuery function after page is loaded
@@ -1304,7 +1323,7 @@
 </script>
 
 <script>
-	function delete()
+	function delete_user()
 	{
 		swal('Deleted!', 
 			'The user has been deactivated.', 

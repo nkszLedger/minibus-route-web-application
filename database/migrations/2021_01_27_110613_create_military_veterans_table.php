@@ -34,7 +34,6 @@ class CreateMilitaryVeteransTable extends Migration
             $table->string('region_leader_name')->nullable();
             $table->string('region_leader_contact_number')->nullable();
             $table->integer('number_of_delegated_schools');
-            $table->longText('list_of_delegated_schools')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
 

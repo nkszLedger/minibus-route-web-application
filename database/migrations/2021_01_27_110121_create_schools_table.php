@@ -94,6 +94,7 @@ class CreateSchoolsTable extends Migration
             $table->foreign('district_id')->references('id')->on('districts');
             $table->foreign('region_id')->references('region_id')->on('regions');
             $table->foreign('level_id')->references('id')->on('school_levels');
+            $table->foreign('sector_id')->references('id')->on('school_sectors');
             $table->foreign('type_of_institution_id')->references('id')->on('school_types');
             $table->foreign('town_city_id')->references('city_id')->on('city');
             $table->foreign('metropolitan_municipality_id')->references('id')->on('metropolitan_municipalities');

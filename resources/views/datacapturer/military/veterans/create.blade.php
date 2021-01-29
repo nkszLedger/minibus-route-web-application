@@ -3,24 +3,24 @@
 @section('content')
     <!-- Content Header (Page header) -->
     <!-- Content Header (Page header) -->
-		<div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Military Veteran Cadets Management</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item active" aria-current="page">
-                                    Registration of cadets assisting with COVID-19 disinfection and PPE 
-                                    distribution for Military Veterans
-                                </li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="content-header">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="page-title">Military Veteran Cadets Management</h3>
+                <div class="d-inline-block align-items-center">
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Registration of cadets assisting with COVID-19 disinfection and PPE 
+                                distribution for Military Veterans
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -44,10 +44,12 @@
                   <div class="row">
                     <div class="col-12">
                       @if( isset($military_veteran) )
-                      <form method="POST" action= "{{ route('military-veterans.update', $military_veteran->id) }}">
+                      <form method="POST" action= "{{ route('military-veterans.update', $military_veteran->id) }}"
+                        enctype='multipart/form-data'>
                         <?php echo method_field('PUT'); ?>
                       @else
-                      <form method="POST" action= "{{ route('military-veterans.store') }}">
+                      <form method="POST" action= "{{ route('military-veterans.store') }}" 
+                        enctype='multipart/form-data'>
                       @endif
                         @csrf
                         <input type="hidden" class="form-control" name="id" value="{{$military_veteran->id ?? '' }}">
@@ -63,7 +65,7 @@
 							@endif
 						</div>
                         <h4 class="box-title text-info">
-                            <i class="ti-user mr-15"></i> Organizational Demography
+                            <i class="ti-agenda mr-15"></i> Organizational Demography
                         </h4>
 						<hr class="mb-15 mt-0">
                         <div class="row">
@@ -128,9 +130,10 @@
 								<div class="form-group">
 									<h5><b>Number of Delegated Schools : <span class="text-danger">*</span></b></h5>
 									<input type="number" name="number_of_delegated_schools" class="form-control" 
-                                     style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
-                                        required data-validation-required-message="This field is required" max="25" min="0"
-                                        value="{{ old('number_of_delegated_schools') ?? 
+                                        id="number_of_delegated_schools" style="text-transform: uppercase; 
+                                        font-weight: bold; font-size: 18px;" 
+                                        required data-validation-required-message="This field is required" 
+                                        max="25" min="0" value="{{ old('number_of_delegated_schools') ?? 
                                         $military_veteran->number_of_delegated_schools ?? '' }}">
                                         
 									<div class="form-control-feedback"> 
@@ -146,17 +149,56 @@
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <h5><b>List Deligated schools: <span class="text-danger">*</span></b></h5>
+                                    <h5><b>List of Delegated Schools: <span class="text-danger">*</span></b></h5>
                                     <select class="form-control select2" multiple="multiple" 
-                                        data-placeholder=" Select a School" style="width: 100%;">
-                                    <option>Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
+                                        data-placeholder=" Select a School" style="width: 100%;"
+                                        name="list_of_delegated_schools[]" id="list_of_delegated_schools">
+                                        @if( isset($all_schools) )
+                                            @if( isset($delegated_schools) )
+                                                @foreach($all_schools as $school)
+                                                    @foreach($delegated_schools as $delegated_school)
+                                                        @if( $school->id == $delegated_school['school']['id']  )
+                                                        <option value="{{ $school->id }}" selected > 
+                                                            ( {{ $school['region']['region_name'] }} ) 
+                                                            ( {{ $school['metropolitan_municipality']['name'] }} ) 
+                                                            ( {{ $school['local_municipality']['name'] }} ) 
+                                                            ( LEVEL : {{ $school['level']['level'] }} ) 
+                                                            ( EMIS NUMBER : {{ $school->emis_number }} ) 
+                                                            <b>{{ $school->institution_name }}</b>
+                                                        </option>
+                                                        @else
+                                                        <option value="{{ $school->id }}"> 
+                                                            ( {{ $school['region']['region_name'] }} ) 
+                                                            ( {{ $school['metropolitan_municipality']['name'] }} ) 
+                                                            ( {{ $school['local_municipality']['name'] }} ) 
+                                                            ( LEVEL : {{ $school['level']['level'] }} ) 
+                                                            ( EMIS NUMBER : {{ $school->emis_number }} ) 
+                                                            <b>{{ $school->institution_name }}</b>
+                                                        </option>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            @else
+                                                @foreach($all_schools as $school)
+                                                    <option value="{{ $school->id }}"> 
+                                                        ( {{ $school['region']['region_name'] }} ) 
+                                                        ( {{ $school['metropolitan_municipality']['name'] }} ) 
+                                                        ( {{ $school['local_municipality']['name'] }} ) 
+                                                        ( LEVEL : {{ $school['level']['level'] }} ) 
+                                                        ( EMIS NUMBER : {{ $school->emis_number }} ) 
+                                                        <b>{{ $school->institution_name }}</b>
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        @endif
                                     </select>
+                                    <div class="form-control-feedback"> 
+										<small>
+											<i>Number of Delegated Schools selected must be 
+                                                <code>EQUAL</code> to number of schools defined above
+                                            </i>
+										</small> 
+									</div>
                                 </div>
                                 <!-- /.form-group -->
                             </div>

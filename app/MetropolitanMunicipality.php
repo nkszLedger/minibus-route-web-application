@@ -16,6 +16,11 @@ class MetropolitanMunicipality extends Model
         return $this->belongsTo(Province::class,'province_id');
     }
 
+    public function school()
+    {
+        return $this->hasMany(School::class);
+    }
+
     public function local_municipality()
     {
         return $this->hasMany(LocalMunicipality::class);

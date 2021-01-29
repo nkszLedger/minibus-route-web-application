@@ -43,6 +43,11 @@ class MilitaryVeteran extends Model
 
     protected $table = 'military_veterans';
 
+    public function military_veteran_delegated_school()
+    {
+        return $this->hasMany(MilitaryVeteransDelegatedSchools::class);
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class,'region_id');

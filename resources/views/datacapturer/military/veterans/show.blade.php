@@ -54,7 +54,7 @@
 							@endif
 						</div>
                         <h4 class="box-title text-info">
-                            <i class="ti-user mr-15"></i> Organizational Demography
+                            <i class="ti-agenda mr-15"></i> Organizational Demography
                         </h4>
 						<hr class="mb-15 mt-0">
                         <div class="row">
@@ -133,6 +133,38 @@
 									</div>
 								</div>
 							</div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <h5><b>List of Delegated Schools: <span class="text-danger">*</span></b></h5>
+                                    <div class="box-body">
+                                        <div class="demo-checkbox">
+                                            @if( isset($delegated_schools) )
+                                                @foreach( $delegated_schools as $delegated_school )
+                                                    <input type="checkbox" class="filled-in chk-col-success" checked disabled />
+                                                        <label>
+                                                            ( {{ $delegated_school['school']['region']['region_name'] }} ) 
+                                                            ( {{ $delegated_school['school']['metropolitan_municipality']['name'] }} ) 
+                                                            ( {{ $delegated_school['school']['local_municipality']['name'] }} ) 
+                                                            ( LEVEL : {{ $delegated_school['school']['level']['level'] }} ) 
+                                                            ( EMIS NUMBER : {{ $delegated_school['school']['emis_number'] }} ) 
+                                                            {{ $delegated_school['school']['institution_name'] }}
+                                                        </label>
+                                                    </option>
+                                                    <br><br>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                    </div>
+                                    <div class="form-control-feedback"> 
+										<small>
+											<i> Previously selected schools for Military Veteran Cadet</i>
+										</small> 
+									</div>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
 
                         </div>
 

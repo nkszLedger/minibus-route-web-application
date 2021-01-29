@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MilitaryVeteranPostRequest;
 use App\Http\Requests\MilitaryVeteranUpdateRequest;
 use App\MilitaryVeteran;
+use App\MilitaryVeteransDelegatedSchools;
 use App\Province;
 use App\Region;
+use App\School;
 use Illuminate\Http\Request;
 
 class MilitaryVeteranController extends Controller
@@ -40,12 +42,18 @@ class MilitaryVeteranController extends Controller
         $all_gender = Gender::all();
         $all_provinces = Province::all();
         $all_regions = Region::all();
+        $all_schools = School::with(['region',
+                            'level', 'sector', 'type',
+                            'metropolitan_municipality',
+                            'local_municipality',
+                            ])->get();
 
         return view('datacapturer.military.veterans.create', 
                 compact(['all_cities', 
                             'all_gender',
                             'all_provinces', 
-                            'all_regions'
+                            'all_regions',
+                            'all_schools',
                         ]));
     }
 
@@ -58,11 +66,10 @@ class MilitaryVeteranController extends Controller
     public function store(MilitaryVeteranPostRequest $request)
     {
         // The incoming request is valid...
-        $validated = $request->validated();
+         $validated = $request->validated();
 
         if( $validated )
         {
-
             $military_veteran = new MilitaryVeteran();
 
             $military_veteran->name =  $request->get('name');
@@ -88,9 +95,23 @@ class MilitaryVeteranController extends Controller
             $military_veteran->region_leader_name =  $request->get('region_leader_name');
             $military_veteran->region_leader_contact_number =  $request->get('region_leader_contact_number');
             $military_veteran->number_of_delegated_schools =  $request->get('number_of_delegated_schools');
-            $military_veteran->list_of_delegated_schools =  $request->get('list_of_delegated_schools'); 
 
-            $military_veteran->save();
+            if ( $military_veteran->save() )
+            {
+                if( !empty($request->get('list_of_delegated_schools')) ) 
+                {
+                    foreach((array)$request->get('list_of_delegated_schools') as $school_id) 
+                    {
+                        /* get delegated schools to military-veteran */
+                        $delegated_school = new MilitaryVeteransDelegatedSchools();
+                        $delegated_school->military_veteran_id = $military_veteran->id;
+                        $delegated_school->school_id = $school_id;
+                        $delegated_school->save();
+                    }
+                }
+            }
+
+            return $this->index();
         }
         
     }
@@ -110,13 +131,17 @@ class MilitaryVeteranController extends Controller
 
         $military_veteran = MilitaryVeteran::with(['region', 'province',
                         'city', 'gender'])->where('id', $id)->first();
+        
+        $delegated_schools = MilitaryVeteransDelegatedSchools::with([
+            'school', 'military_veteran'])->where('military_veteran_id', $id)->get();
 
         return view('datacapturer.military.veterans.show', 
-        compact(['all_cities', 
+                    compact(['all_cities', 
                             'all_gender',
                             'all_provinces', 
                             'all_regions',
-                            'military_veteran'
+                            'military_veteran',
+                            'delegated_schools',
                         ]));
     }
 
@@ -135,13 +160,17 @@ class MilitaryVeteranController extends Controller
 
         $military_veteran = MilitaryVeteran::with(['region', 'province',
                         'city', 'gender'])->where('id', $id)->first();
+        
+        $delegated_schools = MilitaryVeteransDelegatedSchools::with([
+            'school', 'military_veteran'])->where('military_veteran_id', $id);
 
         return view('datacapturer.military.veterans.create', 
                 compact(['all_cities', 
                             'all_gender',
                             'all_provinces', 
                             'all_regions',
-                            'military_veteran'
+                            'military_veteran',
+                            'delegated_schools',
                         ]));
 
     }
