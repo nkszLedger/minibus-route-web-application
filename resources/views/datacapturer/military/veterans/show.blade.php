@@ -6,7 +6,7 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Military Veteran Cadets Management</h3>
+					<h3 class="page-title">MKV School Cadets Management</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -268,47 +268,6 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h5 for="emergency_contact_name"><b>Emergency Contact Name : </b></h5>
-                                    <input type="text" class="form-control required" 
-                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
-                                        id="emergency_contact_name" name="emergency_contact_name" 
-                                        maxlength="25" readonly 
-                                        value="{{ old('emergency_contact_name') ?? 
-                                        $military_veteran->emergency_contact_name ?? '' }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="emergency_contact_number"><b>Emergency Contact Number : </b> </h5>
-                                    <input type="text" class="form-control" 
-                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
-                                        id="emergency_contact_number" name="emergency_contact_number" 
-                                        maxlength="10" readonly 
-                                        value="{{ old('emergency_contact_number') ?? 
-                                        $military_veteran->emergency_contact_number ?? '' }}"
-                                        required data-validation-containsnumber-regex="(\d)+" 
-                                        data-validation-containsnumber-message="No Characters Allowed, Only Numbers" >
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 for="emergencycontactrelationship">
-                                        <b>Relationship to Cadet: </b>
-                                    </h5>
-                                    <input type="text" class="form-control required" 
-                                     style="text-transform: uppercase; font-weight: bold; font-size: 18px;" 
-                                        id="emergency_contact_relationship" 
-                                        name="emergency_contact_relationship" 
-                                        maxlength="25" readonly 
-                                        value="{{ old('emergency_contact_relationship') ?? 
-                                        $military_veteran->emergency_contact_relationship ?? '' }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <h5 for="addressline1"><b>Residential Address Line : </b>
                                         <span class="text-danger"> *</span>  
                                     </h5>
@@ -400,6 +359,48 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergency_contact_name"><b>Emergency Contact Name : </b></h5>
+                                    <input type="text" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="emergency_contact_name" name="emergency_contact_name" 
+                                        maxlength="25" readonly 
+                                        value="{{ old('emergency_contact_name') ?? 
+                                        $military_veteran->emergency_contact_name ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergency_contact_number"><b>Emergency Contact Number : </b> </h5>
+                                    <input type="text" class="form-control" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="emergency_contact_number" name="emergency_contact_number" 
+                                        maxlength="10" readonly 
+                                        value="{{ old('emergency_contact_number') ?? 
+                                        $military_veteran->emergency_contact_number ?? '' }}"
+                                        required data-validation-containsnumber-regex="(\d)+" 
+                                        data-validation-containsnumber-message="No Characters Allowed, Only Numbers" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="emergencycontactrelationship">
+                                        <b>Relationship to Cadet: </b>
+                                    </h5>
+                                    <input type="text" class="form-control required" 
+                                     style="text-transform: uppercase; font-weight: bold; font-size: 18px;" 
+                                        id="emergency_contact_relationship" 
+                                        name="emergency_contact_relationship" 
+                                        maxlength="25" readonly 
+                                        value="{{ old('emergency_contact_relationship') ?? 
+                                        $military_veteran->emergency_contact_relationship ?? '' }}">
+                                </div>
+                            </div>
+
                         </div>
                     
                         <div class="box-footer text-right">
