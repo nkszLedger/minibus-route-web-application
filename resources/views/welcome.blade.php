@@ -98,7 +98,7 @@
                             <input type="submit" value="LOGOUT" />
                         </form>
                     @else
-                        <a href="{{ route('login') }}">Minibus Taxi Login </a>
+                        <a href="{{ route('login') }}">User Login </a>
 
                         {{-- @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
@@ -113,12 +113,16 @@
                     <img src="/minibus/images/emblem.png" alt="minibus"  width="250" height="200">
                 </div>
 
+                <div class="links">
+                    <a href="https://www.dot.gov.za">Gauteng Province</a>
+                </div>  
+
                 <div class="title m-b-md">
-                    GPDRT Monitoring & Regulation System
+                    Monitoring & Regulation System
                 </div>
 
                 <div class="links">
-                    <a href="https://www.dot.gov.za">Gauteng Department of Roads and Transport</a>
+                    <a href="https://www.csir.co.za/smart-mobility">Smart Mobility</a>
                 </div>
 
                 <div class="footer">
