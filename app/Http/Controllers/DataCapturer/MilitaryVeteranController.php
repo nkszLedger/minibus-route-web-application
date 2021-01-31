@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MilitaryVeteranPostRequest;
 use App\Http\Requests\MilitaryVeteranUpdateRequest;
 use App\MilitaryVeteran;
+use App\MilitaryVeteranFingerprint;
+use App\MilitaryVeteranPortrait;
 use App\MilitaryVeteransDelegatedSchools;
 use App\Province;
 use App\Region;
@@ -135,6 +137,11 @@ class MilitaryVeteranController extends Controller
         $delegated_schools = MilitaryVeteransDelegatedSchools::with([
             'school', 'military_veteran'])->where('military_veteran_id', $id)->get();
 
+        $military_veteran_fingerprint = MilitaryVeteranFingerprint::where(
+            'military_veteran_id', $id)->get();
+        $military_veteran_portrait = MilitaryVeteranPortrait::where(
+            'military_veteran_id', $id)->get();
+
         return view('datacapturer.military.veterans.show', 
                     compact(['all_cities', 
                             'all_gender',
@@ -142,6 +149,8 @@ class MilitaryVeteranController extends Controller
                             'all_regions',
                             'military_veteran',
                             'delegated_schools',
+                            'military_veteran_fingerprint',
+                            'military_veteran_portrait'
                         ]));
     }
 
