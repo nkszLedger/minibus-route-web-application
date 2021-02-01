@@ -15,21 +15,21 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         /* assign default admin */
-        $user = User::create([
-            'name' => 'Tanita',
-            'surname' => 'Singano',
-        	'email' => 'zsingano@csir.co.za',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => bcrypt('minibusadmin'),
-            'remember_token' => 'yes',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
-        ]);
+        // $user = User::create([
+        //     'name' => 'Tanita',
+        //     'surname' => 'Singano',
+        // 	'email' => 'zsingano@csir.co.za',
+        //     'email_verified_at' => \Carbon\Carbon::now(),
+        //     'password' => bcrypt('minibusadmin'),
+        //     'remember_token' => 'yes',
+        //     'created_at' => \Carbon\Carbon::now(),
+        //     'updated_at' => \Carbon\Carbon::now(),
+        // ]);
         
-        $role = Role::create(['name' => 'Systems Admin']);
-        $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        // $role = Role::create(['name' => 'Systems Admin']);
+        // $permissions = Permission::pluck('id','id')->all();
+        // $role->syncPermissions($permissions);
+        // $user->assignRole([$role->id]);
         
         $user = User::create([
             'name' => 'Luma',
