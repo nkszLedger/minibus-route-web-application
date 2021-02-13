@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/minibus/images/favicon.ico">
 
-    <title> GPDRT Web</title>
+    <title> Gauteng Province Web</title>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
 	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -199,13 +199,13 @@
 			<div class="d-flex align-items-center justify-content-between">
 				<div class="d-md-block d-none">
 					@role('Systems Admin')
-					<h3 class="page-title br-0">GPDRT Monitoring & Regulation System Administration</h3>
+					<h3 class="page-title br-0">Monitoring & Regulation System Administration</h3>
 					@endrole
 					@role('Data Capturer')
-					<h3 class="page-title br-0">GPDRT Monitoring & Regulation Data Capturing</h3>
+					<h3 class="page-title br-0">Monitoring & Regulation Data Capturing</h3>
 					@endrole
 					@role('Oversight')
-					<h3 class="page-title br-0">GPDRT Monitoring & Regulation Overview</h3>
+					<h3 class="page-title br-0">Monitoring & Regulation Overview</h3>
 					@endrole
 				</div>
 

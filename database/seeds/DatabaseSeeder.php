@@ -32,13 +32,13 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeeVerificationTableSeeder::class);
         $this->call(EmployeeOrganizationTableSeeder::class);*/
 
-        // $this->call(CountrySeeder::class);
-        // $this->call(DistrictSeeder::class);
-        // $this->call(SchoolLevelSeeder::class);
-        // $this->call(SchoolTypeSeeder::class);
-        // $this->call(SchoolSectorSeeder::class);
-        // $this->call(MetropolitanMunicipalitySeeder::class);
-        // $this->call(LocalMunicipalitySeeder::class);
-        //$this->call(SchoolSeeder::class);
+        $this->call(CountrySeeder::class);
+        $this->call(DistrictSeeder::class);
+        $this->call(SchoolLevelSeeder::class);
+        $this->call(SchoolTypeSeeder::class);
+        $this->call(SchoolSectorSeeder::class);
+        $this->call(MetropolitanMunicipalitySeeder::class);
+        $this->call(LocalMunicipalitySeeder::class);
+        $this->call(SchoolSeeder::class);
     }
 }
