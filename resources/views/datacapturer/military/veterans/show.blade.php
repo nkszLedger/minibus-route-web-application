@@ -90,6 +90,25 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5><b>Military Formation :</b><span class="text-danger"> *</span></h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="military_formation"   
+                                            style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                            maxlength=40 id="military_formation"
+                                            required data-validation-required-message="This field is required" 
+                                                value="{{ old('military_formation') ?? $military_veteran->military_formation ?? '' }}" 
+                                                readonly>
+                                        <div class="form-control-feedback"> 
+                                            <small>
+                                                <i>e.g SADAF etc.</i>
+                                            </small> 
+									    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5><b>Regional Leader Name & Surname :</b>
                                     </h5>
                                     <div class="controls">
@@ -219,6 +238,20 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <h5><b>Force Number :</b></h5>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="force_number" 
+                                            style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                            maxlength=25 id="force_number" 
+                                            required data-validation-required-message="This field is required" 
+                                            value="{{ old('force_number') ?? $military_veteran->force_number ?? '' }}" 
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <h5 for="gender"><b>Gender : </b><span class="text-danger">*</span> </h5>
                                     <select class="custom-select form-control" 
                                          style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
@@ -251,6 +284,16 @@
                                          style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
                                         name="phone_number" maxlength="10" readonly 
                                         value="{{ old('phone_number') ?? $military_veteran->phone_number ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="wphoneNumber2"><b>Alternative Phone Number : </b></h5>
+                                    <input type="tel" class="form-control required" id="alternative_number" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        name="alternative_number" maxlength="10" readonly 
+                                        value="{{ old('alternative_number') ?? $military_veteran->alternative_number ?? '' }}">
                                 </div>
                             </div>
                             

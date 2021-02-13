@@ -65,6 +65,9 @@
                                             <th style="display:none;">City </th>
                                             <th style="display:none;">Province </th>
                                             <th style="display:none;">Gender </th>
+											<th style="display:none;">military_formation </th>
+											<th style="display:none;">alternative_number </th>
+											<th style="display:none;">force_number </th>
                                             <th style="display:none;">emergency_contact_name </th>
                                             <th style="display:none;">emergency_contact_relationship </th>
                                             <th style="display:none;">emergency_contact_number </th>
@@ -113,6 +116,11 @@
                                             <td style="display:none;"> {{ $military_veteran['city']['city'] }} </td>
                                             <td style="display:none;"> {{ $military_veteran['province']['name'] }} </td>
                                             <td style="display:none;"> {{ $military_veteran['gender']['type'] }} </td>
+
+											<td style="display:none;"> {{ $military_veteran->military_formation }} </td>
+											<td style="display:none;"> {{ $military_veteran->alternative_number }} </td>
+											<td style="display:none;"> {{ $military_veteran->force_number }} </td>
+
                                             <td style="display:none;"> {{ $military_veteran->emergency_contact_name }} </td>
                                             <td style="display:none;"> {{ $military_veteran->emergency_contact_relationship }} </td>
                                             <td style="display:none;"> {{ $military_veteran->emergency_contact_number }} </td>
@@ -143,6 +151,9 @@
                                             <th style="display:none;">City </th>
                                             <th style="display:none;">Province </th>
                                             <th style="display:none;">Gender </th>
+											<th style="display:none;">military_formation </th>
+											<th style="display:none;">alternative_number </th>
+											<th style="display:none;">force_number </th>
                                             <th style="display:none;">emergency_contact_name </th>
                                             <th style="display:none;">emergency_contact_relationship </th>
                                             <th style="display:none;">emergency_contact_number </th>

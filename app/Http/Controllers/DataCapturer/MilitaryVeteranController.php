@@ -90,6 +90,10 @@ class MilitaryVeteranController extends Controller
             $military_veteran->gender_id =  $request->get('gender');
             $military_veteran->region_id =  $request->get('mvregion');
 
+            $military_veteran->military_formation =  $request->get('military_formation');
+            $military_veteran->alternative_number =  $request->get('alternative_number');
+            $military_veteran->force_number =  $request->get('force_number');
+
             $military_veteran->emergency_contact_name =  $request->get('emergency_contact_name');
             $military_veteran->emergency_contact_relationship =  $request->get('emergency_contact_relationship');
             $military_veteran->emergency_contact_number =  $request->get('emergency_contact_number');
@@ -221,6 +225,12 @@ class MilitaryVeteranController extends Controller
                 'province_id' => $request->get('province'),
                 'gender_id' => $request->get('gender'),
                 'region_id' => $request->get('mvregion'),
+
+                'military_formation' => 
+                    $request->get('military_formation'),
+                'alternative_number' => 
+                    $request->get('alternative_number'),
+                'force_number' => $request->get('force_number'),
 
                 'emergency_contact_name' => 
                     $request->get('emergency_contact_name'),

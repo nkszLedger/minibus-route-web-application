@@ -20,6 +20,7 @@ class CreateMilitaryVeteransTable extends Migration
             $table->string('surname');
             $table->string('id_number')->unique();
             $table->string('phone_number')->nullable();
+            $table->string('alternative_number')->nullable();
             $table->string('email')->unique();
             $table->string('address_line');
             $table->string('surburb');
@@ -28,6 +29,8 @@ class CreateMilitaryVeteransTable extends Migration
             $table->integer('province_id');
             $table->integer('gender_id');
             $table->integer('region_id');
+            $table->string('military_formation');
+            $table->string('force_number')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_relationship')->nullable();
             $table->string('emergency_contact_number')->nullable();
