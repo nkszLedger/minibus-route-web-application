@@ -1,6 +1,5 @@
 <?php
 
-use App\EmployeeVerification;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -40,5 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MetropolitanMunicipalitySeeder::class);
         $this->call(LocalMunicipalitySeeder::class);
         $this->call(SchoolSeeder::class);
+        $this->call(BankSeeder::class);
+        $this->call(BankAccountType::class);
     }
 }
