@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\DataCapturer;
 
+use App\Bank;
+use App\BankAccount;
+use App\BankAccountType;
 use App\City;
 use App\Gender;
 use App\Http\Controllers\Controller;
@@ -50,12 +53,17 @@ class MilitaryVeteranController extends Controller
                             'local_municipality',
                             ])->get();
 
+        $all_banks = Bank::all();
+        $all_bank_account_types = BankAccountType::all();
+
         return view('datacapturer.military.veterans.create', 
                 compact(['all_cities', 
                             'all_gender',
                             'all_provinces', 
                             'all_regions',
                             'all_schools',
+                            'all_banks',
+                            'all_bank_account_types'
                         ]));
     }
 
@@ -72,51 +80,63 @@ class MilitaryVeteranController extends Controller
 
         if( $validated )
         {
-            $military_veteran = new MilitaryVeteran();
+            $bank_account_details = new BankAccount();
+            $bank_account_details->bank_id = $request->get('bank');
+            $bank_account_details->branch_name = $request->get('branch_name');
+            $bank_account_details->branch_code = $request->get('branch_code');
+            $bank_account_details->account_number = $request->get('account_number');
+            $bank_account_details->account_holder = $request->get('account_holder');
+            $bank_account_details->bank_account_type_id = $request->get('bank_account_type');
 
-            $military_veteran->name =  $request->get('name');
-            $military_veteran->surname =  $request->get('surname');
-            $military_veteran->id_number =  $request->get('id_number');
-
-            $military_veteran->phone_number =  $request->get('phone_number');
-            $military_veteran->email =  $request->get('email');
-            $military_veteran->address_line =  $request->get('address_line');
-
-            $military_veteran->surburb =  $request->get('surburb');
-            $military_veteran->postal_code =  $request->get('postal_code');
-            $military_veteran->city_id =  $request->get('city');
-
-            $military_veteran->province_id =  $request->get('province');
-            $military_veteran->gender_id =  $request->get('gender');
-            $military_veteran->region_id =  $request->get('mvregion');
-
-            $military_veteran->military_formation =  $request->get('military_formation');
-            $military_veteran->alternative_number =  $request->get('alternative_number');
-            $military_veteran->force_number =  $request->get('force_number');
-
-            $military_veteran->emergency_contact_name =  $request->get('emergency_contact_name');
-            $military_veteran->emergency_contact_relationship =  $request->get('emergency_contact_relationship');
-            $military_veteran->emergency_contact_number =  $request->get('emergency_contact_number');
-
-            $military_veteran->region_leader_name =  $request->get('region_leader_name');
-            $military_veteran->region_leader_contact_number =  $request->get('region_leader_contact_number');
-            $military_veteran->number_of_delegated_schools =  $request->get('number_of_delegated_schools');
-
-            if ( $military_veteran->save() )
+            if( $bank_account_details->save() )
             {
-                if( !empty($request->get('list_of_delegated_schools')) ) 
+                $military_veteran = new MilitaryVeteran();
+
+                $military_veteran->bank_account_id = $bank_account_details->id;
+
+                $military_veteran->name =  $request->get('name');
+                $military_veteran->surname =  $request->get('surname');
+                $military_veteran->id_number =  $request->get('id_number');
+
+                $military_veteran->phone_number =  $request->get('phone_number');
+                $military_veteran->email =  $request->get('email');
+                $military_veteran->address_line =  $request->get('address_line');
+
+                $military_veteran->surburb =  $request->get('surburb');
+                $military_veteran->postal_code =  $request->get('postal_code');
+                $military_veteran->city_id =  $request->get('city');
+
+                $military_veteran->province_id =  $request->get('province');
+                $military_veteran->gender_id =  $request->get('gender');
+                $military_veteran->region_id =  $request->get('mvregion');
+
+                $military_veteran->military_formation =  $request->get('military_formation');
+                $military_veteran->alternative_number =  $request->get('alternative_number');
+                $military_veteran->force_number =  $request->get('force_number');
+
+                $military_veteran->emergency_contact_name =  $request->get('emergency_contact_name');
+                $military_veteran->emergency_contact_relationship =  $request->get('emergency_contact_relationship');
+                $military_veteran->emergency_contact_number =  $request->get('emergency_contact_number');
+
+                $military_veteran->region_leader_name =  $request->get('region_leader_name');
+                $military_veteran->region_leader_contact_number =  $request->get('region_leader_contact_number');
+                $military_veteran->number_of_delegated_schools =  $request->get('number_of_delegated_schools');
+
+                if ( $military_veteran->save() )
                 {
-                    foreach((array)$request->get('list_of_delegated_schools') as $school_id) 
+                    if( !empty($request->get('list_of_delegated_schools')) ) 
                     {
-                        /* get delegated schools to military-veteran */
-                        $delegated_school = new MilitaryVeteransDelegatedSchools();
-                        $delegated_school->military_veteran_id = $military_veteran->id;
-                        $delegated_school->school_id = $school_id;
-                        $delegated_school->save();
+                        foreach((array)$request->get('list_of_delegated_schools') as $school_id) 
+                        {
+                            /* get delegated schools to military-veteran */
+                            $delegated_school = new MilitaryVeteransDelegatedSchools();
+                            $delegated_school->military_veteran_id = $military_veteran->id;
+                            $delegated_school->school_id = $school_id;
+                            $delegated_school->save();
+                        }
                     }
                 }
             }
-
             return $this->index();
         }
         
@@ -135,8 +155,17 @@ class MilitaryVeteranController extends Controller
         $all_provinces = Province::all();
         $all_regions = Region::all();
 
+        $all_banks = Bank::all();
+        $all_bank_account_types = BankAccountType::all();
+
         $military_veteran = MilitaryVeteran::with(['region', 'province',
-                        'city', 'gender'])->where('id', $id)->first();
+                'city', 'gender', 'bank_account'])->where('id', $id)->first();
+
+        $bank_details = Bank::where('id', 
+        $military_veteran->bank_account->bank_id)->first();
+
+        $bank_account_type_details = BankAccountType::where('id', 
+            $military_veteran->bank_account->bank_account_type_id)->first();
         
         $delegated_schools = MilitaryVeteransDelegatedSchools::with([
             'school', 'military_veteran'])->where('military_veteran_id', $id)->get();
@@ -151,6 +180,10 @@ class MilitaryVeteranController extends Controller
                             'all_gender',
                             'all_provinces', 
                             'all_regions',
+                            'all_banks',
+                            'all_bank_account_types',
+                            'bank_details',
+                            'bank_account_type_details',
                             'military_veteran',
                             'delegated_schools',
                             'military_veteran_fingerprint',
@@ -176,9 +209,18 @@ class MilitaryVeteranController extends Controller
                             'local_municipality',
                             ])->get();
 
+        $all_banks = Bank::all();
+        $all_bank_account_types = BankAccountType::all();
+
         $military_veteran = MilitaryVeteran::with(['region', 'province',
                         'city', 'gender'])->where('id', $id)->first();
         
+        $bank_details = Bank::where('id', 
+            $military_veteran->bank_account->bank_id)->first();
+
+        $bank_account_type_details = BankAccountType::where('id', 
+            $military_veteran->bank_account->bank_account_type_id)->first();
+
         $delegated_schools = MilitaryVeteransDelegatedSchools::with([
             'school', 'military_veteran'])->where('military_veteran_id', $id)
             ->where('deleted_at', NULL)->get();
@@ -188,6 +230,10 @@ class MilitaryVeteranController extends Controller
                             'all_gender',
                             'all_provinces', 
                             'all_regions',
+                            'all_banks',
+                            'all_bank_account_types',
+                            'bank_details',
+                            'bank_account_type_details',
                             'military_veteran',
                             'all_schools',
                             'delegated_schools',
@@ -208,7 +254,9 @@ class MilitaryVeteranController extends Controller
         $validated = $request->validated();
 
         $military_veteran = MilitaryVeteran::with(['region', 'province',
-                        'city', 'gender'])->where('id', $id)->first(); 
+                        'city', 'gender'])->where('id', $id)->first();
+        $military_veteran_bank_account_details = BankAccount::where('id',
+                        $military_veteran->bank_account_id);
 
         if( $validated )
         {
@@ -225,6 +273,8 @@ class MilitaryVeteranController extends Controller
                 'province_id' => $request->get('province'),
                 'gender_id' => $request->get('gender'),
                 'region_id' => $request->get('mvregion'),
+
+                'bank_account_id' => $military_veteran->bank_account_id,
 
                 'military_formation' => 
                     $request->get('military_formation'),
@@ -269,6 +319,18 @@ class MilitaryVeteranController extends Controller
                         $delegated_school->save();
                     }
                 }
+
+                /* update military-veteran banking details */
+                $bank_account_details_update = array(
+                    'bank_id' =>  $request->get('bank'),
+                    'branch_name' =>  $request->get('branch_name'),
+                    'branch_code' =>  $request->get('branch_code'),
+                    'account_number' =>  $request->get('account_number'),
+                    'account_holder' =>  $request->get('account_holder'),
+                    'bank_account_type_id' =>  $request->get('bank_account_type'),
+                );
+
+                $military_veteran_bank_account_details->update($bank_account_details_update);
             }
         }
         return $this->show($id);

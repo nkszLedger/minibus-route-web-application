@@ -16,9 +16,9 @@ class CreateBankAccountsTable extends Migration
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
             $table->integer('bank_id');
-            $table->string('branch_name');
-            $table->integer('branch_code');
-            $table->integer('account_number')->unique();
+            $table->string('branch_name')->nullable();
+            $table->integer('branch_code')->nullable();
+            $table->string('account_number')->unique();
             $table->string('account_holder');
             $table->integer('bank_account_type_id');
             $table->longText('comments')->nullable();

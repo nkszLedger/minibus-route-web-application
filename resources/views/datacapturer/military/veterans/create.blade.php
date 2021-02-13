@@ -492,6 +492,147 @@
 
 
                         </div>
+                        </br>
+                        <h4 class="box-title text-info">
+                            <i class="ti-credit-card mr-15"></i> Bank Account Details
+                        </h4>
+						<hr class="mb-15 mt-0">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="bank"><b>Bank : </b>
+                                        <span class="text-danger"> *</span> 
+                                    </h5>
+                                    <select class="custom-select form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="bank" name="bank" required>
+                                    @if( isset($bank_details))
+                                        <option selected value="{{$bank_details->id}}">
+                                            {{ $bank_details->name }} 
+                                            (UNIVERSAL BRANCH CODE: {{ $bank_details->universal_branch_code }})
+                                        </option>
+                                    @else
+                                        <option value="">Please Select Bank</option>
+                                    @endif
+                                    @foreach ($all_banks as $bank)
+                                        @if( isset($bank_details))
+                                            @if($bank->id !== $bank_details->id)
+                                                <option value="{{$bank->id}}">
+                                                    {{$bank->name}} (UNIVERSAL BRANCH CODE: {{ $bank->universal_branch_code }})
+                                                </option>
+                                            @endif
+                                        @else
+                                            <option value="{{$bank->id}}">
+                                                {{$bank->name}} (UNIVERSAL BRANCH CODE: {{ $bank->universal_branch_code }})
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="branch_name"><b>Branch Name : </b></h5>
+                                    <input type="text" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="branch_name" name="branch_name" 
+                                        maxlength="25" 
+                                        value="{{ old('branch_name') ?? 
+                                        $military_veteran['bank_account']['branch_name'] ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="branch_code"><b>Branch Code : </b></h5>
+                                    <input type="text" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="branch_code" name="branch_code" 
+                                        maxlength="6" value="{{ old('branch_code') ?? 
+                                        $military_veteran['bank_account']['branch_code'] ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="account_holder"><b>Bank Account Holder : </b>
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <input type="text" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="account_holder" name="account_holder" 
+                                        maxlength="25" placeholder="e.g JD MKHIZE"
+                                        value="{{ old('account_holder') ?? 
+                                        $military_veteran['bank_account']['account_holder'] ?? '' }}">
+                                    <div class="form-control-feedback"> 
+										<small>
+											<i>As written on the credit/debit card</i>
+										</small> 
+									</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="account_number"><b>Bank Account Number : </b>
+                                        <span class="text-danger"> *</span>
+                                    </h5>
+                                    <input type="tel" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="account_number" name="account_number" 
+                                        maxlength="25" 
+                                        value="{{ old('account_number') ?? 
+                                        $military_veteran['bank_account']['account_number'] ?? '' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="bank_account_type"><b>Bank Account Type : </b>
+                                        <span class="text-danger"> *</span> 
+                                    </h5>
+                                    <select class="custom-select form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="bank_account_type" name="bank_account_type" required>
+                                    @if( isset($bank_account_type_details))
+                                        <option selected value="{{$bank_account_type_details->id }}">
+                                            {{ $bank_account_type_details->description }} 
+                                        </option>
+                                    @else
+                                        <option value="">Please Select Bank Account Type</option>
+                                    @endif
+                                    @foreach ($all_bank_account_types as $type)
+                                        @if( isset($bank_account_type_details))
+                                            @if($type->id !== $bank_account_type_details->id)
+                                                <option value="{{$type->id}}">
+                                                    {{$type->description}} 
+                                                </option>
+                                            @endif
+                                        @else
+                                            <option value="{{$type->id}}">
+                                                {{$type->description}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h5 for="comments"><b>Account Further Comments : </b></h5>
+                                    <input type="text" class="form-control required" 
+                                         style="text-transform: uppercase; font-weight: bold; font-size: 18px;"
+                                        id="comments" name="comments" 
+                                        maxlength="50" placeholder="e.g Specify account type if 'Others' is selected"
+                                        value="{{ old('comments') ?? 
+                                        $military_veteran['bank_account']['comments'] ?? '' }}">
+                                </div>
+                            </div>
+
+                        </div>
                     
                         <div class="box-footer text-right">
                             <a class="btn btn-warning mb-5" href="{{ route('military-veterans.index') }}">

@@ -56,6 +56,13 @@ class MilitaryVeteranPostRequest extends FormRequest
                         }
                     },
                 ],
+            'bank' => 'required',
+            'branch_name' => 'sometimes|max:25',
+            'branch_code' => 'sometimes|max:25',
+            'account_number' => 'required|unique:bank_accounts',
+            'account_holder' => 'required|max:25',
+            'bank_account_type' => 'required',
+            'comments' => 'sometimes|max:50'
         ];
     }
 }

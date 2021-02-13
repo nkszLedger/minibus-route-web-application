@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BankAccountType extends Model
 {
+    protected $table = 'bank_account_types';
+
     public function bank_account()
     {
-        return $this->hasOne(BankAccount::class);
+        return $this->hasMany(BankAccount::class);
     }
 }

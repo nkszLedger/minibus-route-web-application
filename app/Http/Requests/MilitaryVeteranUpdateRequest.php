@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\BankAccount;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MilitaryVeteranUpdateRequest extends FormRequest
@@ -57,6 +58,14 @@ class MilitaryVeteranUpdateRequest extends FormRequest
                         }
                     },
                 ],
+            'bank' => 'required',
+            'branch_name' => 'sometimes|max:25',
+            'branch_code' => 'sometimes|max:25',
+            'account_number' => 'required|unique:bank_accounts,account_number,'.BankAccount::where('account_number', 
+                                $this->account_number)->first()->pluck('id')->first(),
+            'account_holder' => 'required|max:25',
+            'bank_account_type' => 'required',
+            'comments' => 'sometimes|max:50'
         ];
     }
 }

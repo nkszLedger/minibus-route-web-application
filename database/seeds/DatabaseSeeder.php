@@ -40,6 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocalMunicipalitySeeder::class);
         $this->call(SchoolSeeder::class);
         $this->call(BankSeeder::class);
-        $this->call(BankAccountType::class);
+        $this->call(BankAccountTypeSeeder::class);
     }
 }

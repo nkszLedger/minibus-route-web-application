@@ -37,9 +37,11 @@ class CreateMilitaryVeteransTable extends Migration
             $table->string('region_leader_name')->nullable();
             $table->string('region_leader_contact_number')->nullable();
             $table->integer('number_of_delegated_schools');
+            $table->integer('bank_account_id');
             $table->timestamps();
             $table->softDeletes()->nullable();
 
+            $table->foreign('bank_account_id')->references('id')->on('bank_accounts');
             $table->foreign('gender_id')->references('id')->on('genders');
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->foreign('city_id')->references('city_id')->on('city');

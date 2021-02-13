@@ -43,7 +43,7 @@ class MilitaryVeteran extends Model
         'number_of_delegated_schools',
         'address_line', 'surburb',
         'postal_code', 'city_id',
-        'province_id', 'region_id'
+        'province_id', 'region_id',
     ];  
 
     protected $table = 'military_veterans';
@@ -61,6 +61,11 @@ class MilitaryVeteran extends Model
     public function military_veteran_delegated_school()
     {
         return $this->hasMany(MilitaryVeteransDelegatedSchools::class);
+    }
+
+    public function bank_account()
+    {
+        return $this->belongsTo(BankAccount::class, 'bank_account_id');
     }
 
     public function region()
