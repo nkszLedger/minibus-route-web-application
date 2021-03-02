@@ -134,7 +134,11 @@
                                             <td style="display:none;"> {{ $military_veteran->emergency_contact_number }} </td>
                                             <td style="display:none;"> {{ $military_veteran->region_leader_contact_number }} </td>
                                             <td style="display:none;"> {{ $military_veteran->number_of_delegated_schools }} </td>
-                                            <td style="display:none;"> {{ $military_veteran->list_of_delegated_schools }} </td>
+                                            <td style="display:none;"> 
+												@foreach( $military_veteran->military_veteran_delegated_school as $delegated )
+												({{ $delegated->school->emis_number }}) {{ $delegated->school->institution_name }}; 
+												@endforeach
+											</td>
 
 											<td style="display:none;"> 
 												{{ $military_veteran['bank_account']['bank']['name'] ?? ''}}  
