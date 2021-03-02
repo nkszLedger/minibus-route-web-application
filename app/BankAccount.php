@@ -20,7 +20,7 @@ class BankAccount extends Model
 
     public function bank_account_type()
     {
-        return $this->belongTo(BankAccountType::class,'bank_account_type_id');
+        return $this->belongsTo(BankAccountType::class,'bank_account_type_id');
     }
 
     public function military_veteran()

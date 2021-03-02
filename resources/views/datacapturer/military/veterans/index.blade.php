@@ -152,7 +152,7 @@
 												{{ $military_veteran->bank_account->account_number ?? '' }} 
 											</td>
 											<td style="display:none;">
-												{{ $military_veteran->bank_account->bank_account_type_id ?? ''}} 
+												{{ $military_veteran['bank_account']['bank_account_type']['description'] ?? ''}} 
 											</td>
 											<td style="display:none;">
 												{{ $military_veteran->bank_account->comments ?? ''}} 
