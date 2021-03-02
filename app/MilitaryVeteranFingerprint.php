@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class MilitaryVeteranFingerprint extends Model
 {
+    protected $fillable = [
+        'military_veteran_id', 'fingerprint', 
+        'fingerprint_wsq', 'comments'
+    ];
+
+
     /**
      * The attributes that should be hidden for arrays.
      *

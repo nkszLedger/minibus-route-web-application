@@ -106,7 +106,7 @@ class RegisterController extends Controller
             $oauth_client->secret = base64_encode(hash_hmac('sha256',
                                     $user->password, 'secret', true));
 
-            $oauth_client->redirect = 'http://ptrms-test.csir.co.za';
+            $oauth_client->redirect = 'http://127.0.0.1';
             $oauth_client->personal_access_client = false;
             $oauth_client->password_client = true;
             $oauth_client->revoked = false;

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MilitaryVeteranPortrait extends Model
 {
+    protected $fillable = [
+        'military_veteran_id', 
+        'portrait'
+    ];
+
      /**
      * The attributes that should be hidden for arrays.
      *
