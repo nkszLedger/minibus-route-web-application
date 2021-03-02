@@ -75,6 +75,14 @@
                                             <th style="display:none;">number_of_delegated_schools </th>
                                             <th style="display:none;">list_of_delegated_schools</th>
 
+											<th style="display:none;">Bank</th>
+											<th style="display:none;">Branch Name</th>
+											<th style="display:none;">Branch Code</th>
+											<th style="display:none;">Bank Account Holder</th>
+											<th style="display:none;">Bank Account Number</th>
+											<th style="display:none;">Bank Account Type</th>
+											<th style="display:none;">Bank Account Comments</th>
+
 										</tr>
 									</thead>
 
@@ -127,6 +135,29 @@
                                             <td style="display:none;"> {{ $military_veteran->region_leader_contact_number }} </td>
                                             <td style="display:none;"> {{ $military_veteran->number_of_delegated_schools }} </td>
                                             <td style="display:none;"> {{ $military_veteran->list_of_delegated_schools }} </td>
+
+											<td style="display:none;"> 
+												{{ $military_veteran['bank_account']['bank']['name'] ?? ''}}  
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran->bank_account->branch_name ?? '' }} 
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran['bank_account']['bank']['universal_branch_code']  ?? '' }} 
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran->bank_account->account_holder ?? '' }} 
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran->bank_account->account_number ?? '' }} 
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran->bank_account->bank_account_type_id ?? ''}} 
+											</td>
+											<td style="display:none;">
+												{{ $military_veteran->bank_account->comments ?? ''}} 
+											</td>
+
 										</tr>
 						  			<?php $count++?>
 									@endforeach
@@ -160,6 +191,14 @@
                                             <th style="display:none;">region_leader_contact_number </th>
                                             <th style="display:none;">number_of_delegated_schools </th>
                                             <th style="display:none;">list_of_delegated_schools</th>
+
+											<th style="display:none;">Bank</th>
+											<th style="display:none;">Branch Name</th>
+											<th style="display:none;">Branch Code</th>
+											<th style="display:none;">Bank Account Holder</th>
+											<th style="display:none;">Bank Account Number</th>
+											<th style="display:none;">Bank Account Type</th>
+											<th style="display:none;">Bank Account Comments</th>
 
 										</tr>
 									</tfoot>

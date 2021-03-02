@@ -29,7 +29,7 @@ class MilitaryVeteranController extends Controller
     public function index()
     {
         $all_military_veterans = MilitaryVeteran::with(['city', 'province',
-                                        'region', 'gender'])
+                                        'region', 'gender', 'bank_account'])
                             ->orderBy('id','desc')->get();
 
         return view('datacapturer.military.veterans.index', 
