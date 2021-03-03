@@ -49,7 +49,18 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function show($id)
     {
-        //
+        $fingerprint = MilitaryVeteranFingerprint::where('military_veteran_id',
+            $id)->first();
+
+        $data = array( 
+            'id' => strval( $fingerprint->id ),
+            'fingerprint' => base64_decode($fingerprint->fingerprint),
+            'created_at' => (string) $fingerprint->created_at,
+            'updated_at' => (string)$fingerprint->updated_at,
+        );
+
+        return (['data' => $data]);
+
     }
 
     /**
