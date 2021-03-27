@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MilitaryVeteranFingerprintResource;
+use App\MilitaryVeteran;
 use App\MilitaryVeteranFingerprint;
 use Illuminate\Http\Request;
 
@@ -49,17 +50,15 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function show($id)
     {
-        $fingerprint = MilitaryVeteranFingerprint::where('military_veteran_id',
-            $id)->first();
+        $fingerprint = MilitaryVeteranFingerprint::where(
+            'military_veteran_id', $id )->first();
 
-        $data = array( 
-            'id' => strval( $fingerprint->id ),
-            'fingerprint' => base64_decode($fingerprint->fingerprint),
-            'created_at' => (string) $fingerprint->created_at,
-            'updated_at' => (string)$fingerprint->updated_at,
-        );
-
+        $data = new MilitaryVeteranFingerprintResource( $fingerprint);
+        
         return (['data' => $data]);
+
+        /*file_put_contents('download.ansi', $download->fingerprint);
+        return response()->download( 'download.ansi' );*/
 
     }
 

@@ -49,7 +49,12 @@ class MilitaryVeteranPortraitController extends Controller
      */
     public function show($id)
     {
-        //
+        $portrait = MilitaryVeteranPortrait::where(
+            'military_veteran_id', $id )->first();
+
+        $data = new MilitaryVeteranPortraitResource( $portrait );
+        
+        return (['data' => $data]);
     }
 
     /**

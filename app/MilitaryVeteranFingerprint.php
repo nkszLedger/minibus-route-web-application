@@ -18,8 +18,7 @@ class MilitaryVeteranFingerprint extends Model
      * @var array
      */
     protected $hidden = [
-        'fingerprint_wsq',
-        'fingerprint',
+        'fingerprint_wsq'
     ];
 
     /**

@@ -24,13 +24,14 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('members/{id}', 'API\MemberController@show');
     Route::get('employees/{id}', 'API\EmployeeController@show');
     Route::get('military_veterans/{id}', 'API\MilitaryVeteranController@show');
+    Route::get('militaryveteranfingerprint/{id}', 'API\MilitaryVeteranFingerprintController@show');
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');
     Route::apiResource('usersportrait', 'API\UserPortraitController');
     //Route::apiResource('members', 'API\MemberController');
     Route::apiResource('membersfingerprint', 'API\MemberFingerprintController');
     Route::apiResource('membersportrait', 'API\MemberPortraitController');
-    Route::apiResource('militaryveteranfingerprint', 'API\MilitaryVeteranController');
+    //Route::apiResource('militaryveteranfingerprint', 'API\MilitaryVeteranController');
     Route::apiResource('militaryveteranportrait', 'API\MilitaryVeteranPortraitController');
     Route::apiResource('militaryveteranfingerprint', 'API\MilitaryVeteranFingerprintController');
     
