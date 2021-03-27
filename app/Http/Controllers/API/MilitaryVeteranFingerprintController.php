@@ -35,7 +35,7 @@ class MilitaryVeteranFingerprintController extends Controller
 
         $fingerprint = MilitaryVeteranFingerprint::create([
             'military_veteran_id' => $request->id,
-            'fingerprint' => $contents,
+            'fingerprint' => base64_encode($contents),
     
         ]);
 
