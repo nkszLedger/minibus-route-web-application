@@ -34,7 +34,7 @@ class MilitaryVeteranPortraitController extends Controller
 
         $portrait = MilitaryVeteranPortrait::create([
             'military_veteran_id' => $request->id,
-            'portrait' => $contents,
+            'portrait' => base64_encode($contents),
     
         ]);
 

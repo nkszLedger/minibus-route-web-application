@@ -28,10 +28,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');
     Route::apiResource('usersportrait', 'API\UserPortraitController');
-    //Route::apiResource('members', 'API\MemberController');
     Route::apiResource('membersfingerprint', 'API\MemberFingerprintController');
     Route::apiResource('membersportrait', 'API\MemberPortraitController');
-    //Route::apiResource('militaryveteranfingerprint', 'API\MilitaryVeteranController');
     Route::apiResource('militaryveteranportrait', 'API\MilitaryVeteranPortraitController');
     Route::apiResource('militaryveteranfingerprint', 'API\MilitaryVeteranFingerprintController');
     

@@ -58,7 +58,10 @@ class MilitaryVeteranFingerprintController extends Controller
         return (['data' => $data]);
 
         /*file_put_contents('download.ansi', $download->fingerprint);
-        return response()->download( 'download.ansi' );*/
+        return response()->download( 'download.ansi' );
+        // Return the image in the response with the correct MIME type
+            return response()->make($user->avatar, 200, array(
+        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($user->avatar)*/
 
     }
 
