@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('employees/{id}', 'API\EmployeeController@show');
     Route::get('military_veterans/{id}', 'API\MilitaryVeteranController@show');
     Route::get('militaryveteranfingerprint/{id}', 'API\MilitaryVeteranFingerprintController@show');
+
+    Route::get('militaryveteranportrait/getfile/{id}', 
+                'API\MilitaryVeteranPortraitController@downloadPortrait');
+
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');
     Route::apiResource('usersportrait', 'API\UserPortraitController');
