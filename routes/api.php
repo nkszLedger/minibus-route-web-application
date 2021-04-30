@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('militaryveteranportrait/getfile/{id}', 
                 'API\MilitaryVeteranPortraitController@downloadPortrait');
+    Route::get('militaryveteranfingerprint/getfile/{id}', 
+                'API\MilitaryVeteranFingerprintController@downloadFingerprint');
 
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');

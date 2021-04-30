@@ -75,7 +75,7 @@ class MilitaryVeteranPortraitController extends Controller
         $destinationPath = public_path().'\downloads\\';
         File::isDirectory($destinationPath) or 
         File::makeDirectory($destinationPath, 0777, true, true);
-        File::cleanDirectory($destinationPath);
+        //File::cleanDirectory($destinationPath);
 
         $fileName = $record->military_veteran_id . '_' .$record->id. '_' .time() . '.png';
         $path = $destinationPath.$fileName;
