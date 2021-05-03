@@ -62,6 +62,12 @@ class MilitaryVeteranPortraitController extends Controller
         return (['data' => $data]);
     }
 
+    /**
+     * Download the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function downloadPortrait($id)
     {
         // Find the military veteran portrait only

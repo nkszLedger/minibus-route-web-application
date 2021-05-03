@@ -31,6 +31,18 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('militaryveteranfingerprint/getfile/{id}', 
                 'API\MilitaryVeteranFingerprintController@downloadFingerprint');
 
+    Route::get('membersfingerprint/getleftthumbfile/{id}', 
+                'API\MemberFingerprintController@downloadLeftFingerprint');
+    Route::get('membersfingerprint/getrightthumbfile/{id}', 
+                'API\MemberFingerprintController@downloadRightFingerprint');
+    Route::get('membersportrait/getfile/{id}', 
+                'API\MemberPortraitController@downloadPortrait');
+
+    Route::get('employeesfingerprint/getfile/{id}', 
+                'API\EmployeeFingerprintController@downloadFingerprint');
+    Route::get('employeesportrait/getfile/{id}', 
+                'API\EmployeePortraitController@downloadPortrait');
+
     Route::apiResource('users', 'API\UserController');
     Route::apiResource('usersfingerprint', 'API\UserFingerprintController');
     Route::apiResource('usersportrait', 'API\UserPortraitController');

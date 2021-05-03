@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\EmployeePortrait;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MilitaryVeteranFingerprintResource;
-use App\MilitaryVeteranFingerprint;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
+use App\Http\Resources\API\EmployeePortraitResource;
 use Illuminate\Http\Request;
 
-class MilitaryVeteranFingerprintController extends Controller
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+
+class EmployeePortraitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,18 +30,17 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function store(Request $request)
     {
-        $fingerprint = $request->file('fingerprint');
-
+        $portrait = $request->file('portrait');
         // Get the contents of the file
-        $contents = $fingerprint->openFile()->fread($fingerprint->getSize());
+        $contents = $portrait->openFile()->fread($portrait->getSize());
 
-        $fingerprint = MilitaryVeteranFingerprint::create([
-            'military_veteran_id' => $request->id,
-            'fingerprint' => base64_encode($contents),
+        $portrait = EmployeePortrait::create([
+            'employee_id' => $request->id,
+            'portrait' => base64_encode($contents),
     
         ]);
 
-        return new MilitaryVeteranFingerprintResource($fingerprint);
+        return new EmployeePortraitResource($portrait);
     }
 
     /**
@@ -51,19 +51,12 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function show($id)
     {
-        $fingerprint = MilitaryVeteranFingerprint::where(
-            'military_veteran_id', $id )->first();
+        $portrait = EmployeePortrait::where(
+            'employee_id', $id )->first();
 
-        $data = new MilitaryVeteranFingerprintResource( $fingerprint);
+        $data = new EmployeePortraitResource( $portrait );
         
         return (['data' => $data]);
-
-        /*file_put_contents('download.ansi', $download->fingerprint);
-        return response()->download( 'download.ansi' );
-        // Return the image in the response with the correct MIME type
-            return response()->make($user->avatar, 200, array(
-        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($user->avatar)*/
-
     }
 
     /**
@@ -72,14 +65,14 @@ class MilitaryVeteranFingerprintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function downloadFingerprint($id)
+    public function downloadPortrait($id)
     {
-        // Find the military veteran fingerprint only
-        $record = MilitaryVeteranFingerprint::where(
-                    'military_veteran_id', $id )->first();
+        // Find the military veteran portrait only
+        $record = EmployeePortrait::where(
+                    'employee_id', $id )->first();
 
         // get raw image contents
-        $blob = $record->fingerprint;
+        $blob = $record->portrait;
 
         // set & clear path
         $destinationPath = public_path().'\downloads\\';
@@ -87,7 +80,7 @@ class MilitaryVeteranFingerprintController extends Controller
         File::makeDirectory($destinationPath, 0777, true, true);
         //File::cleanDirectory($destinationPath);
 
-        $fileName = $record->military_veteran_id . '_' .$record->id. '_' .time() . '.ansi';
+        $fileName = $record->employee_id . '_' .$record->id. '_' .time() . '.png';
         $path = $destinationPath.$fileName;
 
         // get processed & decode data
@@ -96,7 +89,7 @@ class MilitaryVeteranFingerprintController extends Controller
 
         return Response::stream(function() use($path) {
             echo File::get($path);
-        }, 200, ["Content-Type"=> 'ansi']);
+        }, 200, ["Content-Type"=> 'png']);
 
     }
 
@@ -107,9 +100,11 @@ class MilitaryVeteranFingerprintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EmployeePortrait $portrait)
     {
-        //
+        $portrait->update($request->only(['portrait']));
+
+        return new EmployeePortraitResource($portrait);
     }
 
     /**

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
+use App\EmployeeFingerprint;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MilitaryVeteranFingerprintResource;
-use App\MilitaryVeteranFingerprint;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
+use App\Http\Resources\API\EmployeeFingerprintResource;
 use Illuminate\Http\Request;
 
-class MilitaryVeteranFingerprintController extends Controller
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+
+class EmployeeFingerprintController extends Controller
 {
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -30,17 +31,15 @@ class MilitaryVeteranFingerprintController extends Controller
     public function store(Request $request)
     {
         $fingerprint = $request->file('fingerprint');
-
         // Get the contents of the file
         $contents = $fingerprint->openFile()->fread($fingerprint->getSize());
 
-        $fingerprint = MilitaryVeteranFingerprint::create([
-            'military_veteran_id' => $request->id,
+        $fingerprint = EmployeeFingerprint::create([
+            'employee_id' => $request->id,
             'fingerprint' => base64_encode($contents),
-    
         ]);
 
-        return new MilitaryVeteranFingerprintResource($fingerprint);
+        return new EmployeeFingerprintResource($fingerprint);
     }
 
     /**
@@ -51,19 +50,12 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function show($id)
     {
-        $fingerprint = MilitaryVeteranFingerprint::where(
-            'military_veteran_id', $id )->first();
+        $fingerprint = EmployeeFingerprint::where(
+            'employee_id', $id )->first();
 
-        $data = new MilitaryVeteranFingerprintResource( $fingerprint);
+        $data = new EmployeeFingerprintResource( $fingerprint );
         
         return (['data' => $data]);
-
-        /*file_put_contents('download.ansi', $download->fingerprint);
-        return response()->download( 'download.ansi' );
-        // Return the image in the response with the correct MIME type
-            return response()->make($user->avatar, 200, array(
-        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($user->avatar)*/
-
     }
 
     /**
@@ -74,9 +66,9 @@ class MilitaryVeteranFingerprintController extends Controller
      */
     public function downloadFingerprint($id)
     {
-        // Find the military veteran fingerprint only
-        $record = MilitaryVeteranFingerprint::where(
-                    'military_veteran_id', $id )->first();
+        // Find the military veteran portrait only
+        $record = EmployeeFingerprint::where(
+                    'employee_id', $id )->first();
 
         // get raw image contents
         $blob = $record->fingerprint;
@@ -87,7 +79,7 @@ class MilitaryVeteranFingerprintController extends Controller
         File::makeDirectory($destinationPath, 0777, true, true);
         //File::cleanDirectory($destinationPath);
 
-        $fileName = $record->military_veteran_id . '_' .$record->id. '_' .time() . '.ansi';
+        $fileName = $record->employee_id . '_' .$record->id. '_' .time() . '.ansi';
         $path = $destinationPath.$fileName;
 
         // get processed & decode data
@@ -107,9 +99,11 @@ class MilitaryVeteranFingerprintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EmployeeFingerprint $fingerprint)
     {
-        //
+        $fingerprint->update($request->only(['fingerprint']));
+
+        return new EmployeeFingerprintResource($fingerprint);
     }
 
     /**
