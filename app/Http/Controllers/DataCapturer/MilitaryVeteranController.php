@@ -14,6 +14,7 @@ use App\MilitaryVeteran;
 use App\MilitaryVeteranFingerprint;
 use App\MilitaryVeteranPortrait;
 use App\MilitaryVeteransDelegatedSchools;
+use App\MilitaryVeteranVerification;
 use App\Province;
 use App\Region;
 use App\School;
@@ -29,7 +30,7 @@ class MilitaryVeteranController extends Controller
     public function index()
     {
         $all_military_veterans = MilitaryVeteran::with(['city', 'province',
-                                        'region', 'gender', 'bank_account',
+                                        'region', 'gender', 'bank_account', 'verification',
                                         'military_veteran_delegated_school.school'])
                             ->orderBy('id','desc')->get();
 
@@ -136,6 +137,16 @@ class MilitaryVeteranController extends Controller
                             $delegated_school->save();
                         }
                     }
+
+                    /* Add verification details */
+                    $verification = new MilitaryVeteranVerification();
+                    $verification->military_veteran_id = $military_veteran->id;
+                    $verification->association_approved = false;
+                    $verification->letter_issued = false;
+                    $verification->letter_signed = false;
+                    $verification->banking_details_confirmed = false;
+                    
+                    $verification->save();
                 }
             }
             return $this->index();

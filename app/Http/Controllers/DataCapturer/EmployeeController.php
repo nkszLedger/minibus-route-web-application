@@ -300,9 +300,12 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employee::find($id);
+        /* Remove other dependent models 
+            before employee model!!  */
+            
+        /*$employee = Employee::find($id);
         $employee->delete();
 
-        return redirect()->intended('employees');
+        return redirect()->intended('employees');*/
     }
 }

@@ -69,6 +69,10 @@ Route::group(['middleware' => 'auth:web'], function() {
     'DataCapturer\EmployeeVerificationController@index')
     ->name('employees_verification');
 
+    Route::get('military_veteran_verification', 
+    'DataCapturer\MilitaryVeteranVerificationController@index')
+    ->name('military_veteran_verification');
+
     Route::get('vehicles/getAssociations/{region_id}', 
     'Controller@getAssociationsByRegionID')->name('associations');
 
@@ -84,6 +88,21 @@ Route::group(['middleware' => 'auth:web'], function() {
         return App::make('App\http\Controllers\Controller')
             ->verifyEmployee($employee_id, $association_approved,
         $letter_issued, $letter_signed, $banking_details_confirmed);
+    });
+
+    Route::get('military_veteran_verification/{military_veteran_id}/'.
+    'association/{association_approved}'.
+    '/issued/{letter_issued}'.
+    '/signed/{letter_signed}'.
+    '/confirmed/{banking_details_confirmed}', 
+    function($military_veteran_id, $association_approved, 
+            $letter_issued, $letter_signed, 
+            $banking_details_confirmed)
+    {
+        return App::make('App\http\Controllers\Controller')
+            ->verifyMilitaryVeteran($military_veteran_id, 
+            $association_approved, $letter_issued, 
+            $letter_signed, $banking_details_confirmed);
     });
 
     Route::get('vehicles/{member_id}/getAssociations/{region_id}', 

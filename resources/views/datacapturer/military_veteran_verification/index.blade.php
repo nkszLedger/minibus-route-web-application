@@ -5,7 +5,7 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Employees Verification</h3>
+					<h3 class="page-title">Military Veteran Verification</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -15,7 +15,7 @@
                                     </a>
                                 </li>
 								<li class="breadcrumb-item active" aria-current="page">
-                                    Employee Verification Status Summary
+                                    Military Veteran Status Summary
                                 </li>
 							</ol>
 						</nav>
@@ -29,9 +29,9 @@
 			  	<div class="col-12">
 					<div class="box">
 						<div class="box-header">
-							<h3 class="box-title">Employee Verification Status Summary</h3>
+							<h3 class="box-title">Military Veteran Verification Status Summary</h3>
 							<h6 class="box-subtitle">
-								Check below to change verification state of employee. Save Changes to submit.
+								Check below to change verification state of Military Veterans. Save Changes to submit.
 							</h6>
 						</div>
 						
@@ -49,7 +49,6 @@
 											<th>#</th>
 											<th>First Name</th>
                                             <th>Surname</th>
-											<th>Rank Position</th>
 											<th>SA ID Number</th>
 											<th>Date Captured</th>
 											<th>Association Approved</th>
@@ -65,23 +64,20 @@
 									<?php
 										$count = 1;
 									?>
-									@foreach($all_employees as $status )
+									@foreach($all_military_veterans as $status )
 										<tr>
 											<td>{{$count}}</td>
                                             <td> 
-												{{ $status['employee']['name'] ?? '' }}
+												{{ $status['military_veteran']['name'] ?? '' }}
 											</td>
                                             <td>
-												{{ $status['employee']['surname'] ?? ''}}
-											</td>
-                                            <td>
-												{{ $status['employee']['position']['position'] ?? '' }}
+												{{ $status['military_veteran']['surname'] ?? ''}}
 											</td>
 											<td>
-												{{ $status['employee']['id_number'] ?? '' }}
+												{{ $status['military_veteran']['id_number'] ?? '' }}
 											</td>
                                             <td>
-												{{ $status['employee']['created_at'] ?? ''}}
+												{{ $status['military_veteran']['created_at'] ?? ''}}
 											</td>
                                             <td>
 												<div class="form-group row">
@@ -89,15 +85,15 @@
 														<div class="checkbox">
 															@if( $status->association_approved )
 																<input type="checkbox" 
-																	name="associationapprovedcheckbox_{{ $status->employee_id }}"
-																	id="associationapprovedcheckbox_{{ $status->employee_id }}" 
+																	name="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}" 
 																	checked>
-																<label for="associationapprovedcheckbox_{{ $status->employee_id }}"></label>
+																<label for="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="associationapprovedcheckbox_{{ $status->employee_id }}"
-																	id="associationapprovedcheckbox_{{ $status->employee_id }}">
-																<label for="associationapprovedcheckbox_{{ $status->employee_id }}"></label>
+																	name="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}">
+																<label for="associationapprovedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -109,15 +105,15 @@
 														<div class="checkbox">
 															@if( $status->letter_issued )
 																<input type="checkbox" 
-																	name="isletterissuedcheckbox_{{ $status->employee_id }}"
-																	id="isletterissuedcheckbox_{{ $status->employee_id }}"
+																	name="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}"
 																	checked>
-																<label for="isletterissuedcheckbox_{{ $status->employee_id }}"></label>
+																<label for="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="isletterissuedcheckbox_{{ $status->employee_id }}"
-																	id="isletterissuedcheckbox_{{ $status->employee_id }}">
-																<label for="isletterissuedcheckbox_{{ $status->employee_id }}"></label>
+																	name="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}">
+																<label for="isletterissuedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -129,15 +125,15 @@
 														<div class="checkbox">
 															@if( $status->letter_signed )
 																<input type="checkbox" 
-																	name="islettersignedcheckbox_{{ $status->employee_id }}"
-																	id="islettersignedcheckbox_{{ $status->employee_id }}"
+																	name="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}"
 																	checked>
-																<label for="islettersignedcheckbox_{{ $status->employee_id }}"></label>
+																<label for="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="islettersignedcheckbox_{{ $status->employee_id }}"
-																	id="islettersignedcheckbox_{{ $status->employee_id }}">
-																<label for="islettersignedcheckbox_{{ $status->employee_id }}"></label>
+																	name="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}">
+																<label for="islettersignedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -149,15 +145,15 @@
 														<div class="checkbox">
 															@if( $status->banking_details_confirmed )
 																<input type="checkbox" 
-																	name="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
-																	id="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
+																	name="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}"
 																	checked>
-																<label for="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"></label>
+																<label for="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@else
 																<input type="checkbox" 
-																	name="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"
-																	id="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}">
-																<label for="isbankingdetailsconfirmedcheckbox_{{ $status->employee_id }}"></label>
+																	name="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}"
+																	id="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}">
+																<label for="isbankingdetailsconfirmedcheckbox_mv_{{ $status->military_veteran_id }}"></label>
 															@endif	
 														</div>
 													</div>
@@ -178,7 +174,7 @@
 												{{-- <button type="submit" data-toggle="modal" data-target="#employee-verify" 
 													class="btn btn-success" > --}}
 												<button type="submit" class="btn btn-success"
-													onclick="verifyEmployee('{{ $status->employee_id }}')">
+													onclick="verifyMilitaryVeteran('{{ $status->military_veteran_id }}')">
 													Save Changes
 												</button>
 											</td>
@@ -191,7 +187,6 @@
 											<th>#</th>
 											<th>First Name</th>
                                             <th>Surname</th>
-											<th>Rank Position</th>
 											<th>SA ID Number</th>
 											<th>Date Captured</th>
 											<th>Association Approved</th>
@@ -210,44 +205,6 @@
 		 	</div>
 			<!-- /.row -->
 		</section>
-
-		<!-- Modal -->
-		<div class="modal center-modal fade" id="employee-verify" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>South African ID Number</label>
-								<input type="text" class="form-control" name="verify-id-number" 
-                                    maxlength=13 min=13 id="verify-id-number" 
-                                    required data-validation-required-message="This field is required" 
-									placeholder="XXXXXXXXXXXXX">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Last Name</label>
-								<input type="text" class="form-control" placeholder="Last Name">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer modal-footer-uniform">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary float-right">Save changes</button>
-				</div>
-				</div>
-			</div>
-		</div>
-		<!-- /.modal -->
 
 	<!-- /.content -->
 @endsection

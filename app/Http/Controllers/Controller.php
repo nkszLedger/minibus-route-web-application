@@ -15,6 +15,7 @@ use App\MemberDriver;
 use App\MemberOperator;
 use App\MemberRegionAssociation;
 use App\MemberVehicle;
+use App\MilitaryVeteranVerification;
 use App\Region;
 use App\RouteVehicle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -428,6 +429,47 @@ class Controller extends BaseController
         else
         {
             return response('Employee verification status update failed!', 400)
+            ->header('Content-Type', 'text/plain');
+        }
+    }
+
+    /**
+     * Updates Military Veteran Verification Status.
+     *
+     * @param  int  $military_veteran_id, $is_association_approved, 
+     *       is_letter_issued, is_letter_signed
+     * @return \Illuminate\Http\Response
+     */
+    public function verifyMilitaryVeteran($military_veteran_id, 
+        $is_association_approved, $is_letter_issued, 
+            $is_letter_signed, $is_banking_details_confirmed )
+    {
+        $military_veteran =	MilitaryVeteranVerification::where(
+            'military_veteran_id', $military_veteran_id);
+
+        $military_veteran_update = array(
+            'association_approved' 
+                => $is_association_approved,
+            'letter_issued' 
+                => $is_letter_issued,
+            'letter_signed' 
+                => $is_letter_signed,
+            'banking_details_confirmed' 
+                => $is_banking_details_confirmed,
+        );
+
+        if( $military_veteran->update($military_veteran_update) )
+        { 
+            return response(
+                'Military Veteran verification status updated!', 
+                200)
+            ->header('Content-Type', 'text/plain');
+        }
+        else
+        {
+            return response(
+                'Military Veteran verification status update failed!', 
+                400)
             ->header('Content-Type', 'text/plain');
         }
     }

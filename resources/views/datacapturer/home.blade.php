@@ -119,10 +119,20 @@
 				</li>
 				<li><a href="{{ route('military-veterans.index') }}"><i class="ti-files mx-5"></i>MANAGE MILITARY</a>
 					<ul>
+						@can(['employee-create']) <!-- Employees are treated as Military Veterans -->
 						<!-- 'military-veteran-create'-->
 						<li><a href="{{ route('military-veterans.create') }}">Register Veterans</a></li> 
-						<!-- 'military-veteran-list'-->
+						@endcan
+
+						@can(['employee-create']) <!-- Employees are treated as Military Veterans -->
+						<!-- 'military-veteran-veriy'-->
+						<li><a href="{{ route('military_veteran_verification') }}">Verify Veterans</a></li>
+						@endcan
+
+						@can(['employee-list']) <!-- Employees are treated as Military Veterans -->
+						<!-- 'military-veteran-list'--> 
 						<li><a href="{{ route('military-veterans.index') }}">View Veterans</a></li>
+						@endcan
 					</ul>
 				</li>
 
@@ -606,6 +616,8 @@
 
 	<!-- Employee Verifications -->
 	<script src="/minibus/main/js/pages/employee-verification.js"></script>
+	<!-- Military Veteran Verifications -->
+	<script src="/minibus/main/js/pages/military_veteran_verification.js"></script>
 	
 	<!-- Dashboard Selectors -->
 	<script src="/minibus/main/js/pages/regions-selector.js"></script>

@@ -48,6 +48,11 @@ class MilitaryVeteran extends Model
 
     protected $table = 'military_veterans';
 
+    public function verification()
+    {
+        return $this->hasOne(MilitaryVeteranVerification::class);
+    }
+
     public function military_veteran_fingerprint()
     {
         return $this->hasOne(MilitaryVeteranFingerprint::class);
